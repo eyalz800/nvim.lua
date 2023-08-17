@@ -1,0 +1,24 @@
+{
+    "clangd.semanticHighlighting": false,
+    "inlayHint.enable": false,
+    "coc.preferences.formatOnType": false,
+    "suggest.noselect": true,
+    "notification.disabledProgressSources": ["*"],
+    "diagnostic.enableHighlightLineNumber": "true",
+    "diagnostic.infoSign": "",
+    "diagnostic.hintSign": "󰌶",
+    "diagnostic.warningSign": "",
+    "diagnostic.errorSign": "",
+    "cSpell.userWords": [
+      "GTEST",
+      "autodetect",
+      "noninteractive",
+      "println",
+      "pugi",
+      "pugixml",
+      "sfml",
+      "stdm",
+      "stoi",
+      "vformat"
+    ]
+}
