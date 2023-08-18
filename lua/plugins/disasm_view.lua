@@ -10,6 +10,7 @@ m.disasm_view = function()
     if v.b.disasm_view then
         v.bo.readonly = false
         v.b.disasm_view = false
+        cmd 'e!'
         return
     end
 
