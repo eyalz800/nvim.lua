@@ -15,6 +15,26 @@ m.find_file_hidden = function()
     cmd 'Files'
 end
 
+m.find_file_list = function()
+    v.env.FZF_DEFAULT_COMMAND = 'if [ -f .files ]; then cat .files; else rg --files | tee .files; fi;'
+    cmd 'Files'
+end
+
+m.find_file_list_invalidate = function()
+    v.env.FZF_DEFAULT_COMMAND = 'rm -rf .files ; rg --files | tee .files'
+    cmd 'Files'
+end
+
+m.find_file_list_hidden = function()
+    v.env.FZF_DEFAULT_COMMAND = 'if [ -f .files ]; then cat .files; else rg --files --no-ignore-vcs --hidden | tee .files; fi;'
+    cmd 'Files'
+end
+
+m.find_file_list_hidden_invalidate = function()
+    v.env.FZF_DEFAULT_COMMAND = 'rm -rf .files ; rg --files --no-ignore-vcs --hidden | tee .files'
+    cmd 'Files'
+end
+
 m.find_in_files = function()
     cmd 'Rg'
 end

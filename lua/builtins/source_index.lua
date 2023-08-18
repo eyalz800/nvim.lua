@@ -2,9 +2,9 @@ local m = {}
 local v = require 'vim'
 
 local async_cmd = require 'builtins.async_cmd'.async_cmd
-local cmd = require 'vim.cmd'.silent
-local expand = v.fn.expand
 local sed = require 'lib.os_bin'.sed
+local expand = v.fn.expand
+local input = v.fn.input
 
 local ctags_file_patterns = '-g "*.c" -g "*.cc" -g "*.cpp" -g "*.cxx" -g "*.h" -g "*.hh" -g "*.hpp"'
 local other_file_patterns = '-g "*.py" -g "*.te" -g "*.S" -g "*.asm" -g "*.mk" -g "*.md" -g "makefile" -g "Makefile"'
@@ -16,13 +16,18 @@ local opengrok_jar = expand('~/.vim/bin/opengrok/lib/opengrok.jar')
 local opengrok_ctags = '~/.vim/bin/ctags-exuberant/ctags/ctags'
 local generate_files_command = 'rg --files ' ..
     ctags_file_patterns ..
-    ' > cscope.files && if ! [ -f .files ]; then cp cscope.files .files && rg --files ' ..
+    ' > cscope.files && if ! [ -f .files ]; then cp cscope.files .files; fi && rg --files ' ..
     other_file_patterns .. ' >> .files'
 local generate_cpp_command = 'cscope -bq'
 local generate_opengrok_command = 'java -Xmx2048m -jar ' .. opengrok_jar .. ' -q -c ' ..
         opengrok_ctags .. ' -s . -d .opengrok ' .. opengrok_file_patterns .. ' -P -S -G -W .opengrok/configuration.xml'
 local generate_tags_command = 'echo ' .. ctags_options .. ' > .gutctags && ' .. sed .. " -i 's/ /\\n/g' .gutctags && ctags " .. ctags_options
 local generate_all_tags_command = 'echo ' .. ctags_everything_options .. ' > .gutctags && ' .. sed .. " -i 's/ /\\n/g' .gutctags && ctags " .. ctags_options
+local generate_flags_command = 'echo -std=c++20 > compile_flags.txt' ..
+    ' && echo -x >> compile_flags.txt' ..
+    ' && echo c++ >> compile_flags.txt' ..
+    ' && set +e ; find . -type d -name inc -or -name include -or -name Include | grep -v \"/\\.\" | ' ..
+    sed .. ' s@^@-isystem\\\\n@g >> compile_flags.txt ; set -e'
 
 m.generate_cpp = function()
     async_cmd(generate_files_command .. ' && ' .. generate_cpp_command, { visible=true })
@@ -52,33 +57,73 @@ m.generate_all_files_list = function()
     async_cmd('rg --files --no-ignore-vcs --hidden  > .files', { visible=true })
 end
 
+m.generate_flags = function()
+    async_cmd(generate_flags_command, { visible=true })
+end
+
 m.goto_symbol_definition = function()
-    cmd('call Init_lua_goto_symbol(' .. expand('<cword>') .. '"definition")')
+    v.fn.Init_lua_goto_symbol(expand '<cword>', 'definition')
 end
 
 m.goto_symbol_declaration = function()
-    cmd('call Init_lua_goto_symbol(' .. expand('<cword>') .. '"declaration")')
+    v.fn.Init_lua_goto_symbol(expand '<cword>', 'declaration')
 end
 
 m.goto_symbol_definition_input = function()
-    cmd('call Init_lua_goto_symbol_input("definition")')
+    v.fn.Init_lua_goto_symbol_input 'definition'
 end
 
 m.goto_symbol_declaration_input = function()
-    cmd('call Init_lua_goto_symbol_input("declaration")')
+    v.fn.Init_lua_goto_symbol_input 'declaration'
 end
 
 m.goto_definition = function()
-    cmd('call Init_lua_goto_definition()')
+    v.fn.Init_lua_goto_definition()
 end
 
--- TODO: Remove mappings
+m.cscope_input = function(option)
+    v.fn.Init_lua_cscope_query(option, 1)
+end
 
-v.cmd [=[
+m.cscope = function(option)
+    v.fn.Init_lua_cscope(option, expand '<cword>', 1)
+end
 
-" Tag stack {{{
-" nnoremap <silent> <leader>o :pop<CR>
-" nnoremap <silent> <leader>i :tag<CR>
+m.cscope_assignments = function() return m.cscope('9') end
+m.cscope_function_calling = function() return m.cscope('3') end
+m.cscope_functions_called_by = function() return m.cscope('2') end
+m.cscope_egrep = function() return m.cscope('6') end
+m.cscope_file = function() return m.cscope('7') end
+m.cscope_definition = function() return m.cscope('1') end
+m.cscope_files_including = function() return m.cscope('8') end
+m.cscope_symbol = function() return m.cscope('0') end
+m.cscope_text = function() return m.cscope('4') end
+
+m.cscope_input_assignments = function() return m.cscope_input('9') end
+m.cscope_input_function_calling = function() return m.cscope_input('3') end
+m.cscope_input_functions_called_by = function() return m.cscope_input('2') end
+m.cscope_input_egrep = function() return m.cscope_input('6') end
+m.cscope_input_file = function() return m.cscope_input('7') end
+m.cscope_input_definition = function() return m.cscope_input('1') end
+m.cscope_input_files_including = function() return m.cscope_input('8') end
+m.cscope_input_symbol = function() return m.cscope_input('0') end
+m.cscope_input_text = function() return m.cscope_input('4') end
+
+m.opengrok_query = function(kind)
+    return v.fn.Init_lua_og_query(kind, expand '<cword>', 1)
+end
+
+m.opengrok_query_input = function(kind)
+    return v.fn.Init_lua_og_query(kind, input 'Text: ', 1)
+end
+
+m.opengrok_query_f = function() return m.opengrok_query('f') end
+m.opengrok_query_d = function() return m.opengrok_query('d') end
+
+m.opengrok_query_input_f = function() return m.opengrok_query_input('f') end
+m.opengrok_query_input_d = function() return m.opengrok_query_input('d') end
+
+v.cmd([=[
 
 function! Init_lua_tagstack_push_current(name)
     return Init_lua_tagstack_push(a:name, getcurpos(), bufnr())
@@ -101,18 +146,6 @@ function! Init_lua_tagstack_push(name, pos, buf)
 
     call settagstack(winnr(), tagstack, 'r')
 endfunction
-
-" Go to definition {{{
-"nnoremap <silent> gs :call Init_lua_goto_symbol(expand('<cword>'), 'definition')<CR>
-"nnoremap <silent> gS :call Init_lua_goto_symbol(expand('<cword>'), 'declaration')<CR>
-"nnoremap <silent> <leader>zd :call Init_lua_goto_symbol(expand('<cword>'), 'definition')<CR>
-"nnoremap <silent> <leader>zD :call Init_lua_goto_symbol(expand('<cword>'), 'declaration')<CR>
-"nnoremap <silent> <leader>gs :call Init_lua_goto_symbol_input('definition')<CR>
-"nnoremap <silent> <leader>gS :call Init_lua_goto_symbol_input('declaration')<CR>
-"nnoremap <silent> <leader><leader>zd :call Init_lua_goto_symbol_input('definition')<CR>
-"nnoremap <silent> <leader><leader>zD :call Init_lua_goto_symbol_input('declaration')<CR>
-"nnoremap <silent> gz :call Init_lua_goto_definition()<CR>
-"nnoremap <silent> <leader>zg :call Init_lua_goto_definition()<CR>
 
 function! Init_lua_goto_symbol_input(type)
     call inputsave()
@@ -224,7 +257,7 @@ function! Init_lua_goto_symbol(symbol, type)
             \    'printf "%s:%s:%s\n", x,z,$0; }'
         let opengrok_command =
             \    "java -Xmx2048m -cp ~/.vim/bin/opengrok/lib/opengrok.jar org.opensolaris.opengrok.search.Search -R .opengrok/configuration.xml -" .
-            \    opengrok_query_type . " " . shellescape(a:symbol) . "| grep \"^/.*\" | " . s:sed . " 's@</\\?.>@@g' | " . s:sed . " 's/&amp;/\\&/g' | " . s:sed . " 's/-\&gt;/->/g'" .
+            \    opengrok_query_type . " " . shellescape(a:symbol) . "| grep \"^/.*\" | ]=] .. sed .. [=[ 's@</\\?.>@@g' | ]=] .. sed .. [=[ 's/&amp;/\\&/g' | ]=] .. sed .. [=[ 's/-\&gt;/->/g'" .
             \    " | awk '" . awk_program . "'"
 
         let results = split(system(opengrok_command), '\n')
@@ -303,63 +336,6 @@ function! Init_lua_get_target_symbol_jump_if_ctag_type(symbol, file, lines, ctag
 endfunction
 " }}}
 
-" Cscope {{{
-nnoremap <silent> <leader>cA :call Init_lua_cscope('9', expand('<cword>'), 0)<CR>
-nnoremap <silent> <leader>cC :call Init_lua_cscope('3', expand('<cword>'), 0)<CR>
-nnoremap <silent> <leader>cD :call Init_lua_cscope('2', expand('<cword>'), 0)<CR>
-nnoremap <silent> <leader>cE :call Init_lua_cscope('6', expand('<cword>'), 0)<CR>
-nnoremap <silent> <leader>cF :call Init_lua_cscope('7', expand('<cword>'), 0)<CR>
-nnoremap <silent> <leader>cG :call Init_lua_cscope('1', expand('<cword>'), 0)<CR>
-nnoremap <silent> <leader>cI :call Init_lua_cscope('8', expand('<cword>'), 0)<CR>
-nnoremap <silent> <leader>cS :call Init_lua_cscope('0', expand('<cword>'), 0)<CR>
-nnoremap <silent> <leader>cT :call Init_lua_cscope('4', expand('<cword>'), 0)<CR>
-nnoremap <silent> <leader><leader>fA :call Init_lua_cscope_query('9', 0)<CR>
-nnoremap <silent> <leader><leader>fC :call Init_lua_cscope_query('3', 0)<CR>
-nnoremap <silent> <leader><leader>fD :call Init_lua_cscope_query('2', 0)<CR>
-nnoremap <silent> <leader><leader>fE :call Init_lua_cscope_query('6', 0)<CR>
-nnoremap <silent> <leader><leader>fF :call Init_lua_cscope_query('7', 0)<CR>
-nnoremap <silent> <leader><leader>fG :call Init_lua_cscope_query('1', 0)<CR>
-nnoremap <silent> <leader><leader>fI :call Init_lua_cscope_query('8', 0)<CR>
-nnoremap <silent> <leader><leader>fS :call Init_lua_cscope_query('0', 0)<CR>
-nnoremap <silent> <leader><leader>cT :call Init_lua_cscope_query('4', 0)<CR>
-nnoremap <silent> <leader><leader>cA :call Init_lua_cscope_query('9', 0, 1)<CR>
-nnoremap <silent> <leader><leader>cC :call Init_lua_cscope_query('3', 0, 1)<CR>
-nnoremap <silent> <leader><leader>cD :call Init_lua_cscope_query('2', 0, 1)<CR>
-nnoremap <silent> <leader><leader>cE :call Init_lua_cscope_query('6', 0, 1)<CR>
-nnoremap <silent> <leader><leader>cF :call Init_lua_cscope_query('7', 0, 1)<CR>
-nnoremap <silent> <leader><leader>cG :call Init_lua_cscope_query('1', 0, 1)<CR>
-nnoremap <silent> <leader><leader>cI :call Init_lua_cscope_query('8', 0, 1)<CR>
-nnoremap <silent> <leader><leader>cS :call Init_lua_cscope_query('0', 0, 1)<CR>
-nnoremap <silent> <leader><leader>cT :call Init_lua_cscope_query('4', 0, 1)<CR>
-
-nnoremap <silent> <leader>ca :call Init_lua_cscope('9', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader>cc :call Init_lua_cscope('3', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader>cd :call Init_lua_cscope('2', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader>ce :call Init_lua_cscope('6', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader>cf :call Init_lua_cscope('7', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader>cg :call Init_lua_cscope('1', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader>ci :call Init_lua_cscope('8', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader>cs :call Init_lua_cscope('0', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader>ct :call Init_lua_cscope('4', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader><leader>fa :call Init_lua_cscope_query('9', 1)<CR>
-nnoremap <silent> <leader><leader>fc :call Init_lua_cscope_query('3', 1)<CR>
-nnoremap <silent> <leader><leader>fd :call Init_lua_cscope_query('2', 1)<CR>
-nnoremap <silent> <leader><leader>fe :call Init_lua_cscope_query('6', 1)<CR>
-nnoremap <silent> <leader><leader>ff :call Init_lua_cscope_query('7', 1)<CR>
-nnoremap <silent> <leader><leader>fg :call Init_lua_cscope_query('1', 1)<CR>
-nnoremap <silent> <leader><leader>fi :call Init_lua_cscope_query('8', 1)<CR>
-nnoremap <silent> <leader><leader>fs :call Init_lua_cscope_query('0', 1)<CR>
-nnoremap <silent> <leader><leader>ct :call Init_lua_cscope_query('4', 1)<CR>
-nnoremap <silent> <leader><leader>ca :call Init_lua_cscope_query('9', 1, 1)<CR>
-nnoremap <silent> <leader><leader>cc :call Init_lua_cscope_query('3', 1, 1)<CR>
-nnoremap <silent> <leader><leader>cd :call Init_lua_cscope_query('2', 1, 1)<CR>
-nnoremap <silent> <leader><leader>ce :call Init_lua_cscope_query('6', 1, 1)<CR>
-nnoremap <silent> <leader><leader>cf :call Init_lua_cscope_query('7', 1, 1)<CR>
-nnoremap <silent> <leader><leader>cg :call Init_lua_cscope_query('1', 1, 1)<CR>
-nnoremap <silent> <leader><leader>ci :call Init_lua_cscope_query('8', 1, 1)<CR>
-nnoremap <silent> <leader><leader>cs :call Init_lua_cscope_query('0', 1, 1)<CR>
-nnoremap <silent> <leader><leader>ct :call Init_lua_cscope_query('4', 1, 1)<CR>
-
 function! Init_lua_cscope(option, query, preview, ...)
     let l:ignorecase = get(a:, 2, 0)
     if l:ignorecase
@@ -431,17 +407,6 @@ function! Init_lua_cscope_query(option, preview, ...)
         echom "Cancelled Search!"
     endif
 endfunction
-" }}}
-
-" Opengrok {{{
-nnoremap <silent> gw :call Init_lua_og_query('f', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader>gw :call Init_lua_og_query('f', input('Text: '), 1)<CR>
-nnoremap <silent> gW :call Init_lua_og_query('d', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader>gW :call Init_lua_og_query('d', input('Text: '), 1)<CR>
-nnoremap <silent> <leader>zo :call Init_lua_og_query('f', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader><leader>zo :call Init_lua_og_query('f', input('Text: '), 1)<CR>
-nnoremap <silent> <leader>zO :call Init_lua_og_query('d', expand('<cword>'), 1)<CR>
-nnoremap <silent> <leader><leader>zO :call Init_lua_og_query('d', input('Text: '), 1)<CR>
 
 function! Init_lua_og_query(option, query, preview)
     let awk_program =
@@ -449,7 +414,7 @@ function! Init_lua_og_query(option, query, preview)
         \    'printf "%s:%s:%s\n", x,z,$0; }'
     let grep_command =
         \    "java -Xmx2048m -cp ~/.vim/bin/opengrok/lib/opengrok.jar org.opensolaris.opengrok.search.Search -R .opengrok/configuration.xml -" .
-        \    a:option . " " . shellescape(a:query) . "| grep \"^/.*\" | " . s:sed . " 's@</\\?.>@@g' | " . s:sed . " 's/&amp;/\\&/g' | " . s:sed . " 's/-\&gt;/->/g'" .
+        \    a:option . " " . shellescape(a:query) . "| grep \"^/.*\" | ]=] .. sed .. [=[ 's@</\\?.>@@g' | ]=] .. sed .. [=[ 's/&amp;/\\&/g' | ]=] .. sed .. [=[ 's/-\&gt;/->/g'" .
         \    " | awk '" . awk_program . "'"
 
     let fzf_color_option = split(fzf#wrap()['options'])[0]
@@ -473,8 +438,7 @@ function! Init_lua_og_query(option, query, preview)
     endif
     return 0
 endfunction
-" }}}
 
-]=]
+]=])
 
 return m

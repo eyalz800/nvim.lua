@@ -9,7 +9,7 @@ v.g.tagbar_compact = 2
 v.g.tagbar_iconchars = {'', ''}
 
 m.open = function()
-    cmd 'TagbarOpen'
+    cmd 'TagbarOpenAutoClose'
 end
 
 m.close = function()

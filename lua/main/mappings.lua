@@ -89,7 +89,11 @@ map('i', '<tab>', lsp.tab, { silent=true, expr=true }) -- Lsp complete
 map('i', '<s-tab>', lsp.shift_tab, { silent=true, expr=true}) -- Lsp prev complete
 map('i', '<cr>', lsp.enter, { silent=true, expr=true }) -- Lsp enter
 map('n', '<c-p>', finder.find_file, { silent=true }) -- Find file
+map('n', '<leader><c-p>', finder.find_file_list, { silent=true }) -- Find file with cache while populating files list for later use.
+map('n', '<leader><leader><c-p>', finder.find_file_list_invalidate, { silent=true }) -- Similar to previous but invalidate cache.
 map('n', '<c-]>', finder.find_file_hidden, { silent=true }) -- Find file include hidden files
+map('n', '<leader><c-]>', finder.find_file_list_hidden, { silent=true }) -- Find file include hidden files with cache while populating files list for later use.
+map('n', '<leader><leader><c-]>', finder.find_file_list_hidden_invalidate, { silent=true }) -- Similar to previous but invalidate cache.
 map('n', '<c-g>', finder.find_in_files, { silent=true }) -- Find in all files including name
 map('n', 'ca', finder.find_folder, { silent=true }) -- Find a folder
 map('n', '<c-\\>', finder.find_content_in_files, { silent=true }) -- Find in all files contents
@@ -162,6 +166,38 @@ map({'n', 'x'}, 'f', search.find_jump, { silent=true }) -- Find and jump to loca
 map({'n', 'x'}, 'F', search.find_jump_back, { silent=true }) -- Find backwards and jump to location
 map({'n', 'x'}, 't', search.till_jump, { silent=true }) -- Find and jump to until location
 map({'n', 'x'}, 'T', search.till_jump_back, { silent=true }) -- Find backwards and jump until location
+map('n', '<leader>ca', source_index.cscope_assignments, { silent=true }) -- CScope assignments
+map('n', '<leader>cc', source_index.cscope_function_calling, { silent=true }) -- CScope function calling
+map('n', '<leader>cd', source_index.cscope_functions_called_by, { silent=true }) -- CScope functions called by
+map('n', '<leader>ce', source_index.cscope_egrep, { silent=true }) -- CScope egrep
+map('n', '<leader>cf', source_index.cscope_file, { silent=true }) -- CScope file
+map('n', '<leader>cg', source_index.cscope_definition, { silent=true }) -- CScope definition
+map('n', '<leader>ci', source_index.cscope_files_including, { silent=true }) -- CScope files including
+map('n', '<leader>cs', source_index.cscope_symbol, { silent=true }) -- CScope symbol
+map('n', '<leader>ct', source_index.cscope_text, { silent=true }) -- CScope text
+map('n', '<leader><leader>ca', source_index.cscope_assignments, { silent=true }) -- CScope assignments
+map('n', '<leader><leader>cc', source_index.cscope_input_function_calling, { silent=true }) -- CScope function calling (input)
+map('n', '<leader><leader>cd', source_index.cscope_input_functions_called_by, { silent=true }) -- CScope functions called by (input)
+map('n', '<leader><leader>ce', source_index.cscope_input_egrep, { silent=true }) -- CScope egrep (input)
+map('n', '<leader><leader>cf', source_index.cscope_input_file, { silent=true }) -- CScope file (input)
+map('n', '<leader><leader>cg', source_index.cscope_input_definition, { silent=true }) -- CScope definition (input)
+map('n', '<leader><leader>ci', source_index.cscope_input_files_including, { silent=true }) -- CScope files including (input)
+map('n', '<leader><leader>cs', source_index.cscope_input_symbol, { silent=true }) -- CScope symbol (input)
+map('n', '<leader><leader>ct', source_index.cscope_input_text, { silent=true }) -- CScope text (input)
+map('n', 'gw', source_index.opengrok_query_f, { silent=true }) -- Opengrok query symbol
+map('n', 'gW', source_index.opengrok_query_d, { silent=true }) -- Opengrok query symbol defintiion
+map('n', '<leader>gw', source_index.opengrok_query_input_f, { silent=true }) -- Opengrok query symbol (input)
+map('n', '<leader>gW', source_index.opengrok_query_input_d, { silent=true }) -- Opengrok query symbol defintiion (input)
+map('n', '<leader>o', ':pop<cr>', { silent=true }) -- Pop tag stack
+map('n', '<leader>i', ':tag<cr>', { silent=true }) -- Unpop tag stack
+map('n', '<leader>zp', source_index.generate_cpp, { silent=true }) -- Generate cpp index
+map('n', '<leader>zt', source_index.generate_tags, { silent=true }) -- Generate common tags
+map('n', '<leader>zT', source_index.generate_all_tags, { silent=true }) -- Generate all tags
+map('n', '<leader>zh', source_index.generate_source_files_list, { silent=true }) -- Generate source files list
+map('n', '<leader>zH', source_index.generate_all_files_list, { silent=true }) -- Generate all files list
+map('n', '<leader>zf', source_index.generate_flags, { silent=true }) -- Generate flags
+map('n', '<leader>zk', source_index.generate_opengrok, { silent=true }) -- Generate opengrok
+map('n', '<leader>zz', source_index.generate_cpp_and_opengrok, { silent=true }) -- Generate cpp and opengrok
 
 -- Additional mappings
 --   * 'gc' - :h commentary -- Comment selected code
