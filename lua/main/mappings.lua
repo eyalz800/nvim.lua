@@ -20,6 +20,7 @@ local binary_view = require 'plugins.binary_view'
 local disasm_view = require 'plugins.disasm_view'
 local tasks = require 'plugins.tasks'
 local debugger = require 'plugins.debugger'
+local search = require 'plugins.search'
 
 map('n', 'Y', 'y$', { silent=true }) -- Yank to end of line
 map('v', '<tab>', '%', { silent=true }) -- Jump to matching pairs
@@ -153,6 +154,12 @@ map('n', '<F34>', debugger.run_to_cursor, { silent=true }) -- Debug run to curso
 map('n', '<leader>dD', debugger.disassemble, { silent=true }) -- Debug disassemble
 map({'n', 'x'}, '<leader>de', debugger.eval_window, { silent=true }) -- Debug eval window
 map('n', '<leader>dq', debugger.reset, { silent=true }) -- Debug close
+map({'n', 'x'}, 's', search.search_jump, { silent=true }) -- Search and jump to location
+map({'n', 'x'}, 'S', search.search_jump_back, { silent=true }) -- Search backwards and jump to location
+map({'n', 'x'}, 'f', search.find_jump, { silent=true }) -- Find and jump to location
+map({'n', 'x'}, 'F', search.find_jump_back, { silent=true }) -- Find backwards and jump to location
+map({'n', 'x'}, 't', search.till_jump, { silent=true }) -- Find and jump to until location
+map({'n', 'x'}, 'T', search.till_jump_back, { silent=true }) -- Find backwards and jump until location
 
 -- Additional mappings
 --   * 'gc' - :h vim-commentary -- Comment selected code
