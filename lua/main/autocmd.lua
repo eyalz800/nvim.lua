@@ -8,6 +8,7 @@ local whitespace = require 'plugins.whitespace'
 local lsp = require 'plugins.lsp'
 local large_files = require 'plugins.large_files'
 local syntax = require 'plugins.syntax'
+local binary_view = require 'plugins.binary_view'
 
 local indentation = augroup('init.lua.file_indentatoin', {})
 autocmd('filetype', {pattern={'c', 'cpp'}, group=indentation, callback=function()
@@ -55,6 +56,9 @@ autocmd('BufReadPre', {group=augroup('init.lua.large_files_pre', {}), callback=l
 autocmd('BufReadPost', {group=augroup('init.lua.large_files_post', {}), callback=large_files.on_buf_read_post})
 autocmd('syntax', {pattern='python', group=augroup('init.lua.syntax.python', {}), callback=syntax.apply_py_syntax})
 autocmd('syntax', {pattern={'c', 'cpp'}, group=augroup('init.lua.syntax.c_cpp', {}), callback=syntax.apply_c_and_cpp_syntax})
+autocmd('BufReadPost', {group=augroup('init.lua.binary_view.rpo', {}), callback=binary_view.on_buf_read_post})
+autocmd('BufWritePre', {group=augroup('init.lua.binary_view.wpr', {}), callback=binary_view.on_buf_write_pre})
+autocmd('BufWritePost', {group=augroup('init.lua.binary_view.wpo', {}), callback=binary_view.on_buf_write_post})
 
 m.cmds = { autocmd, augroup }
 return m

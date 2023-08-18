@@ -16,6 +16,8 @@ local buffer = require 'plugins.buffer'
 local zoom = require 'plugins.zoom'
 local fold = require 'plugins.fold'
 local tabs = require 'plugins.tabs'
+local binary_view = require 'plugins.binary_view'
+local disasm_view = require 'plugins.disasm_view'
 
 map('n', 'Y', 'y$', { silent=true }) -- Yank to end of line
 map('v', '<tab>', '%', { silent=true }) -- Jump to matching pairs
@@ -114,6 +116,8 @@ map('c', '<c-k>', '<plug>CmdlineCompleteBackward', { silent=true }) -- Complete 
 map('c', '<c-j>', '<plug>CmdlineCompleteForward', { silent=true }) -- Complete next in vim command mode
 map('n', '-', ':setlocal wrap! lbr!<cr>', { silent=true }) -- Wrap words
 map('n', 'cr', '<plug>(abolish-coerce-word)', { silent=true }) -- Change word case (s-snake_case, m-MixedCase, c-camelCase, u-UPPER, -/. dash/dot)
+map('n', '<leader>bv', binary_view.binary_view, { silent=true }) -- Binary view with xxd
+map('n', '<leader>dv', disasm_view.disasm_view, { silent=true }) -- Disassembly view
 
 -- Additional mappings
 --   * 'gc' - :h vim-commentary -- Comment selected code
