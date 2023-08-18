@@ -32,5 +32,6 @@ require 'plugins.config.asynctasks'
 require 'plugins.config.pear-tree'
 require 'plugins.config.vim-signature'
 require 'plugins.config.abolish'
+require 'plugins.config.zip'
 
 return m
