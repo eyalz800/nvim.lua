@@ -9,7 +9,7 @@ local get_current_file_size = function()
         return v.loop.fs_stat(v.api.nvim_buf_get_name(bufnr))
     end)
     if not (ok and stats) then
-        return
+        return 0
     end
     return stats.size
 end
