@@ -1,6 +1,7 @@
 local m = {}
 local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
+local user = require 'user'
 local file_readable = require 'vim.file_readable'.file_readable
 local expand = v.fn.expand
 
@@ -56,6 +57,9 @@ m.options = {
     actions = {
         open_file = {
             resize_window = false,
+            window_picker = {
+                enable = user.settings.file_explorer_config.nvim_tree.window_picker,
+            }
         },
     },
     renderer = {

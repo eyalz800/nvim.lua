@@ -22,6 +22,7 @@ m.lsp_config = {coc_plugins={'coc-clangd',
 m.finder = 'fzf'
 m.status_line = 'airline'
 m.file_explorer = 'nvim-tree'
+m.file_explorer_config = {nvim_tree={window_picker=false}}
 m.code_explorer = 'tagbar'
 
 return m
