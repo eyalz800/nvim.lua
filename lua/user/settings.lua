@@ -1,4 +1,5 @@
 local m = {}
+local v = require 'vim'
 
 m.indentation = 4
 m.expand_tabs = true
@@ -9,7 +10,7 @@ m.gui_colors = true
 m.root_paths = {'.git', '.repo', '.files'}
 m.git_plugin = 'gitsigns'
 m.enable_gutentags = false
-m.colorscheme = 'tokyonight'
+m.colorscheme = v.fn.system('if [ -e ~/.vim/.color ] ; then cat ~/.vim/.color ; else echo tokyonight; fi')
 m.colorscheme_settings = { tokyonight={style='storm'} }
 m.powerline = true
 m.lsp = 'coc'
