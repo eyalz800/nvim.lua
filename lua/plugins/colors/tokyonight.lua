@@ -78,6 +78,33 @@ m.configure = function()
         ]=]
     end
 
+    if user.settings.status_line == 'airline' then
+        v.cmd [=[
+            function! Init_lua_tokyonight_airline_theme_patch(palette)
+                if g:airline_theme != 'tokyonight'
+                    return
+                endif
+
+                let airline_error = ['#000000', '#db4b4b', '0', '0']
+                let airline_warning = ['#000000', '#e0af68', '0', '0']
+
+                let a:palette.normal.airline_warning = airline_warning
+                let a:palette.normal.airline_error = airline_error
+                let a:palette.insert.airline_warning = airline_warning
+                let a:palette.insert.airline_error = airline_error
+                let a:palette.replace.airline_warning = airline_warning
+                let a:palette.replace.airline_error = airline_error
+                let a:palette.visual.airline_warning = airline_warning
+                let a:palette.visual.airline_error = airline_error
+                let a:palette.inactive.airline_warning = airline_warning
+                let a:palette.inactive.airline_error = airline_error
+                let a:palette.terminal.airline_warning = airline_warning
+                let a:palette.terminal.airline_error = airline_error
+            endfunction
+        ]=]
+        v.g.airline_theme_patch_func = 'Init_lua_tokyonight_airline_theme_patch'
+    end
+
     if tokyonight_transparent then
         v.cmd 'hi CursorLine ctermbg=242 guibg=#3b4261'
     end

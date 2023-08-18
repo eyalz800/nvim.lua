@@ -1,6 +1,7 @@
 local m = {}
 local v = require 'vim'
 local exec_detach = require 'lib.exec_detach'.exec_detach
+local user = require 'user'
 
 m.configure = function()
     if v.o.background == 'light' then
@@ -203,6 +204,60 @@ m.configure = function()
         " Sign Column
         highlight SignColumn guifg=#bbbbbb guibg=NONE
     ]=]
+
+    if user.settings.finder == 'fzf' then
+        v.cmd [=[
+            let g:fzf_colors =
+            \ { 'fg':      ['fg', 'Normal'],
+              \ 'bg':      ['bg', 'Normal'],
+              \ 'hl':      ['fg', 'SpecialKey'],
+              \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+              \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+              \ 'hl+':     ['fg', 'String'],
+              \ 'info':    ['fg', 'Comment'],
+              \ 'border':  ['fg', 'CursorLine'],
+              \ 'prompt':  ['fg', 'StorageClass'],
+              \ 'pointer': ['fg', 'Error'],
+              \ 'marker':  ['fg', 'Keyword'],
+              \ 'spinner': ['fg', 'Label'],
+              \ 'header':  ['fg', 'Comment'] }
+        ]=]
+    end
+
+    if user.settings.status_line == 'airline' then
+        v.cmd [=[
+            function! Init_lua_codedark_airline_theme_patch(palette)
+                if g:airline_theme != 'codedark'
+                    return
+                endif
+
+                let airline_error = ['#FFFFFF', '#F44747', 0, 0]
+                let airline_warning = ['#FFFFFF', '#F44747', 0, 0]
+
+                let a:palette.normal.airline_warning = airline_warning
+                let a:palette.normal.airline_error = airline_error
+                let a:palette.normal_modified.airline_warning = airline_warning
+                let a:palette.normal_modified.airline_error = airline_error
+                let a:palette.insert.airline_warning = airline_warning
+                let a:palette.insert.airline_error = airline_error
+                let a:palette.insert_modified.airline_warning = airline_warning
+                let a:palette.insert_modified.airline_error = airline_error
+                let a:palette.replace.airline_warning = airline_warning
+                let a:palette.replace.airline_error = airline_error
+                let a:palette.replace_modified.airline_warning = airline_warning
+                let a:palette.replace_modified.airline_error = airline_error
+                let a:palette.visual.airline_warning = airline_warning
+                let a:palette.visual.airline_error = airline_error
+                let a:palette.visual_modified.airline_warning = airline_warning
+                let a:palette.visual_modified.airline_error = airline_error
+                let a:palette.inactive.airline_warning = airline_warning
+                let a:palette.inactive.airline_error = airline_error
+                let a:palette.inactive_modified.airline_warning = airline_warning
+                let a:palette.inactive_modified.airline_error = airline_error
+            endfunction
+        ]=]
+        v.g.airline_theme_patch_func = 'Init_lua_codedark_airline_theme_patch'
+    end
 
     return true
 end
