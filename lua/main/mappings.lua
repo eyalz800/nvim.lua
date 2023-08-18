@@ -154,12 +154,15 @@ map('n', '<F34>', debugger.run_to_cursor, { silent=true }) -- Debug run to curso
 map('n', '<leader>dD', debugger.disassemble, { silent=true }) -- Debug disassemble
 map({'n', 'x'}, '<leader>de', debugger.eval_window, { silent=true }) -- Debug eval window
 map('n', '<leader>dq', debugger.reset, { silent=true }) -- Debug close
-map({'n', 'x'}, 's', search.search_jump, { silent=true }) -- Search and jump to location
-map({'n', 'x'}, 'S', search.search_jump_back, { silent=true }) -- Search backwards and jump to location
+map('n', 's', search.search_jump, { silent=true }) -- Search and jump to location
+map('x', 's', search.search_jump_visual, { silent=true }) -- Search and jump to location
+map('n', 'S', search.search_jump_back, { silent=true }) -- Search backwards and jump to location
+map('x', 'S', search.search_jump_back_visual, { silent=true }) -- Search backwards and jump to location
 map({'n', 'x'}, 'f', search.find_jump, { silent=true }) -- Find and jump to location
 map({'n', 'x'}, 'F', search.find_jump_back, { silent=true }) -- Find backwards and jump to location
 map({'n', 'x'}, 't', search.till_jump, { silent=true }) -- Find and jump to until location
 map({'n', 'x'}, 'T', search.till_jump_back, { silent=true }) -- Find backwards and jump until location
 
 -- Additional mappings
---   * 'gc' - :h vim-commentary -- Comment selected code
+--   * 'gc' - :h commentary -- Comment selected code
+--   * 'ysw' / 'csXY' - :h surround - Surround / change surrounding
