@@ -3,6 +3,9 @@ local v = require 'vim'
 local echo = require 'vim.echo'.echo
 local cmd = v.api.nvim_create_user_command
 
+-- Settings
+cmd('Settings', 'n ~/.config/nvim/lua/user/settings.lua', {})
+
 -- Quit vim
 cmd('Q', 'q', {})
 cmd('Q', 'q!', {bang = true})

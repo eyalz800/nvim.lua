@@ -4,8 +4,9 @@ local user = require 'user'
 local cmd = require 'vim.cmd'.silent
 
 local enabled = true
+local settings = user.settings.lsp_config.coc or {}
 
-v.g.coc_global_extensions = user.settings.lsp_config.coc_plugins
+v.g.coc_global_extensions = settings.plugins or {}
 
 local check_back_space = function()
     local col = v.fn.col('.') - 1
@@ -52,7 +53,7 @@ m.tab = function()
     if v.fn['coc#pum#visible']() ~= 0 then
         return v.fn['coc#pum#next'](1)
     end
-    if check_back_space() then
+    if not settings.tab_trigger or check_back_space() then
         return "<tab>"
     end
     return v.fn['coc#refresh']()

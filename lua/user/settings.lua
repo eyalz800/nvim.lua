@@ -14,12 +14,18 @@ m.colorscheme = v.fn.system('if [ -e ~/.vim/.color ] ; then cat ~/.vim/.color ; 
 m.colorscheme_settings = { tokyonight={style='storm'} }
 m.powerline = true
 m.lsp = 'coc'
-m.lsp_config = {coc_plugins={'coc-clangd',
-                             'coc-pyright',
-                             'coc-vimlsp',
-                             'coc-lua',
-                             'coc-snippets',
-                             'coc-spell-checker'}}
+m.lsp_config = {
+    coc = {
+        tab_trigger = true,
+        plugins = {
+            'coc-clangd',
+            'coc-pyright',
+            'coc-vimlsp',
+            'coc-lua',
+            'coc-snippets',
+            'coc-spell-checker' }
+    }
+}
 m.finder = 'fzf'
 m.status_line = 'airline'
 m.file_explorer = 'nvim-tree'
