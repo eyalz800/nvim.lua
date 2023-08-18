@@ -9,9 +9,9 @@ local getreg = v.fn.getreg
 local tty = nil
 
 local osc_encode = function(text)
-    local encoded_text = string.gsub(text, '\\', '\\\\')
-    encoded_text = string.gsub(encoded_text, "'", "'\\\\''")
-    return system("echo -n '" .. encoded_text .. "' | base64 | tr -d '\\n'")
+    local encoded_text = string.gsub(text, [=[\]=], [=[\\]=])
+    encoded_text = string.gsub(encoded_text, "'", [=['\'']=])
+    return system("echo -n '" .. encoded_text .. [=[' | base64 | tr -d '\n']=])
 end
 
 local ptty_osc_copy = function()
@@ -20,29 +20,29 @@ local ptty_osc_copy = function()
     end
 
     if v.env.TMUX then
-        system('echo -en "\\x1bPtmux;\\x1b\\x1b]52;;' .. osc_encode(getreg('@', 1)) .. '\\x1b\\x1b\\\\\\x1b\\" > ' .. tty)
+        system([=[echo -en "\x1bPtmux;\x1b\x1b]52;;]=] .. osc_encode(getreg('@', 1)) .. [=[\x1b\x1b\\\\\x1b\\" > ]=] .. tty)
     else
-        system('echo -en "\\x1b]52;;' .. osc_encode(getreg('@', 1)) .. '\\x1b\\" > ' .. tty)
+        system([=[echo -en "\x1b]52;;]=] .. osc_encode(getreg('@', 1)) .. [=[\x1b\\" > ]=] .. tty)
     end
 end
 
 local osc_copy = function()
     if v.env.TMUX then
-        system('echo -en "\\x1bPtmux;\\x1b\\x1b]52;;' .. osc_encode(getreg('@', 1)) .. '\\x1b\\x1b\\\\\\x1b\\" > ' .. '/dev/tty')
+        system([=[echo -en "\x1bPtmux;\x1b\x1b]52;;]=] .. osc_encode(getreg('@', 1)) .. [=[\x1b\x1b\\\\\x1b\\" > /dev/tty]=])
     else
-        system('echo -en "\\x1b]52;;' .. osc_encode(getreg('@', 1)) .. '\\x1b\\" > ' .. '/dev/tty')
+        system([=[echo -en "\x1b]52;;]=] .. osc_encode(getreg('@', 1)) .. [=[\x1b\\" > /dev/tty]=])
     end
 end
 
 if user.settings.osc_copy then
     if os ~= "Darwin" then
         m.copy = function()
-            feed_keys '""y'
+            feed_keys('""y', 'x')
             ptty_osc_copy()
         end
 
         m.cut = function()
-            feed_keys '""d'
+            feed_keys('""d', 'x')
             ptty_osc_copy()
         end
 
@@ -56,12 +56,12 @@ if user.settings.osc_copy then
         end
     else
         m.copy = function()
-            feed_keys '"*y'
+            feed_keys('"*y', 'x')
             osc_copy()
         end
 
         m.cut = function()
-            feed_keys '"*d'
+            feed_keys('"*d', 'x')
             osc_copy()
         end
 
