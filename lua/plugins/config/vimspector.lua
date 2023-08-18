@@ -1,50 +1,73 @@
 local m = {}
 local v = require 'vim'
+local file_readable = require 'vim.file_readable'.file_readable
+local cmd = require 'vim.cmd'.silent
+
+m.launch_settings = function()
+    v.fn.Init_lua_vimspector_debug_launch_settings()
+end
+
+m.launch = function()
+    if not file_readable('.vimspector.json') then
+        v.fn.Init_lua_vimspector_debug_launch_settings()
+    end
+
+    if not file_readable('.vimspector.json') then
+        return
+    end
+
+    v.fn['vimspector#Launch']()
+end
+
+m.continue = '<plug>VimspectorContinue'
+m.restart = '<plug>VimspectorRestart'
+m.pause = '<plug>VimspectorPause'
+m.stop = '<plug>VimspectorStop'
+m.breakpoint = '<plug>VimspectorToggleBreakpoint'
+m.breakpoint_cond = '<plug>VimspectorToggleConditionalBreakpoint'
+m.breakpoint_function = '<plug>VimspectorAddFunctionBreakpoint'
+m.clear_breakpoints = v.fn['vimspector#ClearBreakpoints']
+m.step_over = '<plug>VimspectorStepOver'
+m.step_into = '<plug>VimspectorStepInto'
+m.step_out = '<plug>VimspectorStepOut'
+m.run_to_cursor = '<plug>VimspectorRunToCursor'
+m.disassemble = '<plug>VimspectorDisassemble'
+m.eval_window = '<plug>VimspectorBalloonEval'
+m.reset = v.fn['vimspector#Reset']
 
 v.cmd [=[
 
-nnoremap <silent> <leader>dl :call ZVimspectorDebugLaunchSettings()<CR>
-nnoremap <silent> <leader>dd :if !filereadable('.vimspector.json') \| call ZVimspectorDebugLaunchSettings() \| endif \| call vimspector#Launch()<CR>
-nmap <leader>dc <plug>VimspectorContinue
-nmap <F5> <plug>VimspectorContinue
-nmap <leader>dr <plug>VimspectorRestart
-if !has('nvim')
-    nmap <S-F5> <plug>VimspectorRestart
-else
-    nmap <F17> <plug>VimspectorRestart
-endif
-nmap <leader>dp <plug>VimspectorPause
-nmap <F6> <plug>VimspectorPause
-nmap <leader>ds <plug>VimspectorStop
-if !has('nvim')
-    nmap <S-F6> <plug>VimspectorStop
-else
-    nmap <F18> <plug>VimspectorStop
-endif
-nmap <leader>db <plug>VimspectorToggleBreakpoint
-nmap <F9> <plug>VimspectorToggleBreakpoint
-nmap <leader><leader>db <plug>VimspectorToggleConditionalBreakpoint
-if !has('nvim')
-    nmap <S-F9> <plug>VimspectorToggleConditionalBreakpoint
-else
-    nmap <F21> <plug>VimspectorToggleConditionalBreakpoint
-endif
-nmap <leader>df <plug>VimspectorAddFunctionBreakpoint
-nmap <leader><F9> <plug>VimspectorAddFunctionBreakpoint
-nnoremap <silent> <leader>dB :call vimspector#ClearBreakpoints()<CR>
-nnoremap <silent> <leader><leader><F9> :call vimspector#ClearBreakpoints()<CR>
-nmap <leader>dn <plug>VimspectorStepOver
-nnoremap <silent> <F10> :exec "normal \<plug>VimspectorStepOver"<CR>
-nmap <leader>di <plug>VimspectorStepInto
-nnoremap <silent> <S-F10> :exec "normal \<plug>VimspectorStepInto"<CR>
-nnoremap <silent> <F11> :exec "normal \<plug>VimspectorStepInto"<CR>
-nmap <leader>do <plug>VimspectorStepOut
-if !has('nvim')
-    nmap <S-F11> <plug>VimspectorStepOut
-else
-    nmap <F23> <plug>VimspectorStepOut
-endif
-nnoremap <silent> <leader>dq :VimspectorReset<CR>
+" nnoremap <silent> <leader>dl :call Init_lua_vimspector_debug_launch_settings()<cr>
+" nnoremap <silent> <leader>dd :if !filereadable('.vimspector.json') \| call Init_lua_vimspector_debug_launch_settings() \| endif \| call vimspector#Launch()<cr>
+" nmap <leader>dc <plug>VimspectorContinue
+" nmap <F5> <plug>VimspectorContinue
+" nmap <leader>dr <plug>VimspectorRestart
+" nmap <S-F5> <plug>VimspectorRestart
+" nmap <F17> <plug>VimspectorRestart
+" nmap <leader>dp <plug>VimspectorPause
+" nmap <F6> <plug>VimspectorPause
+" nmap <leader>ds <plug>VimspectorStop
+" nmap <S-F6> <plug>VimspectorStop
+" nmap <F18> <plug>VimspectorStop
+" nmap <leader>db <plug>VimspectorToggleBreakpoint
+" nmap <F9> <plug>VimspectorToggleBreakpoint
+" nmap <leader><leader>db <plug>VimspectorToggleConditionalBreakpoint
+" nmap <S-F9> <plug>VimspectorToggleConditionalBreakpoint
+" nmap <F21> <plug>VimspectorToggleConditionalBreakpoint
+" nmap <leader>df <plug>VimspectorAddFunctionBreakpoint
+" nmap <leader><F9> <plug>VimspectorAddFunctionBreakpoint
+" nnoremap <silent> <leader>dB :call vimspector#ClearBreakpoints()<cr>
+" nnoremap <silent> <leader><leader><F9> :call vimspector#ClearBreakpoints()<cr>
+" nmap <leader>dn <plug>VimspectorStepOver
+" nnoremap <silent> <F10> :exec "normal \<plug>VimspectorStepOver"<cr>
+" nmap <leader>di <plug>VimspectorStepInto
+" nnoremap <silent> <S-F10> :exec "normal \<plug>VimspectorStepInto"<cr>
+" nnoremap <silent> <F11> :exec "normal \<plug>VimspectorStepInto"<cr>
+" nmap <leader>do <plug>VimspectorStepOut
+" nmap <S-F11> <plug>VimspectorStepOut
+" nmap <F23> <plug>VimspectorStepOut
+" nnoremap <silent> <leader>dq :VimspectorReset<cr>
+
 let g:vimspector_install_gadgets = ['debugpy', 'CodeLLDB']
 let g:vimspector_sign_priority = {
   \    'vimspectorBP':         300,
@@ -60,35 +83,35 @@ sign define vimspectorBPDisabled    text= texthl=LineNr
 sign define vimspectorPC            text= texthl=String linehl=CursorLine
 sign define vimspectorPCBP          text= texthl=String linehl=CursorLine
 let s:disable_codelldb_default = filereadable(expand('~/.vim/.disable_codelldb_default'))
-augroup ZVimspectorCustomMappings
+augroup init.lua.vimspector.custom_mappings
     autocmd!
-    autocmd FileType VimspectorPrompt call ZVimspectorInitializePrompt()
-    autocmd User VimspectorUICreated call ZVimspectorSetupUi()
+    autocmd FileType VimspectorPrompt call Init_lua_vimspector_initialize_prompt()
+    autocmd User VimspectorUICreated call Init_lua_vimspector_setup_ui()
 augroup end
-function! ZVimspectorSetupUi()
+function! Init_lua_vimspector_setup_ui()
     call win_gotoid(g:vimspector_session_windows.output)
     set ft=asm
     call win_gotoid(g:vimspector_session_windows.code)
 endfunction
-function! ZVimspectorInitializePrompt()
+function! Init_lua_vimspector_initialize_prompt()
     nnoremap <silent> <buffer> x i-exec<space>
     if !exists('b:vimspector_command_history')
-        call ZVimspectorInitializeCommandHistoryMaps()
+        call Init_lua_vimspector_initialize_command_history_maps()
         let b:vimspector_command_history = []
         let b:vimspector_command_history_pos = 0
     endif
 endfunction
-function! ZVimspectorInitializeCommandHistoryMaps()
-    inoremap <silent> <buffer> <CR> <C-o>:call ZVimspectorCommandHistoryAdd()<CR>
-    inoremap <silent> <buffer> <Up> <C-o>:call ZVimspectorCommandHistoryUp()<CR>
-    inoremap <silent> <buffer> <Down> <C-o>:call ZVimspectorCommandHistoryDown()<CR>
+function! Init_lua_vimspector_initialize_command_history_maps()
+    inoremap <silent> <buffer> <cr> <C-o>:call Init_lua_vimspector_command_history_add()<cr>
+    inoremap <silent> <buffer> <Up> <C-o>:call Init_lua_vimspector_command_history_up()<cr>
+    inoremap <silent> <buffer> <Down> <C-o>:call Init_lua_vimspector_command_history_down()<cr>
 endfunction
-function! ZVimspectorCommandHistoryAdd()
+function! Init_lua_vimspector_command_history_add()
     call add(b:vimspector_command_history, getline('.'))
     let b:vimspector_command_history_pos = len(b:vimspector_command_history)
-    call feedkeys("\<CR>", 'tn')
+    call feedkeys("\<cr>", 'tn')
 endfunction
-function! ZVimspectorCommandHistoryUp()
+function! Init_lua_vimspector_command_history_up()
     if len(b:vimspector_command_history) == 0 || b:vimspector_command_history_pos == 0
         return
     endif
@@ -96,7 +119,7 @@ function! ZVimspectorCommandHistoryUp()
     call feedkeys("\<C-o>A", 'tn')
     let b:vimspector_command_history_pos = b:vimspector_command_history_pos - 1
 endfunction
-function! ZVimspectorCommandHistoryDown()
+function! Init_lua_vimspector_command_history_down()
     if b:vimspector_command_history_pos == len(b:vimspector_command_history)
         return
     endif
@@ -104,11 +127,11 @@ function! ZVimspectorCommandHistoryDown()
     call feedkeys("\<C-o>A", 'tn')
     let b:vimspector_command_history_pos = b:vimspector_command_history_pos + 1
 endfunction
-augroup ZVisualMultiVimspector
+augroup init.lua.vimspector.visual_multi_exit
     autocmd!
-    autocmd User visual_multi_exit if &ft == 'VimspectorPrompt' | call ZVimspectorInitializeCommandHistoryMaps() | endif
+    autocmd User visual_multi_exit if &ft == 'VimspectorPrompt' | call Init_lua_vimspector_initialize_command_history_maps() | endif
 augroup end
-function! ZVimspectorGenerateCpp()
+function! Init_lua_vimspector_generate_cpp()
     call inputsave()
     let target = input('Target (Executable/IP): ')
     call inputrestore()
@@ -242,7 +265,7 @@ function! ZVimspectorGenerateCpp()
         endif
     endif
 endfunction
-function! ZVimspectorGeneratePy()
+function! Init_lua_vimspector_generate_py()
     call inputsave()
     let program = input('Python main file: ')
     let python = 'python3'
@@ -267,7 +290,7 @@ function! ZVimspectorGeneratePy()
         \ echo '    }' >> .vimspector.json &&
         \ echo '}' >> .vimspector.json")
 endfunction
-function! ZVimspectorDebugLaunchSettings()
+function! Init_lua_vimspector_debug_launch_settings()
     let debug_type = &filetype
     if debug_type != 'cpp' && debug_type != 'c' && debug_type != 'python'
         call inputsave()
@@ -276,11 +299,11 @@ function! ZVimspectorDebugLaunchSettings()
     endif
 
     if debug_type == 'cpp' || debug_type == 'c'
-        call ZVimspectorGenerateCpp()
+        call Init_lua_vimspector_generate_cpp()
     elseif debug_type == 'python'
-        call ZVimspectorGeneratePy()
+        call Init_lua_vimspector_generate_py()
     else
-        normal :<ESC>
+        normal :<esc>
         echom 'Invalid debug type.'
     endif
 endfunction
