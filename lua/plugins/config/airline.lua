@@ -65,6 +65,8 @@ function! Init_lua_airline_theme_patch(palette)
         let a:palette.visual.airline_error = airline_error
         let a:palette.inactive.airline_warning = airline_warning
         let a:palette.inactive.airline_error = airline_error
+        let a:palette.terminal.airline_warning = airline_warning
+        let a:palette.terminal.airline_error = airline_error
     elseif g:airline_theme == 'github'
         let airline_insert_1 = ['#ffffff', '#ef5939', '0', '0']
         let airline_insert_2 = ['#dddddd', '#404040', '0', '0']
