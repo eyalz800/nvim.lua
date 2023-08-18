@@ -1,3 +1,4 @@
+local m = {}
 local v = require 'vim'
 local map = v.keymap.set
 local root_paths = require 'main.root_paths'
@@ -202,3 +203,6 @@ map('n', '<leader>zz', source_index.generate_cpp_and_opengrok, { silent=true }) 
 -- Additional mappings
 --   * 'gc' - :h commentary -- Comment selected code
 --   * 'ysw' / 'csXY' - :h surround - Surround / change surrounding
+
+require 'user.mappings'
+return m
