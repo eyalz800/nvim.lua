@@ -9,52 +9,51 @@ v.g.asynctasks_term_rows = 10
 v.g.asynctasks_term_cols = 80
 v.g.asynctasks_term_reuse = 1
 
+m.build_project = function()
+    v.fn.Init_lua_build_project()
+end
+
+m.run_project = function()
+    v.fn.Init_lua_run_project()
+end
+
+m.clean_project = function()
+    v.fn.Init_lua_clean_project()
+end
+
+m.build_config = function()
+    v.fn.Init_lua_build_config()
+end
+
 v.cmd [=[
 
-noremap <silent> <F7> :call ZBuildProject()<CR>
-inoremap <silent> <F7> <esc>:call ZBuildProject()<CR>
-if !has('nvim')
-    noremap <silent> <C-F5> :call ZRunProject()<CR>
-    inoremap <silent> <C-F5> <esc>:call ZRunProject()<CR>
-    noremap <silent> <S-F7> :call ZCleanProject()<CR>
-    inoremap <silent> <S-F7> <esc>:call ZCleanProject()<CR>
-    noremap <silent> <C-F7> :call ZBuildConfig()<CR>
-    inoremap <silent> <C-F7> <esc>:call ZBuildConfig()<CR>
-else
-    noremap <silent> <F29> :call ZRunProject()<CR>
-    inoremap <silent> <F29> <esc>:call ZRunProject()<CR>
-    noremap <silent> <F19> :call ZCleanProject()<CR>
-    inoremap <silent> <F19> <esc>:call ZCleanProject()<CR>
-    noremap <silent> <F31> :call ZBuildConfig()<CR>
-    inoremap <silent> <F31> <esc>:call ZBuildConfig()<CR>
-endif
-function! ZBuildProject()
+function! Init_lua_build_project()
     if empty(asynctasks#list(""))
-        call ZBuildConfig()
+        call Init_lua_build_config()
     endif
     below copen
     wincmd p
     AsyncTask project-build
 endfunction
-function! ZCleanProject()
+function! Init_lua_clean_project()
     if empty(asynctasks#list(""))
-        call ZBuildConfig()
+        call Init_lua_build_config()
     endif
     below copen
     wincmd p
     AsyncTask project-clean
 endfunction
-function! ZRunProject()
+function! Init_lua_run_project()
     if empty(asynctasks#list(""))
-        call ZBuildConfig()
+        call Init_lua_build_config()
     endif
     AsyncTask project-run
 endfunction
-function! ZBuildConfig()
+function! Init_lua_build_config()
     call inputsave()
     let command = input('Build command: ')
     call inputrestore()
-    normal :<ESC>
+    normal :<esc>
     if !empty(command)
         if filereadable(expand('~/.vim/.asynctasks_nosave'))
             call system("echo '[project-build]' > .tmptasks; echo -e 'command=" . command . "\n' >> .tmptasks")
@@ -66,7 +65,7 @@ function! ZBuildConfig()
     call inputsave()
     let command = input('Clean command: ')
     call inputrestore()
-    normal :<ESC>
+    normal :<esc>
     if !empty(command)
         call system("echo '[project-clean]' >> .tmptasks; echo -e 'command=" . command . "\n' >> .tmptasks")
     endif
@@ -74,7 +73,7 @@ function! ZBuildConfig()
     call inputsave()
     let command = input('Run command: ')
     call inputrestore()
-    normal :<ESC>
+    normal :<esc>
     if !empty(command)
         call system("echo '[project-run]' >> .tmptasks; echo -e 'command=" . command . "\n' >> .tmptasks; echo output=terminal >> .tmptasks")
     endif

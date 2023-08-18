@@ -18,6 +18,7 @@ local fold = require 'plugins.fold'
 local tabs = require 'plugins.tabs'
 local binary_view = require 'plugins.binary_view'
 local disasm_view = require 'plugins.disasm_view'
+local tasks = require 'plugins.tasks'
 
 map('n', 'Y', 'y$', { silent=true }) -- Yank to end of line
 map('v', '<tab>', '%', { silent=true }) -- Jump to matching pairs
@@ -118,6 +119,20 @@ map('n', '-', ':setlocal wrap! lbr!<cr>', { silent=true }) -- Wrap words
 map('n', 'cr', '<plug>(abolish-coerce-word)', { silent=true }) -- Change word case (s-snake_case, m-MixedCase, c-camelCase, u-UPPER, -/. dash/dot)
 map('n', '<leader>bv', binary_view.binary_view, { silent=true }) -- Binary view with xxd
 map('n', '<leader>dv', disasm_view.disasm_view, { silent=true }) -- Disassembly view
+map('n', '<f7>', tasks.build_project, { silent=true }) -- Build project
+map('i', '<f7>', tasks.build_project, { silent=true }) -- Build project
+map('n', '<c-f5>', tasks.run_project, { silent=true }) -- Run project
+map('i', '<c-f5>', tasks.run_project, { silent=true }) -- Run project
+map('n', '<f29>', tasks.run_project, { silent=true }) -- Run project
+map('i', '<f29>', tasks.run_project, { silent=true }) -- Run project
+map('n', '<s-f7>', tasks.clean_project, { silent=true }) -- Clean project
+map('i', '<s-f7>', tasks.clean_project, { silent=true }) -- Clean project
+map('n', '<f19>', tasks.clean_project, { silent=true }) -- Clean project
+map('i', '<f19>', tasks.clean_project, { silent=true }) -- Clean project
+map('n', '<c-f7>', tasks.run_project, { silent=true }) -- Run project
+map('i', '<c-f7>', tasks.run_project, { silent=true }) -- Run project
+map('n', '<f31>', tasks.build_config, { silent=true }) -- Build config
+map('i', '<f31>', tasks.build_config, { silent=true }) -- Build config
 
 -- Additional mappings
 --   * 'gc' - :h vim-commentary -- Comment selected code
