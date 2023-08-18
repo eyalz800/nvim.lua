@@ -26,6 +26,7 @@ m.lsp_config = {
             'coc-spell-checker' }
     }
 }
+m.install_options = { clang_version=16 }
 m.finder = 'fzf'
 m.status_line = 'airline'
 m.file_explorer = 'nvim-tree'
