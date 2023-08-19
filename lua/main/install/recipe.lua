@@ -72,7 +72,7 @@ return {
     {
         name = 'lazygit',
         command = [=[ LAZYGIT_VERSION=`curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" ]=] ..
-                  [=[ | '"tag_name": "v\K[^"]*'`; ]=] ..
+                  [=[ | grep -Po '"tag_name": "v\K[^"]*'`; ]=] ..
                   [=[ curl -fLo ~/.vim/tmp/lazygit-install/lazygit.tar.gz --create-dirs ]=] ..
                   [=[ "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"; ]=] ..
                   [=[ cd ~/.vim/tmp/lazygit-install; ]=] ..
