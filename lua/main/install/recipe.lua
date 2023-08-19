@@ -221,6 +221,11 @@ return {
         os = 'Linux',
     },
     {
+        name = 'vim-color',
+        command = 'echo tokyonight > ~/.vim/.color',
+        cond = not file_readable(expand '~/.vim/.color')
+    },
+    {
         name = 'success',
         command = 'echo Installation complete!'
     },
