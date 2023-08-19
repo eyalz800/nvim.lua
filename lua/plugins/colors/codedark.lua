@@ -1,12 +1,12 @@
 local m = {}
 local v = require 'vim'
-local exec_detach = require 'lib.exec_detach'.exec_detach
+local cmd = require 'vim.cmd'.silent
 local user = require 'user'
 
 m.configure = function()
     if v.o.background == 'light' then
         v.opt.background = 'dark'
-        exec_detach('color codedark')
+        v.schedule(function() cmd 'color codedark' end)
         return false
     end
 
