@@ -48,14 +48,6 @@ m.configure = function()
         v.cmd [=[
             highlight clear CocUnusedHighlight
             highlight link CocUnusedHighlight DiagnosticUnderlineWarn
-            highlight clear CocErrorFloat
-            highlight link CocErrorFloat None
-            highlight clear CocWarningFloat
-            highlight link CocWarningFloat None
-            highlight clear CocInfoFloat
-            highlight link CocInfoFloat None
-            highlight def link FgCocErrorFloatBgCocFloating None
-            highlight def link FgCocWarningFloatBgCocFloating None
         ]=]
     end
 
