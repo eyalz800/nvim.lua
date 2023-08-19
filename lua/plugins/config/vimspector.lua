@@ -1,7 +1,6 @@
 local m = {}
 local v = require 'vim'
 local file_readable = require 'vim.file_readable'.file_readable
-local cmd = require 'vim.cmd'.silent
 
 m.launch_settings = function()
     v.fn.Init_lua_vimspector_debug_launch_settings()
