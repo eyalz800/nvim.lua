@@ -279,7 +279,7 @@ return {
             '        "sfml",\n' ..
             '        "stdm",\n' ..
             '        "stoi",\n' ..
-            '        "winblend"\n' ..
+            '        "winblend",\n' ..
             '        "vformat"\n' ..
             '    ]\n' ..
             '}\' > ' .. stdpath('config') .. '/coc-settings.json',
