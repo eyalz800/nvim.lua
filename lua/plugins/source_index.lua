@@ -1,7 +1,7 @@
 local m = {}
 local v = require 'vim'
 
-local async_cmd = require 'builtins.async_cmd'.async_cmd
+local async_cmd = require 'plugins.async_cmd'.async_cmd
 local sed = require 'lib.os_bin'.sed
 local expand = v.fn.expand
 local input = v.fn.input

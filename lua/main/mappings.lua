@@ -1,10 +1,8 @@
 local m = {}
 local v = require 'vim'
-local map = v.keymap.set
 local root_paths = require 'main.root_paths'
 local cmd = require 'vim.cmd'.silent
-local source_index = require 'builtins.source_index'
-local expand = v.fn.expand
+local source_index = require 'plugins.source_index'
 local lsp = require 'plugins.lsp'
 local finder = require 'plugins.finder'
 local whitespace = require 'plugins.whitespace'
@@ -22,6 +20,8 @@ local disasm_view = require 'plugins.disasm_view'
 local tasks = require 'plugins.tasks'
 local debugger = require 'plugins.debugger'
 local search = require 'plugins.search'
+local map = v.keymap.set
+local expand = v.fn.expand
 
 map('n', 'Y', 'y$', { silent=true }) -- Yank to end of line
 map('v', '<tab>', '%', { silent=true }) -- Jump to matching pairs
