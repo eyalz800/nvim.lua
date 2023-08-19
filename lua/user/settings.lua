@@ -27,7 +27,7 @@ m.lsp_config = {
     }
 }
 m.install_options = { clang_version=16 }
-m.finder = 'fzf'
+m.finder = 'fzf-lua'
 m.status_line = 'airline'
 m.file_explorer = 'nvim-tree'
 m.file_explorer_config = {nvim_tree={window_picker=false}}

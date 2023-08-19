@@ -205,7 +205,7 @@ m.configure = function()
         highlight SignColumn guifg=#bbbbbb guibg=NONE
     ]=]
 
-    if user.settings.finder == 'fzf' then
+    if user.settings.finder == 'fzf' or user.settings.finder == 'fzf-lua' then
         v.g.fzf_colors = {
             fg = { 'fg', 'Normal' },
             bg = { 'bg', 'Normal' },

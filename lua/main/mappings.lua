@@ -95,7 +95,6 @@ map('n', '<c-]>', finder.find_file_hidden, { silent=true }) -- Find file include
 map('n', '<leader><c-]>', finder.find_file_list_hidden, { silent=true }) -- Find file include hidden files with cache while populating files list for later use.
 map('n', '<leader><leader><c-]>', finder.find_file_list_hidden_invalidate, { silent=true }) -- Similar to previous but invalidate cache.
 map('n', '<c-g>', finder.find_in_files, { silent=true }) -- Find in all files including name
-map('n', 'ca', finder.find_folder, { silent=true }) -- Find a folder
 map('n', '<c-\\>', finder.find_content_in_files, { silent=true }) -- Find in all files contents
 map('n', '//', finder.find_line, { silent=true }) -- Find a line in current file
 map('n', '<c-j>', '<plug>(VM-Add-Cursor-Down)', { silent=true }) -- Add cursor down

@@ -1,7 +1,9 @@
 local m = {}
 local user = require 'user'
 
-if user.settings.finder == 'fzf' then
+if user.settings.finder == 'fzf-lua' then
+    return require 'plugins.config.fzf-lua'
+elseif user.settings.finder == 'fzf' then
     return require 'plugins.config.fzf'
 else
     m.find_file = function() end

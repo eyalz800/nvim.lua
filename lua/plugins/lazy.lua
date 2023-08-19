@@ -58,17 +58,26 @@ local plugins = {
     },
     {
         'ludovicchabant/vim-gutentags',
-        cond=user.settings.enable_gutentags == true,
+        cond= user.settings.enable_gutentags == true,
     },
     {
         "junegunn/fzf",
         dir="~/.fzf",
         build="./install --all",
-        cond = user.settings.finder == 'fzf',
     },
     {
         'junegunn/fzf.vim',
-        cond = user.settings.finder == 'fzf',
+        -- This is needed due to source index still using vim fzf apis.
+        -- cond = user.settings.finder == 'fzf',
+    },
+    {
+        "ibhagwan/fzf-lua",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            local fzf_lua_conf = require 'plugins.config.fzf-lua'
+            require 'fzf-lua'.setup(fzf_lua_conf.prepare())
+        end,
+        cond = user.settings.finder == 'fzf-lua',
     },
     'skywind3000/asyncrun.vim',
     'justinmk/vim-sneak',

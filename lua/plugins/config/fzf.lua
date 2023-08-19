@@ -47,10 +47,6 @@ m.find_content_in_files = function()
     v.fn.Init_lua_rg(false)
 end
 
-m.find_folder = function()
-    v.fn.Init_lua_find_folder()
-end
-
 v.cmd([=[
 
 set rtp+=~/.fzf
@@ -91,22 +87,6 @@ function! Init_lua_rg(fullscreen)
                 \ . ' | xargs rg --column --line-number --no-heading --color=always --smart-case || true'
     let spec = {'options': ['--phony', '--bind', 'change:reload:'.reload_command]}
     call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
-
-function! Init_lua_find_folder()
-    function! s:sink(result)
-        exec 'cd ' . system('dirname ' . a:result)
-    endfunction
-
-    let fzf_color_option = split(fzf#wrap()['options'])[0]
-    let preview = "ls -la --color \\$(dirname {})"
-    let opts = { 'options': fzf_color_option . ' --prompt "> "' .
-                \ ' --preview="' . preview . '"' .
-                \ ' --bind "ctrl-/:toggle-preview"',
-                \ 'sink': function('s:sink')}
-
-    let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --no-ignore-vcs'
-    call fzf#run(fzf#wrap('', opts, 0))
 endfunction
 
 ]=])
