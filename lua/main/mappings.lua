@@ -20,6 +20,7 @@ local disasm_view = require 'plugins.disasm_view'
 local tasks = require 'plugins.tasks'
 local debugger = require 'plugins.debugger'
 local search = require 'plugins.search'
+local indent_guides = require 'plugins.indent_guides'
 local map = v.keymap.set
 local expand = v.fn.expand
 
@@ -52,10 +53,8 @@ map('n', '<c-w>b', ':below 10new +terminal<cr>a', { silent=true }) -- New termin
 map('n', '<c-w>t', ':vert rightb new +terminal<cr>a', { silent=true }) -- New terminal on right side
 map('t', '<c-w>w', '<c-\\><c-n>:q<cr>', { silent=true }) -- Close terminal
 map('t', '<c-w>n', '<c-\\><c-n>', { silent=true }) -- Terminal normal mode
-map('n', '<c-l>', '20zl', { silent=true }) -- Side scrolling
-map('v', '<c-l>', '20zl', { silent=true }) -- Side scrolling
-map('n', '<c-h>', '20zh', { silent=true }) -- Side scrolling
-map('v', '<c-h>', '20zh', { silent=true }) -- Side scrolling
+map({'n', 'x'}, '<c-l>', indent_guides.refresh_trigger('20zl', { expr=false }), { silent=true }) -- Side scrolling
+map({'n', 'x'}, '<c-h>', indent_guides.refresh_trigger('20zh', { expr=false }), { silent=true }) -- Side scrolling
 map('n', '<leader>rw', whitespace.strip, { silent=true }) -- Strip whitespace
 map('n', '<leader>tw', whitespace.toggle, { silent=true }) -- Toggle whitespace
 map('n', 'cro', root_paths.switch_to_root, { silent=true }) -- Switch to root
@@ -201,6 +200,8 @@ map('n', '<leader>zk', source_index.generate_opengrok, { silent=true }) -- Gener
 map('n', '<leader>zz', source_index.generate_cpp_and_opengrok, { silent=true }) -- Generate cpp and opengrok
 map('t', '<scrollwheelleft>', '<nop>', { silent=true }) -- Disable terminal horizontal scrolling
 map('t', '<scrollwheelright>', '<nop>', { silent=true }) -- Disable terminal horizontal scrolling
+map({'n', 'x'}, '<scrollwheelleft>', indent_guides.refresh_trigger('<scrollwheelleft>', { expr=true }), { silent=true, expr=true }) -- Refresh indent guides on horizontal scroll
+map({'n', 'x'}, '<scrollwheelright>', indent_guides.refresh_trigger('<scrollwheelright>', { expr=true }), { silent=true, expr=true }) -- Refresh indent guides on horizontal scroll
 
 -- Additional mappings
 --   * 'gc' - :h commentary -- Comment selected code
