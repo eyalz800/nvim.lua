@@ -216,7 +216,7 @@ return {
                   [=[ echo 'startuppopupversion: 1' > ~/.config/jesseduffield/lazygit/config.yml ; ]=] ..
                   [=[ echo 'gui: ' >> ~/.config/jesseduffield/lazygit/config.yml ; ]=] ..
                   [=[ echo '  theme: ' >> ~/.config/jesseduffield/lazygit/config.yml ; ]=] ..
-                  [=[ echo '    selectedLineBgColor: ' >> ~~/.config/jesseduffield/lazygit/config.yml ; ]=] ..
+                  [=[ echo '    selectedLineBgColor: ' >> ~/.config/jesseduffield/lazygit/config.yml ; ]=] ..
                   [=[ echo '      - reverse' >> ~/.config/jesseduffield/lazygit/config.yml ]=],
         os = 'Linux',
     },
