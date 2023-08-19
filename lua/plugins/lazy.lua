@@ -45,7 +45,10 @@ local plugins = {
         opts = require 'plugins.config.symbols-outline'.options,
         cond = user.settings.code_explorer == 'symbols-outline',
     },
-    { 'ludovicchabant/vim-gutentags', cond=(user.settings.enable_gutentags == true) },
+    {
+        'ludovicchabant/vim-gutentags',
+        cond=user.settings.enable_gutentags == true,
+    },
     {
         "junegunn/fzf",
         dir="~/.fzf",
