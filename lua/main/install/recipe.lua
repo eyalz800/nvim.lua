@@ -82,7 +82,7 @@ return {
     },
     {
         name = 'node-install',
-        command = 'curl -sL https://deb.nodesource.com/setup_lts.x | bash -',
+        command = 'curl -sL https://deb.nodesource.com/setup_lts.x | sudo bash -',
         os = 'Linux',
     },
     {
