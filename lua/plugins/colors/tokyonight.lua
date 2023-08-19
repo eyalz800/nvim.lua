@@ -52,22 +52,21 @@ m.configure = function()
     end
 
     if user.settings.finder == 'fzf' then
-        v.cmd [=[
-            let g:fzf_colors =
-            \ { 'fg':      ['fg', 'Normal'],
-              \ 'bg':      ['bg', 'Normal'],
-              \ 'hl':      ['fg', 'SpecialKey'],
-              \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-              \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-              \ 'hl+':     ['fg', 'String'],
-              \ 'info':    ['fg', 'Comment'],
-              \ 'border':  ['fg', 'Ignore'],
-              \ 'prompt':  ['fg', 'StorageClass'],
-              \ 'pointer': ['fg', 'Error'],
-              \ 'marker':  ['fg', 'Keyword'],
-              \ 'spinner': ['fg', 'Label'],
-              \ 'header':  ['fg', 'Comment'] }
-        ]=]
+        v.g.fzf_colors = {
+            fg = { 'fg', 'Normal' },
+            bg = { 'bg', 'Normal' },
+            hl = { 'fg', 'SpecialKey' },
+            ['fg+'] = { 'fg', 'CursorLine', 'CursorColumn', 'Normal' },
+            ['bg+'] = { 'bg', 'CursorLine', 'CursorColumn' },
+            ['hl+'] = { 'fg', 'String' },
+            info = { 'fg', 'Comment' },
+            border = { 'fg', 'Ignore' },
+            prompt = { 'fg', 'StorageClass' },
+            pointer = { 'fg', 'Error' },
+            marker = { 'fg', 'Keyword' },
+            spinner = { 'fg', 'Label' },
+            header = { 'fg', 'Comment' }
+        }
     end
 
     if user.settings.status_line == 'airline' then
