@@ -1,6 +1,6 @@
 local m = {}
 
-m.main = function()
+local startup = function()
     require 'builtins.nested'
     require 'main.root_paths'
     require 'main.path'
@@ -14,9 +14,9 @@ m.main = function()
 end
 
 if not require 'main.install'.installed() then
-    require 'main.install'.install(m)
+    require 'main.install'.install({ on_finish = startup })
 else
-    m.main()
+    startup()
 end
 
 return m

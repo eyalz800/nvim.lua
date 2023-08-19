@@ -15,7 +15,7 @@ m.installed = function()
     return file_readable(m.install_status_dir .. '/success')
 end
 
-m.install = function(main)
+m.install = function(options)
     if m.installed() then
         return
     end
@@ -78,7 +78,9 @@ m.install = function(main)
         end
 
         cmd 'enew'
-        main.main()
+        if options.on_finish then
+            options.on_finish()
+        end
     end)
 
     schedule(v.schedule_wrap(function()
