@@ -5,8 +5,7 @@ local file_readable = require 'vim.file_readable'.file_readable
 
 local expand = v.fn.expand
 
-v.env.PATH = expand('~/.vim/bin/lf') ..
-    ':' .. expand('~/.vim/bin/llvm') ..
+v.env.PATH = ':' .. expand('~/.vim/bin/llvm') ..
     ':' .. expand('~/.vim/bin/python') ..
     ':' .. v.env.PATH
 
