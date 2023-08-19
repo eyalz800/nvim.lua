@@ -2,7 +2,7 @@ local m = {}
 local v = require 'vim'
 
 m.create = function()
-    local lazypath = v.fn.stdpath("data") .. "/lazy/lazy.nvim"
+    local lazypath = v.fn.stdpath('data') .. '/lazy/lazy.nvim'
     if not v.loop.fs_stat(lazypath) then
         local echo = require 'vim.echo'.echo
         echo ' Installing plugin manager...'

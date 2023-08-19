@@ -2,13 +2,14 @@ local m = {}
 local v = require 'vim'
 local echo = require 'vim.echo'.echo
 local cmd = v.api.nvim_create_user_command
+local config_path = v.fn.stdpath('config')
 
 -- Settings
-cmd('Settings', 'n ~/.config/nvim/lua/user/settings.lua', {})
+cmd('Settings', 'n ' .. config_path .. '/lua/user/settings.lua', {})
 
 -- Mappings
-cmd('Mappings', 'n ~/.config/nvim/lua/main/mappings.lua', {})
-cmd('UserMappings', 'n ~/.config/nvim/lua/user/mappings.lua', {})
+cmd('Mappings', 'n ' .. config_path .. '/lua/main/mappings.lua', {})
+cmd('UserMappings', 'n ' .. config_path .. '/lua/user/mappings.lua', {})
 
 -- Quit vim
 cmd('Q', 'q', {})

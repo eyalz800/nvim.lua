@@ -5,11 +5,11 @@ local cmd = require 'vim.cmd'.silent
 local term = require 'builtins.term'
 local os = require 'lib.os'.os
 local echo = require 'vim.echo'.echo
-local expand = v.fn.expand
 local system = v.fn.system
 local schedule = v.schedule
+local stdpath = v.fn.stdpath
 
-m.install_status_dir = expand '~/.config/nvim/install'
+m.install_status_dir = stdpath('config') .. '/install'
 
 m.installed = function()
     return file_readable(m.install_status_dir .. '/success')
@@ -92,7 +92,7 @@ m.install = function(options)
 end
 
 m.forget = function()
-    system 'rm -rf ~/.config/nvim/install'
+    system('rm -rf ' .. m.install_status_dir)
 end
 
 return m
