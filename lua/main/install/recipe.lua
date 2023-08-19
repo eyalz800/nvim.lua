@@ -239,6 +239,21 @@ return {
             '    "coc.preferences.formatOnType": false,\n' ..
             '    "suggest.noselect": true,\n' ..
             '    "notification.disabledProgressSources": ["*"],\n' ..
+            '    "suggest.pumFloatConfig": {\n' ..
+            '        "border": true,\n' ..
+            '        "rounded": true,\n' ..
+            '        "winblend": true\n' ..
+            '    },\n' ..
+            '    "hover.floatConfig": {\n' ..
+            '        "border": true,\n' ..
+            '        "rounded": true,\n' ..
+            '        "winblend": true\n' ..
+            '    },\n' ..
+            '    "diagnostic.floatConfig": {\n' ..
+            '        "border": true,\n' ..
+            '        "rounded": true,\n' ..
+            '        "winblend": true\n' ..
+            '    },\n' ..
             '    "diagnostic.enableSign": true,\n' ..
             '    "diagnostic.enableHighlightLineNumber": true,\n' ..
             '    "diagnostic.infoSign": "",\n' ..
@@ -247,6 +262,8 @@ return {
             '    "diagnostic.errorSign": "",\n' ..
             '    "diagnostic.virtualText": true,\n' ..
             '    "diagnostic.virtualTextCurrentLineOnly": false,\n' ..
+            '    "diagnostic.virtualTextFormat": "%message ",\n' ..
+            '    "diagnostic.virtualTextPrefix": " ",\n' ..
             '    "cSpell.userWords": [\n' ..
             '        "GTEST",\n' ..
             '        "autodetect",\n' ..
@@ -257,6 +274,7 @@ return {
             '        "sfml",\n' ..
             '        "stdm",\n' ..
             '        "stoi",\n' ..
+            '        "winblend"\n' ..
             '        "vformat"\n' ..
             '    ]\n' ..
             '}\' > ' .. stdpath('config') .. '/coc-settings.json',
