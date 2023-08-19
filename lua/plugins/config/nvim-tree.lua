@@ -5,6 +5,8 @@ local user = require 'user'
 local file_readable = require 'vim.file_readable'.file_readable
 local expand = v.fn.expand
 
+local width = 30
+
 m.open = function(options)
     options = options or { focus=true }
     if file_readable(expand('%')) then
@@ -17,7 +19,10 @@ m.open = function(options)
     end
 end
 
-m.open_current_directory = function() end
+m.open_current_directory = function()
+    cmd 'NvimTreeRefresh'
+    cmd('NvimTreeResize ' .. width)
+end
 
 m.is_open = function()
     return require 'nvim-tree.view'.is_visible()
@@ -44,7 +49,7 @@ m.options = {
     view = {
         adaptive_size = false,
         side = "left",
-        width = 30,
+        width = width,
         preserve_window_proportions = true,
     },
     git = {
