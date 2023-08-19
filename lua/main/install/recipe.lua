@@ -239,6 +239,11 @@ return {
             '    "coc.preferences.formatOnType": false,\n' ..
             '    "suggest.noselect": true,\n' ..
             '    "notification.disabledProgressSources": ["*"],\n' ..
+            '    "suggest.floatConfig": {\n' ..
+            '        "border": true,\n' ..
+            '        "rounded": true,\n' ..
+            '        "winblend": true\n' ..
+            '    },\n' ..
             '    "suggest.pumFloatConfig": {\n' ..
             '        "border": true,\n' ..
             '        "rounded": true,\n' ..
