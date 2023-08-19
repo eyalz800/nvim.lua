@@ -245,6 +245,8 @@ return {
             '    "diagnostic.hintSign": "󰌶",\n' ..
             '    "diagnostic.warningSign": "",\n' ..
             '    "diagnostic.errorSign": "",\n' ..
+            '    "diagnostic.virtualText": true,\n' ..
+            '    "diagnostic.virtualTextCurrentLineOnly": false,\n' ..
             '    "cSpell.userWords": [\n' ..
             '        "GTEST",\n' ..
             '        "autodetect",\n' ..
