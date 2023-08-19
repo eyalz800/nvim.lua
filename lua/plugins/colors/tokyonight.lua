@@ -46,8 +46,12 @@ m.configure = function()
 
     if user.settings.lsp == 'coc' then
         v.cmd [=[
-            highlight clear CocUnusedHighlight
-            highlight link CocUnusedHighlight DiagnosticUnderlineWarn
+            hi clear CocUnusedHighlight
+            hi link CocUnusedHighlight DiagnosticUnderlineWarn
+            hi DiagnosticVirtualTextError guibg=NONE
+            hi DiagnosticVirtualTextWarn guibg=NONE
+            hi DiagnosticVirtualTextHint guibg=NONE
+            hi DiagnosticVirtualTextInfo guibg=NONE
         ]=]
     end
 
