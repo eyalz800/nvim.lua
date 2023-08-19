@@ -17,13 +17,13 @@ return {
         os = 'Linux',
     },
     {
-        name = 'install-brew',
+        name = 'brew-install',
         command = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" ; brew update',
         cond = not executable('brew'),
         os = 'Darwin',
     },
     {
-        name = 'install-git',
+        name = 'git-install',
         command = 'brew install git || true',
         os = 'Darwin'
     },
@@ -40,32 +40,32 @@ return {
         os = 'Darwin',
     },
     {
-        name = 'link-python3',
+        name = 'python3-link',
         command = 'brew link python3',
         os = 'Darwin',
     },
     {
-        name = 'tap-openjdk',
+        name = 'openjdk-tap',
         command = 'brew tap AdoptOpenJDK/openjdk',
         os = 'Darwin',
     },
     {
-        name = 'install-openjdk',
+        name = 'openjdk-install',
         command = 'brew install --cask adoptopenjdk/openjdk/adoptopenjdk8',
         os = 'Darwin',
     },
     {
-        name = 'download-get-pip',
+        name = 'get-pip-download',
         command = 'curl https://bootstrap.pypa.io/get-pip.py -o ~/.vim/tmp/get-pip.py',
         os = 'Darwin',
     },
     {
-        name = 'run-get-pip',
+        name = 'get-pip-run',
         command = 'python3 ~/.vim/tmp/get-pip.py',
         os = 'Darwin',
     },
     {
-        name = 'path-clangd',
+        name = 'clangd-path',
         command = 'echo export PATH=\\$PATH:/usr/local/opt/llvm/bin >> ~/.bashrc',
         condition = not executable('clangd') and executable('/usr/local/opt/llvm/bin/clangd'),
         os = 'Darwin',
@@ -101,7 +101,7 @@ return {
         os = 'Linux',
     },
     {
-        name = 'link-clangd',
+        name = 'clangd-link',
         command = 'rm -rf ~/.vim/bin/llvm/clangd && ln -s $(command -v clangd-' .. options.clang_version .. ') ~/.vim/bin/llvm/clangd',
         os = 'Linux',
     },
@@ -145,28 +145,28 @@ return {
         cond = not file_readable(expand '~/.vim/bin/ctags/Makefile')
     },
     {
-        name = 'download-exuberant-ctags',
+        name = 'exuberant-ctags-download',
         command = 'curl -fLo ~/.vim/bin/ctags-exuberant/ctags.tar.gz --create-dirs ' ..
                   'http://prdownloads.sourceforge.net/ctags/ctags-5.8.tar.gz',
         cond = not executable 'ctags-exuberant' ,
     },
     {
-        name = 'unpack-exuberant-ctags',
+        name = 'exuberant-ctags-unpack',
         command = 'cd ~/.vim/bin/ctags-exuberant; tar -xzvf ctags.tar.gz',
         cond = not executable 'ctags-exuberant' ,
     },
     {
-        name = 'cleanup-exuberant-ctags',
+        name = 'exuberant-ctags-cleanup',
         command = 'rm -rf ~/.vim/bin/ctags-exuberant/ctags',
         cond = not executable 'ctags-exuberant' ,
     },
     {
-        name = 'rename-exuberant-ctags',
+        name = 'exuberant-ctags-rename',
         command = 'mv ~/.vim/bin/ctags-exuberant/ctags-5.8 ~/.vim/bin/ctags-exuberant/ctags',
         cond = not executable 'ctags-exuberant' ,
     },
     {
-        name = 'make-exuberant-ctags',
+        name = 'exuberant-ctags-make',
         command = [=[ cd ~/.vim/bin/ctags-exuberant/ctags; ]=] .. sed ..
                   [=[ -i 's@# define __unused__  _.*@#define __unused__@g' ./general.h; ./configure; make -j ]=],
         cond = not executable 'ctags-exuberant',
@@ -202,7 +202,7 @@ return {
         os = 'Linux',
     },
     {
-        name = 'configure-lazygit',
+        name = 'lazygit-configure',
         command = [=[ mkdir -p ~/Library/Application\ Support/jesseduffield/lazygit ; ]=] ..
                   [=[ echo 'startuppopupversion: 1' > ~/Library/Application\ Support/jesseduffield/lazygit/config.yml ; ]=] ..
                   [=[ echo 'gui: ' >> ~/Library/Application\ Support/jesseduffield/lazygit/config.yml ; ]=] ..
@@ -212,7 +212,7 @@ return {
         os = 'Darwin',
     },
     {
-        name = 'configure-lazygit',
+        name = 'lazygit-configure',
         command = [=[ mkdir -p ~/.config/jesseduffield/lazygit ; ]=] ..
                   [=[ echo 'startuppopupversion: 1' > ~/.config/jesseduffield/lazygit/config.yml ; ]=] ..
                   [=[ echo 'gui: ' >> ~/.config/jesseduffield/lazygit/config.yml ; ]=] ..
