@@ -3,6 +3,7 @@ local sed = require 'lib.os_bin'.sed
 local executable = require 'vim.executable'.executable
 local file_readable = require 'vim.file_readable'.file_readable
 local options = require 'user'.settings.install_options
+local stdpath = v.fn.stdpath
 local expand = v.fn.expand
 local system = v.fn.system
 return {
@@ -228,6 +229,35 @@ return {
     {
         name = 'pynvim',
         command = 'python3 -m pip install --user --upgrade pynvim',
+    },
+    {
+        name = 'coc-settings',
+        command = 'rm -rf ' .. stdpath('config') .. '/coc-settings.json ; ' .. "echo -e '" ..
+            '{\n' ..
+            '    "clangd.semanticHighlighting": false,\n' ..
+            '    "inlayHint.enable": false,\n' ..
+            '    "coc.preferences.formatOnType": false,\n' ..
+            '    "suggest.noselect": true,\n' ..
+            '    "notification.disabledProgressSources": ["*"],\n' ..
+            '    "diagnostic.enableSign": true,\n' ..
+            '    "diagnostic.enableHighlightLineNumber": true,\n' ..
+            '    "diagnostic.infoSign": "",\n' ..
+            '    "diagnostic.hintSign": "󰌶",\n' ..
+            '    "diagnostic.warningSign": "",\n' ..
+            '    "diagnostic.errorSign": "",\n' ..
+            '    "cSpell.userWords": [\n' ..
+            '        "GTEST",\n' ..
+            '        "autodetect",\n' ..
+            '        "noninteractive",\n' ..
+            '        "println",\n' ..
+            '        "pugi",\n' ..
+            '        "pugixml",\n' ..
+            '        "sfml",\n' ..
+            '        "stdm",\n' ..
+            '        "stoi",\n' ..
+            '        "vformat"\n' ..
+            '    ]\n' ..
+            '}\' > ' .. stdpath('config') .. '/coc-settings.json',
     },
     {
         name = 'success',
