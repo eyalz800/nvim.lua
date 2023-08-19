@@ -1,7 +1,7 @@
 local m = {}
 
 require 'plugins.config'
-require 'plugins.lazy'
+require 'plugins.lazy'.activate()
 
 return m
 

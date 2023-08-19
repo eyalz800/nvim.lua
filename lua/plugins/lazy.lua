@@ -1,9 +1,25 @@
 local m = {}
+local v = require 'vim'
 local user = require 'user'
 
 ---@diagnostic disable: different-requires
 
-local plugins = {
+m.activate = function()
+    require 'lazy'.setup(m.plugins)
+end
+
+m.on_update = function()
+    local lazy_locks = v.fn.stdpath('config') .. '/lazy-locks'
+    local lazy_lock = v.fn.stdpath('config') .. '/lazy-lock.json'
+    local snapshot = lazy_locks .. os.date('/%Y-%m-%dT%H:%M:%S.json')
+    if not require 'vim.file_readable'.file_readable(lazy_lock) then
+        return
+    end
+    v.fn.mkdir(lazy_locks, 'p')
+    v.loop.fs_copyfile(lazy_lock, snapshot)
+end
+
+m.plugins = {
     {
         'eyalz800/tokyonight.nvim',
         lazy = false,
@@ -120,7 +136,5 @@ local plugins = {
     'qpkorr/vim-bufkill',
     'cormacrelf/vim-colors-github',
 }
-
-require('lazy').setup(plugins)
 
 return m
