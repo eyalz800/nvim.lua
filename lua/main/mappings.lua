@@ -199,6 +199,8 @@ map('n', '<leader>zH', source_index.generate_all_files_list, { silent=true }) --
 map('n', '<leader>zf', source_index.generate_flags, { silent=true }) -- Generate flags
 map('n', '<leader>zk', source_index.generate_opengrok, { silent=true }) -- Generate opengrok
 map('n', '<leader>zz', source_index.generate_cpp_and_opengrok, { silent=true }) -- Generate cpp and opengrok
+map('t', '<scrollwheelleft>', '<nop>', { silent=true }) -- Disable terminal horizontal scrolling
+map('t', '<scrollwheelright>', '<nop>', { silent=true }) -- Disable terminal horizontal scrolling
 
 -- Additional mappings
 --   * 'gc' - :h commentary -- Comment selected code
