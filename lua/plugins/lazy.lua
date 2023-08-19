@@ -1,6 +1,8 @@
 local m = {}
 local user = require 'user'
 
+---@diagnostic disable: different-requires
+
 local plugins = {
     {
         'eyalz800/tokyonight.nvim',
@@ -9,7 +11,10 @@ local plugins = {
     },
     {
         'lewis6991/gitsigns.nvim',
-        opts = require 'plugins.config.gitsigns'.options,
+        config = function()
+            local options = require 'plugins.config.gitsigns'.options
+            require 'gitsigns'.setup(options)
+        end,
         cond = user.settings.git_plugin == 'gitsigns'
     },
     {
@@ -21,8 +26,11 @@ local plugins = {
     'vim-airline/vim-airline',
     {
         'nvim-tree/nvim-tree.lua',
+        config = function()
+            local options = require 'plugins.config.nvim-tree'.options
+            require 'nvim-tree'.setup(options)
+        end,
         cond = user.settings.file_explorer == 'nvim-tree',
-        opts = require 'plugins.config.nvim-tree'.options,
         dependencies = {
             'nvim-tree/nvim-web-devicons',
         },
@@ -42,7 +50,10 @@ local plugins = {
     },
     {
         'simrat39/symbols-outline.nvim',
-        opts = require 'plugins.config.symbols-outline'.options,
+        config = function()
+            local options = require 'plugins.config.symbols-outline'.options
+            require 'symbols-outline'.setup(options)
+        end,
         cond = user.settings.code_explorer == 'symbols-outline',
     },
     {
