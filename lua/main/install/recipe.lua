@@ -226,6 +226,10 @@ return {
         cond = not file_readable(expand '~/.vim/.color')
     },
     {
+        name = 'pynvim',
+        command = 'python3 -m pip install --user --upgrade pynvim',
+    },
+    {
         name = 'success',
         command = 'echo Installation complete!'
     },
