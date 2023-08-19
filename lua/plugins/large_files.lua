@@ -16,9 +16,6 @@ end
 
 m.on_buf_read_pre = function()
     if get_current_file_size() >= 2 * 1024 * 1024 then
-        cmd 'profile start /tmp/log'
-        cmd 'profile func *'
-        cmd 'profile file *'
         v.opt_local.cursorline = false
         v.opt_local.swapfile = false
         v.opt_local.bufhidden = 'unload'
