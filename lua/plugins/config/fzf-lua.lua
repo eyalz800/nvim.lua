@@ -214,7 +214,7 @@ m.prepare = function()
         ['--ansi']        = '',
         ['--info']        = 'inline',
         ['--height']      = '100%',
-        ['--layout']      = 'reverse',
+        ['--layout']      = 'default',
         ['--border']      = 'none',
       },
       -- Only used when fzf_bin = "fzf-tmux", by default opens as a
