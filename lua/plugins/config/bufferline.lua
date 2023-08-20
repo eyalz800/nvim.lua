@@ -20,10 +20,10 @@ m.config = function()
     bufferline = require 'bufferline'
     return {
         options = {
-            mode = "buffers", -- set to "tabs" to only show tabpages instead
-            style_preset = bufferline.style_preset.default, -- or bufferline.style_preset.minimal,
-            close_command = "Bclose %d",       -- can be a string | function, | false see "Mouse actions"
-            right_mouse_command = 'vert sbuffer %d', -- can be a string | function | false, see "Mouse actions"
+            mode = "buffers",
+            style_preset = bufferline.style_preset.default,
+            close_command = "Bclose %d",
+            right_mouse_command = 'vert sbuffer %d',
             indicator = { style = 'none' },
             buffer_close_icon = '󰅖',
             modified_icon = '●',
@@ -31,12 +31,14 @@ m.config = function()
             left_trunc_marker = '',
             right_trunc_marker = '',
             max_name_length = 18,
-            max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
-            truncate_names = true, -- whether or not tab names should be truncated
-            tab_size = 18,
+            max_prefix_length = 15,
+            truncate_names = true,
+            tab_size = 10,
             diagnostics_update_in_insert = false,
+            separator_style = 'slant',
+            sort_by = 'insert_after_current',
             custom_filter = function(bufnr)
-                local exclude_ft = { "qf", "fugitive", "git", "dirvish", 'nerdtree', 'tagbar', 'NvimTree' }
+                local exclude_ft = { 'qf', 'fugitive', 'git', 'dirvish', 'nerdtree', 'tagbar', 'NvimTree' }
                 local cur_ft = v.bo[bufnr].filetype
                 local should_show = not v.tbl_contains(exclude_ft, cur_ft)
                 should_show = should_show and v.fn.bufname(bufnr) ~= ''
@@ -44,20 +46,18 @@ m.config = function()
             end,
             offsets = {
                 {
-                    filetype = "NvimTree",
-                    text = "File Explorer",
-                    text_align = "left",
+                    filetype = 'NvimTree',
+                    text = 'File Explorer',
+                    text_align = 'left',
                     separator = true,
                 },
                 {
-                    filetype = "nerdtree",
-                    text = "File Explorer",
-                    text_align = "left",
+                    filetype = 'nerdtree',
+                    text = 'File Explorer',
+                    text_align = 'left',
                     separator = true,
                 },
             },
-            separator_style = "slant",
-            sort_by = 'insert_after_current',
         },
     }
 end
