@@ -43,20 +43,30 @@ m.find_file_list_hidden_invalidate = function()
     })
 end
 
+m.find_line = function()
+    fzf_lua.blines({
+        fzf_colors = v.g.fzf_colors,
+    })
+end
+
 m.find_in_files = function()
+    fzf_lua.grep_project({
+        cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+        fzf_colors = v.g.fzf_colors,
+    })
+end
+
+m.find_in_files_precise = function()
     fzf_lua.live_grep({
         cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
         fzf_colors = v.g.fzf_colors,
     })
 end
 
-m.find_line = function()
-    fzf_lua.blines()
-end
-
-m.find_content_in_files = function()
+m.find_in_files_precise_native = function()
     fzf_lua.live_grep_native({
-        cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e'
+        cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+        fzf_colors = v.g.fzf_colors,
     })
 end
 

@@ -35,15 +35,19 @@ m.find_file_list_hidden_invalidate = function()
     cmd 'Files'
 end
 
-m.find_in_files = function()
-    cmd 'Rg'
-end
-
 m.find_line = function()
     v.fn.Init_lua_lines_preview()
 end
 
-m.find_content_in_files = function()
+m.find_in_files = function()
+    cmd 'Rg'
+end
+
+m.find_in_files_precise = function()
+    v.fn.Init_lua_rg(false)
+end
+
+m.find_in_files_precise_native = function()
     v.fn.Init_lua_rg(false)
 end
 
