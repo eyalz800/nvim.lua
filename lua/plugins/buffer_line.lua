@@ -12,7 +12,7 @@ else
     m.next_buffer = function() end
     m.prev_buffer = function() end
     m.delete_buffer = function()
-        cmd 'BD'
+        cmd 'Bclose'
     end
 end
 

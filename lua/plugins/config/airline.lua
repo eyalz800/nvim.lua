@@ -28,7 +28,7 @@ m.next_buffer = '<plug>AirlineSelectNextTab'
 m.prev_buffer = '<plug>AirlineSelectPrevTab'
 
 m.delete_buffer = function()
-    cmd 'BD'
+    cmd 'Bclose'
     v.fn['airline#extensions#tabline#buflist#clean']()
 end
 
