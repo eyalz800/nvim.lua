@@ -52,6 +52,7 @@ opt.fillchars = 'vert:│' -- Bar for vertical split
 opt.swapfile = user.settings.swap_files -- Swap files support
 opt.signcolumn = 'yes:2' -- Sign column width
 opt.mouse = 'a' -- Mouse
+opt.mousemoveevent = true -- Mouse movement
 
 if exists('+shellslash') then -- Use forward slash for directories
     opt.shellslash = true
