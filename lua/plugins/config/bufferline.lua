@@ -22,9 +22,7 @@ m.config = function()
         options = {
             mode = "buffers", -- set to "tabs" to only show tabpages instead
             style_preset = bufferline.style_preset.default, -- or bufferline.style_preset.minimal,
-            -- numbers = "none" | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
             close_command = "Bclose %d",       -- can be a string | function, | false see "Mouse actions"
-            -- right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
             right_mouse_command = 'vert sbuffer %d', -- can be a string | function | false, see "Mouse actions"
             indicator = { style = 'none' },
             buffer_close_icon = '󰅖',
