@@ -1,5 +1,8 @@
 local m = {}
+local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
+
+v.g.better_whitespace_filetypes_blacklist = {'diff', 'gitcommit', 'git', 'unite', 'qf', 'help', 'VimspectorPrompt', 'xxd'}
 
 m.enable = function()
     cmd 'EnableWhitespace'
