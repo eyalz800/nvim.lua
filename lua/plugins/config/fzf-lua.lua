@@ -2,31 +2,45 @@ local m = {}
 local fzf_lua = nil
 
 m.find_file = function()
-    fzf_lua.files()
+    fzf_lua.files({
+        cmd = 'rg --files --color=never --hidden -g "!.git"',
+    })
 end
 
 m.find_file_hidden = function()
-    fzf_lua.files()
+    fzf_lua.files({
+        cmd = 'rg --files --no-ignore-vcs --color=never --hidden',
+    })
 end
 
 m.find_file_list = function()
-    fzf_lua.files()
+    fzf_lua.files({
+        cmd = 'if [ -f .files ]; then cat .files; else rg --files --color=never --hidden -g "!.git" | tee .files; fi;',
+    })
 end
 
 m.find_file_list_invalidate = function()
-    fzf_lua.files()
+    fzf_lua.files({
+        cmd = 'rm -rf .files; rg --files --color=never --hidden -g "!.git" | tee .files; fi;',
+    })
 end
 
 m.find_file_list_hidden = function()
-    fzf_lua.files()
+    fzf_lua.files({
+        cmd = 'if [ -f .files ]; then cat .files; else rg --files --no-ignore-vcs --hidden | tee .files; fi;',
+    })
 end
 
 m.find_file_list_hidden_invalidate = function()
-    fzf_lua.files()
+    fzf_lua.files({
+        cmd = 'rm -rf .files; rg --files --color=never --no-ignore-vcs --hidden | tee .files; fi;',
+    })
 end
 
 m.find_in_files = function()
-    fzf_lua.live_grep()
+    fzf_lua.live_grep({
+        cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e'
+    })
 end
 
 m.find_line = function()
@@ -34,7 +48,9 @@ m.find_line = function()
 end
 
 m.find_content_in_files = function()
-    fzf_lua.live_grep_native()
+    fzf_lua.live_grep_native({
+        cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e'
+    })
 end
 
 m.prepare = function()
@@ -300,7 +316,7 @@ m.prepare = function()
         actions = {
           -- inherits from 'actions.files', here we can override
           -- or set bind to 'false' to disable a default action
-          ["default"]     = actions.file_edit,
+          -- ["default"]     = actions.file_edit,
           -- custom actions are available too
           ["ctrl-y"]      = function(selected) print(selected[1]) end,
         }
@@ -396,13 +412,13 @@ m.prepare = function()
           },
         },
         icons = {
-          ["M"]           = { icon = "M", color = "yellow" },
-          ["D"]           = { icon = "D", color = "red" },
-          ["A"]           = { icon = "A", color = "green" },
-          ["R"]           = { icon = "R", color = "yellow" },
+          ["M"]           = { icon = "", color = "yellow" },
+          ["D"]           = { icon = "", color = "red" },
+          ["A"]           = { icon = "󰄬", color = "green" },
+          ["R"]           = { icon = "", color = "yellow" },
           ["C"]           = { icon = "C", color = "yellow" },
           ["T"]           = { icon = "T", color = "magenta" },
-          ["?"]           = { icon = "?", color = "magenta" },
+          ["?"]           = { icon = "", color = "magenta" },
           -- override git icons?
           -- ["M"]        = { icon = "★", color = "red" },
           -- ["D"]        = { icon = "✗", color = "red" },
