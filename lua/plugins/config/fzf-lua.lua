@@ -1,27 +1,32 @@
 local m = {}
+local v = require 'vim'
 local fzf_lua = nil
 
 m.find_file = function()
     fzf_lua.files({
         cmd = 'rg --files --color=never --hidden -g "!.git"',
+        fzf_colors = v.g.fzf_colors,
     })
 end
 
 m.find_file_hidden = function()
     fzf_lua.files({
         cmd = 'rg --files --no-ignore-vcs --color=never --hidden',
+        fzf_colors = v.g.fzf_colors,
     })
 end
 
 m.find_file_list = function()
     fzf_lua.files({
         cmd = 'if [ -f .files ]; then cat .files; else rg --files --color=never --hidden -g "!.git" | tee .files; fi;',
+        fzf_colors = v.g.fzf_colors,
     })
 end
 
 m.find_file_list_invalidate = function()
     fzf_lua.files({
         cmd = 'rm -rf .files; rg --files --color=never --hidden -g "!.git" | tee .files; fi;',
+        fzf_colors = v.g.fzf_colors,
     })
 end
 
@@ -34,12 +39,14 @@ end
 m.find_file_list_hidden_invalidate = function()
     fzf_lua.files({
         cmd = 'rm -rf .files; rg --files --color=never --no-ignore-vcs --hidden | tee .files; fi;',
+        fzf_colors = v.g.fzf_colors,
     })
 end
 
 m.find_in_files = function()
     fzf_lua.live_grep({
-        cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e'
+        cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+        fzf_colors = v.g.fzf_colors,
     })
 end
 
