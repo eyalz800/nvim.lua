@@ -57,7 +57,7 @@ m.find_in_files = function()
 end
 
 m.find_in_files_precise = function()
-    fzf_lua.live_grep({
+    fzf_lua.live_grep_glob({
         cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
         fzf_colors = v.g.fzf_colors,
     })
