@@ -40,8 +40,6 @@ m.plugins = {
         'airblade/vim-gitgutter',
         cond = user.settings.git_plugin == 'gitgutter',
     },
-    'puremourning/vimspector',
-    'tpope/vim-fugitive',
     {
         'vim-airline/vim-airline',
         cond = user.settings.line == 'airline'
@@ -127,44 +125,82 @@ m.plugins = {
         branch='release',
         cond = user.settings.lsp == 'coc'
     },
+
+    'voldikss/vim-floaterm',
+    'tpope/vim-fugitive',
     'skywind3000/asyncrun.vim',
-    'justinmk/vim-sneak',
-    'easymotion/vim-easymotion',
     'mg979/vim-visual-multi',
-    { 'erig0/cscope_dynamic', build=require('lib.os_bin').sed .. " -i 's/call s:runShellCommand/call system/g' ./plugin/cscope_dynamic.vim" },
     'octol/vim-cpp-enhanced-highlight',
     'tmsvg/pear-tree',
-    'mbbill/undotree',
     'tpope/vim-commentary',
     'tomasiser/vim-code-dark',
     'ntpeters/vim-better-whitespace',
     'troydm/zoomwintab.vim',
-    'jreybert/vimagit',
-    'tpope/vim-obsession',
     'haya14busa/incsearch.vim',
     'haya14busa/incsearch-fuzzy.vim',
-    { 'rrethy/vim-hexokinase', build='make hexokinase' },
     'christoomey/vim-tmux-navigator',
     'tpope/vim-surround',
     'j5shi/CommandlineComplete.vim',
     'kshenoy/vim-signature',
-    'vim-python/python-syntax',
     'scrooloose/vim-slumlord',
-    'aklt/plantuml-syntax',
     'skywind3000/asynctasks.vim',
     'yaronkh/vim-winmanip',
     'rbgrouleff/bclose.vim',
     'lukas-reineke/indent-blankline.nvim',
-    'metakirby5/codi.vim',
     'tpope/vim-abolish',
     'wellle/targets.vim',
-    'eyalz800/vim-ultisnips',
-    'voldikss/vim-floaterm',
-    'will133/vim-dirdiff',
-    'junegunn/goyo.vim',
     'yazgoo/yank-history',
-    'qpkorr/vim-bufkill',
     'cormacrelf/vim-colors-github',
+    'vim-python/python-syntax',
+
+    {
+        'jreybert/vimagit',
+        cmd = {'Magit', 'MagitOnly'}
+    },
+    {
+        'mbbill/undotree',
+        event = 'VeryLazy',
+    },
+    {
+        'easymotion/vim-easymotion',
+        event = 'VeryLazy',
+    },
+    {
+        'aklt/plantuml-syntax',
+        event = 'VeryLazy',
+    },
+    {
+        'eyalz800/vim-ultisnips',
+        event = 'VeryLazy',
+    },
+    {
+        'justinmk/vim-sneak',
+        event = 'VeryLazy',
+    },
+    {
+        'tpope/vim-obsession',
+        cmd = 'Obsession',
+    },
+    {
+        'rrethy/vim-hexokinase', build='make hexokinase'
+    },
+    {
+        'puremourning/vimspector',
+        event = 'VeryLazy'
+    },
+    {
+        'will133/vim-dirdiff',
+        cmd = 'DirDiff',
+    },
+    {
+        'erig0/cscope_dynamic',
+        build=require('lib.os_bin').sed .. " -i 's/call s:runShellCommand/call system/g' ./plugin/cscope_dynamic.vim",
+        event = 'VeryLazy',
+    },
+    {
+        'metakirby5/codi.vim',
+        cmd = 'Codi',
+    },
 }
 
 return m
