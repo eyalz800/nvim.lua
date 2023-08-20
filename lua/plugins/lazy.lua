@@ -12,7 +12,7 @@ m.on_update = function()
     local lazy_locks = v.fn.stdpath('config') .. '/lazy-locks'
     local lazy_lock = v.fn.stdpath('config') .. '/lazy-lock.json'
     local snapshot = lazy_locks .. os.date('/%Y-%m-%dT%H:%M:%S.json')
-    if not require 'vim.file_readable'.file_readable(lazy_lock) then
+    if not v.loop.fs_stat(lazy_lock) then
         return
     end
     v.fn.mkdir(lazy_locks, 'p')
