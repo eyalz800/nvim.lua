@@ -62,7 +62,7 @@ autocmd('BufWritePre', {group=augroup('init.lua.binary_view.w.pr', {}), callback
 autocmd('BufWritePost', {group=augroup('init.lua.binary_view.w.po', {}), callback=binary_view.on_buf_write_post})
 autocmd('BufReadPost', {pattern=doc_reader.doc_patterns, group=augroup('init.lua.doc_reader', {}), callback=doc_reader.on_buf_read_post})
 autocmd('User', {pattern='LazyUpdatePre', group=augroup('init.lua.lazy_update_pre', {}), callback=require 'plugins.lazy'.on_update})
-
+autocmd('filetype', {pattern='qf', group=augroup('init.lua.quickfix', {}), callback=require 'plugins.quickfix'.on_open})
 
 m.cmds = { autocmd, augroup }
 return m
