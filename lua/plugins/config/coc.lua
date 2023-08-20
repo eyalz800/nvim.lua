@@ -24,9 +24,9 @@ m.show_documentation = function()
     end
 end
 
-m.goto_definition = function() v.fn.Init_lua_lsp_jump('Definition') end
+m.goto_definition = '<plug>(coc-definition)'
 m.goto_definition_sync = function() v.fn.CocAction('jumpDefinition') end
-m.show_references = function() v.fn.Init_lua_lsp_jump('References') end
+m.show_references = '<plug>(coc-references)'
 m.code_action = '<plug>(coc-codeaction-cursor)'
 m.quick_fix = '<plug>(coc-fix-current)'
 m.type_definition = '<plug>(coc-type-definition)'
@@ -70,21 +70,5 @@ end
 
 v.g.tagfunc = 'CocTagFunc'
 v.g.coc_fzf_preview = 'right:50%'
-
-v.cmd [=[
-
-function! Init_lua_lsp_jump(jump_type)
-    if a:jump_type == 'definition'
-        let jump_type = 'Definition'
-    else
-        let jump_type = a:jump_type
-    endif
-    if CocActionAsync('jump' . jump_type)
-        return 1
-    endif
-    return 0
-endfunction
-
-]=]
 
 return m
