@@ -68,7 +68,7 @@ m.configure = function()
         }
     end
 
-    if user.settings.status_line == 'airline' then
+    if user.settings.line == 'airline' then
         v.g.airline_theme_patch_func = 'Init_lua_github_airline_theme_patch'
     end
 

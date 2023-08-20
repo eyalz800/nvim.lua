@@ -1,7 +1,7 @@
 local m = {}
 local user = require 'user'
 
-if user.settings.status_line == 'airline' then
+if user.settings.line == 'airline' then
     require 'plugins.config.airline'
 end
 

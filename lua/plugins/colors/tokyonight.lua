@@ -73,7 +73,7 @@ m.configure = function()
         }
     end
 
-    if user.settings.status_line == 'airline' then
+    if user.settings.line == 'airline' then
         v.cmd [=[
             function! Init_lua_tokyonight_airline_theme_patch(palette)
                 if g:airline_theme != 'tokyonight'

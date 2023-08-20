@@ -21,7 +21,7 @@ v.g['airline#extensions#tabline#fnamecollapse'] = 1
 v.g['airline#extensions#tabline#fnamemod'] = ':t'
 v.g['airline_powerline_fonts'] = user.settings.powerline
 
-m.next_tab = '<plug>AirlineSelectNextTab'
-m.prev_tab = '<plug>AirlineSelectPrevTab'
+m.next_buffer = '<plug>AirlineSelectNextTab'
+m.prev_buffer = '<plug>AirlineSelectPrevTab'
 
 return m

@@ -39,7 +39,18 @@ m.plugins = {
     },
     'puremourning/vimspector',
     'tpope/vim-fugitive',
-    'vim-airline/vim-airline',
+    {
+        'vim-airline/vim-airline',
+        cond = user.settings.line == 'airline'
+    },
+    {
+        'nvim-lualine/lualine.nvim',
+        config = function()
+            local options = require 'plugins.config.lualine'.options
+            require 'lualine'.setup(options)
+        end,
+        cond = user.settings.line == 'lualine'
+    },
     {
         'nvim-tree/nvim-tree.lua',
         config = function()
