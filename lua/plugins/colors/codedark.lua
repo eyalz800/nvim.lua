@@ -3,7 +3,7 @@ local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 local user = require 'user'
 
-m.configure = function()
+m.apply = function()
     if v.o.background == 'light' then
         v.opt.background = 'dark'
         v.schedule(function() cmd 'color codedark' end)

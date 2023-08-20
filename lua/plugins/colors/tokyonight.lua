@@ -3,7 +3,7 @@ local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 local user = require 'user'
 
-m.configure = function()
+m.apply = function()
     if v.o.background == 'light' then
         v.opt.background = 'dark'
         v.schedule(function() cmd 'color tokyonight' end)
@@ -105,6 +105,26 @@ m.configure = function()
     end
 
     return true
+end
+
+m.config = function()
+    return {
+        on_highlights = function(hi, color)
+            if user.settings.buffer_line == 'bufferline' then
+                local separator_inactive = '#1b1e2c'
+                local separator_visible = '#212436'
+
+                hi.BufferLineFill = { fg=color.border , bg=color.border }
+                hi.BufferLineOffsetSeparator = { fg=color.bg_dark, bg=color.bg_dark }
+
+                hi.BufferLineSeparator = { fg=color.border, bg=separator_inactive }
+                hi.BufferLineSeparatorVisible = { fg=color.border, bg=separator_visible}
+                hi.BufferLineSeparatorSelected = { fg=color.border, bg=color.bg }
+
+                hi.BufferLineTruncMarker = { fg=color.fg, bg=color.border }
+            end
+        end
+    }
 end
 
 return m

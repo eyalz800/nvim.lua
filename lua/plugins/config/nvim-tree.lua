@@ -9,7 +9,7 @@ local width = 30
 
 m.open = function(options)
     options = options or { focus=true }
-    if file_readable(expand('%')) then
+    if file_readable(expand '%') then
         cmd 'NvimTreeFindFile'
     else
         cmd 'NvimTreeOpen'

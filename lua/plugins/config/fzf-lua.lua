@@ -70,7 +70,7 @@ m.find_in_files_precise_native = function()
     })
 end
 
-m.prepare = function()
+m.config = function()
     fzf_lua = require 'fzf-lua'
     local actions = require 'fzf-lua.actions'
     return {
@@ -691,7 +691,7 @@ m.prepare = function()
             color_icons = true,
             git_icons   = false,
             async       = true,         -- async by default
-            silent      = true,         -- suppress "not found" 
+            silent      = true,         -- suppress "not found"
             separator   = "| ",         -- separator after provider prefix, `false` to disable
             includeDeclaration = true,  -- include current declaration in LSP context
             -- by default display all LSP locations

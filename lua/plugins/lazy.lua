@@ -4,7 +4,7 @@ local user = require 'user'
 
 ---@diagnostic disable: different-requires
 
-m.activate = function()
+m.start = function()
     require 'lazy'.setup(m.plugins)
 end
 
@@ -22,8 +22,11 @@ end
 m.plugins = {
     {
         'eyalz800/tokyonight.nvim',
-        lazy = false,
         priority = 1000,
+        config = function()
+            local tokyonight_color = require 'plugins.colors.tokyonight'
+            require 'tokyonight'.setup(tokyonight_color.config())
+        end,
     },
     {
         'lewis6991/gitsigns.nvim',
@@ -49,6 +52,7 @@ m.plugins = {
             local options = require 'plugins.config.lualine'.options
             require 'lualine'.setup(options)
         end,
+        dependencies = { "nvim-tree/nvim-web-devicons" },
         cond = user.settings.line == 'lualine'
     },
     {
@@ -58,18 +62,26 @@ m.plugins = {
             require 'nvim-tree'.setup(options)
         end,
         cond = user.settings.file_explorer == 'nvim-tree',
-        dependencies = {
-            'nvim-tree/nvim-web-devicons',
-        },
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
     },
     {
         'preservim/nerdtree',
-        cond = user.settings.file_explorer == 'nerdtree',
         dependencies = {
             'ryanoasis/vim-devicons',
             'tiagofumo/vim-nerdtree-syntax-highlight',
             'Xuyuanp/nerdtree-git-plugin'
         },
+        cond = user.settings.file_explorer == 'nerdtree',
+    },
+    {
+        'akinsho/bufferline.nvim',
+        event = 'UIEnter',
+        config = function()
+            local bufferline_conf = require 'plugins.config.bufferline'
+            require "bufferline".setup(bufferline_conf.config())
+        end,
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        cond = user.settings.buffer_line == 'bufferline',
     },
     {
         'majutsushi/tagbar',
@@ -94,7 +106,7 @@ m.plugins = {
     },
     {
         'junegunn/fzf.vim',
-        -- This is needed due to source index still using vim fzf apis.
+        -- This is needed due to source index and coc-fzf still using vim fzf apis.
         -- cond = user.settings.finder == 'fzf',
     },
     {
@@ -102,9 +114,18 @@ m.plugins = {
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             local fzf_lua_conf = require 'plugins.config.fzf-lua'
-            require 'fzf-lua'.setup(fzf_lua_conf.prepare())
+            require 'fzf-lua'.setup(fzf_lua_conf.config())
         end,
         cond = user.settings.finder == 'fzf-lua',
+    },
+    { 'neoclide/coc.nvim',
+        branch = 'release',
+        cond = user.settings.lsp == 'coc'
+    },
+    {
+        'antoinemadec/coc-fzf',
+        branch='release',
+        cond = user.settings.lsp == 'coc'
     },
     'skywind3000/asyncrun.vim',
     'justinmk/vim-sneak',
@@ -112,8 +133,6 @@ m.plugins = {
     'mg979/vim-visual-multi',
     { 'erig0/cscope_dynamic', build=require('lib.os_bin').sed .. " -i 's/call s:runShellCommand/call system/g' ./plugin/cscope_dynamic.vim" },
     'octol/vim-cpp-enhanced-highlight',
-    { 'neoclide/coc.nvim', branch='release', cond=(user.settings.lsp == 'coc') },
-    { 'antoinemadec/coc-fzf', branch='release', cond=(user.settings.lsp == 'coc') },
     'tmsvg/pear-tree',
     'mbbill/undotree',
     'tpope/vim-commentary',

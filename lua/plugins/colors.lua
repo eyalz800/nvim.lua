@@ -18,8 +18,8 @@ m.pre_switch_color = function() end
 
 m.post_switch_color = function()
     local success, colorscheme = pcall(require, 'plugins.colors.' .. v.g.colors_name)
-    if success and colorscheme ~= true and colorscheme.configure then
-        if not colorscheme.configure() or not file_readable(persistent_color_path) then
+    if success and colorscheme ~= true and colorscheme.apply then
+        if not colorscheme.apply() or not file_readable(persistent_color_path) then
             return
         end
 
