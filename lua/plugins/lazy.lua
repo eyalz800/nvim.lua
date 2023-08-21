@@ -145,7 +145,7 @@ m.plugins = {
     'scrooloose/vim-slumlord',
     'skywind3000/asynctasks.vim',
     'yaronkh/vim-winmanip',
-    'rbgrouleff/bclose.vim',
+    'famiu/bufdelete.nvim',
     'lukas-reineke/indent-blankline.nvim',
     'tpope/vim-abolish',
     'wellle/targets.vim',

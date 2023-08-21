@@ -2,6 +2,7 @@ local m = {}
 local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 local user = require 'user'
+local bufdelete = require 'bufdelete'.bufdelete
 
 local bufferline = nil
 
@@ -14,11 +15,7 @@ m.prev_buffer = function()
 end
 
 m.delete_buffer = function(id)
-    if id then
-        cmd('Bclose ' .. id)
-    else
-        cmd 'Bclose'
-    end
+    bufdelete(id or 0, true)
 end
 
 m.config = function()
@@ -40,7 +37,7 @@ m.config = function()
         options = {
             mode = "buffers",
             style_preset = bufferline.style_preset.default,
-            close_command = 'Bclose %d',
+            close_command = m.delete_buffer,
             right_mouse_command = 'vert sbuffer %d',
             indicator = { style = 'none' },
             buffer_close_icon = '󰅖',

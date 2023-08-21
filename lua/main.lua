@@ -5,11 +5,11 @@ local startup = function()
     require 'main.root_paths'
     require 'main.path'
     require 'main.basic'
+    require 'main.plugin_manager'.create()
+    require 'plugins'
     require 'main.mappings'
     require 'main.commands'
     require 'main.autocmd'
-    require 'main.plugin_manager'.create()
-    require 'plugins'
     require 'plugins.colors'.set()
 end
 

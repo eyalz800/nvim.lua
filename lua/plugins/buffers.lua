@@ -1,6 +1,6 @@
 local m = {}
 local user  = require 'user'
-local cmd = require 'vim.cmd'.silent
+local bufdelete = require 'bufdelete'.bufdelete
 
 local buffer_line = user.settings.buffer_line or user.settings.line
 
@@ -12,11 +12,7 @@ else
     m.next_buffer = function() end
     m.prev_buffer = function() end
     m.delete_buffer = function(id)
-        if id then
-            cmd('Bclose ' .. id)
-        else
-            cmd 'Bclose'
-        end
+        bufdelete(id or 0, true)
     end
 end
 
