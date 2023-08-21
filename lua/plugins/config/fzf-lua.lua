@@ -25,7 +25,7 @@ end
 
 m.find_file_list_invalidate = function()
     fzf_lua.files({
-        cmd = 'rm -rf .files; rg --files --color=never --hidden -g "!.git" | tee .files; fi;',
+        cmd = 'rm -rf .files; rg --files --color=never --hidden -g "!.git" | tee .files',
         fzf_colors = v.g.fzf_colors,
     })
 end
@@ -38,7 +38,7 @@ end
 
 m.find_file_list_hidden_invalidate = function()
     fzf_lua.files({
-        cmd = 'rm -rf .files; rg --files --color=never --no-ignore-vcs --hidden | tee .files; fi;',
+        cmd = 'rm -rf .files; rg --files --color=never --no-ignore-vcs --hidden | tee .files',
         fzf_colors = v.g.fzf_colors,
     })
 end
