@@ -40,7 +40,7 @@ m.config = function()
         options = {
             mode = "buffers",
             style_preset = bufferline.style_preset.default,
-            close_command = m.delete_buffer,
+            close_command = 'Bclose %d',
             right_mouse_command = 'vert sbuffer %d',
             indicator = { style = 'none' },
             buffer_close_icon = '󰅖',
