@@ -1,6 +1,7 @@
 local m = {}
 local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
+local user = require 'user'
 
 local bufferline = nil
 
@@ -18,6 +19,19 @@ end
 
 m.config = function()
     bufferline = require 'bufferline'
+
+    local offset_sep = { highlight = "Pmenu", attribute = "bg" }
+    if user.settings.file_explorer ~= 'nvim-tree' then
+        offset_sep = { highlight = "Normal", attribute = "bg" }
+    end
+    local line_bg = { highlight = "Normal", attribute = "bg" }
+    local selected_fg = { highlight = 'NormalSB', attribute = "fg" }
+    local selected_bg = { highlight = 'Pmenu', attribute = "bg" }
+    local visible_fg = { highlight = 'NonText', attribute = "fg" }
+    local visible_bg = { highlight = 'Pmenu', attribute = "bg" }
+    local fg = { highlight = 'NonText', attribute = "fg" }
+    local bg = { highlight = "CursorLine", attribute = "bg" }
+
     return {
         options = {
             mode = "buffers",
@@ -49,6 +63,7 @@ m.config = function()
                     filetype = 'NvimTree',
                     text = 'File Explorer',
                     text_align = 'left',
+                    highlight = 'NvimTreeNormal',
                     separator = true,
                 },
                 {
@@ -58,6 +73,65 @@ m.config = function()
                     separator = true,
                 },
             },
+        },
+        highlights = {
+            fill = { bg = line_bg },
+            offset_separator = { fg = offset_sep, bg = offset_sep},
+            separator = { fg = line_bg, bg = bg },
+            separator_visible = { fg = line_bg, bg = visible_bg },
+            separator_selected = { fg = line_bg, bg = selected_bg },
+            trunc_marker = { fg = fg, bg = line_bg },
+            background = { fg = fg, bg = bg },
+            buffer_visible = { fg = visible_fg, bg = visible_bg },
+            buffer_selected = { fg = selected_fg, bg = selected_bg },
+            duplicate = { fg = fg, bg = bg },
+            duplicate_visible = { fg = visible_fg, bg = visible_bg },
+            duplicate_selected = { fg = selected_fg, bg = selected_bg },
+            close_button = { fg = fg, bg = bg },
+            close_button_visible = { fg = visible_fg, bg = visible_bg },
+            close_button_selected = { fg = selected_fg, bg = selected_bg },
+            tab = { fg = fg, bg = bg },
+            tab_selected = { fg = selected_fg, bg = selected_bg },
+            tab_separator = { fg = line_bg, bg = bg },
+            tab_separator_selected = { fg = line_bg, bg = selected_bg },
+            tab_close = { fg = fg, bg = line_bg },
+            numbers = { fg = fg, bg = bg },
+            numbers_visible = { fg = visible_fg, bg = visible_bg },
+            numbers_selected = { fg = selected_fg, bg = selected_bg },
+
+            modified = { bg = bg },
+            modified_visible = { bg = visible_bg },
+            modified_selected = { bg = selected_bg },
+            pick = { bg = bg },
+            pick_visible = { bg = visible_bg },
+            pick_selected = { bg = selected_bg },
+            indicator_visible = { bg = visible_bg },
+            indicator_selected = { bg = selected_bg },
+
+            diagnostic = { bg = bg },
+            diagnostic_visible = { bg = visible_bg },
+            diagnostic_selected = { bg = selected_bg },
+            hint = { bg = bg },
+            hint_visible = { bg = visible_bg },
+            hint_selected = { bg = selected_bg },
+            info = { bg = bg },
+            info_visible = { bg = visible_bg },
+            info_selected = { bg = selected_bg },
+            info_diagnostic = { bg = bg },
+            info_diagnostic_visible = { bg = visible_bg },
+            info_diagnostic_selected = { bg = selected_bg },
+            warning = { bg = bg },
+            warning_visible = { bg = visible_bg },
+            warning_selected = { bg = selected_bg },
+            warning_diagnostic = { bg = bg },
+            warning_diagnostic_visible = { bg = visible_bg },
+            warning_diagnostic_selected = { bg = selected_bg },
+            error = { bg = bg },
+            error_visible = { bg = visible_bg },
+            error_selected = { bg = selected_bg },
+            error_diagnostic = { bg = bg },
+            error_diagnostic_visible = { bg = visible_bg },
+            error_diagnostic_selected = { bg = selected_bg },
         },
     }
 end
