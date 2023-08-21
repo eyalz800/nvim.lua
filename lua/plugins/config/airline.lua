@@ -27,8 +27,12 @@ v.g['airline_powerline_fonts'] = user.settings.powerline
 m.next_buffer = '<plug>AirlineSelectNextTab'
 m.prev_buffer = '<plug>AirlineSelectPrevTab'
 
-m.delete_buffer = function()
-    cmd 'Bclose'
+m.delete_buffer = function(id)
+    if id then
+        cmd('Bclose ' .. id)
+    else
+        cmd 'Bclose'
+    end
     v.fn['airline#extensions#tabline#buflist#clean']()
 end
 

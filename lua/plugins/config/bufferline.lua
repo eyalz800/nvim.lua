@@ -13,8 +13,12 @@ m.prev_buffer = function()
     cmd 'BufferLineCyclePrev'
 end
 
-m.delete_buffer = function()
-    cmd 'Bclose'
+m.delete_buffer = function(id)
+    if id then
+        cmd('Bclose ' .. id)
+    else
+        cmd 'Bclose'
+    end
 end
 
 m.config = function()
@@ -36,7 +40,7 @@ m.config = function()
         options = {
             mode = "buffers",
             style_preset = bufferline.style_preset.default,
-            close_command = "Bclose %d",
+            close_command = m.delete_buffer,
             right_mouse_command = 'vert sbuffer %d',
             indicator = { style = 'none' },
             buffer_close_icon = '󰅖',

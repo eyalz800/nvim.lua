@@ -11,8 +11,12 @@ elseif buffer_line == 'bufferline' then
 else
     m.next_buffer = function() end
     m.prev_buffer = function() end
-    m.delete_buffer = function()
-        cmd 'Bclose'
+    m.delete_buffer = function(id)
+        if id then
+            cmd('Bclose ' .. id)
+        else
+            cmd 'Bclose'
+        end
     end
 end
 
