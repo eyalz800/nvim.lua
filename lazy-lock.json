@@ -8,7 +8,7 @@
   "coc.nvim": { "branch": "release", "commit": "9332d2ab1154dedc9dbcd3e1c873886abaf061a6" },
   "codi.vim": { "branch": "master", "commit": "83b9859aaf8066d95892e01eb9c01571a4b325dd" },
   "cscope_dynamic": { "branch": "master", "commit": "3293fd9ed7e16a77f5ac37d692dcdfdab078c5c3" },
-  "fzf-lua": { "branch": "main", "commit": "257aafb3c3a3475821db74d1a48ea5b097ac53a9" },
+  "fzf-lua": { "branch": "main", "commit": "fe649a0d042e68d5810c9da8045560e885a705d7" },
   "fzf.vim": { "branch": "master", "commit": "811f34b70b60b4df2997e3ba8cd109e7d06d683b" },
   "gitsigns.nvim": { "branch": "main", "commit": "749267aaa863c30d721c9913699c5d94e0c07dd3" },
   "incsearch-fuzzy.vim": { "branch": "master", "commit": "b08fa8fbfd633e2f756fde42bfb5251d655f5403" },
