@@ -144,7 +144,6 @@ m.plugins = {
     'kshenoy/vim-signature',
     'scrooloose/vim-slumlord',
     'skywind3000/asynctasks.vim',
-    'yaronkh/vim-winmanip',
     'famiu/bufdelete.nvim',
     'lukas-reineke/indent-blankline.nvim',
     'tpope/vim-abolish',
