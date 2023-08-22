@@ -277,7 +277,7 @@ return {
             '    "diagnostic.virtualText": true,\n' ..
             '    "diagnostic.virtualTextCurrentLineOnly": false,\n' ..
             '    "diagnostic.virtualTextFormat": "%message ",\n' ..
-            '    "diagnostic.virtualTextPrefix": " ",\n' ..
+            '    "diagnostic.virtualTextPrefix": "■ ",\n' ..
             '    "cSpell.userWords": [\n' ..
             '        "GTEST",\n' ..
             '        "autodetect",\n' ..
