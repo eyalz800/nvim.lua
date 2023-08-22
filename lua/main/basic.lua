@@ -5,6 +5,7 @@ local user = require 'user'
 local has = require 'vim.has'.has
 local exists = require 'vim.exists'.exists
 local expand = v.fn.expand
+local stdpath = v.fn.stdpath
 
 v.cmd [[
     syntax enable
@@ -58,7 +59,7 @@ if exists('+shellslash') then -- Use forward slash for directories
     opt.shellslash = true
 end
 
-opt.undodir = expand('~/.vim/nundo') -- Undo directory
+opt.undodir = stdpath('data') .. '/undo'
 opt.undolevels = 10000 -- Undo levels
 opt.undofile = true -- Enable undo file
 
