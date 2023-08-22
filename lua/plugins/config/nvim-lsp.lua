@@ -35,7 +35,7 @@ if settings.diagnostic_hover then
             end
         end
 
-        diagnostic.open_float(0, {
+        diagnostic.open_float({}, {
             scope = "cursor",
             focusable = false,
             close_events = {
