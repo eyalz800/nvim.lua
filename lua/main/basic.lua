@@ -4,7 +4,6 @@ local opt = v.opt
 local user = require 'user'
 local has = require 'vim.has'.has
 local exists = require 'vim.exists'.exists
-local expand = v.fn.expand
 local stdpath = v.fn.stdpath
 
 v.cmd [[
@@ -30,8 +29,9 @@ opt.tabstop = user.settings.indentation -- Tab is indentation columns
 opt.softtabstop = user.settings.indentation -- Tab is indentation columns
 opt.cmdheight = 1 -- Command line height is 1
 opt.number = true -- Shows line numbers
-opt.wildmode = 'list:longest,full' -- Enhanced completion menu
 opt.wildmenu = true -- Enhanced completion menu
+--opt.wildmode = 'list:longest,full' -- Enhanced completion menu
+opt.wildoptions = 'pum' -- Use popup menu
 opt.completeopt = 'longest,menuone,preview' -- Enhanced completion menu
 opt.wrap = false -- Do not wrap text
 opt.updatetime = 250 -- Write swp file and trigger cursor hold events every X ms
