@@ -3,13 +3,23 @@ local sed = require 'lib.os_bin'.sed
 local executable = require 'vim.executable'.executable
 local file_readable = require 'vim.file_readable'.file_readable
 local options = require 'user'.settings.install_options
+
 local stdpath = v.fn.stdpath
 local expand = v.fn.expand
 local system = v.fn.system
+
+local data_path = stdpath 'data'
+local installation_path = data_path .. '/installation'
+local bin_path = installation_path .. '/bin'
+local llvm_path = bin_path .. '/llvm'
+local misc_path = installation_path .. '/misc'
+local undo_path = installation_path .. '/undo'
+
 return {
     {
         name = 'make-dirs',
-        command = 'mkdir -p ~/.vim ~/.vim/tmp ~/.vim/bin/llvm ~/.vim/undo ~/.vim/nundo ~/.config/coc ~/.cache'
+        command = 'mkdir -p ~/.vim ~/.config/coc ~/.cache ' ..
+                  installation_path .. ' ' .. bin_path .. ' ' .. llvm_path .. ' ' .. misc_path .. ' ' .. undo_path
     },
     {
         name = 'apt-update',
@@ -56,12 +66,12 @@ return {
     },
     {
         name = 'get-pip-download',
-        command = 'curl https://bootstrap.pypa.io/get-pip.py -o ~/.vim/tmp/get-pip.py',
+        command = 'curl https://bootstrap.pypa.io/get-pip.py -o ' .. misc_path .. '/get-pip.py',
         os = 'Darwin',
     },
     {
         name = 'get-pip-run',
-        command = 'python3 ~/.vim/tmp/get-pip.py',
+        command = 'python3 ' .. misc_path .. '/get-pip.py',
         os = 'Darwin',
     },
     {
@@ -74,9 +84,9 @@ return {
         name = 'lazygit',
         command = [=[ LAZYGIT_VERSION=`curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" ]=] ..
                   [=[ | grep -Po '"tag_name": "v\K[^"]*'`; ]=] ..
-                  [=[ curl -fLo ~/.vim/tmp/lazygit-install/lazygit.tar.gz --create-dirs ]=] ..
+                  [=[ curl -fLo ]=] .. misc_path .. [=[/lazygit-install/lazygit.tar.gz --create-dirs ]=] ..
                   [=[ "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"; ]=] ..
-                  [=[ cd ~/.vim/tmp/lazygit-install; ]=] ..
+                  [=[ cd ]=] .. misc_path .. [=[/lazygit-install; ]=] ..
                   [=[ tar xf lazygit.tar.gz lazygit; ]=] ..
                   [=[ sudo install lazygit /usr/local/bin ]=],
         os = 'Linux',
@@ -88,9 +98,9 @@ return {
     },
     {
         name = 'llvm-install',
-        command = 'curl -fLo ~/.vim/tmp/llvm-install/llvm.sh --create-dirs ' ..
+        command = 'curl -fLo ' .. misc_path .. '/llvm-install/llvm.sh --create-dirs ' ..
                   'https://apt.llvm.org/llvm.sh ; ' ..
-                  'cd ~/.vim/tmp/llvm-install ; chmod +x ./llvm.sh; ' ..
+                  'cd ' .. misc_path .. '/llvm-install ; chmod +x ./llvm.sh; ' ..
                   'sudo ./llvm.sh ' .. options.clang_version .. ' all',
         os = 'Linux',
     },
@@ -102,7 +112,7 @@ return {
     },
     {
         name = 'clangd-link',
-        command = 'rm -rf ~/.vim/bin/llvm/clangd && ln -s $(command -v clangd-' .. options.clang_version .. ') ~/.vim/bin/llvm/clangd',
+        command = 'rm -rf ' .. bin_path .. '/llvm/clangd && ln -s $(command -v clangd-' .. options.clang_version .. ') ' .. bin_path .. '/llvm/clangd',
         os = 'Linux',
     },
     {
@@ -119,55 +129,55 @@ return {
     },
     {
         name = 'download-opengrok',
-        command = 'curl -fLo ~/.vim/bin/opengrok.tar.gz --create-dirs ' ..
+        command = 'curl -fLo ' .. bin_path .. '/opengrok.tar.gz --create-dirs ' ..
                   'https://github.com/oracle/opengrok/releases/download/1.0/opengrok-1.0.tar.gz',
-        cond = not file_readable(expand '~/.vim/bin/opengrok/lib/opengrok.jar')
+        cond = not file_readable(bin_path .. '/opengrok/lib/opengrok.jar')
     },
     {
         name = 'unpack-opengrok',
-        command = 'cd ~/.vim/bin; tar -xzvf opengrok.tar.gz',
-        cond = not file_readable(expand '~/.vim/bin/opengrok/lib/opengrok.jar')
+        command = 'cd ' .. bin_path .. '; tar -xzvf opengrok.tar.gz',
+        cond = not file_readable(bin_path .. '/opengrok/lib/opengrok.jar')
     },
     {
         name = 'remove-opengrok-archive',
-        command = 'rm ~/.vim/bin/opengrok.tar.gz',
-        cond = not file_readable(expand '~/.vim/bin/opengrok/lib/opengrok.jar')
+        command = 'rm ' .. bin_path .. '/opengrok.tar.gz',
+        cond = not file_readable(bin_path .. '/opengrok/lib/opengrok.jar')
     },
     {
         name = 'rename-opengrok',
-        command = 'mv ~/.vim/bin/opengrok* ~/.vim/bin/opengrok',
-        cond = not file_readable(expand '~/.vim/bin/opengrok/lib/opengrok.jar')
+        command = 'mv ' .. bin_path .. '/opengrok* ' .. bin_path .. '/opengrok',
+        cond = not file_readable(bin_path .. '/opengrok/lib/opengrok.jar')
     },
     {
         name = 'universal-ctags',
-        command = 'cd ~/.vim/tmp; git clone https://github.com/universal-ctags/ctags.git; ' ..
+        command = 'cd ' .. misc_path .. '; git clone https://github.com/universal-ctags/ctags.git; ' ..
                   'cd ./ctags; ./autogen.sh; ./configure; make -j; sudo make install',
-        cond = not file_readable(expand '~/.vim/bin/ctags/Makefile')
+        cond = not file_readable(misc_path .. '/ctags/Makefile')
     },
     {
         name = 'exuberant-ctags-download',
-        command = 'curl -fLo ~/.vim/bin/ctags-exuberant/ctags.tar.gz --create-dirs ' ..
+        command = 'curl -fLo ' .. bin_path .. '/ctags-exuberant/ctags.tar.gz --create-dirs ' ..
                   'http://prdownloads.sourceforge.net/ctags/ctags-5.8.tar.gz',
         cond = not executable 'ctags-exuberant' ,
     },
     {
         name = 'exuberant-ctags-unpack',
-        command = 'cd ~/.vim/bin/ctags-exuberant; tar -xzvf ctags.tar.gz',
+        command = 'cd ' .. bin_path .. '/ctags-exuberant; tar -xzvf ctags.tar.gz',
         cond = not executable 'ctags-exuberant' ,
     },
     {
         name = 'exuberant-ctags-cleanup',
-        command = 'rm -rf ~/.vim/bin/ctags-exuberant/ctags',
+        command = 'rm -rf ' .. bin_path .. '/ctags-exuberant/ctags',
         cond = not executable 'ctags-exuberant' ,
     },
     {
         name = 'exuberant-ctags-rename',
-        command = 'mv ~/.vim/bin/ctags-exuberant/ctags-5.8 ~/.vim/bin/ctags-exuberant/ctags',
+        command = 'mv ' .. bin_path .. '/ctags-exuberant/ctags-5.8 ' .. bin_path .. '/ctags-exuberant/ctags',
         cond = not executable 'ctags-exuberant' ,
     },
     {
         name = 'exuberant-ctags-make',
-        command = [=[ cd ~/.vim/bin/ctags-exuberant/ctags; ]=] .. sed ..
+        command = [=[ cd ]=] .. bin_path .. [=[/ctags-exuberant/ctags; ]=] .. sed ..
                   [=[ -i 's@# define __unused__  _.*@#define __unused__@g' ./general.h; ./configure; make -j ]=],
         cond = not executable 'ctags-exuberant',
     },
@@ -179,26 +189,26 @@ return {
     },
     {
         name = 'download-install-bat',
-        command = 'curl -fLo ~/.vim/tmp/bat --create-dirs ' ..
+        command = 'curl -fLo ' .. misc_path .. '/bat --create-dirs ' ..
                   'https://github.com/sharkdp/bat/releases/download/v0.15.1/bat_0.15.1_amd64.deb && ' ..
-                  'sudo dpkg -i ~/.vim/tmp/bat',
+                  'sudo dpkg -i ' .. misc_path .. '/bat',
         cond = function() return not executable 'bat' and system [=[ apt-cache search --names-only ^bat\$' ]=] == '' end,
         os = 'Linux',
     },
     {
         name = 'download-install-ripgrep',
-        command = 'curl -fLo ~/.vim/tmp/ripgrep --create-dirs ' ..
+        command = 'curl -fLo ' .. misc_path .. '/ripgrep --create-dirs ' ..
                   'https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb ; ' ..
-                  'sudo dpkg -i ~/.vim/tmp/ripgrep',
+                  'sudo dpkg -i ' .. misc_path .. '/ripgrep',
         cond = not executable 'rg',
         os = 'Linux',
     },
     {
         name = 'download-install-pandoc',
-        command = 'curl -fLo ~/.vim/tmp/pandoc.deb --create-dirs ' ..
+        command = 'curl -fLo ' .. misc_path .. '/pandoc.deb --create-dirs ' ..
                   'https://github.com/jgm/pandoc/releases/download/2.10.1/pandoc-2.10.1-1-amd64.deb ; ' ..
-                  'sudo dpkg -i ~/.vim/tmp/pandoc.deb',
-        cond = not file_readable(expand '~/.vim/tmp/pandoc.deb'),
+                  'sudo dpkg -i ' .. misc_path .. '/pandoc.deb',
+        cond = not file_readable(misc_path .. '/pandoc.deb'),
         os = 'Linux',
     },
     {

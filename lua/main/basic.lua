@@ -59,7 +59,7 @@ if exists('+shellslash') then -- Use forward slash for directories
     opt.shellslash = true
 end
 
-opt.undodir = stdpath('data') .. '/undo'
+opt.undodir = stdpath('data') .. '/installation/undo'
 opt.undolevels = 10000 -- Undo levels
 opt.undofile = true -- Enable undo file
 
