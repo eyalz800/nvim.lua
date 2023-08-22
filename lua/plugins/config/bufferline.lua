@@ -36,7 +36,10 @@ m.config = function()
     return {
         options = {
             mode = "buffers",
-            style_preset = bufferline.style_preset.default,
+            style_preset = {
+                bufferline.style_preset.no_bold,
+                bufferline.style_preset.no_italic,
+            },
             close_command = m.delete_buffer,
             right_mouse_command = 'vert sbuffer %d',
             indicator = { style = 'none' },
