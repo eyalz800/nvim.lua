@@ -57,7 +57,7 @@ m.options = {
         ignore = false,
     },
     filesystem_watchers = {
-        enable = true,
+        enable = v.loop.fs_stat('/mnt/c/Windows') == nil,
     },
     actions = {
         open_file = {
