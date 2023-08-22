@@ -28,6 +28,7 @@ m.lsp_config = {
     nvim = {
         virtual_text = true,
         diagnostic_hover = true,
+        completion_border = true,
         servers = {
             clangd = true,
             lua = true,

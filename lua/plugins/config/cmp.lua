@@ -1,7 +1,8 @@
 local m = {}
+local user = require 'user'
 
 m.config = function()
-    local function border(hl_name)
+    local border = function(hl_name)
         return {
             { "╭", hl_name },
             { "─", hl_name },
@@ -12,6 +13,10 @@ m.config = function()
             { "╰", hl_name },
             { "│", hl_name },
         }
+    end
+
+    if not user.settings.lsp_config.nvim.completion_border then
+        border = function() return false end
     end
 
     local cmp = require 'cmp'
@@ -61,10 +66,10 @@ m.config = function()
         },
         window = {
             completion = {
-                border = border 'CmpBorder',
+                border = border 'Pmenu',
             },
             documentation = {
-                border = border 'CmpDocBorder'
+                border = border 'Pmenu'
             },
         },
     }
