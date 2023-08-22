@@ -20,7 +20,7 @@ cmd('QA', 'qa', {})
 cmd('QA', 'qa!', {bang = true})
 
 -- Sudo
-cmd('InitLuaSudoW', 'w !sudo tee > /dev/null %', {})
+cmd('SudoWrite', 'w !sudo tee > /dev/null %', {})
 
 -- Syntax information
 cmd('SyntaxInfo', function()
