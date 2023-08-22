@@ -28,20 +28,20 @@ m.apply = function()
     v.env.BAT_THEME = 'Monokai Extended Origin'
 
     v.cmd [=[
-        hi SignColumn guifg=#737aa2 guibg=NONE
-        hi CursorLineNr guibg=NONE
-        hi Folded guifg=#565f89 guibg=NONE
-        hi FoldColumn guibg=NONE
+        hi! SignColumn guifg=#737aa2 guibg=NONE
+        hi! CursorLineNr guibg=NONE
+        hi! Folded guifg=#565f89 guibg=NONE
+        hi! FoldColumn guibg=NONE
 
-        hi Type guifg=#2ac3de
-        hi cCustomClass guifg=#2ac3de
-        hi cppStructure guifg=#2ac3de
-        hi Ignore guifg=#444b6a
+        hi! Type guifg=#2ac3de
+        hi! cCustomClass guifg=#2ac3de
+        hi! cppStructure guifg=#2ac3de
+        hi! Ignore guifg=#444b6a
 
-        hi markdownLinkText guifg=#7aa2f7 gui=NONE
-        hi IndentBlanklineChar guifg=#3b4261 gui=nocombine
+        hi! markdownLinkText guifg=#7aa2f7 gui=NONE
+        hi! IndentBlanklineChar guifg=#3b4261 gui=nocombine
 
-        hi jsonCommentError guifg=#565f89
+        hi! jsonCommentError guifg=#565f89
     ]=]
 
     if user.settings.lsp == 'coc' then
@@ -108,14 +108,18 @@ m.apply = function()
     end
 
     if tokyonight_transparent then
-        v.cmd 'hi CursorLine ctermbg=242 guibg=#3b4261'
+        v.cmd 'hi! CursorLine ctermbg=242 guibg=#3b4261'
     end
 
     return true
 end
 
 m.config = function()
-    return {}
+    return {
+        on_highlights = function(hi, colors)
+            hi['@variable.builtin'] = { fg = colors.orange }
+        end
+    }
 end
 
 return m
