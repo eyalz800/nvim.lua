@@ -3,7 +3,6 @@ local v = require 'vim'
 local executable = require 'vim.executable'.executable
 local file_readable = require 'vim.file_readable'.file_readable
 
-local expand = v.fn.expand
 local stdpath = v.fn.stdpath
 
 v.env.PATH = stdpath('data') .. '/installation/bin/llvm' .. ':' .. v.env.PATH
