@@ -1,32 +1,28 @@
 local m = {}
 local cmd = require 'vim.cmd'.silent
 
-m.open_status = false
+local symbols_outline = nil
 
 m.open = function()
-    cmd 'SymbolsOutlineOpen'
-    m.open_status = true
+    symbols_outline.open_outline()
 end
 
 m.close = function()
-    cmd 'SymbolsOutlineClose'
-    m.open_status = false
+    symbols_outline.close_outline()
 end
 
 m.is_open = function()
-    return m.open_status
+    return symbols_outline.state.code_win ~= 0
 end
 
 m.toggle = function()
-    cmd 'SymbolsOutlineToggle'
-    if m.open_status then
-        m.open_status = false
-    else
-        m.open_status = true
+    if m.is_open() then
+        symbols_outline.toggle_outline()
     end
 end
 
 m.config = function()
+    symbols_outline = require 'symbols-outline'
     return {
         highlight_hovered_item = true,
         show_guides = true,
@@ -93,4 +89,3 @@ m.config = function()
 end
 
 return m
-
