@@ -40,6 +40,7 @@ m.apply_c_and_cpp_syntax = function()
         hi def link cArrayObject cCompundObject
         syntax match cCustomMemVar "\(\.\|->\)\h\w*" containedin=cCompundObject contains=cCustomDot,cCustomPtr
         hi def link cCustomMemVar Function
+        hi! link cCustomClass Type
 
         if &ft == 'cpp'
             syntax keyword cppNew new
@@ -55,6 +56,7 @@ m.apply_c_and_cpp_syntax = function()
             syntax match cppVariable "\h\w*\({\)" contains=cCurlyBrace " }
             hi def link cppVariable cCustomMemVar
             syntax keyword cppSTLbool same_as
+            hi! link cppStructure Type
         endif
     ]=]
 end
