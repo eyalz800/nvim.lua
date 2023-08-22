@@ -30,7 +30,7 @@ m.lsp_config = {
         servers = {
             clangd = true,
             lua = true,
-            python = true,
+            pyright = true,
             snippets = true,
         }
     }
