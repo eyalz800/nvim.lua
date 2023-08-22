@@ -3,6 +3,37 @@ local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 local user = require 'user'
 
+m.config = function()
+    local settings = user.settings.colorscheme_settings
+
+    return {
+        style = (settings.tokyonight or {}).style or 'storm',
+        light_style = 'day',
+        transparent = settings.transparent or false,
+        terminal_colors = true,
+        styles = {
+            comments = { italic = false },
+            keywords = { italic = false },
+            functions = {},
+            variables = {},
+            sidebars = 'dark',
+            floats = 'dark',
+        },
+        sidebars = { 'qf', 'help', 'Outline' },
+        day_brightness = 0.3,
+        hide_inactive_statusline = false,
+        dim_inactive = false,
+        lualine_bold = false,
+        --on_colors = function(colors) end,
+        on_highlights = function(highlights, colors)
+            highlights['FloatBorder'] = { fg = colors.fg, bg = colors.bg_dark }
+            highlights['Folded'] = { fg = colors.comment, bg = colors.none }
+            highlights['Ignore'] = { fg = '#444b6a'}
+            highlights['@variable.builtin'] = { fg = colors.orange }
+        end
+    }
+end
+
 m.apply = function()
     if v.o.background == 'light' then
         v.opt.background = 'dark'
@@ -11,23 +42,6 @@ m.apply = function()
     end
 
     v.env.BAT_THEME = 'Monokai Extended Origin'
-
-    v.cmd [=[
-        hi! SignColumn guifg=#737aa2 guibg=NONE
-        hi! CursorLineNr guibg=NONE
-        hi! Folded guifg=#565f89 guibg=NONE
-        hi! FoldColumn guibg=NONE
-
-        hi! Type guifg=#2ac3de
-        hi! cCustomClass guifg=#2ac3de
-        hi! cppStructure guifg=#2ac3de
-        hi! Ignore guifg=#444b6a
-
-        hi! markdownLinkText guifg=#7aa2f7 gui=NONE
-        hi! IndentBlanklineChar guifg=#3b4261 gui=nocombine
-
-        hi! jsonCommentError guifg=#565f89
-    ]=]
 
     if user.settings.lsp == 'coc' then
         v.cmd [=[
@@ -93,35 +107,6 @@ m.apply = function()
     end
 
     return true
-end
-
-m.config = function()
-    local settings = user.settings.colorscheme_settings
-
-    return {
-        style = (settings.tokyonight or {}).style or 'storm',
-        light_style = 'day',
-        transparent = settings.transparent or false,
-        terminal_colors = true,
-        styles = {
-            comments = { italic = false },
-            keywords = { italic = false },
-            functions = {},
-            variables = {},
-            sidebars = 'dark',
-            floats = 'dark',
-        },
-        sidebars = { 'qf', 'help', 'Outline' },
-        day_brightness = 0.3,
-        hide_inactive_statusline = false,
-        dim_inactive = false,
-        lualine_bold = false,
-        --on_colors = function(colors) end,
-        on_highlights = function(highlights, colors)
-            highlights['@variable.builtin'] = { fg = colors.orange }
-            highlights['FloatBorder'] = { fg = colors.fg, bg = colors.bg_dark }
-        end
-    }
 end
 
 return m
