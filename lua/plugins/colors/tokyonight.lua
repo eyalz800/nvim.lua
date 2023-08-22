@@ -10,21 +10,6 @@ m.apply = function()
         return false
     end
 
-    local settings = user.settings.colorscheme_settings
-    v.g.tokyonight_italic_keywords = 0
-    v.g.tokyonight_italic_comments = 0
-    if settings.tokyonight.style then
-        v.g.tokyonight_style = settings.tokyonight.style
-    end
-
-    local tokyonight_transparent
-
-    if settings.transparent then
-        tokyonight_transparent = settings.transparent
-    else
-        tokyonight_transparent = false
-    end
-
     v.env.BAT_THEME = 'Monokai Extended Origin'
 
     v.cmd [=[
@@ -107,28 +92,26 @@ m.apply = function()
         v.g.airline_theme_patch_func = 'Init_lua_tokyonight_airline_theme_patch'
     end
 
-    if tokyonight_transparent then
-        v.cmd 'hi! CursorLine ctermbg=242 guibg=#3b4261'
-    end
-
     return true
 end
 
 m.config = function()
+    local settings = user.settings.colorscheme_settings
+
     return {
-        style = "storm",
-        light_style = "day",
-        transparent = false,
+        style = (settings.tokyonight or {}).style or 'storm',
+        light_style = 'day',
+        transparent = settings.transparent or false,
         terminal_colors = true,
         styles = {
             comments = { italic = false },
             keywords = { italic = false },
             functions = {},
             variables = {},
-            sidebars = "dark",
-            floats = "dark",
+            sidebars = 'dark',
+            floats = 'dark',
         },
-        sidebars = { "qf", "help" },
+        sidebars = { 'qf', 'help', 'Outline' },
         day_brightness = 0.3,
         hide_inactive_statusline = false,
         dim_inactive = false,
