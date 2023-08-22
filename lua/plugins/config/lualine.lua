@@ -8,7 +8,10 @@ m.options = {
         section_separators = { left = '', right = '' },
         disabled_filetypes = {
             statusline = {},
-            winbar = { 'NvimTree', 'nerdtree' },
+            winbar = {
+                'NvimTree', 'nerdtree',
+                'VimspectorPrompt', 'vimspector-disassembly',
+            },
         },
         ignore_focus = {},
         always_divide_middle = true,
