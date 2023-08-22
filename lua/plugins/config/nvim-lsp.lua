@@ -58,7 +58,7 @@ m.setup = function()
         virtual_text = {
             enabled = settings.virtual_text,
             source = 'if_many',
-            spacing = 8,
+            spacing = 4,
             prefix = '■',
         },
         severity_sort = true,
