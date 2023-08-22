@@ -1,7 +1,16 @@
 local m = {}
 local v = require 'vim'
-local cmd = require 'vim.cmd'.silent
 local user = require 'user'
+
+m.name = 'tokyonight'
+
+m.set_background = function(color_name)
+    if color_name == 'tokyonight-day' then
+        v.opt.background = 'light'
+    else
+        v.opt.background = 'dark'
+    end
+end
 
 m.config = function()
     local settings = user.settings.colorscheme_settings
@@ -28,20 +37,20 @@ m.config = function()
         on_highlights = function(highlights, colors)
             highlights['FloatBorder'] = { fg = colors.fg, bg = colors.bg_dark }
             highlights['Folded'] = { fg = colors.comment, bg = colors.none }
-            highlights['Ignore'] = { fg = '#444b6a'}
+            highlights['Ignore'] = { fg = v.o.background == 'dark' and '#444b6a' or colors.bg_dark}
             highlights['@variable.builtin'] = { fg = colors.orange }
         end
     }
 end
 
 m.apply = function()
-    if v.o.background == 'light' then
-        v.opt.background = 'dark'
-        v.schedule(function() cmd 'color tokyonight' end)
-        return false
+    if v.o.background == 'dark' then
+        m.name = 'tokyonight'
+        v.env.BAT_THEME = 'Monokai Extended Origin'
+    else
+        m.name = 'tokyonight-day'
+        v.env.BAT_THEME = 'Monokai Extended Light'
     end
-
-    v.env.BAT_THEME = 'Monokai Extended Origin'
 
     if user.settings.lsp == 'coc' then
         v.cmd [=[
@@ -86,8 +95,13 @@ m.apply = function()
                     return
                 endif
 
-                let airline_error = ['#000000', '#db4b4b', '0', '0']
-                let airline_warning = ['#000000', '#e0af68', '0', '0']
+                if &background == 'dark'
+                    let airline_error = ['#000000', '#db4b4b', '0', '0']
+                    let airline_warning = ['#000000', '#e0af68', '0', '0']
+                else
+                    let airline_error = ['#ffffff', '#db4b4b', '0', '0']
+                    let airline_warning = ['#ffffff', '#e0af68', '0', '0']
+                endif
 
                 let a:palette.normal.airline_warning = airline_warning
                 let a:palette.normal.airline_error = airline_error

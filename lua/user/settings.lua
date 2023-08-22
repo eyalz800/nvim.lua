@@ -10,7 +10,7 @@ m.gui_colors = true
 m.root_paths = {'.git', '.repo', '.files'}
 m.git_plugin = 'gitsigns'
 m.enable_gutentags = false
-m.colorscheme = v.fn.system('if [ -e ~/.vim/.color ] ; then cat ~/.vim/.color ; else echo tokyonight; fi')
+m.colorscheme = v.fn.system('if [ -e ~/.tmux.color ] ; then cat ~/.tmux.color ; else echo tokyonight; fi')
 m.colorscheme_settings = { tokyonight={style='storm'} }
 m.powerline = true
 m.lsp = 'nvim'

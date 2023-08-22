@@ -18,7 +18,7 @@ local undo_path = installation_path .. '/undo'
 return {
     {
         name = 'make-dirs',
-        command = 'mkdir -p ~/.vim ~/.config/coc ~/.cache ' ..
+        command = 'mkdir -p ~/.config/coc ~/.cache ' ..
                   installation_path .. ' ' .. bin_path .. ' ' .. llvm_path .. ' ' .. misc_path .. ' ' .. undo_path
     },
     {
@@ -229,11 +229,6 @@ return {
                   [=[ echo '    selectedLineBgColor: ' >> ~/.config/jesseduffield/lazygit/config.yml ; ]=] ..
                   [=[ echo '      - reverse' >> ~/.config/jesseduffield/lazygit/config.yml ]=],
         os = 'Linux',
-    },
-    {
-        name = 'vim-color',
-        command = 'echo tokyonight > ~/.vim/.color',
-        cond = not file_readable(expand '~/.vim/.color')
     },
     {
         name = 'pynvim',
