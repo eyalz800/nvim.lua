@@ -118,6 +118,7 @@ m.config = function()
     return {
         on_highlights = function(hi, colors)
             hi['@variable.builtin'] = { fg = colors.orange }
+            hi['FloatBorder'] = { fg = colors.fg }
         end
     }
 end

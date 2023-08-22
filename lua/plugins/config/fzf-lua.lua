@@ -90,6 +90,12 @@ m.lsp_references = function()
     })
 end
 
+m.lsp_diagnostics = function()
+    fzf_lua.diagnostics_document({
+        fzf_colors = v.g.fzf_colors,
+    })
+end
+
 m.config = function()
     fzf_lua = require 'fzf-lua'
     local actions = require 'fzf-lua.actions'

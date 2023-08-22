@@ -22,7 +22,7 @@ m.type_definition = lsp.buf.type_definition
 m.prev_diagnostic = diagnostic.goto_prev
 m.next_diagnostic = diagnostic.goto_next
 m.rename = lsp.buf.rename
-m.list_diagnostics = diagnostic.open_float
+m.list_diagnostics = finder.lsp_diagnostics or diagnostic.open_float
 m.format_selected = function() lsp.buf.format({ async = true }) end
 
 m.quick_fix = m.code_action
