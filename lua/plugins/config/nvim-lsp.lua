@@ -74,7 +74,7 @@ m.setup = function()
         servers.clangd = {}
     end
 
-    if settings.servers.pyright then
+    if settings.servers.python then
         servers.pyright = {}
     end
 
