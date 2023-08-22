@@ -73,16 +73,21 @@ m.setup = function()
     sign({name = 'DiagnosticSignWarn', text = ''})
     sign({name = 'DiagnosticSignError', text = ''})
 
-    diagnostic.config({
-        signs = true,
-        update_in_insert = false,
-        underline = true,
+    local virtual_text = nil
+    if settings.virtual_text then
         virtual_text = {
             enabled = settings.virtual_text,
             source = 'if_many',
             spacing = 4,
             prefix = '■',
-        },
+        }
+    end
+
+    diagnostic.config({
+        signs = true,
+        update_in_insert = false,
+        underline = true,
+        virtual_text = virtual_text or false,
         severity_sort = true,
         float = {
             border = 'rounded',
