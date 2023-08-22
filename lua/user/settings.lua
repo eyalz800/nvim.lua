@@ -15,16 +15,6 @@ m.colorscheme_settings = { tokyonight={style='storm'} }
 m.powerline = true
 m.lsp = 'nvim'
 m.lsp_config = {
-    coc = {
-        tab_trigger = true,
-        plugins = {
-            'coc-clangd',
-            'coc-pyright',
-            'coc-vimlsp',
-            'coc-lua',
-            'coc-snippets',
-            'coc-spell-checker' }
-    },
     nvim = {
         virtual_text = true,
         diagnostic_hover = true,
@@ -35,7 +25,17 @@ m.lsp_config = {
             pyright = true,
             snippets = true,
         },
-    }
+    },
+    coc = {
+        tab_trigger = true,
+        plugins = {
+            'coc-clangd',
+            'coc-pyright',
+            'coc-vimlsp',
+            'coc-lua',
+            'coc-snippets',
+            'coc-spell-checker' }
+    },
 }
 m.install_options = { clang_version=16 }
 m.finder = 'fzf-lua'
