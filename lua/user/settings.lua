@@ -27,12 +27,13 @@ m.lsp_config = {
     },
     nvim = {
         virtual_text = true,
+        diagnostic_hover = true,
         servers = {
             clangd = true,
             lua = true,
             pyright = true,
             snippets = true,
-        }
+        },
     }
 }
 m.install_options = { clang_version=16 }

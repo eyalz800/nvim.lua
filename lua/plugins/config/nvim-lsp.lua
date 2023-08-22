@@ -27,6 +27,28 @@ m.format_selected = function() lsp.buf.format({ async = true }) end
 
 m.quick_fix = m.code_action
 
+if settings.diagnostic_hover then
+    m.diagnostic_hover = function()
+        for _, winid in pairs(v.api.nvim_tabpage_list_wins(0)) do
+            if v.api.nvim_win_get_config(winid).zindex then
+                return
+            end
+        end
+
+        diagnostic.open_float(0, {
+            scope = "cursor",
+            focusable = false,
+            close_events = {
+                "CursorMoved",
+                "CursorMovedI",
+                "BufHidden",
+                "InsertCharPre",
+                "WinLeave",
+            },
+        })
+    end
+end
+
 m.switch_source_header = function()
     if exists ':ClangdSwitchSourceHeader' then
         cmd 'ClangdSwitchSourceHeader'
