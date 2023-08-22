@@ -51,6 +51,10 @@ m.find_in_files_precise_native = function()
     v.fn.Init_lua_rg(false)
 end
 
+m.find_buffer = function()
+    cmd 'Buffers'
+end
+
 v.cmd([=[
 
 set rtp+=~/.fzf

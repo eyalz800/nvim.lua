@@ -46,12 +46,19 @@ m.apply = function()
 
     if user.settings.lsp == 'coc' then
         v.cmd [=[
-            hi clear CocUnusedHighlight
-            hi link CocUnusedHighlight DiagnosticUnderlineWarn
-            hi DiagnosticVirtualTextError guibg=NONE
-            hi DiagnosticVirtualTextWarn guibg=NONE
-            hi DiagnosticVirtualTextHint guibg=NONE
-            hi DiagnosticVirtualTextInfo guibg=NONE
+            hi! link CocUnusedHighlight DiagnosticUnderlineWarn
+            hi! DiagnosticVirtualTextError guibg=NONE
+            hi! DiagnosticVirtualTextWarn guibg=NONE
+            hi! DiagnosticVirtualTextHint guibg=NONE
+            hi! DiagnosticVirtualTextInfo guibg=NONE
+        ]=]
+    elseif user.settings.lsp == 'nvim' then
+        v.cmd [=[
+            hi! link DiagnosticUnnecessary DiagnosticUnderlineWarn
+            hi! DiagnosticVirtualTextError guibg=NONE
+            hi! DiagnosticVirtualTextWarn guibg=NONE
+            hi! DiagnosticVirtualTextHint guibg=NONE
+            hi! DiagnosticVirtualTextInfo guibg=NONE
         ]=]
     end
 

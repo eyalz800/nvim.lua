@@ -69,9 +69,11 @@ map('n', 'gs', source_index.goto_symbol_definition, { silent=true }) -- Goto ind
 map('n', 'gS', source_index.goto_symbol_declaration, { silent=true }) -- Goto indexed symbol prefer declaration
 map('n', 'gz', source_index.goto_definition, { silent=true }) -- Goto defiinition by lsp and fall back to by index
 map('n', 'gd', lsp.goto_definition, { silent=true }) -- Goto definition lsp
-map('n', 'gD', lsp.goto_definition_sync, { silent=true }) -- Goto definition lsp synchronously
-map('n', 'gr', lsp.show_references, { silent=true }) -- Show references
-map('n', '<leader>ac', lsp.code_action, { silent=true }) -- Code action
+map('n', '<leader>gd', lsp.show_definitions, { silent=true }) -- Browse definitions lsp
+map('n', 'gD', lsp.goto_declaration, { silent=true }) -- Goto declaration lsp synchronously
+map('n', '<leader><leader>gd', lsp.goto_definition_sync, { silent=true }) -- Goto definition lsp synchronously
+map('n', 'gr', lsp.show_references, { silent=true }) -- Browse references lsp
+map('n', 'ga', lsp.code_action, { silent=true }) -- Code action
 map('n', '<leader>qf', lsp.quick_fix, { silent=true }) -- Quick fix using lsp
 map('n', '<leader>gy', lsp.type_definition, { silent=true }) -- Goto type definition
 map('n', 'go', lsp.switch_source_header, { silent=true }) -- Switch between source and header
@@ -83,9 +85,7 @@ map('x', 'gf', lsp.format_selected, { silent=true }) -- Format selected
 map('i', '<c-d>', lsp.expand_snippets, { silent=true }) -- Expand snippets
 map('x', '<c-r>', lsp.select_snippets, { silent=true }) -- Select snippets
 map('n', '<leader>ld', lsp.list_diagnostics, { silent=true }) -- List diagnostics
-map('i', '<tab>', lsp.tab, { silent=true, expr=true }) -- Lsp complete
-map('i', '<s-tab>', lsp.shift_tab, { silent=true, expr=true}) -- Lsp prev complete
-map('i', '<cr>', lsp.enter, { silent=true, expr=true }) -- Lsp enter
+map('n', '<leader><c-l>', finder.find_buffer, { silent=true }) -- Find buffer
 map('n', '<c-p>', finder.find_file, { silent=true }) -- Find file
 map('n', '<leader><c-p>', finder.find_file_list, { silent=true }) -- Find file with cache while populating files list for later use.
 map('n', '<leader><leader><c-p>', finder.find_file_list_invalidate, { silent=true }) -- Similar to previous but invalidate cache.
@@ -205,6 +205,13 @@ map({'n', 'x'}, '<scrollwheelright>', indent_guides.refresh_trigger('<scrollwhee
 -- Additional mappings
 --   * 'gc' - :h commentary -- Comment selected code
 --   * 'ysw' / 'csXY' - :h surround - Surround / change surrounding
+
+-- Internal mappings
+if lsp.completion_mappings then
+    map('i', '<tab>', lsp.tab, { silent=true, expr=true }) -- Lsp complete
+    map('i', '<s-tab>', lsp.shift_tab, { silent=true, expr=true}) -- Lsp prev complete
+    map('i', '<cr>', lsp.enter, { silent=true, expr=true }) -- Lsp enter
+end
 
 require 'user.mappings'
 return m

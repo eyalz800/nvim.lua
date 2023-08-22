@@ -25,6 +25,9 @@ m.show_documentation = function()
 end
 
 m.goto_definition = '<plug>(coc-definition)'
+m.goto_declaration = '<plug>(coc-declaration)'
+m.show_definitions = '<plug>(coc-definition)'
+m.show_declarations = '<plug>(coc-declaration)'
 m.goto_definition_sync = function() v.fn.CocAction('jumpDefinition') end
 m.show_references = '<plug>(coc-references)'
 m.code_action = '<plug>(coc-codeaction-cursor)'
@@ -67,6 +70,8 @@ end
 m.enter = function()
     return '<c-g>u<cr><c-r>=coc#on_enter()<cr>'
 end
+
+m.completion_mappings = true
 
 v.g.tagfunc = 'CocTagFunc'
 v.g.coc_fzf_preview = 'right:50%'

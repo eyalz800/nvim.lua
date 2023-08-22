@@ -38,10 +38,12 @@ autocmd('colorschemepre', {group=augroup('init.lua.colorscheme_pre', {}), callba
 autocmd('colorscheme', {group=augroup('init.lua.colorscheme', {}), callback=colors.post_switch_color})
 
 local lsp_was_enabled = nil
-autocmd('User', {pattern='visual_multi_start', group=augroup('init.lua.visual_multi_start', {}), callback=function()
-    lsp_was_enabled = lsp.is_enabled()
-    lsp.disable()
-end})
+if lsp.is_enabled then
+    autocmd('User', {pattern='visual_multi_start', group=augroup('init.lua.visual_multi_start', {}), callback=function()
+        lsp_was_enabled = lsp.is_enabled()
+        lsp.disable()
+    end})
+end
 
 autocmd('User', {pattern='visual_multi_exit', group=augroup('init.lua.visual_multi_exit', {}), callback=function()
     if lsp_was_enabled then

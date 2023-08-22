@@ -1,5 +1,8 @@
 local m = {}
+local user = require 'user'
 
-require 'plugins.config.ultisnips'
+if user.settings.lsp == 'coc' then
+    require 'plugins.config.ultisnips'
+end
 
 return m

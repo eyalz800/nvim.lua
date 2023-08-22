@@ -29,6 +29,53 @@ m.plugins = {
         end,
     },
     {
+        'neovim/nvim-lspconfig',
+        dependencies = {
+            {
+                'williamboman/mason.nvim',
+                config = function()
+                    local mason_conf = require 'plugins.config.mason'
+                    require 'mason'.setup(mason_conf.config())
+                end,
+            },
+            'williamboman/mason-lspconfig.nvim',
+            {
+                'j-hui/fidget.nvim',
+                tag = 'legacy',
+                config = function()
+                    require 'fidget'.setup({})
+                end,
+            },
+            {
+                'folke/neoconf.nvim',
+                config = function()
+                    local neoconf_conf = require 'plugins.config.neoconf'
+                    require 'neoconf'.setup(neoconf_conf.config())
+                end,
+            },
+            {
+                'folke/neodev.nvim',
+                config = function()
+                    local neodev_conf = require 'plugins.config.neodev'
+                    require 'neodev'.setup(neodev_conf.config())
+                end,
+            },
+            {
+                'hrsh7th/nvim-cmp',
+                dependencies = {
+                    'L3MON4D3/LuaSnip',
+                    'saadparwaiz1/cmp_luasnip',
+                    'hrsh7th/cmp-nvim-lsp',
+                    'rafamadriz/friendly-snippets',
+                },
+            },
+        },
+        config = function()
+            require 'plugins.config.nvim-lsp'.setup()
+        end,
+        cond = user.settings.lsp == 'nvim',
+    },
+    {
         'lewis6991/gitsigns.nvim',
         config = function()
             local options = require 'plugins.config.gitsigns'.options
@@ -88,8 +135,8 @@ m.plugins = {
     {
         'simrat39/symbols-outline.nvim',
         config = function()
-            local options = require 'plugins.config.symbols-outline'.options
-            require 'symbols-outline'.setup(options)
+            local symbols_outline_conf = require 'plugins.config.symbols-outline'
+            require 'symbols-outline'.setup(symbols_outline_conf.config())
         end,
         cond = user.settings.code_explorer == 'symbols-outline',
     },
@@ -116,7 +163,8 @@ m.plugins = {
         end,
         cond = user.settings.finder == 'fzf-lua',
     },
-    { 'neoclide/coc.nvim',
+    {
+        'neoclide/coc.nvim',
         branch = 'release',
         cond = user.settings.lsp == 'coc'
     },
@@ -141,7 +189,6 @@ m.plugins = {
     'christoomey/vim-tmux-navigator',
     'tpope/vim-surround',
     'j5shi/CommandlineComplete.vim',
-    'kshenoy/vim-signature',
     'scrooloose/vim-slumlord',
     'skywind3000/asynctasks.vim',
     'famiu/bufdelete.nvim',
@@ -151,7 +198,6 @@ m.plugins = {
     'yazgoo/yank-history',
     'cormacrelf/vim-colors-github',
     'vim-python/python-syntax',
-
     {
         'jreybert/vimagit',
         cmd = {'Magit', 'MagitOnly'}
@@ -171,6 +217,7 @@ m.plugins = {
     {
         'eyalz800/vim-ultisnips',
         event = 'VeryLazy',
+        cond = user.settings.lsp == 'coc',
     },
     {
         'justinmk/vim-sneak',

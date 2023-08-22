@@ -13,7 +13,7 @@ m.enable_gutentags = false
 m.colorscheme = v.fn.system('if [ -e ~/.vim/.color ] ; then cat ~/.vim/.color ; else echo tokyonight; fi')
 m.colorscheme_settings = { tokyonight={style='storm'} }
 m.powerline = true
-m.lsp = 'coc'
+m.lsp = 'nvim'
 m.lsp_config = {
     coc = {
         tab_trigger = true,
@@ -24,6 +24,15 @@ m.lsp_config = {
             'coc-lua',
             'coc-snippets',
             'coc-spell-checker' }
+    },
+    nvim = {
+        virtual_text = true,
+        servers = {
+            clangd = true,
+            lua = true,
+            python = true,
+            snippets = true,
+        }
     }
 }
 m.install_options = { clang_version=16 }
@@ -32,6 +41,6 @@ m.line = 'lualine'
 m.buffer_line = 'bufferline'
 m.file_explorer = 'nvim-tree'
 m.file_explorer_config = {nvim_tree={window_picker=false}}
-m.code_explorer = 'tagbar'
+m.code_explorer = 'symbols-outline'
 
 return m
