@@ -150,9 +150,8 @@ return {
     },
     {
         name = 'universal-ctags',
-        command = 'cd ' .. misc_path .. '; git clone https://github.com/universal-ctags/ctags.git; ' ..
+        command = 'cd ' .. misc_path .. '; rm -rf ctags; git clone https://github.com/universal-ctags/ctags.git; ' ..
                   'cd ./ctags; ./autogen.sh; ./configure; make -j; sudo make install',
-        cond = not file_readable(misc_path .. '/ctags/Makefile')
     },
     {
         name = 'exuberant-ctags-download',
