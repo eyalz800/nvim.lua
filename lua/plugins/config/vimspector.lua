@@ -36,37 +36,6 @@ m.reset = v.fn['vimspector#Reset']
 
 v.cmd [=[
 
-" nnoremap <silent> <leader>dl :call Init_lua_vimspector_debug_launch_settings()<cr>
-" nnoremap <silent> <leader>dd :if !filereadable('.vimspector.json') \| call Init_lua_vimspector_debug_launch_settings() \| endif \| call vimspector#Launch()<cr>
-" nmap <leader>dc <plug>VimspectorContinue
-" nmap <F5> <plug>VimspectorContinue
-" nmap <leader>dr <plug>VimspectorRestart
-" nmap <S-F5> <plug>VimspectorRestart
-" nmap <F17> <plug>VimspectorRestart
-" nmap <leader>dp <plug>VimspectorPause
-" nmap <F6> <plug>VimspectorPause
-" nmap <leader>ds <plug>VimspectorStop
-" nmap <S-F6> <plug>VimspectorStop
-" nmap <F18> <plug>VimspectorStop
-" nmap <leader>db <plug>VimspectorToggleBreakpoint
-" nmap <F9> <plug>VimspectorToggleBreakpoint
-" nmap <leader><leader>db <plug>VimspectorToggleConditionalBreakpoint
-" nmap <S-F9> <plug>VimspectorToggleConditionalBreakpoint
-" nmap <F21> <plug>VimspectorToggleConditionalBreakpoint
-" nmap <leader>df <plug>VimspectorAddFunctionBreakpoint
-" nmap <leader><F9> <plug>VimspectorAddFunctionBreakpoint
-" nnoremap <silent> <leader>dB :call vimspector#ClearBreakpoints()<cr>
-" nnoremap <silent> <leader><leader><F9> :call vimspector#ClearBreakpoints()<cr>
-" nmap <leader>dn <plug>VimspectorStepOver
-" nnoremap <silent> <F10> :exec "normal \<plug>VimspectorStepOver"<cr>
-" nmap <leader>di <plug>VimspectorStepInto
-" nnoremap <silent> <S-F10> :exec "normal \<plug>VimspectorStepInto"<cr>
-" nnoremap <silent> <F11> :exec "normal \<plug>VimspectorStepInto"<cr>
-" nmap <leader>do <plug>VimspectorStepOut
-" nmap <S-F11> <plug>VimspectorStepOut
-" nmap <F23> <plug>VimspectorStepOut
-" nnoremap <silent> <leader>dq :VimspectorReset<cr>
-
 let g:vimspector_install_gadgets = ['debugpy', 'CodeLLDB']
 let g:vimspector_sign_priority = {
   \    'vimspectorBP':         300,
