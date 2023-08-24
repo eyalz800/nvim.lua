@@ -96,6 +96,13 @@ m.lsp_diagnostics = function()
     })
 end
 
+m.color_picker = function()
+    fzf_lua.colorschemes({
+        fzf_colors = v.g.fzf_colors,
+        ignore_patterns   = { '^blue$', '^darkblue$', '^default$', '^delek$', '^desert$', '^elflord$', '^evening$', '^habamax$', '^industry$', '^koehler$', '^lunaperche$', '^morning$', '^murphy$', '^pablo$', '^peachpuff$', '^quiet$', '^retrobox$', '^ron$', '^shine$', '^slate$', '^sorbet$', '^torte$', '^wildcharm$', '^zaibatsu$', '^zellner$', '^tokyonight$' },
+    })
+end
+
 m.config = function()
     fzf_lua = require 'fzf-lua'
     local actions = require 'fzf-lua.actions'

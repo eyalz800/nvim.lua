@@ -17,6 +17,7 @@ else
     m.find_file_list_invalidate = function() end
     m.find_file_list_hidden = function() end
     m.find_file_list_hidden_invalidate = function() end
+    m.color_picker = function() end
 end
 
 return m

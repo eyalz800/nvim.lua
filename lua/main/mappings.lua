@@ -201,6 +201,7 @@ map('t', '<scrollwheelleft>', '<nop>', { silent=true }) -- Disable terminal hori
 map('t', '<scrollwheelright>', '<nop>', { silent=true }) -- Disable terminal horizontal scrolling
 map({'n', 'x'}, '<scrollwheelleft>', indent_guides.refresh_trigger('<scrollwheelleft>', { expr=true }), { silent=true, expr=true }) -- Refresh indent guides on horizontal scroll
 map({'n', 'x'}, '<scrollwheelright>', indent_guides.refresh_trigger('<scrollwheelright>', { expr=true }), { silent=true, expr=true }) -- Refresh indent guides on horizontal scroll
+map('n', '<leader>cp', finder.color_picker, { silent=true }) -- Pick color
 
 -- Additional mappings
 --   * 'gc' - :h commentary -- Comment selected code

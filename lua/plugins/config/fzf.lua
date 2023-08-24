@@ -55,6 +55,10 @@ m.find_buffer = function()
     cmd 'Buffers'
 end
 
+m.color_picker = function()
+    cmd 'Colors'
+end
+
 v.cmd([=[
 
 set rtp+=~/.fzf

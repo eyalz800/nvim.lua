@@ -14,6 +14,7 @@ end
 
 m.config = function()
     local settings = user.settings.colorscheme_settings
+    m.tokyonight_config = require 'tokyonight.config'
 
     return {
         style = (settings.tokyonight or {}).style or 'storm',
@@ -33,7 +34,6 @@ m.config = function()
         hide_inactive_statusline = false,
         dim_inactive = false,
         lualine_bold = false,
-        --on_colors = function(colors) end,
         on_highlights = function(highlights, colors)
             highlights['FloatBorder'] = { fg = colors.fg, bg = colors.bg_dark }
             highlights['Folded'] = { fg = colors.comment, bg = colors.none }
@@ -48,11 +48,17 @@ m.config = function()
 end
 
 m.apply = function()
+    m.name = 'tokyonight-' .. m.tokyonight_config.options.style
+
     if v.o.background == 'dark' then
-        m.name = 'tokyonight'
+        if m.tokyonight_config.options.style == 'day' then
+            v.opt.background = 'light'
+        end
         v.env.BAT_THEME = 'Monokai Extended Origin'
     else
-        m.name = 'tokyonight-day'
+        if m.tokyonight_config.options.style ~= 'day' then
+            v.opt.background = 'dark'
+        end
         v.env.BAT_THEME = 'Monokai Extended Light'
     end
 

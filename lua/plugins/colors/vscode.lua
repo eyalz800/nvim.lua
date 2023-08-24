@@ -14,8 +14,6 @@ m.config = function()
     local settings = user.settings.colorscheme_settings
 
     return {
-        -- style = 'light'
-
         transparent = settings.transparent,
 
         italic_comments = false,
