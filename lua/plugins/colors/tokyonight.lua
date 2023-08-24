@@ -39,6 +39,8 @@ m.config = function()
             highlights['Folded'] = { fg = colors.comment, bg = colors.none }
             highlights['Ignore'] = { fg = v.o.background == 'dark' and '#444b6a' or colors.bg_dark}
             highlights['@variable.builtin'] = { fg = colors.orange }
+            highlights['@lsp.typemod.type.defaultLibrary'] = { fg = colors.blue1 }
+            highlights['@type.builtin'] = { fg = colors.blue1 }
         end
     }
 end
