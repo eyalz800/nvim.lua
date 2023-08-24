@@ -29,6 +29,13 @@ m.plugins = {
         end,
     },
     {
+        'Mofiqul/vscode.nvim',
+        config = function()
+            local vscode = require 'plugins.colors.vscode'
+            require 'vscode'.setup(vscode.config())
+        end,
+    },
+    {
         'neovim/nvim-lspconfig',
         dependencies = {
             {
@@ -178,18 +185,16 @@ m.plugins = {
         branch='release',
         cond = user.settings.lsp == 'coc'
     },
-
-    'voldikss/vim-floaterm',
-    'tpope/vim-fugitive',
-    'skywind3000/asyncrun.vim',
-    'mg979/vim-visual-multi',
     {
         'octol/vim-cpp-enhanced-highlight',
         cond = not require 'plugins.lsp'.semantic_highlighting
     },
+    'voldikss/vim-floaterm',
+    'tpope/vim-fugitive',
+    'skywind3000/asyncrun.vim',
+    'mg979/vim-visual-multi',
     'tmsvg/pear-tree',
     'tpope/vim-commentary',
-    'tomasiser/vim-code-dark',
     'ntpeters/vim-better-whitespace',
     'troydm/zoomwintab.vim',
     'haya14busa/incsearch.vim',
@@ -204,7 +209,6 @@ m.plugins = {
     'tpope/vim-abolish',
     'wellle/targets.vim',
     'yazgoo/yank-history',
-    'cormacrelf/vim-colors-github',
     'vim-python/python-syntax',
     {
         'jreybert/vimagit',
