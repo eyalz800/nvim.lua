@@ -183,7 +183,10 @@ m.plugins = {
     'tpope/vim-fugitive',
     'skywind3000/asyncrun.vim',
     'mg979/vim-visual-multi',
-    'octol/vim-cpp-enhanced-highlight',
+    {
+        'octol/vim-cpp-enhanced-highlight',
+        cond = not require 'plugins.lsp'.semantic_highlighting
+    },
     'tmsvg/pear-tree',
     'tpope/vim-commentary',
     'tomasiser/vim-code-dark',

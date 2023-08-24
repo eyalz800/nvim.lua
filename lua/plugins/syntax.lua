@@ -1,10 +1,15 @@
 local m = {}
 local v = require 'vim'
+local lsp = require 'plugins.lsp'
 
 v.g.python_highlight_all = 1
 v.g.python_highlight_operators = 0
 
 m.apply_c_and_cpp_syntax = function()
+    if lsp.semantic_highlighting then
+        return
+    end
+
     v.cmd [=[
         syntax match cCustomDot "\." contained
         syntax match cCustomPtr "->" contained
@@ -34,11 +39,11 @@ m.apply_c_and_cpp_syntax = function()
         syntax keyword cCharType char16_t
         syntax keyword cCharType char32_t
         hi def link cCharType cType
-        syntax match cCompundObject "\h\w*\(\.\|\->\)" contains=cCustomDot,cCustomPtr
-        hi def link cCompundObject cCustomMemVar
+        syntax match cCompoundObject "\h\w*\(\.\|\->\)" contains=cCustomDot,cCustomPtr
+        hi def link cCompoundObject cCustomMemVar
         syntax match cArrayObject "\h\w*\(\[\)" contains=cCustomBracket " ]
-        hi def link cArrayObject cCompundObject
-        syntax match cCustomMemVar "\(\.\|->\)\h\w*" containedin=cCompundObject contains=cCustomDot,cCustomPtr
+        hi def link cArrayObject cCompoundObject
+        syntax match cCustomMemVar "\(\.\|->\)\h\w*" containedin=cCompoundObject contains=cCustomDot,cCustomPtr
         hi def link cCustomMemVar Function
         hi! link cCustomClass Type
 
@@ -62,6 +67,10 @@ m.apply_c_and_cpp_syntax = function()
 end
 
 m.apply_py_syntax = function()
+    if lsp.semantic_highlighting then
+        return
+    end
+
     v.cmd [=[
         syntax keyword pythonLambda lambda
         hi def link pythonLambda pythonStatement

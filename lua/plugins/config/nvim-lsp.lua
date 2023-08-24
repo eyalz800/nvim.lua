@@ -27,6 +27,8 @@ m.format_selected = function() lsp.buf.format({ async = true }) end
 
 m.quick_fix = m.code_action
 
+m.semantic_highlighting = true
+
 if settings.diagnostic_hover then
     m.diagnostic_hover = function()
         for _, winid in pairs(v.api.nvim_tabpage_list_wins(0)) do
