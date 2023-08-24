@@ -34,6 +34,15 @@ m.disassemble = '<plug>VimspectorDisassemble'
 m.eval_window = '<plug>VimspectorBalloonEval'
 m.reset = v.fn['vimspector#Reset']
 
+m.on_winbar_stop = function() v.fn['vimspector#Stop']() end
+m.on_winbar_continue = function() v.fn['vimspector#Continue']() end
+m.on_winbar_pause = function() v.fn['vimspector#Pause']() end
+m.on_winbar_step_over = function() v.fn['vimspector#StepOver']() end
+m.on_winbar_step_into = function() v.fn['vimspector#StepInto']() end
+m.on_winbar_step_out = function() v.fn['vimspector#StepOut']() end
+m.on_winbar_restart = function() v.fn['vimspector#Restart']() end
+m.on_winbar_exit = function() v.fn['vimspector#Reset']() end
+
 v.cmd [=[
 
 let g:vimspector_install_gadgets = ['debugpy', 'CodeLLDB']
@@ -59,6 +68,17 @@ augroup end
 function! Init_lua_vimspector_setup_ui()
     call win_gotoid(g:vimspector_session_windows.output)
     set ft=asm
+    call win_gotoid(g:vimspector_session_windows.code)
+    split
+    resize -1000
+    enew
+    setlocal ft=VimspectorPrompt
+    setlocal buftype=prompt
+    setlocal nomodifiable
+    setlocal nocursorline
+    setlocal nonumber
+    setlocal textwidth=0
+    setlocal winbar=%#ToolbarButton#%0@v:lua.require'plugins.config.vimspector'.on_winbar_stop@\ ■\ Stop\ %X%*\ \ %#ToolbarButton#%1@v:lua.require'plugins.config.vimspector'.on_winbar_continue@\ ▶\ Cont\ %X%*\ \ %#ToolbarButton#%2@v:lua.require'plugins.config.vimspector'.on_winbar_pause@\ 󰏤\ Pause\ %X%*\ \ %#ToolbarButton#%3@v:lua.require'plugins.config.vimspector'.on_winbar_step_over@\ ↷\ Next\ %X%*\ \ %#ToolbarButton#%4@v:lua.require'plugins.config.vimspector'.on_winbar_step_into@\ →\ Step\ %X%*\ \ %#ToolbarButton#%5@v:lua.require'plugins.config.vimspector'.on_winbar_step_out@\ ←\ Out\ %X%*\ \ %#ToolbarButton#%6@v:lua.require'plugins.config.vimspector'.on_winbar_restart@\ ↺\ %X%*\ \ %#ToolbarButton#%7@v:lua.require'plugins.config.vimspector'.on_winbar_exit@\ ✕\ %X%*
     call win_gotoid(g:vimspector_session_windows.code)
 endfunction
 function! Init_lua_vimspector_initialize_prompt()
