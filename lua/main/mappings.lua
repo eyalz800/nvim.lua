@@ -214,6 +214,9 @@ if lsp.completion_mappings then
     map('i', '<cr>', lsp.enter, { silent=true, expr=true }) -- Lsp enter
 end
 map('i', '<bs>', '<plug>(PearTreeBackspace)', { silent=true }) -- Pear tree internal backspace processing
+if user.settings.lsp ~= 'coc' and user.settings.format_on_pairs then
+    map('i', '<cr>', '<plug>(PearTreeExpand)', { silent=true })
+end
 
 require 'user.mappings'
 return m

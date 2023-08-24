@@ -13,7 +13,7 @@ v.g.pear_tree_pairs = {
 v.g.pear_tree_ft_disabled = {}
 
 -- Pair expansion is dot-repeatable by default:
-v.g.pear_tree_repeatable_expand = 1
+v.g.pear_tree_repeatable_expand = 0
 
 -- Smart pairs are disabled by default:
 v.g.pear_tree_smart_openers = 1
