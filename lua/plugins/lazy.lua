@@ -137,7 +137,7 @@ m.plugins = {
             local bufferline_conf = require 'plugins.config.bufferline'
             require "bufferline".setup(bufferline_conf.config())
         end,
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
         cond = user.settings.buffer_line == 'bufferline',
     },
     {
@@ -157,9 +157,9 @@ m.plugins = {
         cond= user.settings.enable_gutentags == true,
     },
     {
-        "junegunn/fzf",
-        dir="~/.fzf",
-        build="./install --all",
+        'junegunn/fzf',
+        dir='~/.fzf',
+        build='./install --all',
     },
     {
         'junegunn/fzf.vim',
@@ -167,8 +167,8 @@ m.plugins = {
         -- cond = user.settings.finder == 'fzf',
     },
     {
-        "ibhagwan/fzf-lua",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        'ibhagwan/fzf-lua',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
             local fzf_lua_conf = require 'plugins.config.fzf-lua'
             require 'fzf-lua'.setup(fzf_lua_conf.config())
@@ -252,7 +252,7 @@ m.plugins = {
     },
     {
         'erig0/cscope_dynamic',
-        build=require('lib.os_bin').sed .. " -i 's/call s:runShellCommand/call system/g' ./plugin/cscope_dynamic.vim",
+        build=require('lib.os_bin').sed .. ' -i "s/call s:runShellCommand/call system/g" ./plugin/cscope_dynamic.vim',
         event = 'VeryLazy',
     },
     {

@@ -12,6 +12,7 @@ end
 
 m.config = function()
     local settings = user.settings.colorscheme_settings
+    local color = require('vscode.colors').get_colors()
 
     return {
         transparent = settings.transparent,
@@ -20,7 +21,11 @@ m.config = function()
         disable_nvimtree_bg = false,
 
         color_overrides = {},
-        group_overrides = {}
+        group_overrides = {
+            BufferLineFill = { fg = color.vscBack },
+            NvimTreeWinSeparator = { fg = color.vscLeftDark, bg = color.vscLeftDark },
+            BufferLineOffsetSeparator = { fg = color.vscLeftDark, bg = color.vscLeftDark },
+        }
     }
 end
 
