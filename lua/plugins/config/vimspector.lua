@@ -1,9 +1,31 @@
 local m = {}
 local v = require 'vim'
+local user = require 'user'
+
 local file_readable = require 'vim.file_readable'.file_readable
+local executable = require 'vim.executable'.executable
+local feed_keys = require 'vim.feed_keys'.feed_keys
+
+local map = v.keymap.set
+local getline = v.fn.getline
+local setline = v.fn.setline
+local win_gotoid = v.fn.win_gotoid
+local input = v.fn.input
+local system = v.fn.system
 
 m.launch_settings = function()
-    v.fn.Init_lua_vimspector_debug_launch_settings()
+    local debug_type = v.bo.filetype
+    if debug_type ~= 'cpp' and debug_type ~= 'c' and debug_type ~= 'python' then
+        debug_type = input('Debugger type (cpp/python): ')
+    end
+
+    if debug_type == 'cpp' or debug_type == 'c' then
+        m.generate_cpp_config()
+    elseif debug_type == 'python' then
+        m.generate_py_config()
+    else
+        error 'Invalid debug type!'
+    end
 end
 
 m.launch = function()
@@ -43,259 +65,257 @@ m.on_winbar_step_out = function() v.fn['vimspector#StepOut']() end
 m.on_winbar_restart = function() v.fn['vimspector#Restart']() end
 m.on_winbar_exit = function() v.fn['vimspector#Reset']() end
 
-v.cmd [=[
+v.g.vimspector_install_gadgets = {'debugpy', 'CodeLLDB', 'vscode-cpptools'}
+v.g.vimspector_sign_priority = {
+    vimspectorBP = 300,
+    vimspectorBPCond = 200,
+    vimspectorBPDisabled = 100,
+    vimspectorPC = 999,
+    vimspectorPCBP = 999,
+}
 
-let g:vimspector_install_gadgets = ['debugpy', 'CodeLLDB']
-let g:vimspector_sign_priority = {
-  \    'vimspectorBP':         300,
-  \    'vimspectorBPCond':     200,
-  \    'vimspectorBPDisabled': 100,
-  \    'vimspectorPC':         999,
-  \    'vimspectorPCBP':       999,
-  \ }
-sign define vimspectorBP            text= texthl=MatchParen
-sign define vimspectorBPCond        text= texthl=MatchParen
-sign define vimspectorBPLog         text=󰛿 texthl=MatchParen
-sign define vimspectorBPDisabled    text= texthl=LineNr
-sign define vimspectorPC            text= texthl=String linehl=CursorLine
-sign define vimspectorPCBP          text= texthl=String linehl=CursorLine
-let s:disable_codelldb_default = filereadable(expand('~/.vim/.disable_codelldb_default'))
-augroup init.lua.vimspector.custom_mappings
-    autocmd!
-    autocmd FileType VimspectorPrompt call Init_lua_vimspector_initialize_prompt()
-    autocmd User VimspectorUICreated call Init_lua_vimspector_setup_ui()
-augroup end
-function! Init_lua_vimspector_setup_ui()
-    call win_gotoid(g:vimspector_session_windows.output)
-    set ft=asm
-    call win_gotoid(g:vimspector_session_windows.code)
-    split
-    resize -1000
-    enew
-    setlocal ft=VimspectorPrompt
-    setlocal buftype=prompt
-    setlocal nomodifiable
-    setlocal nocursorline
-    setlocal nonumber
-    setlocal textwidth=0
-    setlocal winbar=%#ToolbarButton#%0@v:lua.require'plugins.config.vimspector'.on_winbar_stop@\ ■\ Stop\ %X%*\ \ %#ToolbarButton#%1@v:lua.require'plugins.config.vimspector'.on_winbar_continue@\ ▶\ Cont\ %X%*\ \ %#ToolbarButton#%2@v:lua.require'plugins.config.vimspector'.on_winbar_pause@\ 󰏤\ Pause\ %X%*\ \ %#ToolbarButton#%3@v:lua.require'plugins.config.vimspector'.on_winbar_step_over@\ ↷\ Next\ %X%*\ \ %#ToolbarButton#%4@v:lua.require'plugins.config.vimspector'.on_winbar_step_into@\ →\ Step\ %X%*\ \ %#ToolbarButton#%5@v:lua.require'plugins.config.vimspector'.on_winbar_step_out@\ ←\ Out\ %X%*\ \ %#ToolbarButton#%6@v:lua.require'plugins.config.vimspector'.on_winbar_restart@\ ↺\ %X%*\ \ %#ToolbarButton#%7@v:lua.require'plugins.config.vimspector'.on_winbar_exit@\ ✕\ %X%*
-    call win_gotoid(g:vimspector_session_windows.code)
-endfunction
-function! Init_lua_vimspector_initialize_prompt()
-    nnoremap <silent> <buffer> x i-exec<space>
-    if !exists('b:vimspector_command_history')
-        call Init_lua_vimspector_initialize_command_history_maps()
-        let b:vimspector_command_history = []
-        let b:vimspector_command_history_pos = 0
-    endif
-endfunction
-function! Init_lua_vimspector_initialize_command_history_maps()
-    inoremap <silent> <buffer> <cr> <C-o>:call Init_lua_vimspector_command_history_add()<cr>
-    inoremap <silent> <buffer> <Up> <C-o>:call Init_lua_vimspector_command_history_up()<cr>
-    inoremap <silent> <buffer> <Down> <C-o>:call Init_lua_vimspector_command_history_down()<cr>
-endfunction
-function! Init_lua_vimspector_command_history_add()
-    call add(b:vimspector_command_history, getline('.'))
-    let b:vimspector_command_history_pos = len(b:vimspector_command_history)
-    call feedkeys("\<cr>", 'tn')
-endfunction
-function! Init_lua_vimspector_command_history_up()
-    if len(b:vimspector_command_history) == 0 || b:vimspector_command_history_pos == 0
-        return
-    endif
-    call setline('.', b:vimspector_command_history[b:vimspector_command_history_pos - 1])
-    call feedkeys("\<C-o>A", 'tn')
-    let b:vimspector_command_history_pos = b:vimspector_command_history_pos - 1
-endfunction
-function! Init_lua_vimspector_command_history_down()
-    if b:vimspector_command_history_pos == len(b:vimspector_command_history)
-        return
-    endif
-    call setline('.', b:vimspector_command_history[b:vimspector_command_history_pos - 1])
-    call feedkeys("\<C-o>A", 'tn')
-    let b:vimspector_command_history_pos = b:vimspector_command_history_pos + 1
-endfunction
-augroup init.lua.vimspector.visual_multi_exit
-    autocmd!
-    autocmd User visual_multi_exit if &ft == 'VimspectorPrompt' | call Init_lua_vimspector_initialize_command_history_maps() | endif
-augroup end
-function! Init_lua_vimspector_generate_cpp()
-    call inputsave()
-    let target = input('Target (Executable/IP): ')
-    call inputrestore()
-    let debugger = 'gdb'
-    if !executable('gdb') && executable('lldb')
-        let debugger = 'lldb'
-    endif
-    if s:disable_codelldb_default " vscode-cpptools
-        if stridx(target, ':') != -1 && !filereadable(target)
-            call inputsave()
-            let main_file = input('Main File: ')
-            call inputrestore()
-            call system("
-                \ echo '{' > .vimspector.json &&
-                \ echo '    \"configurations\": {' >> .vimspector.json &&
-                \ echo '        \"Launch\": {' >> .vimspector.json &&
-                \ echo '            \"adapter\": \"vscode-cpptools\",' >> .vimspector.json &&
-                \ echo '            \"configuration\": {' >> .vimspector.json &&
-                \ echo '                \"request\": \"launch\",' >> .vimspector.json &&
-                \ echo '                \"program\": \"" . main_file . "\",' >> .vimspector.json &&
-                \ echo '                \"cwd\": \"${workspaceRoot}\",' >> .vimspector.json &&
-                \ echo '                \"type\": \"cppdbg\",' >> .vimspector.json &&
-                \ echo '                \"setupCommands\": [' >> .vimspector.json &&
-                \ echo '                    { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": false },' >> .vimspector.json &&
-                \ echo '                    { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> .vimspector.json &&
-                \ echo '                ],' >> .vimspector.json &&
-                \ echo '                \"miDebuggerServerAddress\": \"" . target . "\",' >> .vimspector.json &&
-                \ echo '                \"externalConsole\": true,' >> .vimspector.json &&
-                \ echo '                \"stopAtEntry\": true,' >> .vimspector.json &&
-                \ echo '                \"miDebuggerPath\": \"" . debugger . "\",' >> .vimspector.json &&
-                \ echo '                \"MIMode\": \"" . debugger . "\"' >> .vimspector.json &&
-                \ echo '            }' >> .vimspector.json &&
-                \ echo '        }' >> .vimspector.json &&
-                \ echo '    }' >> .vimspector.json &&
-                \ echo '}' >> .vimspector.json")
-        else
-            call system("
-                \ echo '{' > .vimspector.json &&
-                \ echo '    \"configurations\": {' >> .vimspector.json &&
-                \ echo '        \"Launch\": {' >> .vimspector.json &&
-                \ echo '            \"adapter\": \"vscode-cpptools\",' >> .vimspector.json &&
-                \ echo '            \"configuration\": {' >> .vimspector.json &&
-                \ echo '                \"request\": \"launch\",' >> .vimspector.json &&
-                \ echo '                \"type\": \"cppdbg\",' >> .vimspector.json &&
-                \ echo '                \"program\": \"" . target . "\",' >> .vimspector.json &&
-                \ echo '                \"args\": [],' >> .vimspector.json &&
-                \ echo '                \"environment\": [],' >> .vimspector.json &&
-                \ echo '                \"cwd\": \"${workspaceRoot}\",' >> .vimspector.json &&
-                \ echo '                \"externalConsole\": true,' >> .vimspector.json &&
-                \ echo '                \"stopAtEntry\": true,' >> .vimspector.json &&
-                \ echo '                \"setupCommands\": [' >> .vimspector.json &&
-                \ echo '                    { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": false },' >> .vimspector.json &&
-                \ echo '                    { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> .vimspector.json &&
-                \ echo '                ],' >> .vimspector.json &&
-                \ echo '                \"MIMode\": \"" . debugger . "\"' >> .vimspector.json &&
-                \ echo '            }' >> .vimspector.json &&
-                \ echo '        }' >> .vimspector.json &&
-                \ echo '    }' >> .vimspector.json &&
-                \ echo '}' >> .vimspector.json")
-        endif
-    else " CodeLLDB
-        if executable('lldb')
-            let debugger = 'lldb'
-        endif
-        if stridx(target, ':') != -1 && !filereadable(target)
-            call inputsave()
-            let main_file = input('Main File: ')
-            call inputrestore()
-            call system("
-                \ echo '{' > .vimspector.json &&
-                \ echo '    \"configurations\": {' >> .vimspector.json &&
-                \ echo '        \"Launch\": {' >> .vimspector.json &&
-                \ echo '            \"adapter\": \"CodeLLDB\",' >> .vimspector.json &&
-                \ echo '            \"configuration\": {' >> .vimspector.json &&
-                \ echo '                \"name\": \"remote attach\",' >> .vimspector.json &&
-                \ echo '                \"request\": \"launch\",' >> .vimspector.json &&
-                \ echo '                \"custom\": true,' >> .vimspector.json &&
-                \ echo '                \"type\": \"" . debugger . "\",' >> .vimspector.json &&
-                \ echo '                \"targetCreateCommands\": [\"target create " . main_file . "\"],' >> .vimspector.json &&
-                \ echo '                \"processCreateCommands\": [\"gdb-remote " . target . "\"],' >> .vimspector.json &&
-                \ echo '                \"args\": [],' >> .vimspector.json &&
-                \ echo '                \"environment\": [],' >> .vimspector.json &&
-                \ echo '                \"cwd\": \"${workspaceRoot}\",' >> .vimspector.json &&
-                \ echo '                \"terminal\": \"external\",' >> .vimspector.json &&
-                \ echo '                \"stopOnEntry\": true,' >> .vimspector.json &&
-                \ echo '                \"sourceMap\": {' >> .vimspector.json &&
-                \ echo '                    \"\": \"\"' >> .vimspector.json &&
-                \ echo '                },' >> .vimspector.json &&
-                \ echo '                \"initCommands\": [' >> .vimspector.json &&
-                \ echo '                    \"settings set target.x86-disassembly-flavor intel\"' >> .vimspector.json &&
-                \ echo '                ]' >> .vimspector.json &&
-                \ echo '            },' >> .vimspector.json &&
-                \ echo '            \"breakpoints\": {' >> .vimspector.json &&
-                \ echo '                \"exception\": {' >> .vimspector.json &&
-                \ echo '                    \"cpp_throw\": \"N\",' >> .vimspector.json &&
-                \ echo '                    \"cpp_catch\": \"N\"' >> .vimspector.json &&
-                \ echo '                }' >> .vimspector.json &&
-                \ echo '            }' >> .vimspector.json &&
-                \ echo '        }' >> .vimspector.json &&
-                \ echo '    }' >> .vimspector.json &&
-                \ echo '}' >> .vimspector.json")
-        else
-            call system("
-                \ echo '{' > .vimspector.json &&
-                \ echo '    \"configurations\": {' >> .vimspector.json &&
-                \ echo '        \"Launch\": {' >> .vimspector.json &&
-                \ echo '            \"adapter\": \"CodeLLDB\",' >> .vimspector.json &&
-                \ echo '            \"configuration\": {' >> .vimspector.json &&
-                \ echo '                \"name\": \"launch\",' >> .vimspector.json &&
-                \ echo '                \"request\": \"launch\",' >> .vimspector.json &&
-                \ echo '                \"type\": \"" . debugger . "\",' >> .vimspector.json &&
-                \ echo '                \"program\": \"" . target . "\",' >> .vimspector.json &&
-                \ echo '                \"args\": [],' >> .vimspector.json &&
-                \ echo '                \"environment\": [],' >> .vimspector.json &&
-                \ echo '                \"cwd\": \"${workspaceRoot}\",' >> .vimspector.json &&
-                \ echo '                \"terminal\": \"external\",' >> .vimspector.json &&
-                \ echo '                \"stopOnEntry\": true,' >> .vimspector.json &&
-                \ echo '                \"initCommands\": [' >> .vimspector.json &&
-                \ echo '                    \"settings set target.x86-disassembly-flavor intel\"' >> .vimspector.json &&
-                \ echo '                ]' >> .vimspector.json &&
-                \ echo '            },' >> .vimspector.json &&
-                \ echo '            \"breakpoints\": {' >> .vimspector.json &&
-                \ echo '                \"exception\": {' >> .vimspector.json &&
-                \ echo '                    \"cpp_throw\": \"N\",' >> .vimspector.json &&
-                \ echo '                    \"cpp_catch\": \"N\"' >> .vimspector.json &&
-                \ echo '                }' >> .vimspector.json &&
-                \ echo '            }' >> .vimspector.json &&
-                \ echo '        }' >> .vimspector.json &&
-                \ echo '    }' >> .vimspector.json &&
-                \ echo '}' >> .vimspector.json")
-        endif
-    endif
-endfunction
-function! Init_lua_vimspector_generate_py()
-    call inputsave()
-    let program = input('Python main file: ')
-    let python = 'python3'
-    call inputrestore()
-    call system("
-        \ echo '{' > .vimspector.json &&
-        \ echo '    \"configurations\": {' >> .vimspector.json &&
-        \ echo '        \"Launch\": {' >> .vimspector.json &&
-        \ echo '            \"adapter\": \"debugpy\",' >> .vimspector.json &&
-        \ echo '            \"breakpoints\": {\"exception\": {\"raised\": \"N\", \"uncaught\": \"Y\"}},' >> .vimspector.json &&
-        \ echo '            \"configuration\": {' >> .vimspector.json &&
-        \ echo '                \"request\": \"launch\",' >> .vimspector.json &&
-        \ echo '                \"type\": \"python\",' >> .vimspector.json &&
-        \ echo '                \"program\": \"" . program . "\",' >> .vimspector.json &&
-        \ echo '                \"args\": [],' >> .vimspector.json &&
-        \ echo '                \"python\": \"" . python . "\",' >> .vimspector.json &&
-        \ echo '                \"cwd\": \"${workspaceRoot}\",' >> .vimspector.json &&
-        \ echo '                \"externalConsole\": true,' >> .vimspector.json &&
-        \ echo '                \"stopAtEntry\": true' >> .vimspector.json &&
-        \ echo '            }' >> .vimspector.json &&
-        \ echo '        }' >> .vimspector.json &&
-        \ echo '    }' >> .vimspector.json &&
-        \ echo '}' >> .vimspector.json")
-endfunction
-function! Init_lua_vimspector_debug_launch_settings()
-    let debug_type = &filetype
-    if debug_type != 'cpp' && debug_type != 'c' && debug_type != 'python'
-        call inputsave()
-        let debug_type = input('Debugger type (cpp/python): ')
-        call inputrestore()
-    endif
+m.on_initialize_prompt = function()
+    map('n', 'x', 'i-exec<space>', {silent=true, buffer=true})
 
-    if debug_type == 'cpp' || debug_type == 'c'
-        call Init_lua_vimspector_generate_cpp()
-    elseif debug_type == 'python'
-        call Init_lua_vimspector_generate_py()
+    if not v.b.vimspector_command_history then
+        v.b.vimspector_command_history = {}
+        v.b.vimspector_command_history_pos = 0
+        m.command_history_initialize()
+    end
+end
+
+m.on_ui_created = function()
+    win_gotoid(v.g.vimspector_session_windows.output)
+    v.bo.filetype='asm'
+    win_gotoid(v.g.vimspector_session_windows.code)
+    v.cmd [=[
+        split
+        resize -1000
+        enew
+    ]=]
+    v.bo.filetype = 'VimspectorPrompt'
+    v.bo.buftype = 'prompt'
+    v.bo.modifiable = false
+    v.bo.textwidth = 0
+    v.wo.cursorline = false
+    v.wo.number = false
+    v.wo.winbar = [=[%#ToolbarButton#%0@v:lua.require'plugins.config.vimspector'.on_winbar_stop@ ■ Stop %X%*]=] ..
+                [=[  %#ToolbarButton#%1@v:lua.require'plugins.config.vimspector'.on_winbar_continue@ ▶ Cont %X%*]=] ..
+                [=[  %#ToolbarButton#%2@v:lua.require'plugins.config.vimspector'.on_winbar_pause@ 󰏤 Pause %X%*]=] ..
+                [=[  %#ToolbarButton#%3@v:lua.require'plugins.config.vimspector'.on_winbar_step_over@ ↷ Next %X%*]=] ..
+                [=[  %#ToolbarButton#%4@v:lua.require'plugins.config.vimspector'.on_winbar_step_into@ → Step %X%*]=] ..
+                [=[  %#ToolbarButton#%5@v:lua.require'plugins.config.vimspector'.on_winbar_step_out@ ← Out %X%*]=] ..
+                [=[  %#ToolbarButton#%6@v:lua.require'plugins.config.vimspector'.on_winbar_restart@ ↺ %X%*]=] ..
+                [=[  %#ToolbarButton#%7@v:lua.require'plugins.config.vimspector'.on_winbar_exit@ ✕ %X%*]=]
+    win_gotoid(v.g.vimspector_session_windows.code)
+end
+
+m.command_history_initialize = function()
+    map('i', '<cr>', m.command_history_add, {silent=true, buffer=true, expr=true})
+    map('i', '<up>', m.command_history_up, {silent=true, buffer=true})
+    map('i', '<down>', m.command_history_down, {silent=true, buffer=true})
+end
+
+m.command_history_add = function()
+    local history = v.b.vimspector_command_history
+    table.insert(history, getline('.'))
+    v.b.vimspector_command_history = history
+    v.b.vimspector_command_history_pos = #v.b.vimspector_command_history
+    return '<cr>'
+end
+
+m.command_history_up = function()
+    if #v.b.vimspector_command_history == 0 or v.b.vimspector_command_history_pos == 0 then
+        return
+    end
+
+    setline('.', v.b.vimspector_command_history[v.b.vimspector_command_history_pos])
+    if v.b.vimspector_command_history_pos ~= 1 then
+        v.b.vimspector_command_history_pos = v.b.vimspector_command_history_pos - 1
+    end
+    feed_keys '<c-o>A'
+end
+
+m.command_history_down = function()
+    if #v.b.vimspector_command_history == v.b.vimspector_command_history_pos then
+        setline('.', '> ')
     else
-        normal :<esc>
-        echom 'Invalid debug type.'
-    endif
-endfunction
+        v.b.vimspector_command_history_pos = v.b.vimspector_command_history_pos + 1
+        setline('.', v.b.vimspector_command_history[v.b.vimspector_command_history_pos])
+    end
+    feed_keys '<c-o>A'
+end
 
+m.on_visual_multi_exit = function()
+    if v.bo.filetype == 'VimspectorPrompt' then
+        m.command_history_initialize()
+    end
+end
+
+v.cmd [=[
+    sign define vimspectorBP            text= texthl=MatchParen
+    sign define vimspectorBPCond        text= texthl=MatchParen
+    sign define vimspectorBPLog         text=󰛿 texthl=MatchParen
+    sign define vimspectorBPDisabled    text= texthl=LineNr
+    sign define vimspectorPC            text= texthl=String linehl=CursorLine
+    sign define vimspectorPCBP          text= texthl=String linehl=CursorLine
 ]=]
+
+m.generate_cpp_config = function()
+    local target = input('Target (Executable/IP): ')
+
+    local debugger = 'gdb'
+    if not executable 'gdb' and executable 'lldb' then
+        debugger = 'lldb'
+    end
+
+    if user.settings.native_debugger_plugin == 'vscode-cpptools' then
+        if string.find(target, ':', 1, true) and not v.loop.fs_stat(target) then
+            local main_file = input 'Main File: '
+            system(
+                "echo '{' > .vimspector.json &&" ..
+                "echo '    \"configurations\": {' >> .vimspector.json &&" ..
+                "echo '        \"Launch\": {' >> .vimspector.json &&" ..
+                "echo '            \"adapter\": \"vscode-cpptools\",' >> .vimspector.json &&" ..
+                "echo '            \"configuration\": {' >> .vimspector.json &&" ..
+                "echo '                \"request\": \"launch\",' >> .vimspector.json &&" ..
+                "echo '                \"program\": \"" .. main_file .. "\",' >> .vimspector.json &&" ..
+                "echo '                \"cwd\": \"${workspaceRoot}\",' >> .vimspector.json &&" ..
+                "echo '                \"type\": \"cppdbg\",' >> .vimspector.json &&" ..
+                "echo '                \"setupCommands\": [' >> .vimspector.json &&" ..
+                "echo '                    { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": false },' >> .vimspector.json &&" ..
+                "echo '                    { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> .vimspector.json &&" ..
+                "echo '                ],' >> .vimspector.json &&" ..
+                "echo '                \"miDebuggerServerAddress\": \"" .. target .. "\",' >> .vimspector.json &&" ..
+                "echo '                \"externalConsole\": true,' >> .vimspector.json &&" ..
+                "echo '                \"stopAtEntry\": true,' >> .vimspector.json &&" ..
+                "echo '                \"miDebuggerPath\": \"" .. debugger .. "\",' >> .vimspector.json &&" ..
+                "echo '                \"MIMode\": \"" .. debugger .. "\"' >> .vimspector.json &&" ..
+                "echo '            }' >> .vimspector.json &&" ..
+                "echo '        }' >> .vimspector.json &&" ..
+                "echo '    }' >> .vimspector.json &&" ..
+                "echo '}' >> .vimspector.json"
+            )
+        else
+            system(
+                "echo '{' > .vimspector.json && " ..
+                "echo '    \"configurations\": {' >> .vimspector.json && " ..
+                "echo '        \"Launch\": {' >> .vimspector.json && " ..
+                "echo '            \"adapter\": \"vscode-cpptools\",' >> .vimspector.json && " ..
+                "echo '            \"configuration\": {' >> .vimspector.json && " ..
+                "echo '                \"request\": \"launch\",' >> .vimspector.json && " ..
+                "echo '                \"type\": \"cppdbg\",' >> .vimspector.json && " ..
+                "echo '                \"program\": \"" .. target .. "\",' >> .vimspector.json && " ..
+                "echo '                \"args\": [],' >> .vimspector.json && " ..
+                "echo '                \"environment\": [],' >> .vimspector.json && " ..
+                "echo '                \"cwd\": \"${workspaceRoot}\",' >> .vimspector.json && " ..
+                "echo '                \"externalConsole\": true,' >> .vimspector.json && " ..
+                "echo '                \"stopAtEntry\": true,' >> .vimspector.json && " ..
+                "echo '                \"setupCommands\": [' >> .vimspector.json && " ..
+                "echo '                    { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": false },' >> .vimspector.json && " ..
+                "echo '                    { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> .vimspector.json && " ..
+                "echo '                ],' >> .vimspector.json && " ..
+                "echo '                \"MIMode\": \"" .. debugger .. "\"' >> .vimspector.json && " ..
+                "echo '            }' >> .vimspector.json && " ..
+                "echo '        }' >> .vimspector.json && " ..
+                "echo '    }' >> .vimspector.json && " ..
+                "echo '}' >> .vimspector.json"
+            )
+        end
+    else
+        if string.find(target, ':', 1, true) and not v.loop.fs_stat(target) then
+            local main_file = input 'Main File: '
+            system(
+                "echo '{' > .vimspector.json && " ..
+                "echo '    \"configurations\": {' >> .vimspector.json && " ..
+                "echo '        \"Launch\": {' >> .vimspector.json && " ..
+                "echo '            \"adapter\": \"CodeLLDB\",' >> .vimspector.json && " ..
+                "echo '            \"configuration\": {' >> .vimspector.json && " ..
+                "echo '                \"name\": \"remote attach\",' >> .vimspector.json && " ..
+                "echo '                \"request\": \"launch\",' >> .vimspector.json && " ..
+                "echo '                \"custom\": true,' >> .vimspector.json && " ..
+                "echo '                \"type\": \"" .. debugger .. "\",' >> .vimspector.json && " ..
+                "echo '                \"targetCreateCommands\": [\"target create " .. main_file .. "\"],' >> .vimspector.json && " ..
+                "echo '                \"processCreateCommands\": [\"gdb-remote " .. target .. "\"],' >> .vimspector.json && " ..
+                "echo '                \"args\": [],' >> .vimspector.json && " ..
+                "echo '                \"environment\": [],' >> .vimspector.json && " ..
+                "echo '                \"cwd\": \"${workspaceRoot}\",' >> .vimspector.json && " ..
+                "echo '                \"terminal\": \"external\",' >> .vimspector.json && " ..
+                "echo '                \"stopOnEntry\": true,' >> .vimspector.json && " ..
+                "echo '                \"sourceMap\": {' >> .vimspector.json && " ..
+                "echo '                    \"\": \"\"' >> .vimspector.json && " ..
+                "echo '                },' >> .vimspector.json && " ..
+                "echo '                \"initCommands\": [' >> .vimspector.json && " ..
+                "echo '                    \"settings set target.x86-disassembly-flavor intel\"' >> .vimspector.json && " ..
+                "echo '                ]' >> .vimspector.json && " ..
+                "echo '            },' >> .vimspector.json && " ..
+                "echo '            \"breakpoints\": {' >> .vimspector.json && " ..
+                "echo '                \"exception\": {' >> .vimspector.json && " ..
+                "echo '                    \"cpp_throw\": \"N\",' >> .vimspector.json && " ..
+                "echo '                    \"cpp_catch\": \"N\"' >> .vimspector.json && " ..
+                "echo '                }' >> .vimspector.json && " ..
+                "echo '            }' >> .vimspector.json && " ..
+                "echo '        }' >> .vimspector.json && " ..
+                "echo '    }' >> .vimspector.json && " ..
+                "echo '}' >> .vimspector.json"
+            )
+        else
+            system(
+                "echo '{' > .vimspector.json && " ..
+                "echo '    \"configurations\": {' >> .vimspector.json && " ..
+                "echo '        \"Launch\": {' >> .vimspector.json && " ..
+                "echo '            \"adapter\": \"CodeLLDB\",' >> .vimspector.json && " ..
+                "echo '            \"configuration\": {' >> .vimspector.json && " ..
+                "echo '                \"name\": \"launch\",' >> .vimspector.json && " ..
+                "echo '                \"request\": \"launch\",' >> .vimspector.json && " ..
+                "echo '                \"type\": \"" .. debugger .. "\",' >> .vimspector.json && " ..
+                "echo '                \"program\": \"" .. target .. "\",' >> .vimspector.json && " ..
+                "echo '                \"args\": [],' >> .vimspector.json && " ..
+                "echo '                \"environment\": [],' >> .vimspector.json && " ..
+                "echo '                \"cwd\": \"${workspaceRoot}\",' >> .vimspector.json && " ..
+                "echo '                \"terminal\": \"external\",' >> .vimspector.json && " ..
+                "echo '                \"stopOnEntry\": true,' >> .vimspector.json && " ..
+                "echo '                \"initCommands\": [' >> .vimspector.json && " ..
+                "echo '                    \"settings set target.x86-disassembly-flavor intel\"' >> .vimspector.json && " ..
+                "echo '                ]' >> .vimspector.json && " ..
+                "echo '            },' >> .vimspector.json && " ..
+                "echo '            \"breakpoints\": {' >> .vimspector.json && " ..
+                "echo '                \"exception\": {' >> .vimspector.json && " ..
+                "echo '                    \"cpp_throw\": \"N\",' >> .vimspector.json && " ..
+                "echo '                    \"cpp_catch\": \"N\"' >> .vimspector.json && " ..
+                "echo '                }' >> .vimspector.json && " ..
+                "echo '            }' >> .vimspector.json && " ..
+                "echo '        }' >> .vimspector.json && " ..
+                "echo '    }' >> .vimspector.json && " ..
+                "echo '}' >> .vimspector.json"
+            )
+        end
+    end
+end
+
+m.generate_py_config = function()
+    local program = input('Python main file: ')
+    local python = 'python3'
+    system(
+        "echo '{' > .vimspector.json && " ..
+        "echo '    \"configurations\": {' >> .vimspector.json && " ..
+        "echo '        \"Launch\": {' >> .vimspector.json && " ..
+        "echo '            \"adapter\": \"debugpy\",' >> .vimspector.json && " ..
+        "echo '            \"breakpoints\": {\"exception\": {\"raised\": \"N\", \"uncaught\": \"Y\"}},' >> .vimspector.json && " ..
+        "echo '            \"configuration\": {' >> .vimspector.json && " ..
+        "echo '                \"request\": \"launch\",' >> .vimspector.json && " ..
+        "echo '                \"type\": \"python\",' >> .vimspector.json && " ..
+        "echo '                \"program\": \"" .. program .. "\",' >> .vimspector.json && " ..
+        "echo '                \"args\": [],' >> .vimspector.json && " ..
+        "echo '                \"python\": \"" .. python .. "\",' >> .vimspector.json && " ..
+        "echo '                \"cwd\": \"${workspaceRoot}\",' >> .vimspector.json && " ..
+        "echo '                \"externalConsole\": true,' >> .vimspector.json && " ..
+        "echo '                \"stopAtEntry\": true' >> .vimspector.json && " ..
+        "echo '            }' >> .vimspector.json && " ..
+        "echo '        }' >> .vimspector.json && " ..
+        "echo '    }' >> .vimspector.json && " ..
+        "echo '}' >> .vimspector.json"
+    )
+end
 
 return m
