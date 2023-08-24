@@ -1,5 +1,6 @@
 local m = {}
 local v = require 'vim'
+local user = require 'user'
 local root_paths = require 'main.root_paths'
 local cmd = require 'vim.cmd'.silent
 local source_index = require 'plugins.source_index'
@@ -109,7 +110,6 @@ map('n', '<c-w>d', buffers.delete_buffer, { silent=true }) -- Close buffer
 map('n', '<c-w>p', ':below copen<cr>', { silent=true }) -- Quickfix open below
 map('n', '<c-w>m', ':below copen<cr>', { silent=true }) -- Quickfix open below
 map('n', '<c-w>q', ':cclose<cr>', { silent=true }) -- Quickfix close
-map('i', '<bs>', '<plug>(PearTreeBackspace)', { silent=true }) -- Pear tree internal backspace processing
 map('c', '<c-k>', '<plug>CmdlineCompleteBackward', { silent=true }) -- Complete prev in vim command mode
 map('c', '<c-j>', '<plug>CmdlineCompleteForward', { silent=true }) -- Complete next in vim command mode
 map('n', '-', ':setlocal wrap! lbr!<cr>', { silent=true }) -- Wrap words
@@ -213,6 +213,7 @@ if lsp.completion_mappings then
     map('i', '<s-tab>', lsp.shift_tab, { silent=true, expr=true}) -- Lsp prev complete
     map('i', '<cr>', lsp.enter, { silent=true, expr=true }) -- Lsp enter
 end
+map('i', '<bs>', '<plug>(PearTreeBackspace)', { silent=true }) -- Pear tree internal backspace processing
 
 require 'user.mappings'
 return m
