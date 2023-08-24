@@ -24,6 +24,7 @@ m.config = function()
     require('luasnip.loaders.from_vscode').lazy_load()
     luasnip.config.setup {}
 
+---@diagnostic disable-next-line: missing-fields
     cmp.setup {
         snippet = {
             expand = function(args)
