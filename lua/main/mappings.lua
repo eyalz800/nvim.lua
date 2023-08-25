@@ -68,7 +68,6 @@ map('n', 'gl', git.show_git, { silent=true }) -- Show git
 map('n', 'gm', git.show_staging_buffer, { silent=true }) -- Show git staging buffer
 map('n', 'gs', source_index.goto_symbol_definition, { silent=true }) -- Goto indexed symbol prefer definition
 map('n', 'gS', source_index.goto_symbol_declaration, { silent=true }) -- Goto indexed symbol prefer declaration
-map('n', 'gz', source_index.goto_definition, { silent=true }) -- Goto defiinition by lsp and fall back to by index
 map('n', 'gd', lsp.goto_definition, { silent=true }) -- Goto definition lsp
 map('n', '<leader>gd', lsp.show_definitions, { silent=true }) -- Browse definitions lsp
 map('n', 'gD', lsp.goto_declaration, { silent=true }) -- Goto declaration lsp synchronously
@@ -201,6 +200,7 @@ map('n', '<leader>gF', source_index.generate_all_files_list, { silent=true }) --
 map('n', '<leader>gcf', source_index.generate_flags, { silent=true }) -- Generate flags
 map('n', '<leader>go', source_index.generate_opengrok, { silent=true }) -- Generate opengrok
 map('n', '<leader>ga', source_index.generate_cpp_and_opengrok, { silent=true }) -- Generate cpp and opengrok
+map('n', '<leader>gd', source_index.clean, { silent=true }) -- Clean
 map('t', '<scrollwheelleft>', '<nop>', { silent=true }) -- Disable terminal horizontal scrolling
 map('t', '<scrollwheelright>', '<nop>', { silent=true }) -- Disable terminal horizontal scrolling
 map({'n', 'x'}, '<scrollwheelleft>', indent_guides.refresh_trigger('<scrollwheelleft>', { expr=true }), { silent=true, expr=true }) -- Refresh indent guides on horizontal scroll
