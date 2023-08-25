@@ -1,7 +1,6 @@
 local m = {}
 local v = require 'vim'
 local user = require 'user'
-local cmd = require 'vim.cmd'.silent
 local bufdelete = require 'bufdelete'.bufdelete
 
 v.g['airline#extensions#whitespace#checks'] = {'indent', 'trailing', 'mixed-indent-file', 'conflicts'}
