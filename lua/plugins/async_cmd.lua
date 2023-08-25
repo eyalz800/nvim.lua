@@ -8,9 +8,12 @@ local cmd = require 'vim.cmd'.silent
 m.async_cmd = function(command, options)
     options = options or {}
 
-    if exists(':AsyncRun') then
+    if exists ':AsyncRun'  then
         if options.visible then
-            cmd('below copen')
+            cmd 'below copen'
+        end
+        if not options.focus then
+            cmd 'wincmd p'
         end
         cmd('AsyncRun ' .. command)
     else
