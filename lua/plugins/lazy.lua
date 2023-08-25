@@ -199,33 +199,73 @@ m.plugins = {
     },
     {
         'antoinemadec/coc-fzf',
-        branch='release',
+        branch = 'release',
         cond = user.settings.lsp == 'coc'
     },
     {
         'octol/vim-cpp-enhanced-highlight',
         cond = not require 'plugins.lsp'.semantic_highlighting or user.settings.treesitter
     },
-    'voldikss/vim-floaterm',
-    'tpope/vim-fugitive',
-    'skywind3000/asyncrun.vim',
-    'mg979/vim-visual-multi',
-    'tmsvg/pear-tree',
-    'tpope/vim-commentary',
-    'ntpeters/vim-better-whitespace',
-    'troydm/zoomwintab.vim',
-    'haya14busa/incsearch.vim',
-    'haya14busa/incsearch-fuzzy.vim',
-    'christoomey/vim-tmux-navigator',
-    'tpope/vim-surround',
-    'j5shi/CommandlineComplete.vim',
-    'scrooloose/vim-slumlord',
-    'skywind3000/asynctasks.vim',
-    'famiu/bufdelete.nvim',
-    'lukas-reineke/indent-blankline.nvim',
-    'tpope/vim-abolish',
-    'wellle/targets.vim',
-    'yazgoo/yank-history',
+    {
+        'voldikss/vim-floaterm',
+    },
+    {
+        'tpope/vim-fugitive',
+    },
+    {
+        'skywind3000/asyncrun.vim',
+    },
+    {
+        'mg979/vim-visual-multi',
+    },
+    {
+        'tmsvg/pear-tree',
+    },
+    {
+        'tpope/vim-commentary',
+    },
+    {
+        'ntpeters/vim-better-whitespace',
+    },
+    {
+        'troydm/zoomwintab.vim',
+    },
+    {
+        'haya14busa/incsearch.vim',
+    },
+    {
+        'haya14busa/incsearch-fuzzy.vim',
+    },
+    {
+        'christoomey/vim-tmux-navigator',
+    },
+    {
+        'tpope/vim-surround',
+    },
+    {
+        'j5shi/CommandlineComplete.vim',
+    },
+    {
+        'scrooloose/vim-slumlord',
+    },
+    {
+        'skywind3000/asynctasks.vim',
+    },
+    {
+        'famiu/bufdelete.nvim',
+    },
+    {
+        'lukas-reineke/indent-blankline.nvim',
+    },
+    {
+        'tpope/vim-abolish',
+    },
+    {
+        'wellle/targets.vim',
+    },
+    {
+        'yazgoo/yank-history',
+    },
     {
         'vim-python/python-syntax',
         cond = not require 'plugins.lsp'.semantic_highlighting or user.settings.treesitter
