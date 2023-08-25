@@ -1,33 +1,29 @@
 local m = {}
 local v = require 'vim'
 
-v.cmd [=[
+v.g.VM_default_mappings = 0
 
-let g:VM_default_mappings = 0
-
-if &background == 'dark'
-    let g:VM_theme = 'iceblue'
+if v.o.background == 'dark' then
+    v.g.VM_theme = 'iceblue'
 else
-    let g:VM_theme = 'lightblue1'
-endif
+    v.g.VM_theme = 'lightblue1'
+end
 
-let g:VM_leader = '<leader>m'
+v.g.VM_leader = 'm'
 
-let g:VM_maps = {
-    \ 'Find Under': '<leader>ms',
-    \ 'Find Subword Under': '<leader>ms',
-    \ 'Add Cursor At Pos': '<leader>mm',
-    \ 'Start Regex Search': 'm/',
-    \ 'Merge Regions': '<leader>mM',
-    \ 'Toggle Multiline': '<leader>mL',
-    \ 'Select All': '<leader>mA',
-    \ 'Visual All': '<leader>mA',
-    \ 'Visual Add': '<leader>ma',
-    \ 'Visual Cursors': '<leader>mc',
-    \ 'Visual Find': '<leader>mf',
-    \ 'Visual Regex': '<leader>m/',
-\ }
-
-]=]
+v.g.VM_maps = {
+    ['Find Under'] = 'ms',
+    ['Find Subword Under'] = 'ms',
+    ['Add Cursor At Pos'] = 'mm',
+    ['Start Regex Search'] = 'm/',
+    ['Merge Regions'] = 'mM',
+    ['Toggle Multiline'] = 'mL',
+    ['Select All'] = 'mA',
+    ['Visual All'] = 'mA',
+    ['Visual Add'] = 'ma',
+    ['Visual Cursors'] = 'mc',
+    ['Visual Find'] = 'mf',
+    ['Visual Regex'] = 'm/',
+}
 
 return m
