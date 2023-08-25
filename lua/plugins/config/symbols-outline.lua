@@ -1,5 +1,4 @@
 local m = {}
-local cmd = require 'vim.cmd'.silent
 
 local symbols_outline = nil
 
