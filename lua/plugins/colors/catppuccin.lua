@@ -59,26 +59,6 @@ m.config = function()
                     InitLuaBufferLineVisibleBg = { bg = color.mantle },
                 }
             end,
-            latte = function(color)
-                return {
-
-                }
-            end,
-            frappe = function(color)
-                return {
-
-                }
-            end,
-            macchiato = function(color)
-                return {
-
-                }
-            end,
-            mocha = function(color)
-                return {
-
-                }
-            end,
         }
     }
 end
