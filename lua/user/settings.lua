@@ -42,8 +42,9 @@ m.finder = 'fzf-lua'
 m.line = 'lualine'
 m.buffer_line = 'bufferline'
 m.file_explorer = 'nvim-tree'
-m.file_explorer_config = {nvim_tree={window_picker=false}}
+m.file_explorer_config = { nvim_tree = { window_picker = false } }
 m.code_explorer = 'symbols-outline'
 m.format_on_pairs = true
+m.treesitter = true
 
 return m

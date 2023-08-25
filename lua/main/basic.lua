@@ -6,10 +6,11 @@ local has = require 'vim.has'.has
 local exists = require 'vim.exists'.exists
 local stdpath = v.fn.stdpath
 
-v.cmd [[
-    syntax enable
-    filetype plugin indent on
-]]
+if not user.settings.treesitter then
+    v.cmd 'syntax enable'
+end
+
+v.cmd 'filetype plugin indent on'
 
 opt.ignorecase = true -- Ignore case
 opt.smartcase = true -- Smart case

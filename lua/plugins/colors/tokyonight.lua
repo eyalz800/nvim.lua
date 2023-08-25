@@ -38,9 +38,11 @@ m.config = function()
             highlights['FloatBorder'] = { fg = colors.fg, bg = colors.bg_dark }
             highlights['Folded'] = { fg = colors.comment, bg = colors.none }
             highlights['Ignore'] = { fg = v.o.background == 'dark' and '#444b6a' or colors.bg_dark}
-            highlights['@variable.builtin'] = { fg = colors.orange }
+            highlights['@variable.builtin'] = { fg = colors.magenta }
+            highlights['@keyword'] = { fg = colors.blue1 }
             highlights['@lsp.typemod.type.defaultLibrary'] = { fg = colors.blue1 }
             highlights['@type.builtin'] = { fg = colors.blue1 }
+            highlights['@lsp.typemod.variable.defaultLibrary.cpp'] = { fg = colors.orange }
             highlights['@lsp.typemod.function.defaultLibrary.cpp'] = { fg = colors.blue }
             highlights['@lsp.typemod.method.defaultLibrary.cpp'] = { fg = colors.blue }
         end

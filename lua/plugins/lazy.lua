@@ -96,6 +96,15 @@ m.plugins = {
         cond = user.settings.lsp == 'nvim',
     },
     {
+        'nvim-treesitter/nvim-treesitter',
+        build = ':TSUpdate',
+        config = function()
+            local nvim_treesitter = require 'plugins.config.nvim-treesitter'
+            require 'nvim-treesitter.configs'.setup(nvim_treesitter.config())
+        end,
+        cond = user.settings.treesitter,
+    },
+    {
         'lewis6991/gitsigns.nvim',
         config = function()
             local options = require 'plugins.config.gitsigns'.options
@@ -248,7 +257,8 @@ m.plugins = {
         cmd = 'Obsession',
     },
     {
-        'rrethy/vim-hexokinase', build='make hexokinase'
+        'rrethy/vim-hexokinase',
+        build='make hexokinase',
     },
     {
         'puremourning/vimspector',
