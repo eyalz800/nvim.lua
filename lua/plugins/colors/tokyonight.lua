@@ -34,22 +34,26 @@ m.config = function()
         hide_inactive_statusline = false,
         dim_inactive = false,
         lualine_bold = false,
-        on_highlights = function(highlights, colors)
-            highlights['FloatBorder'] = { fg = colors.fg, bg = colors.bg_dark }
-            highlights['Folded'] = { fg = colors.comment, bg = colors.none }
-            highlights['Ignore'] = { fg = v.o.background == 'dark' and '#444b6a' or colors.bg_dark}
-            highlights['@variable.builtin'] = { fg = colors.magenta }
-            highlights['@keyword'] = { fg = colors.blue1 }
-            highlights['@lsp.typemod.type.defaultLibrary'] = { fg = colors.blue1 }
-            highlights['@type.builtin'] = { fg = colors.blue1 }
-            highlights['@lsp.typemod.variable.defaultLibrary.cpp'] = { fg = colors.orange }
-            highlights['@lsp.typemod.function.defaultLibrary.cpp'] = { fg = colors.blue }
-            highlights['@lsp.typemod.method.defaultLibrary.cpp'] = { fg = colors.blue }
-            highlights['@constructor.cpp'] = { fg = colors.blue }
-            highlights['@keyword.function.lua'] = { fg = colors.blue }
-            highlights['@constructor.lua'] = { fg = colors.fg }
-            highlights['@punctuation.bracet'] = { fg = colors.fg }
-            highlights['@operator'] = { fg = colors.fg }
+        on_highlights = function(highlights, color)
+            highlights['FloatBorder'] = { fg = color.fg, bg = color.bg_dark }
+            highlights['Folded'] = { fg = color.comment, bg = color.none }
+            highlights['Ignore'] = { fg = v.o.background == 'dark' and '#444b6a' or color.bg_dark}
+            highlights['@variable.builtin'] = { fg = color.magenta }
+            highlights['@keyword'] = { fg = color.blue1 }
+            highlights['@lsp.typemod.type.defaultLibrary'] = { fg = color.blue1 }
+            highlights['@type.builtin'] = { fg = color.blue1 }
+            highlights['@string.escape'] = { fg = color.blue1 }
+            highlights['@lsp.typemod.variable.defaultLibrary.cpp'] = { fg = color.orange }
+            highlights['@lsp.typemod.function.defaultLibrary.cpp'] = { fg = color.blue }
+            highlights['@lsp.typemod.method.defaultLibrary.cpp'] = { fg = color.blue }
+            highlights['@lsp.typemod.function.defaultLibrary.c'] = { fg = color.blue }
+            highlights['@constructor.cpp'] = { fg = color.blue }
+            highlights['@keyword.function'] = { fg = color.blue }
+            highlights['@constructor.lua'] = { fg = color.fg }
+            highlights['@punctuation.bracet'] = { fg = color.fg }
+            highlights['@punctuation.delimiter'] = { fg = color.fg }
+            highlights['@operator'] = { fg = color.fg }
+            highlights['@conditional.ternary'] = { fg = color.fg }
         end
     }
 end

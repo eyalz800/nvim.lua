@@ -25,6 +25,12 @@ m.config = function()
             BufferLineFill = { fg = color.vscBack },
             NvimTreeWinSeparator = { fg = color.vscLeftDark, bg = color.vscLeftDark },
             BufferLineOffsetSeparator = { fg = color.vscLeftDark, bg = color.vscLeftDark },
+            ['@keyword.function.lua'] = { fg = color.vscPink },
+            ['@string.escape'] = { fg = color.vscYellowOrange },
+            ['@conditional.ternary'] = { fg = color.vscFront },
+            ['@punctuation.delimiter'] = { fg = color.vscFront },
+            ['@constructor.lua'] = { fg = color.vscFront },
+            ['@variable.builtin'] = { fg = color.vscBlue },
         }
     }
 end
