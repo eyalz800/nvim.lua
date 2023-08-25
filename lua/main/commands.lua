@@ -1,6 +1,5 @@
 local m = {}
 local v = require 'vim'
-local echo = require 'vim.echo'.echo
 local cmd = v.api.nvim_create_user_command
 local config_path = v.fn.stdpath('config')
 
@@ -21,12 +20,5 @@ cmd('QA', 'qa!', {bang = true})
 
 -- Sudo
 cmd('SudoWrite', 'w !sudo tee > /dev/null %', {})
-
--- Syntax information
-cmd('SyntaxInfo', function()
-    local s = v.fn.synID(v.fn.line('.'), v.fn.col('.'), 1)
-    echo(v.fn.synIDattr(s, 'name') ..
-         ' -> ' .. v.fn.synIDattr(v.fn.synIDtrans(s), 'name'))
-end, {})
 
 return m
