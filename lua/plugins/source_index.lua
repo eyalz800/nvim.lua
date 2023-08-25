@@ -9,6 +9,17 @@ local finder = require 'plugins.finder'
 local expand = v.fn.expand
 local input = v.fn.input
 local stdpath = v.fn.stdpath
+local split = v.fn.split
+local winnr = v.fn.winnr
+local bufnr = v.fn.bufnr
+local has_key = v.fn.has_key
+local getcurpos = v.fn.getcurpos
+local settagstack = v.fn.settagstack
+local gettagstack = v.fn.gettagstack
+local shellescape = v.fn.shellescape
+local system = v.fn.system
+local index = v.fn.index
+local trim = v.fn.trim
 
 local bin_path = stdpath 'data' .. '/installation/bin'
 
@@ -132,14 +143,14 @@ m.opengrok_query_input_d = function() return m.opengrok_query_input('d') end
 m.lib = {}
 
 m.lib.tagstack_push_current = function(name)
-    return m.lib.tagstack_push(name, v.fn.getcurpos(), v.fn.bufnr())
+    return m.lib.tagstack_push(name, getcurpos(), bufnr())
 end
 
 m.lib.tagstack_push = function(name, pos, buf)
     local curpos = pos
     curpos[1] = buf
     local item = { tagname = name, from = curpos }
-    local tagstack = v.fn.gettagstack()
+    local tagstack = gettagstack()
     local curidx = tagstack.curidx
 
     if curidx == (tagstack.length + 1) then
@@ -150,24 +161,24 @@ m.lib.tagstack_push = function(name, pos, buf)
     end
     tagstack.curidx = curidx + 1
 
-    v.fn.settagstack(v.fn.winnr(), tagstack, 'r')
+    settagstack(winnr(), tagstack, 'r')
 end
 
 m.lib.goto_symbol_input = function(type)
-    local symbol = v.fn.input('Symbol: ')
+    local symbol = input('Symbol: ')
     m.lib.goto_symbol(symbol, type)
 end
 
 m.lib.string_preview = function(string)
-    local name = v.fn.expand('<cword>')
-    local pos = v.fn.getcurpos()
-    local buf = v.fn.bufnr()
+    local name = expand '<cword>'
+    local pos = getcurpos()
+    local buf = bufnr()
 
-    local result = v.fn['fzf#vim#grep']('echo -e ' .. v.fn.shellescape(string),
-        0, v.fn['fzf#vim#with_preview']({ options = v.fn.split(v.fn['fzf#wrap']().options)[1] .. ' --prompt "> "' }), 0)
+    local result = v.fn['fzf#vim#grep']('echo -e ' .. shellescape(string),
+        0, v.fn['fzf#vim#with_preview']({ options = split(v.fn['fzf#wrap']().options)[1] .. ' --prompt "> "' }), 0)
 
     if #result ~= 0 then
-        if buf == v.fn.bufnr() and pos[2] == v.fn.getcurpos()[2] then
+        if buf == bufnr() and pos[2] == getcurpos()[2] then
             return 1
         end
         m.lib.tagstack_push(name, pos, buf)
@@ -203,16 +214,16 @@ m.lib.goto_symbol = function(symbol, type)
             '{ x = $1; $1 = ""; z = $3; $3 = ""; ' ..
             'printf "%s:%s:%s\n", x,z,$0; }'
         local cscope_command =
-            'cscope -dL' .. cscope_query_type .. " " .. v.fn.shellescape(symbol) ..
+            'cscope -dL' .. cscope_query_type .. " " .. shellescape(symbol) ..
             " | awk '" .. awk_program .. "'"
-        local results = v.fn.split(v.fn.system(cscope_command), '\n')
+        local results = split(system(cscope_command), '\n')
 
         if #results <= overall_limit then
             local files_to_results = {}
 
             for _, result in ipairs(results) do
-                local file_line = v.fn.split(v.fn.trim(v.fn.split(result, file_line_separator)[1]), ':')
-                if v.fn.has_key(files_to_results, file_line[1]) ~= 0 then
+                local file_line = split(trim(split(result, file_line_separator)[1]), ':')
+                if has_key(files_to_results, file_line[1]) ~= 0 then
                     table.insert(files_to_results[file_line[1]][1], file_line[2])
                     table.insert(files_to_results[file_line[1]][2], result)
                 else
@@ -220,7 +231,7 @@ m.lib.goto_symbol = function(symbol, type)
                 end
             end
 
-            if v.fn.len(files_to_results) <= limit then
+            if #files_to_results <= limit then
                 local valid_results = {}
                 local valid_jumps = {}
 
@@ -228,7 +239,7 @@ m.lib.goto_symbol = function(symbol, type)
                     local file_lines, res = file_results[1], file_results[2]
                     for _, target_line, target_column in ipairs(m.lib.get_target_symbol_jump_if_ctag_type(symbol, file_path, file_lines, ctags_tag_types)) do
                         table.insert(valid_jumps, {file_path, target_line, target_column})
-                        table.insert(valid_results, res[v.fn.index(file_lines, target_line)])
+                        table.insert(valid_results, res[index(file_lines, target_line)])
                     end
                 end
 
@@ -254,11 +265,11 @@ m.lib.goto_symbol = function(symbol, type)
             'printf "%s:%s:%s\n", x,z,$0; }'
         local opengrok_command =
             "java -Xmx2048m -cp " .. opengrok_jar .. " org.opensolaris.opengrok.search.Search -R .opengrok/configuration.xml -" ..
-            opengrok_query_type .. " " .. v.fn.shellescape(symbol) ..
+            opengrok_query_type .. " " .. shellescape(symbol) ..
             "| grep \"^/.*\" | " .. sed .. " 's@</\\?.>@@g' | " .. sed .. " 's/&amp;/\\&/g' | " .. sed .. " 's/-\\&gt;/->/g'" ..
             " | awk '" .. awk_program .. "'"
 
-        local results = v.fn.split(v.fn.system(opengrok_command), '\n')
+        local results = split(system(opengrok_command), '\n')
         if #results > overall_limit then
             return m.lib.og_query(opengrok_query_type, symbol, 1)
         end
@@ -266,8 +277,8 @@ m.lib.goto_symbol = function(symbol, type)
         local files_to_results = {}
 
         for _, result in ipairs(results) do
-            local file_line = v.fn.split(v.fn.trim(v.fn.split(result, file_line_separator)[1]), ':')
-            if v.fn.has_key(files_to_results, file_line[1]) ~= 0 then
+            local file_line = split(trim(split(result, file_line_separator)[1]), ':')
+            if has_key(files_to_results, file_line[1]) ~= 0 then
                 table.insert(files_to_results[file_line[1]][1], file_line[2])
                 table.insert(files_to_results[file_line[1]][2], result)
             else
@@ -275,7 +286,7 @@ m.lib.goto_symbol = function(symbol, type)
             end
         end
 
-        if v.fn.len(files_to_results) > limit then
+        if #files_to_results > limit then
             return m.lib.og_query(opengrok_query_type, symbol, 1)
         end
 
@@ -306,7 +317,7 @@ end
 m.lib.get_target_symbol_jump_if_ctag_type = function(symbol, file, lines, ctags_tag_types)
     local ctags_output = io.popen("ctags -o - " ..
         ctags_everything_options ..
-        ' ' .. v.fn.shellescape(file) .. " 2>/dev/null | rg " .. v.fn.shellescape(symbol))
+        ' ' .. shellescape(file) .. " 2>/dev/null | rg " .. shellescape(symbol))
     local ctags = {}
     if ctags_output then
         for line in ctags_output:lines() do
@@ -336,7 +347,7 @@ m.lib.get_target_symbol_jump_if_ctag_type = function(symbol, file, lines, ctags_
             end
         end
 
-        if v.fn.index(ctags_tag_types, ctag_field_type) ~= -1 and ctag_field_line ~= '' and vim.fn.index(lines, ctag_field_line) ~= -1 then
+        if index(ctags_tag_types, ctag_field_type) ~= -1 and ctag_field_line ~= '' and vim.fn.index(lines, ctag_field_line) ~= -1 then
             table.insert(lines_and_columns, {ctag_field_line, ctag_field_column})
         end
 
@@ -355,16 +366,16 @@ m.lib.cscope = function(_, query, preview, options)
         '{ x = $1; $1 = ""; z = $3; $3 = ""; ' ..
         'printf("%s:%s:%s\\n", x, z, $0); }'
     local grep_command =
-        'cscope -dL' .. ignorecase .. " " .. v.fn.shellescape(query) ..
+        'cscope -dL' .. ignorecase .. " " .. shellescape(query) ..
         " | awk '" .. awk_program .. "'"
 
-    local name = v.fn.expand('<cword>')
-    local pos = v.fn.getcurpos()
-    local buf = v.fn.bufnr()
+    local name = expand '<cword>'
+    local pos = getcurpos()
+    local buf = bufnr()
 
     local result = finder.custom_grep(grep_command, { preview=preview })
     if result and #result ~= 0 then
-        if buf == v.fn.bufnr() and pos[2] == v.fn.getcurpos()[2] then
+        if buf == bufnr() and pos[2] == getcurpos()[2] then
             return 1
         end
         m.lib.tagstack_push(name, pos, buf)
@@ -394,7 +405,7 @@ m.lib.cscope_query = function(option, preview, options)
         return
     end
 
-    query = v.fn.input(query)
+    query = input(query)
 
     if query ~= '' then
         if options.ignorecase then
@@ -414,17 +425,17 @@ m.lib.og_query = function(option, query, preview)
 
     local grep_command =
         "java -Xmx2048m -cp " .. opengrok_jar .. " org.opensolaris.opengrok.search.Search -R .opengrok/configuration.xml -" ..
-        option .. " " .. v.fn.shellescape(query) ..
+        option .. " " .. shellescape(query) ..
         " | grep \"^/.*\" | " .. sed .. " 's@</\\?.>@@g' | " .. sed .. " 's/&amp;/\\&/g' | " .. sed .. " 's/-\\&gt;/->/g'" ..
         " | awk '" .. awk_program .. "'"
 
-    local name = v.fn.expand('<cword>')
-    local pos = v.fn.getcurpos()
-    local buf = v.fn.bufnr()
+    local name = expand('<cword>')
+    local pos = getcurpos()
+    local buf = bufnr()
 
     local result = finder.custom_grep(grep_command, { preview=preview })
     if result and #result ~= 0 then
-        if buf == v.fn.bufnr() and pos[2] == v.fn.getcurpos()[2] then
+        if buf == bufnr() and pos[2] == getcurpos()[2] then
             return 1
         end
         m.lib.tagstack_push(name, pos, buf)
