@@ -7,12 +7,12 @@ local sed = require 'lib.os_bin'.sed
 local echo = require 'vim.echo'.echo
 local finder = require 'plugins.finder'
 
+local split = v.split
+local bufnr = v.api.nvim_get_current_buf
+local winnr = v.fn.winnr
 local expand = v.fn.expand
 local input = v.fn.input
 local stdpath = v.fn.stdpath
-local split = v.fn.split
-local winnr = v.fn.winnr
-local bufnr = v.fn.bufnr
 local getcurpos = v.fn.getcurpos
 local settagstack = v.fn.settagstack
 local gettagstack = v.fn.gettagstack
@@ -175,7 +175,7 @@ m.lib.string_preview = function(string)
     local pos = getcurpos()
     local buf = bufnr()
 
-    local result = finder.custom_grep('echo -e ' .. shellescape(string))
+    local result = finder.custom_grep('echo ' .. shellescape(string))
     if result and #result ~= 0 then
         if buf == bufnr() and pos[2] == getcurpos()[2] then
             return 1
@@ -188,7 +188,7 @@ end
 
 m.lib.goto_symbol = function(symbol, type)
     if symbol == '' then
-        vim.cmd("echom 'Empty symbol!'")
+        echo 'Empty Symbol!'
         return 0
     end
 
@@ -232,10 +232,11 @@ m.lib.goto_symbol = function(symbol, type)
                 local valid_jumps = {}
 
                 for file_path, file_results in pairs(files_to_results) do
-                    local file_lines, res = file_results[1], file_results[2]
+                    local file_lines, result_lines = file_results[1], file_results[2]
                     for _, line_to_column in ipairs(m.lib.get_target_symbol_jump_if_ctag_type(symbol, file_path, file_lines, ctags_tag_types)) do
-                        table.insert(valid_jumps, {file_path, line_to_column[1], line_to_column[2]})
-                        table.insert(valid_results, res[index(file_lines, line_to_column[1])])
+                        local line, column = line_to_column[1], line_to_column[2]
+                        table.insert(valid_jumps, {file_path, line, column})
+                        table.insert(valid_results, result_lines[index(file_lines, line) + 1])
                     end
                 end
 
@@ -288,10 +289,11 @@ m.lib.goto_symbol = function(symbol, type)
         local valid_jumps = {}
 
         for file_path, file_results in pairs(files_to_results) do
-            local file_lines, res = file_results[1], file_results[2]
+            local file_lines, result_lines = file_results[1], file_results[2]
             for _, line_to_column in ipairs(m.lib.get_target_symbol_jump_if_ctag_type(symbol, file_path, file_lines, ctags_tag_types)) do
-                table.insert(valid_jumps, {file_path, line_to_column[1], line_to_column[2]})
-                table.insert(valid_results, res[index(file_lines, line_to_column[1])])
+                local line, column = line_to_column[1], line_to_column[2]
+                table.insert(valid_jumps, {file_path, line, column})
+                table.insert(valid_results, result_lines[index(file_lines, line_to_column[1]) + 1])
             end
         end
 
@@ -323,25 +325,28 @@ m.lib.get_target_symbol_jump_if_ctag_type = function(symbol, file, lines, ctags_
     for _, ctag in ipairs(ctags) do
         local ctag_fields = split(ctag, '\t')
         local ctag_field_name = ctag_fields[1]
-        if ctag_field_name ~= symbol then
+
+        if #ctag_field_name < #symbol or string.sub(ctag_field_name, -#symbol) ~= symbol then
             goto continue
         end
 
-        local ctag_field_type = ''
-        local ctag_field_line = ''
+        local ctag_field_type = nil
+        local ctag_field_line = nil
         local ctag_field_column = 0
         for _, ctag_field in ipairs(ctag_fields) do
-            if ctag_field_type == '' and #ctag_field == 1 then
+            if not ctag_field_type and #ctag_field == 1 then
                 ctag_field_type = ctag_field
-            elseif ctag_field_line == '' and ctag_field:find('line:') == 1 then
-                ctag_field_line = v.split(ctag_field, ':')[2]
+            elseif not ctag_field_line and ctag_field:find('line:') == 1 then
+                ctag_field_line = split(ctag_field, ':')[2]
             elseif ctag_field_column == 0 and ctag_field:find('/^') == 1 and ctag_field:find(symbol) then
-                ctag_field_column = ctag_field:find(symbol) - 1
+                ctag_field_column = ctag_field:find(symbol) - 2
             end
         end
 
-        if index(ctags_tag_types, ctag_field_type) ~= -1 and ctag_field_line ~= '' and vim.fn.index(lines, ctag_field_line) ~= -1 then
-            table.insert(lines_and_columns, {ctag_field_line, ctag_field_column})
+        if index(ctags_tag_types, ctag_field_type) ~= -1 and ctag_field_line and index(lines, ctag_field_line) ~= -1 then
+            if index(lines_and_columns, {ctag_field_line, ctag_field_column}) == -1 then
+                table.insert(lines_and_columns, {ctag_field_line, ctag_field_column})
+            end
         end
 
         ::continue::
