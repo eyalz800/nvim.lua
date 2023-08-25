@@ -203,7 +203,7 @@ map('n', '<leader>gF', source_index.generate_all_files_list, { silent=true }) --
 map('n', '<leader>gcf', source_index.generate_flags, { silent=true }) -- Generate flags
 map('n', '<leader>go', source_index.generate_opengrok, { silent=true }) -- Generate opengrok
 map('n', '<leader>ga', source_index.generate_cpp_and_opengrok, { silent=true }) -- Generate cpp and opengrok
-map('n', '<leader>gd', source_index.clean, { silent=true }) -- Clean
+map('n', '<leader><leader>gc', source_index.clean, { silent=true }) -- Clean
 map('t', '<scrollwheelleft>', '<nop>', { silent=true }) -- Disable terminal horizontal scrolling
 map('t', '<scrollwheelright>', '<nop>', { silent=true }) -- Disable terminal horizontal scrolling
 map({'n', 'x'}, '<scrollwheelleft>', indent_guides.refresh_trigger('<scrollwheelleft>', { expr=true }), { silent=true, expr=true }) -- Refresh indent guides on horizontal scroll
