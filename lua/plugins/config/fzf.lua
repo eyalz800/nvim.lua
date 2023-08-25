@@ -63,6 +63,18 @@ m.color_picker = function()
     cmd 'Colors'
 end
 
+m.custom_grep = function(command, options)
+    options = options or {}
+
+    local fzf_color_option = v.split(v.fn["fzf#wrap"]()["options"], " ")[1]
+    local fzf_opts = { options = fzf_color_option .. ' --prompt "> "' }
+    if options.preview then
+        fzf_opts = v.fn['fzf#vim#with_preview'](fzf_opts)
+    end
+
+    return v.fn['fzf#vim#grep'](command, 0, fzf_opts, 0)
+end
+
 m.rg = function(fullscreen)
     local initial_command = 'rg --column --line-number --no-heading --color=always --smart-case . '
     local reload_command =

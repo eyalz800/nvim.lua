@@ -4,6 +4,7 @@ local v = require 'vim'
 local async_cmd = require 'plugins.async_cmd'.async_cmd
 local sed = require 'lib.os_bin'.sed
 local echo = require 'vim.echo'.echo
+local finder = require 'plugins.finder'
 
 local expand = v.fn.expand
 local input = v.fn.input
@@ -357,20 +358,13 @@ m.lib.cscope = function(_, query, preview, options)
         'cscope -dL' .. ignorecase .. " " .. v.fn.shellescape(query) ..
         " | awk '" .. awk_program .. "'"
 
-    local fzf_color_option = v.split(v.fn["fzf#wrap"]()["options"], " ")[1]
-    local opts = { options = fzf_color_option .. ' --prompt "> "' }
-    if preview then
-        opts = v.fn["fzf#vim#with_preview"](opts)
-    end
-
     local name = v.fn.expand('<cword>')
     local pos = v.fn.getcurpos()
     local buf = v.fn.bufnr()
 
-    local result = v.fn["fzf#vim#grep"](grep_command, 0, opts, 0)
-
-    if #result ~= 0 then
-        if buf == v.fn.bufnr() and pos[2] == vim.fn.getcurpos()[2] then
+    local result = finder.custom_grep(grep_command, { preview=preview })
+    if result and #result ~= 0 then
+        if buf == v.fn.bufnr() and pos[2] == v.fn.getcurpos()[2] then
             return 1
         end
         m.lib.tagstack_push(name, pos, buf)
@@ -424,19 +418,12 @@ m.lib.og_query = function(option, query, preview)
         " | grep \"^/.*\" | " .. sed .. " 's@</\\?.>@@g' | " .. sed .. " 's/&amp;/\\&/g' | " .. sed .. " 's/-\\&gt;/->/g'" ..
         " | awk '" .. awk_program .. "'"
 
-    local fzf_color_option = v.split(v.fn["fzf#wrap"]()["options"], " ")[1]
-    local opts = { options = fzf_color_option .. ' --prompt "> "' }
-    if preview then
-        opts = v.fn["fzf#vim#with_preview"](opts)
-    end
-
     local name = v.fn.expand('<cword>')
     local pos = v.fn.getcurpos()
     local buf = v.fn.bufnr()
 
-    local result = v.fn["fzf#vim#grep"](grep_command, 0, opts, 0)
-
-    if #result ~= 0 then
+    local result = finder.custom_grep(grep_command, { preview=preview })
+    if result and #result ~= 0 then
         if buf == v.fn.bufnr() and pos[2] == v.fn.getcurpos()[2] then
             return 1
         end

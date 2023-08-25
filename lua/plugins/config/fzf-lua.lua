@@ -103,6 +103,13 @@ m.color_picker = function()
     })
 end
 
+m.custom_grep = function(command)
+    fzf_lua.grep_project({
+        cmd = command,
+        fzf_colors = v.g.fzf_colors,
+    })
+end
+
 m.config = function()
     fzf_lua = require 'fzf-lua'
     local actions = require 'fzf-lua.actions'
