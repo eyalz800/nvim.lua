@@ -49,6 +49,7 @@ m.config = function()
             highlights['@keyword.function.lua'] = { fg = colors.blue }
             highlights['@constructor.lua'] = { fg = colors.fg }
             highlights['@punctuation.bracet'] = { fg = colors.fg }
+            highlights['@operator'] = { fg = colors.fg }
         end
     }
 end
