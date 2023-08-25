@@ -56,6 +56,7 @@ map({'n', 'x'}, '<c-l>', indent_guides.refresh_trigger('20zl', { expr=false }), 
 map({'n', 'x'}, '<c-h>', indent_guides.refresh_trigger('20zh', { expr=false }), { silent=true }) -- Side scrolling
 map('n', '<leader>rw', whitespace.strip, { silent=true }) -- Strip whitespace
 map('n', '<leader>tw', whitespace.toggle, { silent=true }) -- Toggle whitespace
+map('n', '<leader>ts', ':set spell! spelloptions=camel spelllang=en<cr>', { silent=true }) -- Toggle spell
 map('n', 'cro', root_paths.switch_to_root, { silent=true }) -- Switch to root
 map('n', 'cp', root_paths.switch_to_project_root, { silent=true }) -- Switch to project root
 map('n', 'cf', explorers.display_current_file, { silent=true }) -- Echo current file
