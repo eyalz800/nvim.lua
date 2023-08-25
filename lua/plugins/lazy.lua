@@ -36,6 +36,14 @@ m.plugins = {
         end,
     },
     {
+        'catppuccin/nvim',
+        name = 'catppuccin',
+        config = function()
+            local catppuccin = require 'plugins.colors.catppuccin'
+            require 'catppuccin'.setup(catppuccin.config())
+        end,
+    },
+    {
         'neovim/nvim-lspconfig',
         dependencies = {
             {

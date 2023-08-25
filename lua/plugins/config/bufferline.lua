@@ -21,17 +21,36 @@ end
 m.config = function()
     bufferline = require 'bufferline'
 
-    local offset_sep = { highlight = "Pmenu", attribute = "bg" }
+    v.cmd [=[
+        hi! def link InitLuaBufferLineBg Normal
+        hi! def link InitLuaBufferLineOffsetSep Pmenu
+        hi! def link InitLuaBufferLineSelectedBg Pmenu
+        hi! def link InitLuaBufferLineSelectedFg NormalSB
+        hi! def link InitLuaBufferLineVisibleFg NonText
+        hi! def link InitLuaBufferLineVisibleBg Pmenu
+        hi! def link InitLuaBufferLineNormalFg NonText
+        hi! def link InitLuaBufferLineNormalBg CursorLine
+    ]=]
+
+    local groups = {
+        "Pmenu",
+        "Normal",
+        "NormalSB",
+        "NonText",
+        "CursorLine",
+    }
+
+    local offset_sep = { highlight = "InitLuaBufferLineOffsetSep", attribute = "bg" }
     if user.settings.file_explorer ~= 'nvim-tree' then
         offset_sep = { highlight = "Normal", attribute = "bg" }
     end
-    local line_bg = { highlight = "Normal", attribute = "bg" }
-    local selected_fg = { highlight = 'NormalSB', attribute = "fg" }
-    local selected_bg = { highlight = 'Pmenu', attribute = "bg" }
-    local visible_fg = { highlight = 'NonText', attribute = "fg" }
-    local visible_bg = { highlight = 'Pmenu', attribute = "bg" }
-    local fg = { highlight = 'NonText', attribute = "fg" }
-    local bg = { highlight = "CursorLine", attribute = "bg" }
+    local line_bg = { highlight = "InitLuaBufferLineBg", attribute = "bg" }
+    local selected_fg = { highlight = 'InitLuaBufferLineSelectedFg', attribute = "fg" }
+    local selected_bg = { highlight = 'InitLuaBufferLineSelectedBg', attribute = "bg" }
+    local visible_fg = { highlight = 'InitLuaBufferLineVisibleFg', attribute = "fg" }
+    local visible_bg = { highlight = 'InitLuaBufferLineVisibleBg', attribute = "bg" }
+    local fg = { highlight = 'InitLuaBufferLineNormalFg', attribute = "fg" }
+    local bg = { highlight = "InitLuaBufferLineNormalBg", attribute = "bg" }
 
     return {
         options = {
