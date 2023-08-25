@@ -204,7 +204,7 @@ m.plugins = {
     },
     {
         'octol/vim-cpp-enhanced-highlight',
-        cond = not require 'plugins.lsp'.semantic_highlighting
+        cond = not require 'plugins.lsp'.semantic_highlighting or user.settings.treesitter
     },
     'voldikss/vim-floaterm',
     'tpope/vim-fugitive',
@@ -226,7 +226,10 @@ m.plugins = {
     'tpope/vim-abolish',
     'wellle/targets.vim',
     'yazgoo/yank-history',
-    'vim-python/python-syntax',
+    {
+        'vim-python/python-syntax',
+        cond = not require 'plugins.lsp'.semantic_highlighting or user.settings.treesitter
+    },
     {
         'jreybert/vimagit',
         cmd = {'Magit', 'MagitOnly'}
