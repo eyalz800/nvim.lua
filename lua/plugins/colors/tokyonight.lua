@@ -45,6 +45,7 @@ m.config = function()
             highlights['@lsp.typemod.variable.defaultLibrary.cpp'] = { fg = colors.orange }
             highlights['@lsp.typemod.function.defaultLibrary.cpp'] = { fg = colors.blue }
             highlights['@lsp.typemod.method.defaultLibrary.cpp'] = { fg = colors.blue }
+            highlights['@constructor.cpp'] = { fg = colors.blue }
         end
     }
 end
