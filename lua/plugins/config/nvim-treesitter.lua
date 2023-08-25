@@ -3,7 +3,7 @@ local v = require 'vim'
 
 m.config = function()
     return {
-        ensure_installed = { 'c', 'cpp', 'lua', 'vim', 'python' },
+        ensure_installed = { 'c', 'cpp', 'lua', 'vim', 'vimdoc', 'python', 'query' },
         sync_install = false,
         auto_install = true,
         highlight = {
