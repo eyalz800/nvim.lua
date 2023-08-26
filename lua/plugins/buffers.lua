@@ -15,6 +15,7 @@ else
         bufdelete(id or 0, true)
     end
     m.switch_to_buffer = function() return function() end end
+    m.pick_buffer = function() end
 end
 
 return m

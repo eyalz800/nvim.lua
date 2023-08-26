@@ -123,6 +123,7 @@ map('n', '<leader>7', buffers.switch_to_buffer(7), { silent=true }) -- Switch bu
 map('n', '<leader>8', buffers.switch_to_buffer(8), { silent=true }) -- Switch buffer 8
 map('n', '<leader>9', buffers.switch_to_buffer(9), { silent=true }) -- Switch buffer 9
 map('n', '<leader>0', buffers.switch_to_buffer(0), { silent=true }) -- Switch buffer 10
+map('n', '<leader><tab>', buffers.pick_buffer, { silent=true }) -- Pick buffer
 map('n', '<c-w>p', ':below copen<cr>', { silent=true }) -- Quickfix open below
 map('n', '<c-w>m', ':below copen<cr>', { silent=true }) -- Quickfix open below
 map('n', '<c-w>q', ':cclose<cr>', { silent=true }) -- Quickfix close

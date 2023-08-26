@@ -22,6 +22,8 @@ m.switch_to_buffer = function(number)
     return '<cmd>BufferLineGoToBuffer ' .. number .. '<cr>'
 end
 
+m.pick_buffer = ':BufferLinePick<cr>'
+
 m.config = function()
     bufferline = require 'bufferline'
 
