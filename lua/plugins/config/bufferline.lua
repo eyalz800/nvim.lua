@@ -18,6 +18,10 @@ m.delete_buffer = function(id)
     bufdelete(id or 0, true)
 end
 
+m.switch_to_buffer = function(number)
+    return '<cmd>BufferLineGoToBuffer ' .. number .. '<cr>'
+end
+
 m.config = function()
     bufferline = require 'bufferline'
 
@@ -31,14 +35,6 @@ m.config = function()
         hi! def link InitLuaBufferLineNormalFg NonText
         hi! def link InitLuaBufferLineNormalBg CursorLine
     ]=]
-
-    local groups = {
-        "Pmenu",
-        "Normal",
-        "NormalSB",
-        "NonText",
-        "CursorLine",
-    }
 
     local offset_sep = { highlight = "InitLuaBufferLineOffsetSep", attribute = "bg" }
     if user.settings.file_explorer ~= 'nvim-tree' then

@@ -14,6 +14,7 @@ else
     m.delete_buffer = function(id)
         bufdelete(id or 0, true)
     end
+    m.switch_to_buffer = function() return function() end end
 end
 
 return m

@@ -1,7 +1,6 @@
 local m = {}
 local v = require 'vim'
 local user = require 'user'
-local bufdelete = require 'bufdelete'.bufdelete
 
 v.g['airline#extensions#whitespace#checks'] = {'indent', 'trailing', 'mixed-indent-file', 'conflicts'}
 v.g['airline#extensions#whitespace#trailing_format'] = 'tr[%s]'
@@ -28,8 +27,13 @@ m.next_buffer = '<plug>AirlineSelectNextTab'
 m.prev_buffer = '<plug>AirlineSelectPrevTab'
 
 m.delete_buffer = function(id)
+    local bufdelete = require 'bufdelete'.bufdelete
     bufdelete(id or 0, true)
     v.fn['airline#extensions#tabline#buflist#clean']()
+end
+
+m.switch_to_buffer = function(number)
+    return '<plug>AirlineSelectTab' .. number
 end
 
 return m
