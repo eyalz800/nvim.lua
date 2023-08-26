@@ -37,7 +37,7 @@ m.lsp_config = {
             'coc-spell-checker' }
     },
 }
-m.install_options = { clang_version=16 }
+m.install_options = { clang_version = 16 }
 m.finder = 'fzf-lua'
 m.line = 'lualine'
 m.buffer_line = 'bufferline'
@@ -46,5 +46,6 @@ m.file_explorer_config = { nvim_tree = { window_picker = false } }
 m.code_explorer = 'symbols-outline'
 m.format_on_pairs = true
 m.treesitter = true
+m.terminal = { set_background = true }
 
 return m

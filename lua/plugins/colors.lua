@@ -3,6 +3,7 @@ local v = require 'vim'
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
 local file_readable = require 'vim.file_readable'.file_readable
+local terminal_color = require 'plugins.terminal_color'
 
 local readfile = v.fn.readfile
 local expand = v.fn.expand
@@ -38,6 +39,11 @@ m.post_switch_color = function()
         system('echo -n ' .. color_name .. ' > ' .. tmux_color_path)
         if v.env.TMUX then
             system 'tmux source ~/.tmux.conf'
+        end
+
+        local bg = v.fn.synIDattr(v.fn.hlID 'Normal', 'bg')
+        if bg ~= '' then
+            terminal_color.set_background_color(bg)
         end
     end
 end
