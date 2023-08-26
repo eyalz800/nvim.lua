@@ -38,6 +38,8 @@ m.config = function()
             highlights['FloatBorder'] = { fg = color.fg, bg = color.bg_dark }
             highlights['Folded'] = { fg = color.comment, bg = color.none }
             highlights['Ignore'] = { fg = v.o.background == 'dark' and '#444b6a' or color.bg_dark}
+            highlights['InitLuaVimspectorBP'] = { fg = color.orange }
+            highlights['InitLuaVimspectorPC'] = { fg = color.green }
             highlights['@variable.builtin'] = { fg = color.magenta }
             highlights['@keyword'] = { fg = color.blue1 }
             highlights['@lsp.typemod.type.defaultLibrary'] = { fg = color.blue1 }
@@ -49,6 +51,7 @@ m.config = function()
             highlights['@lsp.typemod.function.defaultLibrary.c'] = { fg = color.blue }
             highlights['@constructor.cpp'] = { fg = color.blue }
             highlights['@keyword.function'] = { fg = color.blue }
+            highlights['@keyword.operator.c'] = { fg = color.blue5 }
             highlights['@constructor.lua'] = { fg = color.fg }
             highlights['@punctuation.bracet'] = { fg = color.fg }
             highlights['@punctuation.delimiter'] = { fg = color.fg }

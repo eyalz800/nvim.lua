@@ -153,12 +153,15 @@ m.on_visual_multi_exit = function()
 end
 
 v.cmd [=[
-    sign define vimspectorBP            text= texthl=MatchParen
-    sign define vimspectorBPCond        text= texthl=MatchParen
-    sign define vimspectorBPLog         text=󰛿 texthl=MatchParen
-    sign define vimspectorBPDisabled    text= texthl=LineNr
-    sign define vimspectorPC            text= texthl=String linehl=CursorLine
-    sign define vimspectorPCBP          text= texthl=String linehl=CursorLine
+    hi! def link InitLuaVimspectorBP WarningMsg
+    hi! def link InitLuaVimspectorBPDisabled LineNr
+    hi! def link InitLuaVimspectorPC String
+    sign define vimspectorBP            text= texthl=InitLuaVimspectorBP
+    sign define vimspectorBPCond        text= texthl=InitLuaVimspectorBP
+    sign define vimspectorBPLog         text=󰛿 texthl=InitLuaVimspectorBP
+    sign define vimspectorBPDisabled    text= texthl=InitLuaVimspectorBPDisabled
+    sign define vimspectorPC            text= texthl=InitLuaVimspectorPC linehl=CursorLine
+    sign define vimspectorPCBP          text= texthl=InitLuaVimspectorPC linehl=CursorLine
 ]=]
 
 m.generate_cpp_config = function()

@@ -12,7 +12,7 @@ end
 
 m.config = function()
     local settings = user.settings.colorscheme_settings
-    local color = require('vscode.colors').get_colors()
+    local color = require 'vscode.colors' .get_colors()
 
     return {
         transparent = settings.transparent,
@@ -25,6 +25,10 @@ m.config = function()
             BufferLineFill = { fg = color.vscBack },
             NvimTreeWinSeparator = { fg = color.vscLeftDark, bg = color.vscLeftDark },
             BufferLineOffsetSeparator = { fg = color.vscLeftDark, bg = color.vscLeftDark },
+            MatchParen = { fg = color.vscBlueGreen, bg = color.vscBack },
+            WarningMsg = { fg = color.vscUiOrange },
+            DiagnosticWarn = { fg = color.vscUiOrange },
+            InitLuaVimspectorPC = { fg = color.vscGreen },
             ['@keyword.function.lua'] = { fg = color.vscPink },
             ['@string.escape'] = { fg = color.vscYellowOrange },
             ['@conditional.ternary'] = { fg = color.vscFront },
@@ -41,6 +45,9 @@ m.apply = function()
     else
         v.env.BAT_THEME = 'Monokai Extended Light'
     end
+
+    local color = require 'vscode.colors' .get_colors()
+    v.cmd('hi! DiagnosticUnderlineWarn guisp=' .. color.vscUiOrange)
 
     if user.settings.lsp == 'coc' then
         v.cmd [=[
