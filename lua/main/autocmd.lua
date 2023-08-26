@@ -1,8 +1,5 @@
 local m = {}
 local v = require 'vim'
-local augroup = v.api.nvim_create_augroup
-local autocmd = v.api.nvim_create_autocmd
-local opt_local = v.opt_local
 local colors = require 'plugins.colors'
 local whitespace = require 'plugins.whitespace'
 local lsp = require 'plugins.lsp'
@@ -10,6 +7,10 @@ local large_files = require 'plugins.large_files'
 local syntax = require 'plugins.syntax'
 local binary_view = require 'plugins.binary_view'
 local doc_reader = require 'plugins.doc_reader'
+local user = require 'user'
+local augroup = v.api.nvim_create_augroup
+local autocmd = v.api.nvim_create_autocmd
+local opt_local = v.opt_local
 
 local indentation = augroup('init.lua.file_indentatoin', {})
 autocmd('filetype', {pattern={'c', 'cpp'}, group=indentation, callback=function()
@@ -38,18 +39,28 @@ autocmd('colorschemepre', {group=augroup('init.lua.colorscheme_pre', {}), callba
 autocmd('colorscheme', {group=augroup('init.lua.colorscheme', {}), callback=colors.post_switch_color})
 
 local lsp_was_enabled = nil
-if lsp.is_enabled then
-    autocmd('User', {pattern='visual_multi_start', group=augroup('init.lua.visual_multi_start', {}), callback=function()
+if user.settings.lsp == 'coc' then
+    autocmd('User', {pattern='visual_multi_start', group=augroup('init.lua.visual_multi_start.lsp', {}), callback=function()
         lsp_was_enabled = lsp.is_enabled()
         lsp.disable()
     end})
 end
 
-autocmd('User', {pattern='visual_multi_exit', group=augroup('init.lua.visual_multi_exit', {}), callback=function()
+autocmd('User', {pattern='visual_multi_exit', group=augroup('init.lua.visual_multi_exit.lsp', {}), callback=function()
     if lsp_was_enabled then
         lsp.enable()
     end
 end})
+
+if user.settings.line == 'lualine' then
+    local lualine = require 'lualine'
+    autocmd('User', {pattern='visual_multi_start', group=augroup('init.lua.visual_multi_start.line', {}), callback=function()
+        lualine.hide()
+    end})
+    autocmd('User', {pattern='visual_multi_exit', group=augroup('init.lua.visual_multi_exit.line', {}), callback=function()
+        lualine.hide({ unhide = true })
+    end})
+end
 
 autocmd('filetype', {pattern='nerdtree', group=augroup('init.lua.nerdtree', {}), callback=function()
     opt_local.signcolumn = 'no'
