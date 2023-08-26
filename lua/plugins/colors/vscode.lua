@@ -22,6 +22,7 @@ m.config = function()
 
         color_overrides = {},
         group_overrides = {
+            NormalFloat = { fg = color.vscFront, bg = color.vscBack },
             BufferLineFill = { fg = color.vscBack },
             NvimTreeWinSeparator = { fg = color.vscLeftDark, bg = color.vscLeftDark },
             BufferLineOffsetSeparator = { fg = color.vscLeftDark, bg = color.vscLeftDark },
@@ -29,6 +30,10 @@ m.config = function()
             WarningMsg = { fg = color.vscUiOrange },
             DiagnosticWarn = { fg = color.vscUiOrange },
             InitLuaVimspectorPC = { fg = color.vscGreen },
+            DiagnosticUnderlineTextError = { fg = color.vscRed },
+            DiagnosticUnderlineTextWarn = { fg = color.vscUiOrange },
+            DiagnosticUnderlineTextHint = { fg = color.vscBlue },
+            DiagnosticUnderlineTextInfo = { fg = color.vscBlue },
             ['@keyword.function.lua'] = { fg = color.vscPink },
             ['@string.escape'] = { fg = color.vscYellowOrange },
             ['@conditional.ternary'] = { fg = color.vscFront },
@@ -47,23 +52,18 @@ m.apply = function()
     end
 
     local color = require 'vscode.colors' .get_colors()
-    v.cmd('hi! DiagnosticUnderlineWarn guisp=' .. color.vscUiOrange)
+
+    v.cmd([=[
+        hi! DiagnosticUnderlineWarn guisp=]=] .. color.vscUiOrange .. [=[
+    ]=])
 
     if user.settings.lsp == 'coc' then
         v.cmd [=[
             hi! link CocUnusedHighlight DiagnosticUnderlineWarn
-            hi! DiagnosticVirtualTextError guibg=NONE
-            hi! DiagnosticVirtualTextWarn guibg=NONE
-            hi! DiagnosticVirtualTextHint guibg=NONE
-            hi! DiagnosticVirtualTextInfo guibg=NONE
         ]=]
     elseif user.settings.lsp == 'nvim' then
         v.cmd [=[
             hi! link DiagnosticUnnecessary DiagnosticUnderlineWarn
-            hi! DiagnosticVirtualTextError guibg=NONE
-            hi! DiagnosticVirtualTextWarn guibg=NONE
-            hi! DiagnosticVirtualTextHint guibg=NONE
-            hi! DiagnosticVirtualTextInfo guibg=NONE
         ]=]
     end
 
