@@ -16,7 +16,7 @@ m.config = function()
         },
         transparent_background = settings.transparent, -- disables setting the background color.
         show_end_of_buffer = false,
-        term_colors = false,
+        term_colors = true,
         dim_inactive = {
             enabled = false,
             shade = 'dark',
