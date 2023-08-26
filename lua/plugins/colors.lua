@@ -31,11 +31,6 @@ m.post_switch_color = function()
 
         v.opt.guicursor = 'n-v-c-sm:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20'
 
-        local bg = v.fn.synIDattr(v.fn.hlID 'Normal', 'bg')
-        if bg ~= '' then
-            terminal_color.set_background_color(bg)
-        end
-
         local color_name = colorscheme.name or v.g.colors_name
         if file_readable(tmux_color_path) and readfile(tmux_color_path)[1] == color_name then
             return
@@ -45,6 +40,15 @@ m.post_switch_color = function()
         if v.env.TMUX then
             system 'tmux source ~/.tmux.conf'
         end
+
+        m.load_terminal_colors()
+    end
+end
+
+m.load_terminal_colors = function()
+    local bg = v.fn.synIDattr(v.fn.hlID 'Normal', 'bg')
+    if bg ~= '' then
+        terminal_color.set_background_color(bg)
     end
 end
 
