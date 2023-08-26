@@ -11,7 +11,7 @@ local system = v.fn.system
 local data_path = stdpath 'data'
 local installation_path = data_path .. '/installation'
 local bin_path = installation_path .. '/bin'
-local llvm_path = bin_path .. '/llvm'
+local programs_path = bin_path .. '/programs'
 local misc_path = installation_path .. '/misc'
 local undo_path = installation_path .. '/undo'
 
@@ -19,7 +19,7 @@ return {
     {
         name = 'make-dirs',
         command = 'mkdir -p ~/.config/coc ~/.cache ' ..
-                  installation_path .. ' ' .. bin_path .. ' ' .. llvm_path .. ' ' .. misc_path .. ' ' .. undo_path
+                  installation_path .. ' ' .. bin_path .. ' ' .. programs_path .. ' ' .. misc_path .. ' ' .. undo_path
     },
     {
         name = 'apt-update',
@@ -75,10 +75,11 @@ return {
         os = 'Darwin',
     },
     {
-        name = 'clangd-path',
-        command = 'echo export PATH=\\$PATH:/usr/local/opt/llvm/bin >> ~/.bashrc',
-        condition = not executable('clangd') and executable('/usr/local/opt/llvm/bin/clangd'),
-        os = 'Darwin',
+        name = 'clangd-link',
+        command = 'rm -rf ' .. programs_path .. '/clangd' ..
+               ' ; ln -s /opt/homebrew/opt/llvm/bin/clangd ' .. programs_path .. '/clangd',
+        cond = file_readable '/opt/homebrew/opt/llvm/bin/clangd',
+        os = 'Darwin'
     },
     {
         name = 'lazygit',
@@ -112,7 +113,7 @@ return {
     },
     {
         name = 'clangd-link',
-        command = 'rm -rf ' .. bin_path .. '/llvm/clangd && ln -s $(command -v clangd-' .. options.clang_version .. ') ' .. bin_path .. '/llvm/clangd',
+        command = 'rm -rf ' .. programs_path .. '/clangd && ln -s $(command -v clangd-' .. options.clang_version .. ') ' .. programs_path .. '/clangd',
         os = 'Linux',
     },
     {

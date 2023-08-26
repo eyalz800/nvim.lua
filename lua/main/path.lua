@@ -1,14 +1,21 @@
 local m = {}
 local v = require 'vim'
 local executable = require 'vim.executable'.executable
-local file_readable = require 'vim.file_readable'.file_readable
 
 local stdpath = v.fn.stdpath
 
-v.env.PATH = stdpath('data') .. '/installation/bin/llvm' .. ':' .. v.env.PATH
+local data_path = stdpath 'data'
 
-if not executable('clangd') and file_readable('/usr/local/opt/llvm/bin/clangd') then
-    v.env.PATH = v.env.PATH .. '/usr/local/opt/llvm/bin/clangd'
+v.env.PATH = data_path .. '/installation/bin/programs' .. ':' ..
+             data_path .. '/mason/bin' .. ':' ..
+             v.env.PATH
+
+if not executable('clangd') and v.loop.fs_stat('/usr/local/opt/llvm/bin/clangd') then
+    v.env.PATH = v.env.PATH .. '/usr/local/opt/llvm/bin'
+end
+
+if not executable('clangd') and v.loop.fs_stat('/opt/homebrew/opt/llvm/bin/clangd') then
+    v.env.PATH = v.env.PATH .. '/opt/homebrew/opt/llvm/bin'
 end
 
 return m
