@@ -31,6 +31,7 @@ end})
 
 autocmd('TermOpen', {group=augroup('init.lua.terminal_auto_commands', {}), callback=function()
     opt_local.number = false
+    opt_local.relativenumber = false
     opt_local.signcolumn = 'no'
     whitespace.disable()
 end})
