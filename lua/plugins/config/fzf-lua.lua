@@ -2,6 +2,8 @@ local m = {}
 local v = require 'vim'
 local fzf_lua = nil
 
+local expand = v.fn.expand
+
 m.find_file = function()
     fzf_lua.files({
         cmd = 'rg --files --color=never --hidden -g "!.git"',
@@ -70,8 +72,32 @@ m.find_in_files_precise_native = function()
     })
 end
 
+m.find_current_in_files = function()
+    fzf_lua.grep_cword({
+        cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+        fzf_colors = v.g.fzf_colors,
+    })
+end
+
+m.find_current_in_files_precise = function()
+    fzf_lua.live_grep_glob({
+        cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+        search = expand '<cword>',
+        fzf_colors = v.g.fzf_colors,
+    })
+end
+
+m.find_current_in_files_precise_native = function()
+    fzf_lua.live_grep_native({
+        cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+        search = expand '<cword>',
+        fzf_colors = v.g.fzf_colors,
+    })
+end
+
 m.find_buffer = function()
     fzf_lua.buffers({
+        search = expand '<cword>',
         fzf_colors = v.g.fzf_colors,
     })
 end

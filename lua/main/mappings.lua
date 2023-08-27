@@ -96,6 +96,9 @@ map('n', '<leader><leader><c-]>', finder.find_file_list_hidden_invalidate, { sil
 map('n', '<c-g>', finder.find_in_files, { silent=true }) -- Search in all files fuzzy
 map('n', '<c-\\>', finder.find_in_files_precise, { silent=true }) -- Search in all files precisely
 map('n', '<leader><c-\\>', finder.find_in_files_precise_native, { silent=true }) -- Search in all files precisely (may be faster)
+map('n', 'g<c-g>', finder.find_current_in_files, { silent=true }) -- Search in all files fuzzy
+map('n', 'g<c-\\>', finder.find_current_in_files_precise, { silent=true }) -- Search in all files precisely
+map('n', 'g<leader><c-\\>', finder.find_current_in_files_precise_native, { silent=true }) -- Search in all files precisely (may be faster)
 map('n', '//', finder.find_line, { silent=true }) -- Find a line in current file
 map('n', '<c-j>', '<plug>(VM-Add-Cursor-Down)', { silent=true }) -- Add cursor down
 map('n', '<c-k>', '<plug>(VM-Add-Cursor-Up)', { silent=true }) -- Add cursor down

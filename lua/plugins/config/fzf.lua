@@ -63,6 +63,10 @@ m.color_picker = function()
     cmd 'Colors'
 end
 
+m.find_current_in_files = m.find_in_files
+m.find_current_in_files_precise = m.find_in_files_precise
+m.find_current_in_files_precise_native = m.find_in_files_precise_native
+
 m.custom_grep = function(command, options)
     options = options or {}
 
