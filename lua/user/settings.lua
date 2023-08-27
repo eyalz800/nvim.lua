@@ -47,5 +47,6 @@ m.code_explorer = 'symbols-outline'
 m.format_on_pairs = true
 m.treesitter = true
 m.terminal = { set_background = true }
+m.quickfix_expand = true
 
 return m
