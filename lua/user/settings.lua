@@ -49,5 +49,10 @@ m.treesitter = true
 m.terminal = { set_background = true }
 m.quickfix_expand = true
 m.column = 'statuscol'
+m.line_number = {
+    number = false,
+    relative = true,
+    together = true,
+}
 
 return m
