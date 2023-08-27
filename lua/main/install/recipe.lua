@@ -156,30 +156,26 @@ return {
     },
     {
         name = 'exuberant-ctags-download',
-        command = 'curl -fLo ' .. bin_path .. '/ctags-exuberant/ctags.tar.gz --create-dirs ' ..
+        command = 'rm -rf ' .. bin_path .. '/ctags-exuberant ; ' ..
+                  'curl -fLo ' .. bin_path .. '/ctags-exuberant/ctags.tar.gz --create-dirs ' ..
                   'http://prdownloads.sourceforge.net/ctags/ctags-5.8.tar.gz',
-        cond = not executable 'ctags-exuberant' ,
     },
     {
         name = 'exuberant-ctags-unpack',
         command = 'cd ' .. bin_path .. '/ctags-exuberant; tar -xzvf ctags.tar.gz',
-        cond = not executable 'ctags-exuberant' ,
     },
     {
         name = 'exuberant-ctags-cleanup',
         command = 'rm -rf ' .. bin_path .. '/ctags-exuberant/ctags',
-        cond = not executable 'ctags-exuberant' ,
     },
     {
         name = 'exuberant-ctags-rename',
         command = 'mv ' .. bin_path .. '/ctags-exuberant/ctags-5.8 ' .. bin_path .. '/ctags-exuberant/ctags',
-        cond = not executable 'ctags-exuberant' ,
     },
     {
         name = 'exuberant-ctags-make',
         command = [=[ cd ]=] .. bin_path .. [=[/ctags-exuberant/ctags; ]=] .. sed ..
                   [=[ -i 's@# define __unused__  _.*@#define __unused__@g' ./general.h; ./configure; make -j ]=],
-        cond = not executable 'ctags-exuberant',
     },
     {
         name = 'install-bat',
