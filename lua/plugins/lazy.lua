@@ -96,6 +96,14 @@ m.plugins = {
         cond = user.settings.lsp == 'nvim',
     },
     {
+        'luukvbaal/statuscol.nvim',
+        config = function()
+            local statuscol_conf = require 'plugins.config.statuscol'
+            require 'statuscol'.setup(statuscol_conf.config())
+        end,
+        cond = user.settings.column == 'statuscol',
+    },
+    {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
         config = function()

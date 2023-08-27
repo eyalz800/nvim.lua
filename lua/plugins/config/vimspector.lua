@@ -65,6 +65,8 @@ m.on_winbar_step_out = function() v.fn['vimspector#StepOut']() end
 m.on_winbar_restart = function() v.fn['vimspector#Restart']() end
 m.on_winbar_exit = function() v.fn['vimspector#Reset']() end
 
+m.toggle_breakpoint = v.fn['vimspector#ToggleBreakpoint']
+
 v.g.vimspector_install_gadgets = {'debugpy', 'CodeLLDB', 'vscode-cpptools'}
 v.g.vimspector_sign_priority = {
     vimspectorBP = 300,
