@@ -20,7 +20,7 @@ m.config = function()
         setopt = true,
         thousands = false,
         relculright = true,
-        ft_ignore = { 'nerdtree', 'tagbar', 'NvimTree', 'Outline', 'VimspectorPrompt' },
+        ft_ignore = { 'nerdtree', 'tagbar', 'NvimTree', 'Outline', 'VimspectorPrompt', 'fugitiveblame' },
         bt_ignore = { 'prompt', 'terminal' },
         segments = {
             { text = { '%C' }, click = 'v:lua.ScFa' },
