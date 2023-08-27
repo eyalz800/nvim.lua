@@ -26,19 +26,17 @@ m.config = function()
             { text = { '%C' }, click = 'v:lua.ScFa' },
             { text = { '%s' }, click = 'v:lua.ScSa' },
             {
-                text = { '%=%{v:lnum}' },
+                text = { '%=%{v:lnum} ' },
                 click = 'v:lua.ScLa',
-                condition = {
-                    line_number_setting.together,
-                },
+                condition = { line_number_setting.together, },
             },
             {
-                text = { ' ', builtin.lnumfunc, ' ' },
+                text = { function(args) return builtin.lnumfunc(args) .. ' ' end },
                 click = 'v:lua.ScLa',
                 condition = {
-                    function(args) return v.o.relativenumber and curwin() == args.win end,
-                    function(args) return v.o.relativenumber and curwin() == args.win end,
-                    builtin.notempty,
+                    function(args)
+                        return not line_number_setting.together or (v.o.relativenumber and curwin() == args.win)
+                    end,
                 },
             },
         },
