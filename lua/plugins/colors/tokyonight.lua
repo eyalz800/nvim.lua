@@ -46,6 +46,7 @@ m.config = function()
             highlights['@type.builtin'] = { fg = color.blue1 }
             highlights['@string.escape'] = { fg = color.blue1 }
             highlights['@lsp.typemod.variable.defaultLibrary.cpp'] = { fg = color.orange }
+            highlights['@lsp.typemod.enumMember.defaultLibrary.cpp'] = { fg = color.orange }
             highlights['@lsp.typemod.function.defaultLibrary.cpp'] = { fg = color.blue }
             highlights['@lsp.typemod.method.defaultLibrary.cpp'] = { fg = color.blue }
             highlights['@lsp.typemod.function.defaultLibrary.c'] = { fg = color.blue }
