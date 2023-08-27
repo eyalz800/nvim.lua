@@ -53,7 +53,7 @@ opt.showmode = false -- Do not show command/insert/normal status
 opt.ttimeoutlen = 10 -- Responsive escape
 opt.fillchars = 'vert:│' -- Bar for vertical split
 opt.swapfile = user.settings.swap_files -- Swap files support
-opt.signcolumn = 'yes:2' -- Sign column width
+opt.signcolumn = 'auto:2-9' -- Sign column width
 opt.mouse = 'a' -- Mouse
 opt.mousemoveevent = true -- Mouse movement
 
