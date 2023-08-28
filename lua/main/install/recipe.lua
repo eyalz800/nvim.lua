@@ -38,7 +38,7 @@ return {
     },
     {
         name = 'install-basic',
-        command = 'brew install curl ag ctags cscope llvm make autoconf automake' ..
+        command = 'brew install curl ag ctags cscope llvm make autoconf automake unzip' ..
                   ' pkg-config python3 nodejs gnu-sed bat ripgrep lazygit tig golang pandoc || true',
         'brew install git || true',
         os = 'Darwin',
@@ -106,7 +106,7 @@ return {
     },
     {
         name = 'install-basic',
-        command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y curl exuberant-ctags cscope git ' ..
+        command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y curl exuberant-ctags cscope git unzip ' ..
                   'make autoconf automake pkg-config openjdk-8-jre python3 python3-pip gdb golang nodejs tig',
         os = 'Linux',
     },
