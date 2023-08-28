@@ -30,7 +30,7 @@ end
 
 m.launch = function()
     if not file_readable('.vimspector.json') then
-        v.fn.Init_lua_vimspector_debug_launch_settings()
+        m.launch_settings()
     end
 
     if not file_readable('.vimspector.json') then
