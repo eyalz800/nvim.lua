@@ -5,7 +5,6 @@ local file_readable = require 'vim.file_readable'.file_readable
 local options = require 'user'.settings.install_options
 
 local stdpath = v.fn.stdpath
-local expand = v.fn.expand
 local system = v.fn.system
 
 local data_path = stdpath 'data'
@@ -102,7 +101,7 @@ return {
         command = 'curl -fLo ' .. misc_path .. '/llvm-install/llvm.sh --create-dirs ' ..
                   'https://apt.llvm.org/llvm.sh ; ' ..
                   'cd ' .. misc_path .. '/llvm-install ; chmod +x ./llvm.sh; ' ..
-                  'sudo ./llvm.sh ' .. options.clang_version .. ' all',
+                  'sudo DEBIAN_FRONTEND=noninteractive ./llvm.sh ' .. options.clang_version .. ' all',
         os = 'Linux',
     },
     {
@@ -159,23 +158,35 @@ return {
         command = 'rm -rf ' .. bin_path .. '/ctags-exuberant ; ' ..
                   'curl -fLo ' .. bin_path .. '/ctags-exuberant/ctags.tar.gz --create-dirs ' ..
                   'http://prdownloads.sourceforge.net/ctags/ctags-5.8.tar.gz',
+        cond = not executable 'ctags-exuberant'
     },
     {
         name = 'exuberant-ctags-unpack',
         command = 'cd ' .. bin_path .. '/ctags-exuberant; tar -xzvf ctags.tar.gz',
+        cond = not executable 'ctags-exuberant',
     },
     {
         name = 'exuberant-ctags-cleanup',
         command = 'rm -rf ' .. bin_path .. '/ctags-exuberant/ctags',
+        cond = not executable 'ctags-exuberant',
     },
     {
         name = 'exuberant-ctags-rename',
         command = 'mv ' .. bin_path .. '/ctags-exuberant/ctags-5.8 ' .. bin_path .. '/ctags-exuberant/ctags',
+        cond = not executable 'ctags-exuberant',
     },
     {
         name = 'exuberant-ctags-make',
         command = [=[ cd ]=] .. bin_path .. [=[/ctags-exuberant/ctags; ]=] .. sed ..
                   [=[ -i 's@# define __unused__  _.*@#define __unused__@g' ./general.h; ./configure; make -j ]=],
+        cond = not executable 'ctags-exuberant',
+    },
+    {
+        name = 'exuberant-ctags-link',
+        command = 'rm -rf ' .. bin_path .. '/ctags-exuberant' .. ' ; ' ..
+                  'mkdir -p ' .. bin_path .. '/ctags-exuberant/ctags ; ' ..
+                  'ln -s `which ctags-exuberant` ' .. bin_path .. '/ctags-exuberant/ctags',
+        cond = executable 'ctags-exuberant',
     },
     {
         name = 'install-bat',
