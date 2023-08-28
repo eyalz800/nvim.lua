@@ -2,6 +2,7 @@ local m = {}
 local v = require 'vim'
 local debugger = require 'plugins.debugger'
 local user = require 'user'
+local git = require 'plugins.git'
 
 local curwin = v.api.nvim_get_current_win
 
@@ -11,6 +12,14 @@ m.config = function()
     local toggle_breakpoint = function(args)
         if args.button == 'l' then
             debugger.toggle_breakpoint()
+        end
+    end
+
+    local line_action = function(args)
+        if args.button == 'r' or (args.button == 'l' and args.mods:find 'c') then
+            git.git_blame_current_line()
+        elseif args.button == 'l' then
+            return debugger.toggle_breakpoint()
         end
     end
 
@@ -42,7 +51,7 @@ m.config = function()
         },
         clickmod = 'c',
         clickhandlers = {
-            Lnum                    = toggle_breakpoint,
+            Lnum                    = line_action,
             FoldClose               = builtin.foldclose_click,
             FoldOpen                = builtin.foldopen_click,
             FoldOther               = builtin.foldother_click,

@@ -1,6 +1,7 @@
 local m = {}
 local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
+local user = require 'user'
 local terminal = require 'plugins.terminal'.open_floating_terminal
 local expand = v.fn.expand
 
@@ -18,6 +19,13 @@ end
 
 m.show_staging_buffer = function()
     cmd 'MagitOnly'
+end
+
+if user.settings.git_plugin == 'gitsigns' then
+    local gitsigns = require 'plugins.config.gitsigns'
+    m.git_blame_current_line = gitsigns.git_blame_current_line
+else
+    m.git_blame_current_line = function() end
 end
 
 return m

@@ -115,8 +115,8 @@ m.plugins = {
     {
         'lewis6991/gitsigns.nvim',
         config = function()
-            local options = require 'plugins.config.gitsigns'.options
-            require 'gitsigns'.setup(options)
+            local gitsigns_conf = require 'plugins.config.gitsigns'
+            require 'gitsigns'.setup(gitsigns_conf.config())
         end,
         cond = user.settings.git_plugin == 'gitsigns'
     },
@@ -131,8 +131,8 @@ m.plugins = {
     {
         'nvim-lualine/lualine.nvim',
         config = function()
-            local options = require 'plugins.config.lualine'.options
-            require 'lualine'.setup(options)
+            local lualine_conf = require 'plugins.config.lualine'
+            require 'lualine'.setup(lualine_conf.config())
         end,
         dependencies = { "nvim-tree/nvim-web-devicons" },
         cond = user.settings.line == 'lualine'
@@ -140,8 +140,8 @@ m.plugins = {
     {
         'nvim-tree/nvim-tree.lua',
         config = function()
-            local options = require 'plugins.config.nvim-tree'.options
-            require 'nvim-tree'.setup(options)
+            local nvim_tree_conf = require 'plugins.config.nvim-tree'
+            require 'nvim-tree'.setup(nvim_tree_conf.config())
         end,
         cond = user.settings.file_explorer == 'nvim-tree',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
