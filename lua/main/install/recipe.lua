@@ -186,7 +186,7 @@ return {
         command = 'rm -rf ' .. bin_path .. '/ctags-exuberant' .. ' ; ' ..
                   'mkdir -p ' .. bin_path .. '/ctags-exuberant/ctags ; ' ..
                   'ln -s `which ctags-exuberant` ' .. bin_path .. '/ctags-exuberant/ctags',
-        cond = executable 'ctags-exuberant',
+        cond = function() return executable 'ctags-exuberant' end,
     },
     {
         name = 'install-bat',
