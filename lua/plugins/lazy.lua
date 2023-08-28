@@ -189,10 +189,16 @@ m.plugins = {
     },
     {
         'junegunn/fzf.vim',
+        dependencies = {
+            'junegunn/fzf',
+        },
     },
     {
         'ibhagwan/fzf-lua',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        dependencies = {
+            'nvim-tree/nvim-web-devicons',
+            'junegunn/fzf',
+        },
         config = function()
             local fzf_lua_conf = require 'plugins.config.fzf-lua'
             require 'fzf-lua'.setup(fzf_lua_conf.config())
