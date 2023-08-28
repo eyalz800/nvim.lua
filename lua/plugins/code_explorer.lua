@@ -6,7 +6,7 @@ if user.settings.code_explorer == 'tagbar' then
 elseif user.settings.code_explorer == 'symbols-outline' then
     return require 'plugins.config.symbols-outline'
 else
-    m.open = function() end
+    m.open = function(_) end
     m.close = function() end
     m.is_open = function() end
     m.toggle = function() end

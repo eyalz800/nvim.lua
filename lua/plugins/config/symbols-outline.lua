@@ -7,7 +7,9 @@ m.open = function()
 end
 
 m.close = function()
-    symbols_outline.close_outline()
+    if m.is_open() then
+        symbols_outline.close_outline()
+    end
 end
 
 m.is_open = function()

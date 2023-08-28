@@ -21,6 +21,7 @@ local tasks = require 'plugins.tasks'
 local debugger = require 'plugins.debugger'
 local search = require 'plugins.search'
 local indent_guides = require 'plugins.indent_guides'
+local quickfix = require 'plugins.quickfix'
 local map = v.keymap.set
 local expand = v.fn.expand
 
@@ -34,6 +35,7 @@ map('n', '<c-w>w', ':q<cr>', { silent=true }) -- Close window
 map('n', '<c-w>g', explorers.file.open, { silent=true }) -- Open file explorer
 map('n', '<c-w>;', explorers.code.open, { silent=true }) -- Open code explorer
 map('n', '<c-w>e', explorers.close, { silent=true }) -- Close all explorers
+map('n', '<c-w>a', explorers.arrange, { silent=true }) -- Arrange explorers
 map('n', '<c-s>', ':w<cr>', { silent=true }) -- Save file
 map('i', '<c-s>', '<c-o>:w<cr>', { silent=true }) -- Save file
 map({'n', 'v'}, '<leader>=', '<c-a>', { silent=true }) -- Increment
@@ -128,7 +130,7 @@ map('n', '<leader>9', buffers.switch_to_buffer(9), { silent=true }) -- Switch bu
 map('n', '<leader>0', buffers.switch_to_buffer(0), { silent=true }) -- Switch buffer 10
 map('n', '<leader><tab>', buffers.pick_buffer, { silent=true }) -- Pick buffer
 map('n', '<c-w>p', ':below copen<cr>', { silent=true }) -- Quickfix open below
-map('n', '<c-w>m', ':below copen<cr>', { silent=true }) -- Quickfix open below
+map('n', '<c-w>m', quickfix.map_open, { silent=true }) -- Go to quickfix
 map('n', '<c-w>q', ':cclose<cr>', { silent=true }) -- Quickfix close
 map('c', '<c-k>', '<plug>CmdlineCompleteBackward', { silent=true }) -- Complete prev in vim command mode
 map('c', '<c-j>', '<plug>CmdlineCompleteForward', { silent=true }) -- Complete next in vim command mode

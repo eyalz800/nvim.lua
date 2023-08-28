@@ -2,6 +2,7 @@ local m = {}
 local v = require 'vim'
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
+local quickfix = require 'plugins.quickfix'
 
 local input = v.fn.input
 local system = v.fn.system
@@ -17,8 +18,7 @@ m.build_project = function()
     if #v.fn['asynctasks#list']('') == 0 then
         m.build_config()
     end
-    cmd 'below copen'
-    cmd 'wincmd p'
+    quickfix.open({ focus = false, expand = true })
     cmd 'AsyncTask project-build'
 end
 
@@ -33,8 +33,7 @@ m.clean_project = function()
     if #v.fn['asynctasks#list']('') == 0 then
         m.build_config()
     end
-    cmd 'below copen'
-    cmd 'wincmd p'
+    quickfix.open({ focus = false, expand = true })
     cmd 'AsyncTask project-clean'
 end
 
