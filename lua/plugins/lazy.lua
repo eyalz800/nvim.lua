@@ -179,17 +179,16 @@ m.plugins = {
     },
     {
         'ludovicchabant/vim-gutentags',
-        cond= user.settings.enable_gutentags == true,
+        cond = user.settings.enable_gutentags == true,
     },
     {
         'junegunn/fzf',
-        dir='~/.fzf',
-        build='./install --all',
+        name = 'fzf',
+        dir = '~/.fzf',
+        build = './install --all',
     },
     {
         'junegunn/fzf.vim',
-        -- This is needed due to source index and coc-fzf still using vim fzf apis.
-        -- cond = user.settings.finder == 'fzf',
     },
     {
         'ibhagwan/fzf-lua',
