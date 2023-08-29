@@ -53,7 +53,7 @@ m.debugger = 'vimspector'
 m.line_number = {
     number = true,
     relative = true,
-    together = 'relative',
+    together = true,
 }
 
 return m

@@ -39,7 +39,9 @@ m.config = function()
                 click = 'v:lua.ScLa',
                 condition = {
                     function(args)
-                        return line_number_setting.together == true or (line_number_setting.together == 'relative' and not v.o.number and curwin() == args.win)
+                        return line_number_setting.together and
+                            ((not args.nu and args.rnu) or
+                                (args.rnu and curwin() ~= args.win))
                     end
                 },
             },
@@ -48,7 +50,8 @@ m.config = function()
                 click = 'v:lua.ScLa',
                 condition = {
                     function(args)
-                        return not line_number_setting.together or (v.o.relativenumber and curwin() == args.win)
+                        return (args.rnu or args.nu) and
+                            (not args.rnu or curwin() == args.win)
                     end,
                 },
             },
