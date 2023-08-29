@@ -49,10 +49,11 @@ m.treesitter = true
 m.terminal = { set_background = true }
 m.quickfix_expand = true
 m.column = 'statuscol'
+m.debugger = 'vimspector'
 m.line_number = {
-    number = false,
+    number = true,
     relative = true,
-    together = true,
+    together = 'relative',
 }
 
 return m

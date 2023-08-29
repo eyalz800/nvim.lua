@@ -35,9 +35,13 @@ m.config = function()
             { text = { '%C' }, click = 'v:lua.ScFa' },
             { text = { '%s' }, click = 'v:lua.ScSa' },
             {
-                text = { '%=%{v:lnum} ' },
+                text = { function() return '%=%{v:lnum} ' end },
                 click = 'v:lua.ScLa',
-                condition = { line_number_setting.together, },
+                condition = {
+                    function(args)
+                        return line_number_setting.together == true or (line_number_setting.together == 'relative' and not v.o.number and curwin() == args.win)
+                    end
+                },
             },
             {
                 text = { function(args) return builtin.lnumfunc(args) .. ' ' end },

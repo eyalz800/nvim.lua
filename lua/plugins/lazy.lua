@@ -318,7 +318,8 @@ m.plugins = {
     },
     {
         'puremourning/vimspector',
-        event = 'VeryLazy'
+        event = 'VeryLazy',
+        cond = user.settings.debugger == 'vimspector'
     },
     {
         'will133/vim-dirdiff',
@@ -326,7 +327,7 @@ m.plugins = {
     },
     {
         'erig0/cscope_dynamic',
-        build=require('lib.os_bin').sed .. ' -i "s/call s:runShellCommand/call system/g" ./plugin/cscope_dynamic.vim',
+        build = require 'lib.os_bin'.sed .. ' -i "s/call s:runShellCommand/call system/g" ./plugin/cscope_dynamic.vim',
         event = 'VeryLazy',
     },
     {
