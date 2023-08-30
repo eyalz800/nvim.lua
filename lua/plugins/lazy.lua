@@ -268,12 +268,6 @@ m.plugins = {
         'troydm/zoomwintab.vim',
     },
     {
-        'haya14busa/incsearch.vim',
-    },
-    {
-        'haya14busa/incsearch-fuzzy.vim',
-    },
-    {
         'christoomey/vim-tmux-navigator',
     },
     {
@@ -316,10 +310,6 @@ m.plugins = {
         event = 'VeryLazy',
     },
     {
-        'easymotion/vim-easymotion',
-        event = 'VeryLazy',
-    },
-    {
         'aklt/plantuml-syntax',
         event = 'VeryLazy',
     },
@@ -327,10 +317,6 @@ m.plugins = {
         'eyalz800/vim-ultisnips',
         event = 'VeryLazy',
         cond = user.settings.lsp == 'coc',
-    },
-    {
-        'justinmk/vim-sneak',
-        event = 'VeryLazy',
     },
     {
         'tpope/vim-obsession',
@@ -374,6 +360,32 @@ m.plugins = {
             'mfussenegger/nvim-dap',
         },
         cond = user.settings.debugger == 'dap',
+    },
+    {
+        "folke/flash.nvim",
+        event = "VeryLazy",
+        config = function()
+            local flash_conf = require 'plugins.config.flash'
+            require 'flash'.setup(flash_conf.config())
+        end,
+        keys = function()
+            return require 'plugins.config.flash'.keys
+        end,
+        cond = user.settings.jumper == 'flash',
+    },
+    {
+        'easymotion/vim-easymotion',
+        event = 'VeryLazy',
+        cond = user.settings.jumper == 'easymotion-sneak',
+    },
+    {
+        'justinmk/vim-sneak',
+        event = 'VeryLazy',
+        cond = user.settings.jumper == 'easymotion-sneak',
+    },
+    {
+        'haya14busa/incsearch.vim',
+        cond = user.settings.jumper ~= 'flash',
     },
     {
         'will133/vim-dirdiff',

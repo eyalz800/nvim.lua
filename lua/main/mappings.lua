@@ -19,7 +19,7 @@ local binary_view = require 'plugins.binary_view'
 local disasm_view = require 'plugins.disasm_view'
 local tasks = require 'plugins.tasks'
 local debugger = require 'plugins.debugger'
-local search = require 'plugins.search'
+local jump = require 'plugins.jump'
 local indent_guides = require 'plugins.indent_guides'
 local quickfix = require 'plugins.quickfix'
 local map = v.keymap.set
@@ -179,14 +179,6 @@ map('n', '<F34>', debugger.run_to_cursor, { silent=true }) -- Debug run to curso
 map('n', '<leader>dD', debugger.disassemble, { silent=true }) -- Debug disassemble
 map({'n', 'x'}, '<leader>de', debugger.eval_window, { silent=true }) -- Debug eval window
 map('n', '<leader>dq', debugger.reset, { silent=true }) -- Debug close
-map('n', 's', search.search_jump, { silent=true }) -- Search and jump to location
-map('x', 's', search.search_jump_visual, { silent=true }) -- Search and jump to location
-map('n', 'S', search.search_jump_back, { silent=true }) -- Search backwards and jump to location
-map('x', 'S', search.search_jump_back_visual, { silent=true }) -- Search backwards and jump to location
-map({'n', 'x'}, 'f', search.find_jump, { silent=true }) -- Find and jump to location
-map({'n', 'x'}, 'F', search.find_jump_back, { silent=true }) -- Find backwards and jump to location
-map({'n', 'x'}, 't', search.till_jump, { silent=true }) -- Find and jump to until location
-map({'n', 'x'}, 'T', search.till_jump_back, { silent=true }) -- Find backwards and jump until location
 map('n', '<leader>ca', source_index.cscope_assignments, { silent=true }) -- CScope assignments
 map('n', '<leader>cc', source_index.cscope_function_calling, { silent=true }) -- CScope function calling
 map('n', '<leader>cd', source_index.cscope_functions_called_by, { silent=true }) -- CScope functions called by
@@ -228,6 +220,16 @@ map('n', '<leader>cp', finder.color_picker, { silent=true }) -- Pick color
 map('n', '<leader>p', ':YankHistoryRgPaste<cr>', { silent=true }) -- Paste from history
 map({'n', 'x'}, '<f1>', ':set relativenumber!<cr>', { silent=true }) -- Relative number
 map({'n', 'x'}, '<f2>', ':set number!<cr>', { silent=true }) -- Number
+
+if jump.needs_mapping then
+    map('n', 's', jump.search_jump, { silent=true }) -- Search and jump to location
+    map('x', 's', jump.search_jump_visual, { silent=true }) -- Search and jump to location
+    map('x', 'S', jump.search_jump_back_visual, { silent=true }) -- Search backwards and jump to location
+    map({'n', 'x'}, 'f', jump.find_jump, { silent=true }) -- Find and jump to location
+    map({'n', 'x'}, 'F', jump.find_jump_back, { silent=true }) -- Find backwards and jump to location
+    map({'n', 'x'}, 't', jump.till_jump, { silent=true }) -- Find and jump to until location
+    map({'n', 'x'}, 'T', jump.till_jump_back, { silent=true }) -- Find backwards and jump until location
+end
 
 -- Additional mappings
 --   * 'gc' - :h commentary -- Comment selected code
