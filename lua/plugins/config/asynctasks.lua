@@ -38,7 +38,7 @@ m.clean_project = function()
 end
 
 m.build_config = function()
-    local success, command = pcall(input, 'Build command: ')
+    local success, command = pcall(input, 'Build command: ', '', 'shellcmd')
     if not success then
         return
     end
@@ -47,7 +47,7 @@ m.build_config = function()
         system("echo '[project-build]' > .tmptasks; echo -e 'command=" .. command .. "\nsave=2\n' >> .tmptasks")
     end
 
-    success, command = pcall(input, 'Clean command: ')
+    success, command = pcall(input, 'Clean command: ', '', 'shellcmd')
     if not success then
         goto cleanup
     end
@@ -56,7 +56,7 @@ m.build_config = function()
         system("echo '[project-clean]' >> .tmptasks; echo -e 'command=" .. command .. "\n' >> .tmptasks")
     end
 
-    success, command = pcall(input, 'Run command: ')
+    success, command = pcall(input, 'Run command: ', '', 'shellcmd')
     if not success then
         goto cleanup
     end
