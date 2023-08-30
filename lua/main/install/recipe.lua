@@ -107,7 +107,7 @@ return {
     {
         name = 'install-basic',
         command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y curl exuberant-ctags cscope git unzip ' ..
-                  'make autoconf automake pkg-config openjdk-8-jre python3 python3-pip gdb golang nodejs tig',
+                  'make autoconf automake pkg-config openjdk-8-jre python3 python3-pip python3-venv gdb golang nodejs tig',
         os = 'Linux',
     },
     {
@@ -124,8 +124,8 @@ return {
         command = 'python3 -m pip install setuptools',
     },
     {
-        name = 'pip-install-pylint-compiledb-jedi',
-        command = 'python3 -m pip install pylint compiledb jedi',
+        name = 'pip-install-compiledb',
+        command = 'python3 -m pip install compiledb',
     },
     {
         name = 'download-opengrok',
