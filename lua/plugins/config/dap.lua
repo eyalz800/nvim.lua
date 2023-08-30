@@ -1,7 +1,6 @@
 local m = {}
 local v = require 'vim'
 
-
 local ui = require 'plugins.config.dap-ui'
 
 local fs_stat = v.loop.fs_stat
@@ -31,7 +30,6 @@ m.launch_settings = function()
 
     if not dap.configurations[debug_type] then
         error('Invalid debug type, current configuration: ' .. inspect(dap.configurations))
-        return
     end
 
     if debug_type == 'cpp' or debug_type == 'c' then
