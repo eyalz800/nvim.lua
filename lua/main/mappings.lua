@@ -239,9 +239,12 @@ if lsp.completion_mappings then
     map('i', '<s-tab>', lsp.shift_tab, { silent=true, expr=true}) -- Lsp prev complete
     map('i', '<cr>', lsp.enter, { silent=true, expr=true }) -- Lsp enter
 end
-map('i', '<bs>', '<plug>(PearTreeBackspace)', { silent=true }) -- Pear tree internal backspace processing
-if user.settings.lsp ~= 'coc' and user.settings.format_on_pairs then
-    map('i', '<cr>', '<plug>(PearTreeExpand)', { silent=true })
+
+if user.settings.pairs == 'pear-tree' then
+    map('i', '<bs>', '<plug>(PearTreeBackspace)', { silent=true }) -- Pear tree internal backspace processing
+    if user.settings.lsp ~= 'coc' and user.settings.format_on_pairs then
+        map('i', '<cr>', '<plug>(PearTreeExpand)', { silent=true })
+    end
 end
 
 require 'user.mappings'

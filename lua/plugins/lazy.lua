@@ -44,22 +44,30 @@ m.plugins = {
         end,
     },
     {
+        'williamboman/mason.nvim',
+        config = function()
+            local mason_conf = require 'plugins.config.mason'
+            require 'mason'.setup(mason_conf.config())
+        end,
+        cond = user.settings.lsp == 'nvim' or user.settings.debugger == 'dap'
+    },
+    {
         'neovim/nvim-lspconfig',
         dependencies = {
             {
-                'williamboman/mason.nvim',
-                config = function()
-                    local mason_conf = require 'plugins.config.mason'
-                    require 'mason'.setup(mason_conf.config())
-                end,
+                'williamboman/mason-lspconfig.nvim',
+                dependencies = {
+                    'williamboman/mason.nvim'
+                },
+                cond = user.settings.lsp == 'nvim',
             },
-            'williamboman/mason-lspconfig.nvim',
             {
                 'j-hui/fidget.nvim',
                 tag = 'legacy',
                 config = function()
                     require 'fidget'.setup({})
                 end,
+                cond = user.settings.lsp == 'nvim',
             },
             {
                 'folke/neoconf.nvim',
@@ -67,6 +75,7 @@ m.plugins = {
                     local neoconf_conf = require 'plugins.config.neoconf'
                     require 'neoconf'.setup(neoconf_conf.config())
                 end,
+                cond = user.settings.lsp == 'nvim',
             },
             {
                 'folke/neodev.nvim',
@@ -74,6 +83,7 @@ m.plugins = {
                     local neodev_conf = require 'plugins.config.neodev'
                     require 'neodev'.setup(neodev_conf.config())
                 end,
+                cond = user.settings.lsp == 'nvim',
             },
             {
                 'hrsh7th/nvim-cmp',
@@ -86,8 +96,9 @@ m.plugins = {
                     {
                         'eyalz800/friendly-snippets',
                         cond = user.settings.lsp_config.nvim.servers.snippets,
-                    }
+                    },
                 },
+                cond = user.settings.lsp == 'nvim',
             },
         },
         config = function()
@@ -143,8 +154,8 @@ m.plugins = {
             local nvim_tree_conf = require 'plugins.config.nvim-tree'
             require 'nvim-tree'.setup(nvim_tree_conf.config())
         end,
-        cond = user.settings.file_explorer == 'nvim-tree',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
+        cond = user.settings.file_explorer == 'nvim-tree',
     },
     {
         'preservim/nerdtree',
@@ -233,6 +244,19 @@ m.plugins = {
     },
     {
         'tmsvg/pear-tree',
+        cond = user.settings.pairs == 'pear-tree',
+    },
+    {
+        'windwp/nvim-autopairs',
+        config = function()
+            local nvim_autopairs_conf = require 'plugins.config.nvim-autopairs'
+            require 'nvim-autopairs'.setup(nvim_autopairs_conf.config())
+            nvim_autopairs_conf.setup()
+        end,
+        dependencies = {
+            'hrsh7th/nvim-cmp',
+        },
+        cond = user.settings.pairs == 'nvim-autopairs',
     },
     {
         'tpope/vim-commentary',
@@ -317,9 +341,39 @@ m.plugins = {
         build='make hexokinase',
     },
     {
-        'puremourning/vimspector',
+        'jay-babu/mason-nvim-dap.nvim',
         event = 'VeryLazy',
-        cond = user.settings.debugger == 'vimspector'
+        config = function()
+            local mason_nvim_dap_conf = require 'plugins.config.mason-nvim-dap'
+            require 'mason-nvim-dap'.setup(mason_nvim_dap_conf.config())
+        end,
+        dependencies = {
+            'williamboman/mason.nvim',
+            'rcarriga/nvim-dap-ui',
+        },
+        cond = user.settings.debugger == 'dap',
+    },
+    {
+        'mfussenegger/nvim-dap',
+        event = 'VeryLazy',
+        config = function()
+            local nvim_dap_conf = require 'plugins.config.dap'
+            nvim_dap_conf.config()
+        end,
+        cond = user.settings.debugger == 'dap',
+    },
+    {
+        'rcarriga/nvim-dap-ui',
+        event = 'VeryLazy',
+        config = function()
+            local dap_ui_conf = require 'plugins.config.dap-ui'
+            require 'dapui'.setup(dap_ui_conf.config())
+            dap_ui_conf.setup()
+        end,
+        dependencies = {
+            'mfussenegger/nvim-dap',
+        },
+        cond = user.settings.debugger == 'dap',
     },
     {
         'will133/vim-dirdiff',

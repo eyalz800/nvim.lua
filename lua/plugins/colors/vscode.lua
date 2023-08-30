@@ -29,7 +29,7 @@ m.config = function()
             MatchParen = { fg = color.vscBlueGreen, bg = color.vscBack },
             WarningMsg = { fg = color.vscUiOrange },
             DiagnosticWarn = { fg = color.vscUiOrange },
-            InitLuaVimspectorPC = { fg = color.vscGreen },
+            InitLuaDebugPC = { fg = color.vscGreen },
             DiagnosticUnderlineTextError = { fg = color.vscRed },
             DiagnosticUnderlineTextWarn = { fg = color.vscUiOrange },
             DiagnosticUnderlineTextHint = { fg = color.vscBlue },

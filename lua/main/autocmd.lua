@@ -82,9 +82,14 @@ if lsp.diagnostic_hover then
     autocmd('CursorHold', {group=augroup('init.lua.lsp_diagnostics_hover', {}), callback=lsp.diagnostic_hover})
 end
 
-autocmd('filetype', {pattern='VimspectorPrompt', group=augroup('init.lua.vimspector.prompt', {}), callback=require 'plugins.config.vimspector'.on_initialize_prompt})
-autocmd('User', {pattern='VimspectorUICreated', group=augroup('init.lua.vimspector.ui_created', {}), callback=require 'plugins.config.vimspector'.on_ui_created})
-autocmd('User', {pattern='visual_multi_exit', group=augroup('init.lua.vimspector.visual_multi_exit', {}), callback=require 'plugins.config.vimspector'.on_visual_multi_exit})
 autocmd('User', {pattern='VeryLazy', group=augroup('init.lua.terminal_color', {}), callback=require 'plugins.colors'.load_terminal_colors})
+
+if user.settings.debugger == 'vimspector' then
+    autocmd('filetype', {pattern='VimspectorPrompt', group=augroup('init.lua.vimspector.prompt', {}), callback=require 'plugins.config.vimspector'.on_initialize_prompt})
+    autocmd('User', {pattern='VimspectorUICreated', group=augroup('init.lua.vimspector.ui_created', {}), callback=require 'plugins.config.vimspector'.on_ui_created})
+    autocmd('User', {pattern='visual_multi_exit', group=augroup('init.lua.vimspector.visual_multi_exit', {}), callback=require 'plugins.config.vimspector'.on_visual_multi_exit})
+elseif user.settings.debugger == 'dap' then
+    autocmd('filetype', {pattern='dap-repl', group=augroup('init.lua.dap.repl_complete', {}), callback=require 'plugins.config.dap'.on_dap_repl_attach})
+end
 
 return m

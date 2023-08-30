@@ -12,6 +12,8 @@ m.config = function()
                 winbar = {
                     'NvimTree', 'nerdtree',
                     'VimspectorPrompt', 'vimspector-disassembly',
+                    'dap-repl', 'dapui_console', 'dapui_scopes',
+                    'dapui_breakpoints', 'dapui_stacks', 'dapui_watches'
                 },
             },
             ignore_focus = {},

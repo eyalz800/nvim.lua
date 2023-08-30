@@ -1,12 +1,20 @@
 local m = {}
 local user = require 'user'
 
+require 'plugins.config.zip'
+require 'plugins.config.visual_multi'
+require 'plugins.config.tmux_navigator'
+require 'plugins.config.hexokinase'
+require 'plugins.config.asynctasks'
+require 'plugins.config.abolish'
+
 if user.settings.line == 'airline' then
     require 'plugins.config.airline'
 end
 
 if user.settings.lsp == 'coc' then
     require 'plugins.config.coc'
+    require 'plugins.config.ultisnips'
 end
 
 if user.settings.file_explorer == 'nerdtree' then
@@ -31,15 +39,12 @@ if user.settings.file_explorer == 'nerdtree' then
     require 'plugins.config.devicons'
 end
 
-require 'plugins.config.visual_multi'
-require 'plugins.config.tmux_navigator'
-require 'plugins.config.ultisnips'
-require 'plugins.config.hexokinase'
-require 'plugins.config.vimspector'
-require 'plugins.config.asynctasks'
-require 'plugins.config.pear-tree'
-require 'plugins.config.signature'
-require 'plugins.config.abolish'
-require 'plugins.config.zip'
+if user.settings.pairs == 'pear-tree' then
+    require 'plugins.config.pear-tree'
+end
+
+if user.settings.debugger == 'vimspector' then
+    require 'plugins.config.vimspector'
+end
 
 return m

@@ -49,7 +49,8 @@ m.treesitter = true
 m.terminal = { set_background = true }
 m.quickfix_expand = true
 m.column = 'statuscol'
-m.debugger = 'vimspector'
+m.debugger = 'dap'
+m.pairs = 'nvim-autopairs'
 m.line_number = {
     number = true,
     relative = true,

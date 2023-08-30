@@ -3,6 +3,8 @@ local user = require 'user'
 
 if user.settings.debugger == 'vimspector' then
     return require 'plugins.config.vimspector'
+elseif user.settings.debugger == 'dap' then
+    return require 'plugins.config.dap'
 else
     m.launch_settings = function() end
     m.launch = function() end
@@ -21,6 +23,7 @@ else
     m.disassemble = function() end
     m.eval_window = function() end
     m.reset = function() end
+    m.toggle_breakpoint = function() end
 end
 
 return m

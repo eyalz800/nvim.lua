@@ -38,8 +38,8 @@ m.config = function()
             highlights['FloatBorder'] = { fg = color.fg, bg = color.bg_dark }
             highlights['Folded'] = { fg = color.comment, bg = color.none }
             highlights['Ignore'] = { fg = v.o.background == 'dark' and '#444b6a' or color.bg_dark}
-            highlights['InitLuaVimspectorBP'] = { fg = color.orange }
-            highlights['InitLuaVimspectorPC'] = { fg = color.green }
+            highlights['InitLuaDebugBP'] = { fg = color.orange }
+            highlights['InitLuaDebugPC'] = { fg = color.green }
             highlights['@variable.builtin'] = { fg = color.magenta }
             highlights['@keyword'] = { fg = color.blue1 }
             highlights['@lsp.typemod.type.defaultLibrary'] = { fg = color.blue1 }
