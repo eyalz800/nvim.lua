@@ -168,8 +168,9 @@ m.generate_cpp_config = function()
                 "echo '            \"args\": [],' >> launch.json && " ..
                 "echo '            \"environment\": [],' >> launch.json && " ..
                 "echo '            \"cwd\": \"${workspaceFolder}\",' >> launch.json && " ..
-                "echo '            \"stopOnEntry\": true,' >> launch.json && " ..
+                "echo '            \"stopOnEntry\": false,' >> launch.json && " ..
                 "echo '            \"initCommands\": [' >> launch.json && " ..
+                "echo '                \"breakpoint set --name main\",' >> launch.json && " ..
                 "echo '                \"settings set target.x86-disassembly-flavor intel\"' >> launch.json && " ..
                 "echo '            ]' >> launch.json && " ..
                 "echo '        }' >> launch.json && " ..
