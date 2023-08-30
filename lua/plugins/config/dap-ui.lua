@@ -10,6 +10,8 @@ local nvim_set_current_win = v.api.nvim_set_current_win
 local nvim_win_get_tabpage = v.api.nvim_win_get_tabpage
 local nvim_tabpage_get_number = v.api.nvim_tabpage_get_number
 local win_getid = v.fn.win_getid
+local expand = v.fn.expand
+local fs_stat = v.loop.fs_stat
 
 m.debug_win = nil
 m.debug_tab = nil
@@ -21,7 +23,12 @@ m.open = function()
         return
     end
 
-    cmd 'tabnew'
+    if fs_stat(expand '%') then
+        cmd 'tabedit %'
+    else
+        cmd 'tabnew'
+    end
+
     m.debug_win = win_getid()
     m.debug_tab = nvim_win_get_tabpage(m.debug_win)
     m.debug_tabnr = nvim_tabpage_get_number(m.debug_tab)

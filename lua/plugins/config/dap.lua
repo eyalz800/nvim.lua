@@ -19,7 +19,7 @@ m.launch_settings = function()
     local debug_type = v.bo.filetype
 
     if not dap.configurations[debug_type] then
-        debug_type = input 'Debugger type: '
+        debug_type = input('Debugger type: ', 'cpp')
     end
 
     if not dap.configurations[debug_type] then
@@ -43,7 +43,7 @@ m.launch = function()
     local debug_type = v.bo.filetype
 
     if not dap.configurations[debug_type] then
-        debug_type = input 'Debugger type: '
+        debug_type = input('Debugger type: ', 'cpp')
     end
 
     if not dap.configurations[debug_type] then
@@ -105,53 +105,108 @@ end
 
 m.generate_cpp_config = function()
     local target = input('(launch.json) target: ', getcwd() .. '/', 'file')
+    local type = input('(launch.json) type: ', 'codelldb/cppdbg')
 
-    if string.find(target, ':', 1, true) and not v.loop.fs_stat(target) then
-        local main_file = input('(attach) main file: ', getcwd() .. '/', 'file')
-        system(
-            "echo '{' > launch.json && " ..
-            "echo '    \"configurations\": [' >> launch.json && " ..
-            "echo '        {' >> launch.json && " ..
-            "echo '            \"name\": \"remote attach\",' >> launch.json && " ..
-            "echo '            \"request\": \"launch\",' >> launch.json && " ..
-            "echo '            \"custom\": true,' >> launch.json && " ..
-            "echo '            \"type\": \"codelldb\",' >> launch.json && " ..
-            "echo '            \"targetCreateCommands\": [\"target create " .. main_file .. "\"],' >> launch.json && " ..
-            "echo '            \"processCreateCommands\": [\"gdb-remote " .. target .. "\"],' >> launch.json && " ..
-            "echo '            \"args\": [],' >> launch.json && " ..
-            "echo '            \"environment\": [],' >> launch.json && " ..
-            "echo '            \"cwd\": \"${workspaceFolder}\",' >> launch.json && " ..
-            "echo '            \"stopOnEntry\": true,' >> launch.json && " ..
-            "echo '            \"sourceMap\": {' >> launch.json && " ..
-            "echo '                \"\": \"\"' >> launch.json && " ..
-            "echo '            },' >> launch.json && " ..
-            "echo '            \"initCommands\": [' >> launch.json && " ..
-            "echo '                \"settings set target.x86-disassembly-flavor intel\"' >> launch.json && " ..
-            "echo '            ]' >> launch.json && " ..
-            "echo '        }' >> launch.json && " ..
-            "echo '    ]' >> launch.json && " ..
-            "echo '}' >> launch.json"
-        )
+    if type == 'codelldb' then
+        if string.find(target, ':', 1, true) and not v.loop.fs_stat(target) then
+            local main_file = input('(attach) main file: ', getcwd() .. '/', 'file')
+            system(
+                "echo '{' > launch.json && " ..
+                "echo '    \"configurations\": [' >> launch.json && " ..
+                "echo '        {' >> launch.json && " ..
+                "echo '            \"name\": \"remote attach (codelldb)\",' >> launch.json && " ..
+                "echo '            \"request\": \"launch\",' >> launch.json && " ..
+                "echo '            \"custom\": true,' >> launch.json && " ..
+                "echo '            \"type\": \"codelldb\",' >> launch.json && " ..
+                "echo '            \"targetCreateCommands\": [\"target create " .. main_file .. "\"],' >> launch.json && " ..
+                "echo '            \"processCreateCommands\": [\"gdb-remote " .. target .. "\"],' >> launch.json && " ..
+                "echo '            \"args\": [],' >> launch.json && " ..
+                "echo '            \"environment\": [],' >> launch.json && " ..
+                "echo '            \"cwd\": \"${workspaceFolder}\",' >> launch.json && " ..
+                "echo '            \"stopOnEntry\": true,' >> launch.json && " ..
+                "echo '            \"sourceMap\": {' >> launch.json && " ..
+                "echo '                \"\": \"\"' >> launch.json && " ..
+                "echo '            },' >> launch.json && " ..
+                "echo '            \"initCommands\": [' >> launch.json && " ..
+                "echo '                \"settings set target.x86-disassembly-flavor intel\"' >> launch.json && " ..
+                "echo '            ]' >> launch.json && " ..
+                "echo '        }' >> launch.json && " ..
+                "echo '    ]' >> launch.json && " ..
+                "echo '}' >> launch.json"
+            )
+        else
+            system(
+                "echo '{' > launch.json && " ..
+                "echo '    \"configurations\": [' >> launch.json && " ..
+                "echo '        {' >> launch.json && " ..
+                "echo '            \"name\": \"local launch (codelldb)\",' >> launch.json && " ..
+                "echo '            \"request\": \"launch\",' >> launch.json && " ..
+                "echo '            \"type\": \"codelldb\",' >> launch.json && " ..
+                "echo '            \"program\": \"" .. target .. "\",' >> launch.json && " ..
+                "echo '            \"args\": [],' >> launch.json && " ..
+                "echo '            \"environment\": [],' >> launch.json && " ..
+                "echo '            \"cwd\": \"${workspaceFolder}\",' >> launch.json && " ..
+                "echo '            \"stopOnEntry\": true,' >> launch.json && " ..
+                "echo '            \"initCommands\": [' >> launch.json && " ..
+                "echo '                \"settings set target.x86-disassembly-flavor intel\"' >> launch.json && " ..
+                "echo '            ]' >> launch.json && " ..
+                "echo '        }' >> launch.json && " ..
+                "echo '    ]' >> launch.json && " ..
+                "echo '}' >> launch.json"
+            )
+        end
+    elseif type == 'cppdbg' then
+        if string.find(target, ':', 1, true) and not v.loop.fs_stat(target) then
+            local main_file = input('(attach) main file: ', getcwd() .. '/', 'file')
+            system(
+                "echo '{' > launch.json && " ..
+                "echo '    \"configurations\": [' >> launch.json &&" ..
+                "echo '        {' >> launch.json && " ..
+                "echo '            \"name\": \"remote attach (cppdbg)\",' >> launch.json && " ..
+                "echo '            \"request\": \"launch\",' >> launch.json && " ..
+                "echo '            \"program\": \"" .. main_file .. "\",' >> launch.json && " ..
+                "echo '            \"cwd\": \"${workspaceFolder}\",' >> launch.json && " ..
+                "echo '            \"type\": \"cppdbg\",' >> launch.json && " ..
+                "echo '            \"args\": [],' >> launch.json && " ..
+                "echo '            \"environment\": [],' >> launch.json && " ..
+                "echo '            \"setupCommands\": [' >> launch.json && " ..
+                "echo '                { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": false },' >> launch.json && " ..
+                "echo '                { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> launch.json && " ..
+                "echo '            ],' >> launch.json && " ..
+                "echo '            \"stopAtEntry\": true,' >> launch.json && " ..
+                "echo '            \"miDebuggerServerAddress\": \"" .. target .. "\",' >> launch.json && " ..
+                "echo '            \"miDebuggerPath\": \"gdb\",' >> launch.json &&" ..
+                "echo '            \"MIMode\": \"gdb\"' >> launch.json &&" ..
+                "echo '        }' >> launch.json && " ..
+                "echo '    ]' >> launch.json && " ..
+                "echo '}' >> launch.json"
+            )
+        else
+            system(
+                "echo '{' > launch.json && " ..
+                "echo '    \"configurations\": [' >> launch.json && " ..
+                "echo '        {' >> launch.json && " ..
+                "echo '            \"name\": \"local launch (cppdbg)\",' >> launch.json && " ..
+                "echo '            \"request\": \"launch\",' >> launch.json && " ..
+                "echo '            \"program\": \"" .. target .. "\",' >> launch.json && " ..
+                "echo '            \"cwd\": \"${workspaceFolder}\",' >> launch.json && " ..
+                "echo '            \"type\": \"cppdbg\",' >> launch.json && " ..
+                "echo '            \"args\": [],' >> launch.json && " ..
+                "echo '            \"environment\": [],' >> launch.json && " ..
+                "echo '            \"setupCommands\": [' >> launch.json && " ..
+                "echo '                { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": false },' >> launch.json && " ..
+                "echo '                { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> launch.json && " ..
+                "echo '            ],' >> launch.json && " ..
+                "echo '            \"stopAtEntry\": true,' >> launch.json && " ..
+                "echo '            \"miDebuggerPath\": \"gdb\",' >> launch.json &&" ..
+                "echo '            \"MIMode\": \"gdb\"' >> launch.json &&" ..
+                "echo '        }' >> launch.json && " ..
+                "echo '    ]' >> launch.json && " ..
+                "echo '}' >> launch.json"
+            )
+        end
     else
-        system(
-            "echo '{' > launch.json && " ..
-            "echo '    \"configurations\": [' >> launch.json && " ..
-            "echo '        {' >> launch.json && " ..
-            "echo '            \"name\": \"launch\",' >> launch.json && " ..
-            "echo '            \"request\": \"launch\",' >> launch.json && " ..
-            "echo '            \"type\": \"codelldb\",' >> launch.json && " ..
-            "echo '            \"program\": \"" .. target .. "\",' >> launch.json && " ..
-            "echo '            \"args\": [],' >> launch.json && " ..
-            "echo '            \"environment\": [],' >> launch.json && " ..
-            "echo '            \"cwd\": \"${workspaceFolder}\",' >> launch.json && " ..
-            "echo '            \"stopOnEntry\": true,' >> launch.json && " ..
-            "echo '            \"initCommands\": [' >> launch.json && " ..
-            "echo '                \"settings set target.x86-disassembly-flavor intel\"' >> launch.json && " ..
-            "echo '            ]' >> launch.json && " ..
-            "echo '        }' >> launch.json && " ..
-            "echo '    ]' >> launch.json && " ..
-            "echo '}' >> launch.json"
-        )
+        error 'Invalid choice!'
     end
 end
 
