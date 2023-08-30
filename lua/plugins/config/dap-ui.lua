@@ -100,31 +100,31 @@ m.config = function()
         },
         layouts = { {
             elements = { {
-                id = 'scopes',
-                size = 0.25
-            }, {
                 id = 'breakpoints',
-                size = 0.25
+                size = 0.15
             }, {
                 id = 'stacks',
                 size = 0.25
             }, {
+                id = 'scopes',
+                size = 0.45
+            }, {
                 id = 'watches',
-                size = 0.25
-            } },
+                size = 0.15
+            }, },
             position = 'left',
             size = 40
         }, {
             elements = { {
-                id = 'repl',
-                size = 0.5
-            }, {
                 id = 'console',
-                size = 0.5
-            } },
+                size = 0.4
+            }, {
+                id = 'repl',
+                size = 0.6
+            }, },
             position = 'bottom',
             size = 10
-        } },
+        }, },
         mappings = {
             edit = 'e',
             expand = { '<cr>', '<2-leftmouse>' },
