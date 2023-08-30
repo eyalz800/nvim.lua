@@ -38,15 +38,11 @@ m.launch_settings = function()
         m.generate_py_config()
     end
 
-    if fs_stat 'launch.json' then
-        require 'dap.ext.vscode'.load_launchjs('launch.json', translation)
-    end
-
-    dap.run(dap.configurations[debug_type][#dap.configurations[debug_type]], {})
+    m.launch({ debug_type = debug_type })
 end
 
-m.launch = function()
-    local debug_type = v.bo.filetype
+m.launch = function(options)
+    local debug_type = (options or {}).debug_type or v.bo.filetype
     local success = nil
 
     if not dap.configurations[debug_type] then
@@ -59,6 +55,10 @@ m.launch = function()
     if not dap.configurations[debug_type] then
         error('Invalid debug type, current configuration: ' .. require 'vim.echo'.inspect(dap.configurations))
         return
+    end
+
+    if dap.session() then
+        dap.disconnect()
     end
 
     if fs_stat 'launch.json' then

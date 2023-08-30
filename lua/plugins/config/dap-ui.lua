@@ -33,7 +33,7 @@ m.open = function()
     m.debug_tab = nvim_win_get_tabpage(m.debug_win)
     m.debug_tabnr = nvim_tabpage_get_number(m.debug_tab)
 
-    dapui.open()
+    dapui.open({ reset = true })
 end
 
 m.close = function()
