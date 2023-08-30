@@ -65,68 +65,73 @@ m.config = function()
     m.dapui = require 'dapui'
     return {
         controls = {
-            element = "repl",
+            element = 'repl',
             enabled = true,
             icons = {
-                disconnect = "",
-                pause = "",
-                play = "",
-                run_last = "",
-                step_back = "",
-                step_into = "",
-                step_out = "",
-                step_over = "",
-                terminate = ""
+                disconnect = '',
+                pause = '',
+                play = '',
+                run_last = '',
+                step_back = '',
+                step_into = '',
+                step_out = '',
+                step_over = '',
+                terminate = ''
             }
         },
-        element_mappings = {},
+        element_mappings = {
+            stacks = {
+                open = { 'o', '<cr>', '<2-leftmouse>' },
+                expand = { 'E' },
+            }
+        },
         expand_lines = false,
         floating = {
-            border = "single",
+            border = 'single',
             mappings = {
-                close = { "q", "<esc>" }
+                close = { 'q', '<esc>' }
             }
         },
         force_buffers = true,
         icons = {
-            collapsed = "",
-            current_frame = "",
-            expanded = ""
+            collapsed = '',
+            current_frame = '',
+            expanded = ''
         },
         layouts = { {
             elements = { {
-                id = "scopes",
+                id = 'scopes',
                 size = 0.25
             }, {
-                id = "breakpoints",
+                id = 'breakpoints',
                 size = 0.25
             }, {
-                id = "stacks",
+                id = 'stacks',
                 size = 0.25
             }, {
-                id = "watches",
+                id = 'watches',
                 size = 0.25
             } },
-            position = "left",
+            position = 'left',
             size = 40
         }, {
             elements = { {
-                id = "repl",
+                id = 'repl',
                 size = 0.5
             }, {
-                id = "console",
+                id = 'console',
                 size = 0.5
             } },
-            position = "bottom",
+            position = 'bottom',
             size = 10
         } },
         mappings = {
-            edit = "e",
-            expand = { "<cr>", "<2-leftmouse>" },
-            open = "o",
-            remove = "d",
-            repl = "r",
-            toggle = "t"
+            edit = 'e',
+            expand = { '<cr>', '<2-leftmouse>' },
+            open = 'o',
+            remove = 'd',
+            repl = 'r',
+            toggle = 't'
         },
         render = {
             indent = 1,
