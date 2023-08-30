@@ -1,6 +1,9 @@
 local m = {}
 local v = require 'vim'
 
+
+local ui = require 'plugins.config.dap-ui'
+
 local fs_stat = v.loop.fs_stat
 local input = v.fn.input
 local system = v.fn.system
@@ -82,14 +85,20 @@ m.stop = function() return dap.stop() end
 m.breakpoint = function() return dap.toggle_breakpoint() end
 m.breakpoint_cond = function() end
 m.breakpoint_function = function() end
-m.clear_breakpoints = function() end
+m.clear_breakpoints = function() return dap.clear_breakpoints() end
 m.step_over = function() return dap.step_over() end
+
 m.step_into = function() return dap.step_into() end
 m.step_out = function() return dap.step_out() end
 m.run_to_cursor = function() return dap.run_to_cursor() end
 m.disassemble = function() end
 m.eval_window = function() end
-m.reset = function() return dap.disconnect() end
+m.reset = function()
+    if dap.session() then
+        dap.disconnect()
+    end
+    ui.close()
+end
 m.toggle_breakpoint = function() return dap.toggle_breakpoint() end
 
 m.on_dap_repl_attach = function()

@@ -53,10 +53,10 @@ m.setup = function()
         m.open()
     end
     dap.listeners.before.event_terminated['dapui_config'] = function()
-        m.close()
+        -- m.close()
     end
     dap.listeners.before.event_exited['dapui_config'] = function()
-        m.close()
+        -- m.close()
     end
 end
 
@@ -80,7 +80,7 @@ m.config = function()
             }
         },
         element_mappings = {},
-        expand_lines = true,
+        expand_lines = false,
         floating = {
             border = "single",
             mappings = {
