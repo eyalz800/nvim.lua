@@ -17,13 +17,18 @@ local translation = {
 
 m.launch_settings = function()
     local debug_type = v.bo.filetype
+    local success = nil
 
     if not dap.configurations[debug_type] then
-        debug_type = input('Debugger type: ', 'cpp')
+        success, debug_type = pcall(input, 'Debugger type: ', 'cpp')
+        if not success then
+            return
+        end
     end
 
     if not dap.configurations[debug_type] then
         error('Invalid debug type, current configuration: ' .. inspect(dap.configurations))
+        return
     end
 
     if debug_type == 'cpp' or debug_type == 'c' then
@@ -41,13 +46,18 @@ end
 
 m.launch = function()
     local debug_type = v.bo.filetype
+    local success = nil
 
     if not dap.configurations[debug_type] then
-        debug_type = input('Debugger type: ', 'cpp')
+        success, debug_type = pcall(input, 'Debugger type: ', 'cpp')
+        if not success then
+            return
+        end
     end
 
     if not dap.configurations[debug_type] then
         error('Invalid debug type, current configuration: ' .. require 'vim.echo'.inspect(dap.configurations))
+        return
     end
 
     if fs_stat 'launch.json' then

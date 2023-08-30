@@ -16,7 +16,9 @@ v.g.asynctasks_term_reuse = 1
 
 m.build_project = function()
     if #v.fn['asynctasks#list']('') == 0 then
-        m.build_config()
+        if not m.build_config() then
+            return
+        end
     end
     quickfix.open({ focus = false, expand = true })
     cmd 'AsyncTask project-build'
@@ -24,7 +26,9 @@ end
 
 m.run_project = function()
     if #v.fn['asynctasks#list']('') == 0 then
-        m.build_config()
+        if not m.build_config() then
+            return
+        end
     end
     cmd 'AsyncTask project-run'
 end
@@ -40,7 +44,7 @@ end
 m.build_config = function()
     local success, command = pcall(input, 'Build command: ', '', 'shellcmd')
     if not success then
-        return
+        return false
     end
 
     if #command ~= 0 then
@@ -69,6 +73,8 @@ m.build_config = function()
 
     ::cleanup::
     system 'rm -rf .tmptasks'
+
+    return success
 end
 
 return m
