@@ -98,7 +98,12 @@ m.reset = function()
     ui.close()
 end
 m.toggle_breakpoint = function() return dap.toggle_breakpoint() end
-
+m.reset_ui = function()
+    ui.dapui.open({ reset = true })
+end
+m.toggle_ui = function()
+    ui.dapui.toggle({ reset = true })
+end
 m.on_dap_repl_attach = function()
     require 'dap.ext.autocompl'.attach()
 end

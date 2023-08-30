@@ -3,7 +3,7 @@ local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 
 local dap = nil
-local dapui = nil
+m.dapui = nil
 
 local nvim_win_is_valid = v.api.nvim_win_is_valid
 local nvim_set_current_win = v.api.nvim_set_current_win
@@ -33,11 +33,11 @@ m.open = function()
     m.debug_tab = nvim_win_get_tabpage(m.debug_win)
     m.debug_tabnr = nvim_tabpage_get_number(m.debug_tab)
 
-    dapui.open({ reset = true })
+    m.dapui.open({ reset = true })
 end
 
 m.close = function()
-    dapui.close()
+    m.dapui.close()
 
     if m.debug_tab and vim.api.nvim_tabpage_is_valid(m.debug_tab) then
         cmd('tabclose ' .. m.debug_tabnr)
@@ -62,7 +62,7 @@ end
 
 m.config = function()
     dap = require 'dap'
-    dapui = require 'dapui'
+    m.dapui = require 'dapui'
     return {
         controls = {
             element = "repl",

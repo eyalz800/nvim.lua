@@ -24,6 +24,8 @@ else
     m.eval_window = function() end
     m.reset = function() end
     m.toggle_breakpoint = function() end
+    m.reset_ui = function() end
+    m.toggle_ui = function() end
 end
 
 return m
