@@ -44,13 +44,13 @@ m.buffer_line = 'bufferline'
 m.file_explorer = 'nvim-tree'
 m.file_explorer_config = { nvim_tree = { window_picker = false } }
 m.code_explorer = 'symbols-outline'
-m.format_on_pairs = true
 m.treesitter = true
 m.terminal = { set_background = true }
 m.quickfix_expand = true
 m.column = 'statuscol'
 m.debugger = 'dap'
 m.pairs = 'nvim-autopairs'
+m.format_on_pairs = true
 m.line_number = {
     number = true,
     relative = true,

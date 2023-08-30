@@ -1,4 +1,5 @@
 local m = {}
+local user = require 'user'
 
 m.config = function()
     return {
@@ -14,7 +15,7 @@ m.config = function()
         enable_abbr = false,
         break_undo = true,
         check_ts = false,
-        map_cr = true,
+        map_cr = user.settings.format_on_pairs,
         map_bs = true,
         map_c_h = false,
         map_c_w = false,
