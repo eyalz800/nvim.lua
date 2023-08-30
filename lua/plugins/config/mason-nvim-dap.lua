@@ -5,6 +5,7 @@ m.config = function()
         handlers = {},
         ensure_installed = {
             'codelldb',
+            'cpptools',
             --'python',
         },
     }
