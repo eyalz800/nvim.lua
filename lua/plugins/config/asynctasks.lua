@@ -7,7 +7,7 @@ local quickfix = require 'plugins.quickfix'
 local input = v.fn.input
 local system = v.fn.system
 
-v.g.asyncrun_open = 6
+v.g.asyncrun_open = 0
 v.g.asyncrun_rootmarks = user.settings.root_paths
 v.g.asynctasks_term_pos = 'right'
 v.g.asynctasks_term_rows = 10
