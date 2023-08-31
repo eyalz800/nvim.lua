@@ -388,6 +388,14 @@ m.plugins = {
         cond = user.settings.jumper ~= 'flash',
     },
     {
+        'sindrets/diffview.nvim',
+        config = function()
+            local diff_view_conf = require 'plugins.config.diffview'
+            require 'diffview'.setup(diff_view_conf.config())
+        end,
+        event = 'VeryLazy',
+    },
+    {
         'will133/vim-dirdiff',
         cmd = 'DirDiff',
     },
