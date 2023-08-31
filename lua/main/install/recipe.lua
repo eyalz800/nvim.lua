@@ -21,6 +21,11 @@ return {
                   installation_path .. ' ' .. bin_path .. ' ' .. programs_path .. ' ' .. misc_path .. ' ' .. undo_path
     },
     {
+        name = 'apt-add-repository-git',
+        command = 'sudo DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:git-core/ppa',
+        os = 'Linux',
+    },
+    {
         name = 'apt-update',
         command = 'sudo apt update',
         os = 'Linux',
