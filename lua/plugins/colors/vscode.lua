@@ -1,6 +1,7 @@
 local m = {}
 local v = require 'vim'
 local user = require 'user'
+local nvim_set_hl = v.api.nvim_set_hl
 
 m.set_background = function(color_name)
     if color_name == 'vscode-light' then
@@ -64,13 +65,9 @@ m.apply = function()
     ]=])
 
     if user.settings.lsp == 'coc' then
-        v.cmd [=[
-            hi! link CocUnusedHighlight DiagnosticUnderlineWarn
-        ]=]
+        nvim_set_hl(0, 'CocUnusedHighlight', { link = 'DiagnosticUnderlineWarn' })
     elseif user.settings.lsp == 'nvim' then
-        v.cmd [=[
-            hi! link DiagnosticUnnecessary DiagnosticUnderlineWarn
-        ]=]
+        nvim_set_hl(0, 'DiagnosticUnnecessary', { link = 'DiagnosticUnderlineWarn' })
     end
 
     if user.settings.finder == 'fzf' or user.settings.finder == 'fzf-lua' then

@@ -31,12 +31,12 @@ m.config = function()
         v.cmd [=[
             hi def link InitLuaBufferLineBg Pmenu
             hi def link InitLuaBufferLineOffsetSep Pmenu
-            hi def link InitLuaBufferLineSelectedBg CursorLine
-            hi def link InitLuaBufferLineSelectedFg NormalSB
+            hi def link InitLuaBufferLineSelectedBg Normal
+            hi def link InitLuaBufferLineSelectedFg Normal
             hi def link InitLuaBufferLineVisibleFg NonText
             hi def link InitLuaBufferLineVisibleBg Normal
             hi def link InitLuaBufferLineNormalFg NonText
-            hi def link InitLuaBufferLineNormalBg Normal
+            hi def link InitLuaBufferLineNormalBg CursorLine
             hi def link InitLuaBufferLineIndicator InitLuaBufferLineSelectedBg
         ]=]
     else

@@ -1,6 +1,7 @@
 local m = {}
 local v = require 'vim'
 local user = require 'user'
+local nvim_set_hl = v.api.nvim_set_hl
 
 m.name = 'tokyonight'
 
@@ -58,6 +59,18 @@ m.config = function()
             highlights['@punctuation.delimiter'] = { fg = color.fg }
             highlights['@operator'] = { fg = color.fg }
             highlights['@conditional.ternary'] = { fg = color.fg }
+
+            highlights.InitLuaBufferLineVisibleFg = { fg = color.fg_dark }
+            highlights.InitLuaBufferLineSelectedFg = { fg = color.fg }
+
+            if v.env.TERM == 'xterm-kitty' then
+                highlights.InitLuaBufferLineIndicator = { bg = color.red }
+                if user.settings.bar == 'barbecue' then
+                    highlights.InitLuaBufferLineNormalBg = { bg = color.bg_highlight }
+                    highlights.InitLuaBufferLineVisibleBg = { bg = color.bg }
+                    highlights.InitLuaBufferLineSelectedBg = { bg = color.bg }
+                end
+            end
         end
     }
 end
@@ -78,22 +91,18 @@ m.apply = function()
     end
 
     if user.settings.lsp == 'coc' then
-        v.cmd [=[
-            hi! link CocUnusedHighlight DiagnosticUnderlineWarn
-            hi! DiagnosticVirtualTextError guibg=NONE
-            hi! DiagnosticVirtualTextWarn guibg=NONE
-            hi! DiagnosticVirtualTextHint guibg=NONE
-            hi! DiagnosticVirtualTextInfo guibg=NONE
-        ]=]
+        nvim_set_hl(0, 'CocUnusedHighlight', {link = 'DiagnosticUnderlineWarn'})
     elseif user.settings.lsp == 'nvim' then
-        v.cmd [=[
-            hi! link DiagnosticUnnecessary DiagnosticUnderlineWarn
-            hi! DiagnosticVirtualTextError guibg=NONE
-            hi! DiagnosticVirtualTextWarn guibg=NONE
-            hi! DiagnosticVirtualTextHint guibg=NONE
-            hi! DiagnosticVirtualTextInfo guibg=NONE
-        ]=]
+        nvim_set_hl(0, 'DiagnosticUnnecessary', { link = 'DiagnosticUnderlineWarn' })
     end
+
+    v.cmd [=[
+        hi! link CocUnusedHighlight DiagnosticUnderlineWarn
+        hi! DiagnosticVirtualTextError guibg=NONE
+        hi! DiagnosticVirtualTextWarn guibg=NONE
+        hi! DiagnosticVirtualTextHint guibg=NONE
+        hi! DiagnosticVirtualTextInfo guibg=NONE
+    ]=]
 
     if user.settings.finder == 'fzf' or user.settings.finder == 'fzf-lua' then
         v.g.fzf_colors = {
