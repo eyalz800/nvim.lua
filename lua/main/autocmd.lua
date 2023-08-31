@@ -94,4 +94,6 @@ end
 
 autocmd({'WinEnter'}, {pattern='term://*', group=augroup('init.lua.term.enter', {}), command='startinsert'})
 
+autocmd('filetype', {pattern='fugitiveblame', group=augroup('init.lua.fugitive-diffview', {}), command=[=[nnoremap <buffer> <silent> d <cmd>silent exec 'norm! 0eb"xyw' <bar> wincmd l <bar> silent exec 'DiffviewFileHistory % --range='.getreg('x')<cr>]=]})
+
 return m
