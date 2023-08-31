@@ -50,7 +50,7 @@ m.config = function()
         },
         highlight_overrides = {
             all = function(color)
-                return {
+                local options =  {
                     Ignore = { fg = color.subtext1 },
                     BufferLineFill = { fg = color.mantle },
                     BufferLineOffsetSeparator = { fg = color.mantle, bg = color.mantle },
@@ -58,6 +58,15 @@ m.config = function()
                     InitLuaBufferLineSelectedBg = { bg = color.mantle },
                     InitLuaBufferLineVisibleBg = { bg = color.mantle },
                 }
+
+                if user.settings.bar == 'barbecue' then
+                    options.BufferLineFill = nil
+                    options.InitLuaBufferLineVisibleBg = nil
+                    options.InitLuaBufferLineSelectedBg = nil
+                    options.InitLuaBufferLineBg = { fg = color.mantle, bg = color.mantle }
+                end
+
+                return options
             end,
         }
     }

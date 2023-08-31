@@ -145,8 +145,23 @@ m.plugins = {
             local lualine_conf = require 'plugins.config.lualine'
             require 'lualine'.setup(lualine_conf.config())
         end,
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
         cond = user.settings.line == 'lualine'
+    },
+    {
+        'utilyre/barbecue.nvim',
+        name = 'barbecue',
+        event = 'UIEnter',
+        version = '*',
+        config = function()
+            local barbecue_conf = require 'plugins.config.barbecue'
+            require 'barbecue'.setup(barbecue_conf.config())
+        end,
+        dependencies = {
+            'SmiteshP/nvim-navic',
+            'nvim-tree/nvim-web-devicons',
+        },
+        cond = user.settings.bar == 'barbecue' and user.settings.lsp == 'nvim'
     },
     {
         'nvim-tree/nvim-tree.lua',
@@ -171,7 +186,7 @@ m.plugins = {
         event = 'UIEnter',
         config = function()
             local bufferline_conf = require 'plugins.config.bufferline'
-            require "bufferline".setup(bufferline_conf.config())
+            require 'bufferline'.setup(bufferline_conf.config())
         end,
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         cond = user.settings.buffer_line == 'bufferline',
@@ -362,8 +377,8 @@ m.plugins = {
         cond = user.settings.debugger == 'dap',
     },
     {
-        "folke/flash.nvim",
-        event = "VeryLazy",
+        'folke/flash.nvim',
+        event = 'VeryLazy',
         config = function()
             local flash_conf = require 'plugins.config.flash'
             require 'flash'.setup(flash_conf.config())

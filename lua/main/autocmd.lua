@@ -96,4 +96,9 @@ autocmd({'WinEnter'}, {pattern='term://*', group=augroup('init.lua.term.enter', 
 
 autocmd('filetype', {pattern='fugitiveblame', group=augroup('init.lua.fugitive-diffview', {}), command=[=[nnoremap <buffer> <silent> d <cmd>silent exec 'norm! 0eb"xyw' <bar> wincmd l <bar> silent exec 'DiffviewFileHistory % --range='.getreg('x')<cr>]=]})
 
+if user.settings.bar == 'barbecue' and user.settings.lsp == 'nvim' then
+    autocmd({ 'WinScrolled', 'BufWinEnter', 'CursorHold', 'InsertLeave' },
+        { group = augroup('init.lua.barbecue.updater', {}), callback = require 'plugins.config.barbecue'.on_update })
+end
+
 return m

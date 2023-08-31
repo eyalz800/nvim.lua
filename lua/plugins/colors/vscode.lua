@@ -14,7 +14,7 @@ m.config = function()
     local settings = user.settings.colorscheme_settings
     local color = require 'vscode.colors' .get_colors()
 
-    return {
+    local options = {
         transparent = settings.transparent,
 
         italic_comments = false,
@@ -42,6 +42,12 @@ m.config = function()
             ['@variable.builtin'] = { fg = color.vscBlue },
         }
     }
+
+    if user.settings.bar == 'barbecue' then
+        options.group_overrides.BufferLineFill = nil
+    end
+
+    return options
 end
 
 m.apply = function()

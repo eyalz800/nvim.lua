@@ -27,16 +27,29 @@ m.pick_buffer = ':BufferLinePick<cr>'
 m.config = function()
     bufferline = require 'bufferline'
 
-    v.cmd [=[
-        hi! def link InitLuaBufferLineBg Normal
-        hi! def link InitLuaBufferLineOffsetSep Pmenu
-        hi! def link InitLuaBufferLineSelectedBg Pmenu
-        hi! def link InitLuaBufferLineSelectedFg NormalSB
-        hi! def link InitLuaBufferLineVisibleFg NonText
-        hi! def link InitLuaBufferLineVisibleBg Pmenu
-        hi! def link InitLuaBufferLineNormalFg NonText
-        hi! def link InitLuaBufferLineNormalBg CursorLine
-    ]=]
+    if user.settings.bar == 'barbecue' then
+        v.cmd [=[
+            hi def link InitLuaBufferLineBg Pmenu
+            hi def link InitLuaBufferLineOffsetSep Pmenu
+            hi def link InitLuaBufferLineSelectedBg Normal
+            hi def link InitLuaBufferLineSelectedFg NormalSB
+            hi def link InitLuaBufferLineVisibleFg NonText
+            hi def link InitLuaBufferLineVisibleBg Normal
+            hi def link InitLuaBufferLineNormalFg NonText
+            hi def link InitLuaBufferLineNormalBg CursorLine
+        ]=]
+    else
+        v.cmd [=[
+            hi def link InitLuaBufferLineBg Normal
+            hi def link InitLuaBufferLineOffsetSep Pmenu
+            hi def link InitLuaBufferLineSelectedBg Pmenu
+            hi def link InitLuaBufferLineSelectedFg NormalSB
+            hi def link InitLuaBufferLineVisibleFg NonText
+            hi def link InitLuaBufferLineVisibleBg Pmenu
+            hi def link InitLuaBufferLineNormalFg NonText
+            hi def link InitLuaBufferLineNormalBg CursorLine
+        ]=]
+    end
 
     local offset_sep = { highlight = "InitLuaBufferLineOffsetSep", attribute = "bg" }
     if user.settings.file_explorer ~= 'nvim-tree' then

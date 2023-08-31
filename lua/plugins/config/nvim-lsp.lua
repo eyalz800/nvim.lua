@@ -128,10 +128,22 @@ m.setup = function()
     mason_lspconfig.setup_handlers {
         function(server_name)
             local config = servers[server_name]
+
+            local on_attach = function() end
+
+            if user.settings.bar == 'barbecue' then
+                on_attach = function(client, bufnr)
+                    if client.server_capabilities['documentSymbolProvider'] then
+                        require 'nvim-navic'.attach(client, bufnr)
+                    end
+                end
+            end
+
             lspconfig[server_name].setup {
                 capabilities = capabilities,
                 settings = config,
                 filetypes = (config or {}).filetypes,
+                on_attach = on_attach,
             }
         end
     }

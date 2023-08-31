@@ -1,7 +1,8 @@
 local m = {}
+local user = require 'user'
 
 m.config = function()
-    return {
+    local options = {
         options = {
             icons_enabled = true,
             theme = 'auto',
@@ -60,6 +61,13 @@ m.config = function()
         },
         extensions = {}
     }
+
+    if user.settings.bar ~= 'lualine' then
+        options.winbar = nil
+        options.inactive_winbar = nil
+    end
+
+    return options
 end
 
 return m

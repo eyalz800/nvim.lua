@@ -36,7 +36,7 @@ opt.wildmenu = true -- Enhanced completion menu
 opt.wildoptions = 'pum' -- Use popup menu
 opt.completeopt = 'longest,menuone,preview' -- Enhanced completion menu
 opt.wrap = false -- Do not wrap text
-opt.updatetime = 250 -- Write swp file and trigger cursor hold events every X ms
+opt.updatetime = 200 -- Write swp file and trigger cursor hold events every X ms
 opt.shortmess:append "cI" -- Disable splash
 opt.hidden = true -- Allow hidden buffers with writes
 opt.cursorline = true -- Activate cursor line
