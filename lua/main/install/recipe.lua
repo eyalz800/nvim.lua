@@ -97,8 +97,9 @@ return {
         os = 'Linux',
     },
     {
-        name = 'node-install',
-        command = 'curl -sL https://deb.nodesource.com/setup_lts.x | sudo bash -',
+        name = 'install-basic',
+        command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y curl exuberant-ctags cscope git unzip ca-certificates gnupg ' ..
+                  'make autoconf automake pkg-config openjdk-8-jre python3 python3-pip python3-venv gdb golang tig',
         os = 'Linux',
     },
     {
@@ -106,13 +107,16 @@ return {
         command = 'curl -fLo ' .. misc_path .. '/llvm-install/llvm.sh --create-dirs ' ..
                   'https://apt.llvm.org/llvm.sh ; ' ..
                   'cd ' .. misc_path .. '/llvm-install ; chmod +x ./llvm.sh; ' ..
-                  'sudo DEBIAN_FRONTEND=noninteractive ./llvm.sh ' .. options.clang_version .. ' all',
+                  [=[ echo '\n' | sudo DEBIAN_FRONTEND=noninteractive ./llvm.sh ]=] .. options.clang_version .. ' all',
         os = 'Linux',
     },
     {
-        name = 'install-basic',
-        command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y curl exuberant-ctags cscope git unzip ' ..
-                  'make autoconf automake pkg-config openjdk-8-jre python3 python3-pip python3-venv gdb golang nodejs tig',
+        name = 'node-install',
+        command = [=[ sudo mkdir -p /etc/apt/keyrings ; ]=] ..
+                  [=[ curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg ; ]=] ..
+                  [=[ echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list ; ]=] ..
+                  [=[ sudo apt update ; ]=] ..
+                  [=[ sudo DEBIAN_FRONTEND=noninteractive apt install -y nodejs ]=],
         os = 'Linux',
     },
     {
