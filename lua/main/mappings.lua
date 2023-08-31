@@ -216,6 +216,7 @@ map('n', '<leader>ga', source_index.generate_cpp_and_opengrok, { silent=true }) 
 map('n', '<leader><leader>gc', source_index.clean, { silent=true }) -- Clean
 map('t', '<scrollwheelleft>', '<nop>', { silent=true }) -- Disable terminal horizontal scrolling
 map('t', '<scrollwheelright>', '<nop>', { silent=true }) -- Disable terminal horizontal scrolling
+map('t', '<mousemove>', '<nop>', { silent=true }) -- Disable terminal mouse move
 map({'n', 'x'}, '<scrollwheelleft>', indent_guides.refresh_trigger('<scrollwheelleft>', { expr=true }), { silent=true, expr=true }) -- Refresh indent guides on horizontal scroll
 map({'n', 'x'}, '<scrollwheelright>', indent_guides.refresh_trigger('<scrollwheelright>', { expr=true }), { silent=true, expr=true }) -- Refresh indent guides on horizontal scroll
 map('n', '<leader>cp', finder.color_picker, { silent=true }) -- Pick color

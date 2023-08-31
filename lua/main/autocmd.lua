@@ -92,4 +92,6 @@ elseif user.settings.debugger == 'dap' then
     autocmd('filetype', {pattern='dap-repl', group=augroup('init.lua.dap.repl_complete', {}), callback=require 'plugins.config.dap'.on_dap_repl_attach})
 end
 
+autocmd({'WinEnter'}, {pattern='term://*', group=augroup('init.lua.term.enter', {}), command='startinsert'})
+
 return m
