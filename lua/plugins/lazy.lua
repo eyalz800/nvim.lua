@@ -53,6 +53,7 @@ m.plugins = {
     },
     {
         'neovim/nvim-lspconfig',
+        event = 'VeryLazy',
         dependencies = {
             {
                 'williamboman/mason-lspconfig.nvim',
@@ -165,6 +166,7 @@ m.plugins = {
     },
     {
         'nvim-tree/nvim-tree.lua',
+        event = 'VeryLazy',
         config = function()
             local nvim_tree_conf = require 'plugins.config.nvim-tree'
             require 'nvim-tree'.setup(nvim_tree_conf.config())
@@ -197,6 +199,7 @@ m.plugins = {
     },
     {
         'simrat39/symbols-outline.nvim',
+        event = 'VeryLazy',
         config = function()
             local symbols_outline_conf = require 'plugins.config.symbols-outline'
             require 'symbols-outline'.setup(symbols_outline_conf.config())
@@ -221,6 +224,7 @@ m.plugins = {
     },
     {
         'ibhagwan/fzf-lua',
+        event = 'VeryLazy',
         dependencies = {
             'nvim-tree/nvim-web-devicons',
             'junegunn/fzf',
@@ -263,6 +267,7 @@ m.plugins = {
     },
     {
         'windwp/nvim-autopairs',
+        event = 'InsertEnter',
         config = function()
             local nvim_autopairs_conf = require 'plugins.config.nvim-autopairs'
             require 'nvim-autopairs'.setup(nvim_autopairs_conf.config())
@@ -275,42 +280,52 @@ m.plugins = {
     },
     {
         'tpope/vim-commentary',
+        event = 'VeryLazy',
     },
     {
         'ntpeters/vim-better-whitespace',
     },
     {
         'troydm/zoomwintab.vim',
+        event = 'VeryLazy',
     },
     {
         'christoomey/vim-tmux-navigator',
     },
     {
         'tpope/vim-surround',
+        event = 'VeryLazy',
     },
     {
         'j5shi/CommandlineComplete.vim',
+        event = 'VeryLazy',
     },
     {
         'scrooloose/vim-slumlord',
+        event = 'VeryLazy',
     },
     {
         'skywind3000/asynctasks.vim',
+        event = 'VeryLazy',
     },
     {
         'famiu/bufdelete.nvim',
+        event = 'VeryLazy',
     },
     {
         'lukas-reineke/indent-blankline.nvim',
     },
     {
         'tpope/vim-abolish',
+        event = 'VeryLazy',
     },
     {
         'wellle/targets.vim',
+        event = 'VeryLazy',
     },
     {
         'yazgoo/yank-history',
+        event = 'VeryLazy',
     },
     {
         'vim-python/python-syntax',
