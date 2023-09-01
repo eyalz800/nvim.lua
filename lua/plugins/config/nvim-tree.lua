@@ -18,7 +18,7 @@ m.open = function(options)
         cmd 'NvimTreeOpen'
     end
     if not options.focus then
-        cmd 'wincmd w'
+        cmd 'wincmd p'
     end
 end
 

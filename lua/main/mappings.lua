@@ -61,7 +61,7 @@ map('n', '<leader>tw', whitespace.toggle, { silent=true }) -- Toggle whitespace
 map('n', '<leader>ts', ':set spell! spelloptions=camel spelllang=en<cr>', { silent=true }) -- Toggle spell
 map('n', 'cro', root_paths.switch_to_root, { silent=true }) -- Switch to root
 map('n', 'cp', root_paths.switch_to_project_root, { silent=true }) -- Switch to project root
-map('n', '<leader>cf', explorers.display_current_file, { silent=true }) -- Echo current file
+map('n', '<leader>ef', explorers.display_current_file, { silent=true }) -- Echo current file
 map('n', 'cq', explorers.display_current_directory, { silent=true }) -- Echo current directory
 map('n', 'cd', function() cmd('cd ' .. expand('%:p:h')) end, { silent = true }) -- Enter current file directory
 map('n', 'cu', function() cmd('cd ..') end, { silent = true }) -- Go up one directory
