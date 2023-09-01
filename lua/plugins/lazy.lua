@@ -200,6 +200,7 @@ m.plugins = {
     {
         --'simrat39/symbols-outline.nvim',
         'eyalz800/symbols-outline.nvim',
+        branch = 'main',
         event = 'VeryLazy',
         config = function()
             local symbols_outline_conf = require 'plugins.config.symbols-outline'

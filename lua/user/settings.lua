@@ -45,6 +45,8 @@ m.bar = 'barbecue'
 m.file_explorer = 'nvim-tree'
 m.file_explorer_config = { nvim_tree = { window_picker = false } }
 m.code_explorer = 'symbols-outline'
+m.edge = 'edgy'
+m.pin_bars = true
 m.treesitter = true
 m.terminal = { set_background = true }
 m.quickfix_expand = true
