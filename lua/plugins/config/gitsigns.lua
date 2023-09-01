@@ -1,4 +1,5 @@
 local m = {}
+local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 
 m.git_blame_current_line = function()
@@ -14,7 +15,13 @@ m.config = function()
             topdelete    = { text = '‾' },
             changedelete = { text = '┃' },
             untracked    = { text = '┆' },
-        }
+        },
+        on_attach = function()
+            if v.b.large_file then
+                return false
+            end
+            return true
+        end,
     }
 end
 

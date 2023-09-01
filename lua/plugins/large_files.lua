@@ -17,6 +17,7 @@ end
 
 m.on_buf_read_pre = function()
     if get_current_file_size() >= 2 * 1024 * 1024 then
+        local buf = v.api.nvim_get_current_buf()
         v.opt_local.cursorline = false
         v.opt_local.swapfile = false
         v.opt_local.bufhidden = 'unload'
@@ -24,8 +25,10 @@ m.on_buf_read_pre = function()
         v.opt_local.undolevels = -1
         v.opt_local.undoreload = 0
         v.opt_local.list = false
+        v.opt_local.filetype = ''
         v.opt_local.foldmethod = 'manual'
-        v.b.large_file_deferred = {}
+        v.b.large_file = true
+        local large_file_deferred = {}
         if exists ':AirlineToggle' then
             cmd 'AirlineToggle'
         end
@@ -45,21 +48,32 @@ m.on_buf_read_pre = function()
             v.b.sig_enabled = 0
         end
         if exists ':CocDisable' then
-            table.insert(v.b.large_file_deferred, 'CocDisable')
+            table.insert(large_file_deferred, 'CocDisable')
         end
         if exists ':TSBufDisable' then
-            table.insert(v.b.large_file_deferred, 'TSBufDisable highlight')
+            cmd ':TSBufDisable highlight'
+        end
+        if exists ':DisableWhitespace' then
+            cmd 'DisableWhitespace'
         end
         if user.settings.bar == 'barbecue' then
             require 'barbecue.ui'.toggle(false)
         end
         if user.settings.lsp == 'nvim' then
-            table.insert(v.b.large_file_deferred, 'LspStop')
-            require 'cmp'.setup.buffer({ enabled = false })
+            require 'cmp'.setup({ enabled = false })
+            v.api.nvim_create_autocmd({ 'LspAttach' }, {
+                buffer = buf,
+                callback = function(args)
+                    v.schedule(function()
+                        v.lsp.buf_detach_client(buf, args.data.client_id)
+                    end)
+                end,
+            })
         end
         if user.settings.pairs == 'nvim-autopairs' then
-            table.insert(v.b.large_file_deferred, "lua require 'nvim-autopairs'.disable()")
+            table.insert(large_file_deferred, "lua require 'nvim-autopairs'.disable()")
         end
+        v.b.large_file_deferred = large_file_deferred
     end
 end
 
