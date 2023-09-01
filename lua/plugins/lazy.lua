@@ -310,7 +310,8 @@ m.plugins = {
         event = 'VeryLazy',
     },
     {
-        'famiu/bufdelete.nvim',
+        --'famiu/bufdelete.nvim',
+        'eyalz800/bufdelete.nvim',
         event = 'VeryLazy',
     },
     {
