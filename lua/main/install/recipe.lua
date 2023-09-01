@@ -194,7 +194,7 @@ return {
         name = 'exuberant-ctags-link',
         command = 'rm -rf ' .. bin_path .. '/ctags-exuberant' .. ' ; ' ..
                   'mkdir -p ' .. bin_path .. '/ctags-exuberant/ctags ; ' ..
-                  'ln -s `which ctags-exuberant` ' .. bin_path .. '/ctags-exuberant/ctags',
+                  'ln -s `which ctags-exuberant` ' .. bin_path .. '/ctags-exuberant/ctags/ctags',
         cond = function() return executable 'ctags-exuberant' end,
     },
     {
