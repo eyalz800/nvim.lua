@@ -224,6 +224,8 @@ map('n', '<leader>cp', finder.color_picker, { silent=true }) -- Pick color
 map('n', '<leader>p', ':YankHistoryRgPaste<cr>', { silent=true }) -- Paste from history
 map({'n', 'x'}, '<f1>', ':set relativenumber!<cr>', { silent=true }) -- Relative number
 map({'n', 'x'}, '<f2>', ':set number!<cr>', { silent=true }) -- Number
+map('n', '<leader>bt', ':lua require "barbecue.ui".toggle()<cr>', { silent=true }) -- Toggle barbecue bar
+map('n', '<leader><leader>lf', ':lua require "plugins.large_files".set()<cr>', { silent=true }) -- Set large file
 
 if jump.needs_mapping then
     map('n', 's', jump.search_jump, { silent=true }) -- Search and jump to location
