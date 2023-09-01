@@ -1,4 +1,5 @@
 local m = {}
+local v = require 'vim'
 
 m.config = function()
     return {
@@ -144,7 +145,7 @@ m.config = function()
             search = {
                 -- when `true`, flash will be activated during regular search by default.
                 -- You can always toggle when searching with `require("flash").toggle()`
-                enabled = true,
+                enabled = false,
                 highlight = { backdrop = false },
                 jump = { history = true, register = true, nohlsearch = true },
                 search = {
@@ -157,14 +158,16 @@ m.config = function()
             -- `f`, `F`, `t`, `T`, `;` and `,` motions
             char = {
                 enabled = true,
+                --
                 -- dynamic configuration for ftFT motions
                 config = function(opts)
                     -- autohide flash when in operator-pending mode
-                    opts.autohide = vim.fn.mode(true):find("no") and vim.v.operator == "y"
+                    opts.autohide = v.fn.mode(true):find("no") and v.v.operator == "y"
 
-                    -- disable jump labels when enabled and when using a count
-                    opts.jump_labels = opts.jump_labels and vim.v.count == 0
-
+                    -- disable jump labels when not enabled, when using a count,
+                    -- and when recording/executing registers
+                    opts.jump_labels = opts.jump_labels and v.v.count == 0 and
+                                       v.fn.reg_executing() == "" and v.fn.reg_recording() == ""
                     -- Show jump labels only in operator-pending mode
                     -- opts.jump_labels = vim.v.count == 0 and vim.fn.mode(true):find("o")
                 end,
@@ -176,7 +179,7 @@ m.config = function()
                 multi_line = true,
                 -- When using jump labels, don't use these keys
                 -- This allows using those keys directly after the motion
-                label = { exclude = "hjkliardc" },
+                label = { exclude = "hjkliardcweb" },
                 -- by default all keymaps are enabled, but you can disable some of them,
                 -- by removing them from the list.
                 -- If you rather use another key, you can map them
