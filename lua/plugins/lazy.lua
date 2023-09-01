@@ -53,7 +53,6 @@ m.plugins = {
     },
     {
         'neovim/nvim-lspconfig',
-        event = 'VeryLazy',
         dependencies = {
             {
                 'williamboman/mason-lspconfig.nvim',
@@ -196,6 +195,27 @@ m.plugins = {
     {
         'majutsushi/tagbar',
         cond = user.settings.code_explorer == 'tagbar',
+    },
+    {
+        "folke/edgy.nvim",
+        event = "VeryLazy",
+        config = function()
+            local edgy_conf = require 'plugins.config.edgy'
+            require 'edgy'.setup(edgy_conf.config())
+        end,
+        dependencies = {
+            'nvim-tree/nvim-tree.lua',
+            'eyalz800/symbols-outline.nvim',
+        },
+        cond = user.settings.edge == 'edgy',
+    },
+    {
+        'stevearc/stickybuf.nvim',
+        config = function()
+            local stickybuf_conf = require 'plugins.config.stickybuf'
+            require 'stickybuf'.setup(stickybuf_conf.config())
+        end,
+        cond = user.settings.pin_bars,
     },
     {
         --'simrat39/symbols-outline.nvim',

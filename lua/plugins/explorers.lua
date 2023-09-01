@@ -4,6 +4,7 @@ local echo = require 'vim.echo'.echo
 local expand = v.fn.expand
 local cmd = require 'vim.cmd'.silent
 local file_readable = require 'vim.file_readable'.file_readable
+local user = require 'user'
 
 local winwidth = v.fn.winwidth
 local win_getid = v.fn.win_getid
@@ -34,6 +35,9 @@ m.close = function()
 end
 
 m.arrange = function()
+    if user.settings.edge == 'edgy' then
+        return
+    end
     local cur_win = win_getid()
     local qf = getqflist({winid = 0}).winid
 

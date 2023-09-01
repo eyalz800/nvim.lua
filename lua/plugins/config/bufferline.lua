@@ -98,15 +98,15 @@ m.config = function()
             end,
             offsets = {
                 {
+                    text = user.settings.edge == 'edgy' and '󰍜' or 'Explorer',
                     filetype = 'NvimTree',
-                    text = 'File Explorer',
                     text_align = 'left',
                     highlight = 'NvimTreeNormal',
                     separator = true,
                 },
                 {
+                    text = user.settings.edge == 'edgy' and '󰍜' or 'Explorer',
                     filetype = 'nerdtree',
-                    text = 'File Explorer',
                     text_align = 'left',
                     separator = true,
                 },
