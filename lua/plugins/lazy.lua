@@ -354,7 +354,8 @@ m.plugins = {
     },
     {
         'rrethy/vim-hexokinase',
-        build='make hexokinase',
+        event = 'VeryLazy',
+        build = 'make hexokinase',
     },
     {
         'jay-babu/mason-nvim-dap.nvim',

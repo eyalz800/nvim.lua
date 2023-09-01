@@ -2,6 +2,7 @@ local m = {}
 local v = require 'vim'
 local exists = require 'vim.exists'.exists
 local cmd = require 'vim.cmd'.silent
+local user = require 'user'
 
 local get_current_file_size = function()
     local bufnr = v.api.nvim_get_current_buf()
@@ -45,6 +46,19 @@ m.on_buf_read_pre = function()
         end
         if exists ':CocDisable' then
             table.insert(v.b.large_file_deferred, 'CocDisable')
+        end
+        if exists ':TSBufDisable' then
+            table.insert(v.b.large_file_deferred, 'TSBufDisable highlight')
+        end
+        if user.settings.bar == 'barbecue' then
+            require 'barbecue.ui'.toggle(false)
+        end
+        if user.settings.lsp == 'nvim' then
+            table.insert(v.b.large_file_deferred, 'LspStop')
+            require 'cmp'.setup.buffer({ enabled = false })
+        end
+        if user.settings.pairs == 'nvim-autopairs' then
+            table.insert(v.b.large_file_deferred, "lua require 'nvim-autopairs'.disable()")
         end
     end
 end
