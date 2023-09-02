@@ -50,6 +50,9 @@ m.set = function()
     if exists ':HexokinaseTurnOff' then
         cmd 'HexokinaseTurnOff'
     end
+    if exists ':ColorizerDetachFromBuffer' then
+        cmd 'ColorizerDetachFromBuffer'
+    end
     if exists '*signature#utils#Toggle' then
         v.b.sig_enabled = 0
     end

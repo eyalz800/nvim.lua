@@ -61,6 +61,7 @@ m.line_number = {
     relative = true,
     together = true,
 }
+m.colorizer = 'nvim-colorizer'
 m.cscope_dynamic = false
 
 return m

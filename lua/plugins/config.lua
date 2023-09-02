@@ -4,9 +4,13 @@ local user = require 'user'
 require 'plugins.config.zip'
 require 'plugins.config.visual_multi'
 require 'plugins.config.tmux_navigator'
-require 'plugins.config.hexokinase'
 require 'plugins.config.asynctasks'
 require 'plugins.config.abolish'
+
+
+if user.settings.colorizer == 'hexokinase' then
+    require 'plugins.config.hexokinase'
+end
 
 if user.settings.line == 'airline' then
     require 'plugins.config.airline'

@@ -380,6 +380,15 @@ m.plugins = {
         'rrethy/vim-hexokinase',
         event = 'VeryLazy',
         build = 'make hexokinase',
+        cond = user.settings.colorizer == 'hexokinase',
+    },
+    {
+        'NvChad/nvim-colorizer.lua',
+        config = function()
+            local nvim_colorizer_conf = require 'plugins.config.colorizer'
+            require 'colorizer'.setup(nvim_colorizer_conf.config())
+        end,
+        cond = user.settings.colorizer == 'nvim-colorizer',
     },
     {
         'jay-babu/mason-nvim-dap.nvim',
