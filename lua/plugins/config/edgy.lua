@@ -32,14 +32,14 @@ m.config = function()
             },
         },
         right = {
-            {
-                title = "Help",
-                ft = "help",
-                size = { width = 0.5 },
-                filter = function(buf)
-                    return v.bo[buf].buftype == "help"
-                end,
-            },
+            -- {
+            --     title = "Help",
+            --     ft = "help",
+            --     size = { width = 0.5 },
+            --     filter = function(buf)
+            --         return v.bo[buf].buftype == "help"
+            --     end,
+            -- },
         },
 
         top = {},
