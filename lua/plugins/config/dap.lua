@@ -3,8 +3,11 @@ local v = require 'vim'
 
 local ui = require 'plugins.config.dap-ui'
 local user = require 'user'
+local executable = require 'vim.executable'.executable
 
 local fs_stat = v.loop.fs_stat
+local fs_chmod = v.loop.fs_chmod
+local stdpath = v.fn.stdpath
 local input = v.fn.input
 local system = v.fn.system
 local inspect = v.inspect
@@ -16,10 +19,20 @@ local fnamemodify = v.fn.fnamemodify
 local dap = nil
 local load_launch_json = nil
 
+local lldb_mi = stdpath 'data' .. '/mason/packages/cpptools/extension/debugAdapters/lldb-mi/bin/lldb-mi'
+
 local translation = {
     codelldb = { 'c', 'cpp' },
     cppdbg = { 'c', 'cpp' },
 }
+
+local setup_lldb_mi = function()
+    local mode = (fs_stat(lldb_mi) or {}).mode
+    if mode and bit.band(mode, tonumber('111', 8)) == 0 then
+        fs_chmod(lldb_mi, tonumber('755', 8))
+    end
+    return executable(lldb_mi)
+end
 
 local find_launch_json = function(directory)
     local current_path = directory
@@ -74,7 +87,7 @@ m.launch = function(options)
     end
 
     if not dap.configurations[debug_type] then
-        error('Invalid debug type, current configuration: ' .. require 'vim.echo'.inspect(dap.configurations))
+        error('Invalid debug type, current configuration: ' .. inspect(dap.configurations))
         return
     end
 
@@ -90,7 +103,11 @@ m.launch = function(options)
         local launch_json = find_launch_json(directory)
         if launch_json then
             load_launch_json(launch_json, translation)
-            dap.run(dap.configurations[debug_type][#dap.configurations[debug_type]], {})
+            local config = dap.configurations[debug_type][#dap.configurations[debug_type]]
+            if config.MIMode == 'lldb' or config.miMode == 'lldb' then
+                setup_lldb_mi()
+            end
+            dap.run(config, {})
             return
         end
 
@@ -159,9 +176,13 @@ end
 m.generate_cpp_config = function()
     local target = input('(launch.json) target: ', getcwd() .. '/', 'file')
     local type = input('(launch.json) type: ', 'codelldb / cppdbg')
+    local debugger, mi_mode = 'gdb', 'gdb'
+    if not executable(debugger) and type == 'cppdbg' and setup_lldb_mi() then
+        debugger, mi_mode = 'lldb-mi', 'lldb'
+    end
 
     if type == 'codelldb' then
-        if string.find(target, ':', 1, true) and not v.loop.fs_stat(target) then
+        if string.find(target, ':', 1, true) and not fs_stat(target) then
             local main_file = input('(attach) main file: ', getcwd() .. '/', 'file')
             system(
                 "echo '{' > launch.json && " ..
@@ -210,7 +231,7 @@ m.generate_cpp_config = function()
             )
         end
     elseif type == 'cppdbg' then
-        if string.find(target, ':', 1, true) and not v.loop.fs_stat(target) then
+        if string.find(target, ':', 1, true) and not fs_stat(target) then
             local main_file = input('(attach) main file: ', getcwd() .. '/', 'file')
             system(
                 "echo '{' > launch.json && " ..
@@ -228,9 +249,9 @@ m.generate_cpp_config = function()
                 "echo '                { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> launch.json && " ..
                 "echo '            ],' >> launch.json && " ..
                 "echo '            \"stopAtEntry\": true,' >> launch.json && " ..
-                "echo '            \"miDebuggerServerAddress\": \"" .. target .. "\",' >> launch.json && " ..
-                "echo '            \"miDebuggerPath\": \"gdb\",' >> launch.json &&" ..
-                "echo '            \"MIMode\": \"gdb\"' >> launch.json &&" ..
+                "echo '            \"MIDebuggerServerAddress\": \"" .. target .. "\",' >> launch.json && " ..
+                "echo '            \"MIDebuggerPath\": \"" .. debugger .. "\",' >> launch.json &&" ..
+                "echo '            \"MIMode\": \"" .. mi_mode .. "\"' >> launch.json &&" ..
                 "echo '        }' >> launch.json && " ..
                 "echo '    ]' >> launch.json && " ..
                 "echo '}' >> launch.json"
@@ -252,8 +273,8 @@ m.generate_cpp_config = function()
                 "echo '                { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> launch.json && " ..
                 "echo '            ],' >> launch.json && " ..
                 "echo '            \"stopAtEntry\": true,' >> launch.json && " ..
-                "echo '            \"miDebuggerPath\": \"gdb\",' >> launch.json &&" ..
-                "echo '            \"MIMode\": \"gdb\"' >> launch.json &&" ..
+                "echo '            \"MIDebuggerPath\": \"" .. debugger .. "\",' >> launch.json &&" ..
+                "echo '            \"MIMode\": \"" .. mi_mode .. "\"' >> launch.json &&" ..
                 "echo '        }' >> launch.json && " ..
                 "echo '    ]' >> launch.json && " ..
                 "echo '}' >> launch.json"

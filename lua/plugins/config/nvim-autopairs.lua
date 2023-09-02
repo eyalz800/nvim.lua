@@ -3,7 +3,7 @@ local user = require 'user'
 
 m.config = function()
     return {
-        disable_filetype = { 'TelescopePrompt', 'spectre_panel' },
+        disable_filetype = { 'TelescopePrompt', 'spectre_panel', 'dap-repl', 'dapui_watches' },
         disable_in_macro = true,
         disable_in_visualblock = false,
         disable_in_replace_mode = true,

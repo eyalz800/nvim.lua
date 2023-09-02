@@ -7,6 +7,7 @@ local data_path = stdpath 'data'
 
 v.env.PATH = data_path .. '/installation/bin/programs' .. ':' ..
              data_path .. '/mason/bin' .. ':' ..
+             data_path .. '/mason/packages/cpptools/extension/debugAdapters/lldb-mi/bin' .. ':' ..
              v.env.PATH
 
 return m
