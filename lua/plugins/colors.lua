@@ -11,6 +11,12 @@ local system = v.fn.system
 
 local tmux_color_path = expand '~/.tmux.color'
 
+m.subscribers = {}
+
+m.subscribe = function(subscriber)
+    table.insert(m.subscribers, subscriber)
+end
+
 m.set = function()
     local color_name = user.settings.colorscheme
     local success, colorscheme = pcall(require, 'plugins.colors.' .. color_name)
@@ -30,6 +36,10 @@ m.post_switch_color = function()
         end
 
         v.opt.guicursor = 'n-v-c-sm:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20'
+
+        for _, subscriber in ipairs(m.subscribers) do
+            subscriber()
+        end
 
         local color_name = colorscheme.name or v.g.colors_name
         if file_readable(tmux_color_path) and readfile(tmux_color_path)[1] == color_name then

@@ -1,7 +1,14 @@
 local m = {}
 local v = require 'vim'
+local user = require 'user'
+
+local nvim_get_hl = v.api.nvim_get_hl
+local nvim_set_hl = v.api.nvim_set_hl
 
 m.config = function()
+    require 'plugins.colors'.subscribe(m.on_color)
+    m.on_color()
+
     local min_width = 30
     return {
         left = {
@@ -85,16 +92,16 @@ m.config = function()
             winbar = true,
             winfixwidth = true,
             winfixheight = false,
-            winhighlight =
-                "EdgyWinBar:Pmenu," ..
-                "WinSeparator:NvimTreeWinSeparator," ..
-                "EdgyNormal:Pmenu," ..
-                "EdgyTitle:Pmenu," ..
-                "EdgyIcon:Pmenu," ..
-                "EdgyIconActive:Pmenu," ..
-                "WinBar:EdgyWinBar," ..
-                "Normal:EdgyNormal," ..
-                "",
+            winhighlight = 'WinSeparator:EdgyWinSeparator',
+            --     "EdgyWinBar:Pmenu," ..
+            --     "WinSeparator:NvimTreeWinSeparator," ..
+            --     "EdgyNormal:Pmenu," ..
+            --     "EdgyTitle:Pmenu," ..
+            --     "EdgyIcon:Pmenu," ..
+            --     "EdgyIconActive:Pmenu," ..
+            --     "WinBar:EdgyWinBar," ..
+            --     "Normal:EdgyNormal," ..
+            --     "",
             signcolumn = "no",
         },
         -- buffer-local keymaps to be added to edgebar buffers.
@@ -171,6 +178,24 @@ m.config = function()
         },
       fix_win_height = v.fn.has("nvim-0.10.0") == 0,
     }
+end
+
+m.on_color = function()
+    local bg = nvim_get_hl(0, { name = 'StatusLine' }).bg
+    if user.settings.file_explorer == 'nvim-tree' then
+        bg = nvim_get_hl(0, { name = 'NvimTreeNormal' }).bg
+    end
+    local sign = nvim_get_hl(0, { name = 'SignColumn' })
+    local title = nvim_get_hl(0, { name = 'Title' })
+    local constant = nvim_get_hl(0, { name = 'Constant' })
+    local normal = nvim_get_hl(0, { name = 'Normal' })
+    nvim_set_hl(0, "EdgyIcon", { fg = sign.fg, bg = bg, link = nil })
+    nvim_set_hl(0, "EdgyIconActive", { fg = constant.fg, bg = bg, link = nil })
+    nvim_set_hl(0, "EdgyTitle", { fg = title.fg, bg = bg, link = nil })
+    nvim_set_hl(0, "EdgyWinBar", { fg = bg, bg = bg, link = nil })
+    nvim_set_hl(0, "EdgyWinSeparator", { fg = bg, bg = bg, link = nil })
+    nvim_set_hl(0, "EdgyNormal", { fg = normal.fg, bg = bg, link = nil })
+    nvim_set_hl(0, "WinBar", { link = 'EdgyWinBar' })
 end
 
 return m
