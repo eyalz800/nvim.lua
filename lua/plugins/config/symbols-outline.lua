@@ -5,15 +5,16 @@ local symbols_outline = nil
 
 m.open = function(options)
     options = options or { focus = true }
+    if not m.is_open() and options.focus ~= 'always' then
+        options.focus = false
+    end
     symbols_outline.open_outline()
-    if not v.bo.filetype == 'Outline' then
+    if v.bo.filetype == 'Outline' then
         if not options.focus then
             cmd 'wincmd p'
         end
-    else
-        if options.focus and symbols_outline.view.winnr then
-            v.fn.win_gotoid(symbols_outline.view.winnr)
-        end
+    elseif options.focus and symbols_outline.view.winnr then
+        v.fn.win_gotoid(symbols_outline.view.winnr)
     end
 end
 
