@@ -210,7 +210,8 @@ m.plugins = {
         cond = user.settings.edge == 'edgy',
     },
     {
-        'stevearc/stickybuf.nvim',
+        --'stevearc/stickybuf.nvim',
+        'eyalz800/stickybuf.nvim',
         config = function()
             local stickybuf_conf = require 'plugins.config.stickybuf'
             require 'stickybuf'.setup(stickybuf_conf.config())
