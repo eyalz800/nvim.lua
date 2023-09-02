@@ -1,17 +1,12 @@
 local m = {}
-local v = require 'vim'
-local cmd = require 'vim.cmd'.silent
 local user = require 'user'
 
-m.toggle_zoom = function()
-    if user.settings.edge == 'edgy' then
-        if v.b.edgy_disable then
-            v.b.edgy_disable = false
-        else
-            v.b.edgy_disable = true
-        end
-    end
-    cmd 'ZoomWinTabToggle'
+if user.settings.zoom == 'zoomwintab' then
+    return require 'plugins.config.zoomwintab'
+elseif user.settings.zoom == 'neo-zoom' then
+    return require 'plugins.config.neo-zoom'
+else
+    m.toggle_zoom = function() end
 end
 
 return m

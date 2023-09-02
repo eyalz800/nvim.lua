@@ -62,6 +62,7 @@ m.line_number = {
     together = true,
 }
 m.colorizer = 'nvim-colorizer'
+m.zoom = 'zoomwintab'
 m.cscope_dynamic = false
 
 return m

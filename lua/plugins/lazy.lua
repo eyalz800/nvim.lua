@@ -311,6 +311,16 @@ m.plugins = {
     {
         'troydm/zoomwintab.vim',
         event = 'VeryLazy',
+        cond = user.settings.zoom == 'zoomwintab',
+    },
+    {
+        'nyngwang/NeoZoom.lua',
+        event = 'VeryLazy',
+        config = function()
+            local neo_zoom_conf = require 'plugins.config.neo-zoom'
+            require 'neo-zoom'.setup(neo_zoom_conf.config())
+        end,
+        cond = user.settings.zoom == 'neo-zoom',
     },
     {
         'christoomey/vim-tmux-navigator',
