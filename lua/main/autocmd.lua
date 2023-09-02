@@ -77,6 +77,7 @@ autocmd('BufWritePost', {group=augroup('init.lua.binary_view.w.po', {}), callbac
 autocmd('BufReadPost', {pattern=doc_reader.doc_patterns, group=augroup('init.lua.doc_reader', {}), callback=doc_reader.on_buf_read_post})
 autocmd('User', {pattern='LazyUpdatePre', group=augroup('init.lua.lazy_update_pre', {}), callback=require 'plugins.lazy'.on_update})
 autocmd('filetype', {pattern='qf', group=augroup('init.lua.quickfix', {}), callback=require 'plugins.quickfix'.on_open})
+autocmd('filetype', {pattern='help', group=augroup('init.lua.help', {}), callback=require 'plugins.help'.on_open})
 
 if lsp.diagnostic_hover then
     autocmd('CursorHold', {group=augroup('init.lua.lsp_diagnostics_hover', {}), callback=lsp.diagnostic_hover})
