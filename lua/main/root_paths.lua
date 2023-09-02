@@ -14,7 +14,7 @@ m.switch_to_root = function()
 end
 
 m.switch_to_project_root = function()
-    local directory = v.fn.expand('%:p:h')
+    local directory = v.fn.expand '%:p:h'
     if #directory == 0 then
         directory = getcwd()
     end

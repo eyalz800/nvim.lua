@@ -52,6 +52,7 @@ m.terminal = { set_background = true }
 m.quickfix_expand = true
 m.column = 'statuscol'
 m.debugger = 'dap'
+m.launch_json = { 'launch.json', '.vscode/launch.json' }
 m.pairs = 'nvim-autopairs'
 m.jumper = 'flash'
 m.format_on_pairs = true

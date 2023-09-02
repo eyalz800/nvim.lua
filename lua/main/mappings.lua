@@ -147,6 +147,7 @@ map({'n', 'i'}, '<f19>', tasks.clean_project, { silent=true }) -- Clean project
 map({'n', 'i'}, '<c-f7>', tasks.run_project, { silent=true }) -- Run project
 map({'n', 'i'}, '<f31>', tasks.build_config, { silent=true }) -- Build config
 map('n', '<leader>dl', debugger.launch_settings, { silent=true }) -- Debug launch settings
+map('n', '<leader>dj', debugger.launch_settings, { silent=true }) -- Debug launch settings
 map('n', '<leader>dd', debugger.launch, { silent=true }) -- Debug launch
 map('n', '<leader>dc', debugger.continue, { silent=true }) -- Debug continue
 map('n', '<F5>', debugger.continue, { silent=true }) -- Debug continue

@@ -2,20 +2,41 @@ local m = {}
 local v = require 'vim'
 
 local ui = require 'plugins.config.dap-ui'
+local user = require 'user'
 
 local fs_stat = v.loop.fs_stat
 local input = v.fn.input
 local system = v.fn.system
 local inspect = v.inspect
 local getcwd = v.fn.getcwd
+local sign_define = v.fn.sign_define
+local expand = v.fn.expand
+local fnamemodify = v.fn.fnamemodify
 
 local dap = nil
-local sign_define = v.fn.sign_define
+local load_launch_json = nil
 
 local translation = {
     codelldb = { 'c', 'cpp' },
     cppdbg = { 'c', 'cpp' },
 }
+
+local find_launch_json = function(directory)
+    local current_path = directory
+    local limit = 100
+    local iteration = 0
+    local launch_json = nil
+    while iteration < limit do
+        for _, path in ipairs(user.settings.launch_json) do
+            launch_json = current_path .. '/' .. path
+            if fs_stat(launch_json) then
+                return launch_json
+            end
+        end
+        current_path = fnamemodify(current_path, ':h')
+        iteration = iteration + 1
+    end
+end
 
 m.launch_settings = function()
     local debug_type = v.bo.filetype
@@ -61,10 +82,19 @@ m.launch = function(options)
         dap.disconnect()
     end
 
-    if fs_stat 'launch.json' then
-        require 'dap.ext.vscode'.load_launchjs('launch.json', translation)
-        dap.run(dap.configurations[debug_type][#dap.configurations[debug_type]], {})
-        return
+    for _, directory in ipairs({expand '%:p:h', getcwd()}) do
+        if #directory == 0 then
+            goto continue
+        end
+
+        local launch_json = find_launch_json(directory)
+        if launch_json then
+            load_launch_json(launch_json, translation)
+            dap.run(dap.configurations[debug_type][#dap.configurations[debug_type]], {})
+            return
+        end
+
+        ::continue::
     end
 
     dap.continue()
@@ -116,6 +146,7 @@ v.cmd [=[
 
 m.config = function()
     dap = require 'dap'
+    load_launch_json = require 'dap.ext.vscode'.load_launchjs
     sign_define('DapBreakpoint', { text='', texthl='InitLuaDebugBP' })
     sign_define('DapBreakpointCondition', { text='', texthl='InitLuaDebugBP' })
     sign_define('DapLogPoint', { text='󰛿', texthl='InitLuaDebugBP' })
@@ -127,7 +158,7 @@ end
 
 m.generate_cpp_config = function()
     local target = input('(launch.json) target: ', getcwd() .. '/', 'file')
-    local type = input('(launch.json) type: ', 'codelldb/cppdbg')
+    local type = input('(launch.json) type: ', 'codelldb / cppdbg')
 
     if type == 'codelldb' then
         if string.find(target, ':', 1, true) and not v.loop.fs_stat(target) then
