@@ -187,7 +187,7 @@ m.on_color = function()
     nvim_set_hl(0, "EdgyWinBar", { fg = bg, bg = bg, link = nil })
     nvim_set_hl(0, "EdgyWinSeparator", { fg = bg, bg = bg, link = nil })
     nvim_set_hl(0, "EdgyNormal", { fg = normal.fg, bg = bg, link = nil })
-    nvim_set_hl(0, "WinBar", { link = 'EdgyWinBar' })
+    nvim_set_hl(0, "WinBar", { fg = normal.fg, bg = bg })
     nvim_set_hl(0, "EdgyEndOfBuffer", { fg = bg, bg = bg })
 end
 

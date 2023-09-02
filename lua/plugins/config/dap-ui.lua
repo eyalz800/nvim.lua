@@ -1,6 +1,7 @@
 local m = {}
 local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
+local user = require 'user'
 
 local dap = nil
 m.dapui = nil
@@ -49,6 +50,8 @@ m.close = function()
 end
 
 m.setup = function()
+    require 'plugins.colors'.subscribe(m.on_color)
+    m.on_color()
     dap.listeners.after.event_initialized['dapui_config'] = function()
         m.open()
     end
@@ -58,6 +61,35 @@ m.setup = function()
     dap.listeners.before.event_exited['dapui_config'] = function()
         -- m.close()
     end
+end
+
+m.on_color = function()
+    local success, hl = pcall(require, 'dapui.config.highlights')
+    if success then
+        pcall(hl.setup)
+    end
+
+    local nvim_get_hl = v.api.nvim_get_hl
+    local nvim_set_hl = v.api.nvim_set_hl
+
+    local bg = nvim_get_hl(0, { name = 'WinBar' }).bg
+    nvim_set_hl(0, 'DapUIStepOver', { fg = nvim_get_hl(0, { name = 'DapUIStepOver' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIStepInto', { fg = nvim_get_hl(0, { name = 'DapUIStepInto' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIStepBack', { fg = nvim_get_hl(0, { name = 'DapUIStepBack' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIStepOut', { fg = nvim_get_hl(0, { name = 'DapUIStepOut' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIStop', { fg = nvim_get_hl(0, { name = 'DapUIStop' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIPlayPause', { fg = nvim_get_hl(0, { name = 'DapUIPlayPause' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIRestart', { fg = nvim_get_hl(0, { name = 'DapUIRestart' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIUnavailable', { fg = nvim_get_hl(0, { name = 'DapUIUnavailable' }).fg, bg = bg })
+
+    nvim_set_hl(0, 'DapUIStepOverNC', { fg = nvim_get_hl(0, { name = 'DapUIStepOverNC' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIStepIntoNC', { fg = nvim_get_hl(0, { name = 'DapUIStepIntoNC' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIStepBackNC', { fg = nvim_get_hl(0, { name = 'DapUIStepBackNC' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIStepOutNC', { fg = nvim_get_hl(0, { name = 'DapUIStepOutNC' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIStopNC', { fg = nvim_get_hl(0, { name = 'DapUIStopNC' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIPlayPauseNC', { fg = nvim_get_hl(0, { name = 'DapUIPlayPauseNC' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIRestartNC', { fg = nvim_get_hl(0, { name = 'DapUIRestartNC' }).fg, bg = bg })
+    nvim_set_hl(0, 'DapUIUnavailableNC', { fg = nvim_get_hl(0, { name = 'DapUIUnavailableNC' }).fg, bg = bg })
 end
 
 m.config = function()

@@ -413,6 +413,7 @@ m.plugins = {
         end,
         dependencies = {
             'mfussenegger/nvim-dap',
+            'folke/edgy.nvim',
         },
         cond = user.settings.debugger == 'dap',
     },
