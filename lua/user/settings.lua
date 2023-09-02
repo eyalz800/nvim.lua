@@ -61,5 +61,6 @@ m.line_number = {
     relative = true,
     together = true,
 }
+m.cscope_dynamic = false
 
 return m

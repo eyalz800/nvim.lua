@@ -459,10 +459,20 @@ m.plugins = {
         'erig0/cscope_dynamic',
         build = require 'lib.os_bin'.sed .. ' -i "s/call s:runShellCommand/call system/g" ./plugin/cscope_dynamic.vim',
         event = 'VeryLazy',
+        cond = user.settings.cscope_dynamic,
     },
     {
         'metakirby5/codi.vim',
         cmd = 'Codi',
+    },
+    {
+        'rmagatti/goto-preview',
+        event = 'VeryLazy',
+        config = function()
+            local goto_preview_conf = require 'plugins.config.goto-preview'
+            require 'goto-preview'.setup(goto_preview_conf.config())
+        end,
+        cond = user.settings.lsp == 'nvim',
     },
 }
 
