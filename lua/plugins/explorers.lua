@@ -36,14 +36,17 @@ end
 m.arrange = function()
     local cur_win = win_getid()
     local qf = getqflist({winid = 0}).winid
-    local code = m.code.is_open()
 
     if qf > 0 then
         win_gotoid(qf)
         cmd 'wincmd J'
     end
-    if code then
-        m.code.close()
+    if m.code.is_open() then
+        m.code.open({ focus = true })
+
+        local width = winwidth(0)
+        cmd 'wincmd L'
+        cmd('vertical resize ' .. width)
     end
     if m.file.is_open() then
         m.file.open({ focus = true })
@@ -53,9 +56,6 @@ m.arrange = function()
         cmd('vertical resize ' .. width)
     end
     win_gotoid(cur_win)
-    if code then
-        m.code.open({ focus = false })
-    end
 end
 
 return m
