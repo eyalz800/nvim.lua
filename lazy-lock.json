@@ -43,7 +43,7 @@
   "python-syntax": { "branch": "master", "commit": "2cc00ba72929ea5f9456a26782db57fb4cc56a65" },
   "statuscol.nvim": { "branch": "main", "commit": "0944234914438695050eec6f83b4669864680c1a" },
   "stickybuf.nvim": { "branch": "master", "commit": "4699b64bfe2b53cd11dd7394303a7252e8fa4792" },
-  "symbols-outline.nvim": { "branch": "main", "commit": "3785eb81dab62a2dcd0fdded37c1f330f953ffb4" },
+  "symbols-outline.nvim": { "branch": "main", "commit": "6dbb84d9b069d7699df30a6f6fdad1fbbee336a1" },
   "targets.vim": { "branch": "master", "commit": "642d3a4ce306264b05ea3219920b13ea80931767" },
   "tokyonight.nvim": { "branch": "main", "commit": "ac43ab9cd6e2cadbb429dd683b8100fad1698ab0" },
   "undotree": { "branch": "master", "commit": "0e11ba7325efbbb3f3bebe06213afa3e7ec75131" },
