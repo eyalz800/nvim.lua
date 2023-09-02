@@ -21,7 +21,7 @@ m.config = function()
             {
                 title = "Symbols",
                 ft = "Outline",
-                pinned = true,
+                pinned = false,
                 open = require 'plugins.code_explorer'.open,
             },
         },
