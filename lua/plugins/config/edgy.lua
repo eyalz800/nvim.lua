@@ -40,14 +40,6 @@ m.config = function()
                     return v.bo[buf].buftype == "help"
                 end,
             },
-            {
-                title = "Help",
-                ft = "markdown",
-                size = { width = 0.5 },
-                filter = function(buf)
-                    return v.bo[buf].buftype == "help"
-                end,
-            },
         },
 
         top = {},
