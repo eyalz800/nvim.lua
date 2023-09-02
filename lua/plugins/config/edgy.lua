@@ -84,7 +84,7 @@ m.config = function()
             winbar = true,
             winfixwidth = true,
             winfixheight = false,
-            winhighlight = 'WinSeparator:EdgyWinSeparator',
+            winhighlight = 'WinSeparator:EdgyWinSeparator,EndOfBuffer:EdgyEndOfBuffer',
             --     "EdgyWinBar:Pmenu," ..
             --     "WinSeparator:NvimTreeWinSeparator," ..
             --     "EdgyNormal:Pmenu," ..
@@ -188,6 +188,7 @@ m.on_color = function()
     nvim_set_hl(0, "EdgyWinSeparator", { fg = bg, bg = bg, link = nil })
     nvim_set_hl(0, "EdgyNormal", { fg = normal.fg, bg = bg, link = nil })
     nvim_set_hl(0, "WinBar", { link = 'EdgyWinBar' })
+    nvim_set_hl(0, "EdgyEndOfBuffer", { fg = bg, bg = bg })
 end
 
 return m
