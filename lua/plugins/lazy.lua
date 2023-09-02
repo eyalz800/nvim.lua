@@ -197,7 +197,8 @@ m.plugins = {
         cond = user.settings.code_explorer == 'tagbar',
     },
     {
-        "folke/edgy.nvim",
+        --"folke/edgy.nvim",
+        "eyalz800/edgy.nvim",
         event = "VeryLazy",
         config = function()
             local edgy_conf = require 'plugins.config.edgy'
@@ -432,7 +433,7 @@ m.plugins = {
         end,
         dependencies = {
             'mfussenegger/nvim-dap',
-            'folke/edgy.nvim',
+            'edgy.nvim',
         },
         cond = user.settings.debugger == 'dap',
     },
