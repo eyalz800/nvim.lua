@@ -85,15 +85,6 @@ m.config = function()
             winfixwidth = true,
             winfixheight = false,
             winhighlight = 'WinSeparator:EdgyWinSeparator,EndOfBuffer:EdgyEndOfBuffer',
-            --     "EdgyWinBar:Pmenu," ..
-            --     "WinSeparator:NvimTreeWinSeparator," ..
-            --     "EdgyNormal:Pmenu," ..
-            --     "EdgyTitle:Pmenu," ..
-            --     "EdgyIcon:Pmenu," ..
-            --     "EdgyIconActive:Pmenu," ..
-            --     "WinBar:EdgyWinBar," ..
-            --     "Normal:EdgyNormal," ..
-            --     "",
             signcolumn = "no",
         },
         -- buffer-local keymaps to be added to edgebar buffers.
