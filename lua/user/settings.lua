@@ -46,7 +46,7 @@ m.file_explorer = 'nvim-tree'
 m.file_explorer_config = { nvim_tree = { window_picker = false } }
 m.code_explorer = 'symbols-outline'
 m.edge = nil
-m.pin_bars = nil
+m.pin_bars = 'pin'
 m.treesitter = true
 m.terminal = { set_background = true }
 m.quickfix_expand = true
