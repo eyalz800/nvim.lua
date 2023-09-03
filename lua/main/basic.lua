@@ -57,6 +57,7 @@ opt.signcolumn = 'yes:2' -- Sign column width
 opt.mouse = 'a' -- Mouse
 opt.mousemoveevent = true -- Mouse movement
 opt.splitkeep = 'screen' -- Keep text on the same screen line
+opt.shada:append({'r*://'}) -- Ignore files from shada
 
 if exists('+shellslash') then -- Use forward slash for directories
     opt.shellslash = true
