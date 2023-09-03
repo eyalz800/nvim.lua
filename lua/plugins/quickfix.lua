@@ -39,7 +39,7 @@ end
 m.on_open = function()
     v.o.relativenumber = false
     v.keymap.set('n', 'q', ':<C-u>q<cr>', { silent=true, buffer=true })
-    v.keymap.set('n', 'A', explorers.arrange, { silent=true, buffer=true })
+    v.keymap.set('n', 'a', explorers.arrange, { silent=true, buffer=true })
 end
 
 return m
