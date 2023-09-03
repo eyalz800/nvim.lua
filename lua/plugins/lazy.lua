@@ -197,9 +197,8 @@ m.plugins = {
         cond = user.settings.code_explorer == 'tagbar',
     },
     {
-        --"folke/edgy.nvim",
-        "eyalz800/edgy.nvim",
-        event = "VeryLazy",
+        'folke/edgy.nvim',
+        event = 'VeryLazy',
         config = function()
             local edgy_conf = require 'plugins.config.edgy'
             require 'edgy'.setup(edgy_conf.config())
@@ -211,13 +210,12 @@ m.plugins = {
         cond = user.settings.edge == 'edgy',
     },
     {
-        --'stevearc/stickybuf.nvim',
-        'eyalz800/stickybuf.nvim',
+        'stevearc/stickybuf.nvim',
         config = function()
             local stickybuf_conf = require 'plugins.config.stickybuf'
             require 'stickybuf'.setup(stickybuf_conf.config())
         end,
-        cond = user.settings.pin_bars,
+        cond = user.settings.pin_bars == 'stickybuf',
     },
     {
         --'simrat39/symbols-outline.nvim',

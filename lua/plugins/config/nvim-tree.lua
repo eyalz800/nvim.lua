@@ -66,6 +66,7 @@ m.config = function()
         actions = {
             open_file = {
                 resize_window = true,
+                eject = not user.settings.pin_bars,
                 window_picker = {
                     enable = user.settings.file_explorer_config.nvim_tree.window_picker,
                 }

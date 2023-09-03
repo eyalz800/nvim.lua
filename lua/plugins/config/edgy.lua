@@ -31,17 +31,7 @@ m.config = function()
                 title = "QuickFix"
             },
         },
-        right = {
-            -- {
-            --     title = "Help",
-            --     ft = "help",
-            --     size = { width = 0.5 },
-            --     filter = function(buf)
-            --         return v.bo[buf].buftype == "help"
-            --     end,
-            -- },
-        },
-
+        right = {},
         top = {},
 
         ---@type table<Edgy.Pos, {size:integer | fun():integer, wo?:vim.wo}>

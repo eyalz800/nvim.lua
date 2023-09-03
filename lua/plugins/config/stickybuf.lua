@@ -7,7 +7,6 @@ m.config = function()
         'fugitiveblame',
         'NvimTree',
         'Outline',
-        'edgy',
     }
 
     return {
