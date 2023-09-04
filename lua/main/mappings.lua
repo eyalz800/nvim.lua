@@ -22,6 +22,7 @@ local debugger = require 'plugins.debugger'
 local jump = require 'plugins.jump'
 local indent_guides = require 'plugins.indent_guides'
 local quickfix = require 'plugins.quickfix'
+local terminal = require 'plugins.terminal'
 local map = v.keymap.set
 local expand = v.fn.expand
 
@@ -51,8 +52,8 @@ map('n', 'L', ':vertical resize +1<cr>', { silent=true }) -- Resize vertically
 map('n', 'H', ':vertical resize -1<cr>', { silent=true }) -- Resize vertically
 --map('n', '<c-w>=', ':resize +1<cr>', { silent=true }) -- Resize horizontal window
 map('', '<c-w>z', zoom.toggle_zoom, { silent=true }) -- Toggle zoom
-map('n', '<c-w>b', ':below 10new +terminal<cr>a', { silent=true }) -- New terminal below
-map('n', '<c-w>t', ':vert rightb new +terminal<cr>a', { silent=true }) -- New terminal on right side
+map('n', '<c-w>b', terminal.open_below, { silent=true }) -- New terminal below
+map('n', '<c-w>t', terminal.open_split, { silent=true }) -- New terminal on right side
 map('t', '<c-w>w', '<c-\\><c-n>:q<cr>', { silent=true }) -- Close terminal
 map('t', '<c-w>n', '<c-\\><c-n>', { silent=true }) -- Terminal normal mode
 map({'n', 'x'}, '<c-l>', indent_guides.refresh_trigger('20zl', { expr=false }), { silent=true }) -- Side scrolling

@@ -3,6 +3,7 @@ local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 local explorers = require 'plugins.explorers'
 local user = require 'user'
+local terminal = require 'plugins.terminal'
 
 local win_getid = v.fn.win_getid
 local win_gotoid = v.fn.win_gotoid
@@ -40,7 +41,7 @@ m.on_open = function()
     v.o.relativenumber = false
     v.keymap.set('n', 'q', ':<C-u>q<cr>', { silent=true, buffer=true })
     v.keymap.set('n', 'a', explorers.arrange, { silent=true, buffer=true })
-    v.keymap.set('n', 'C', '<cmd>vert rightb new +terminal<cr>a', { silent=true, buffer=true })
+    v.keymap.set('n', 'C', terminal.open_split, { silent = true, buffer = true })
 end
 
 return m
