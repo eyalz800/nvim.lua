@@ -127,22 +127,15 @@ m.setup = function()
                     end
 
                     local success, _ = pcall(v.api.nvim_win_set_buf, buf_pin_data.win, win_pin_data.buf)
-                    if not success then
-                        if win_ref then
-                            pcall(v.api.nvim_win_close, win_ref, true)
-                        end
-                        if buf_pin_data.win_ref then
-                            pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
-                            v.b[win_pin_data.buf].pin_data.win_ref = nil
-                        end
-                        return
-                    end
                     if buf_pin_data.win_ref then
                         pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
                         v.b[win_pin_data.buf].pin_data.win_ref = nil
                     end
 
-                    pcall(open_in_best_win, buf)
+                    if success then
+                        pcall(open_in_best_win, buf)
+                    end
+
                     if win_ref then
                         pcall(v.api.nvim_win_close, win_ref, true)
                     end
