@@ -145,11 +145,12 @@ m.setup = function()
 
             local buf_pin_data = v.b[buf].pin_data
             if buf_pin_data then
-                win_pin_data = { buf = buf }
-                v.w.pin_data = win_pin_data
-
-                buf_pin_data.win = v.api.nvim_get_current_win()
-                v.b[buf].pin_data = buf_pin_data
+                if not v.api.nvim_win_is_valid(buf_pin_data.win) then
+                    win_pin_data = { buf = buf }
+                    v.w.pin_data = win_pin_data
+                    buf_pin_data.win = v.api.nvim_get_current_win()
+                    v.b[buf].pin_data = buf_pin_data
+                end
             else
                 local buf_ft = v.bo[buf].filetype
                 for _, ft in ipairs(m.filetyeps) do
