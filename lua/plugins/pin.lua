@@ -40,6 +40,11 @@ local open_in_best_win = function(buf)
     v.cmd.wincmd({ count = 2, args = { 'w' } })
 end
 
+local is_auto_deleted = function(buf)
+    local bufhidden = v.bo[buf].bufhidden
+    return bufhidden == 'unload' or bufhidden == 'delete' or bufhidden == 'wipe'
+end
+
 m.pin = function(opts)
     opts = opts or {}
 
@@ -63,7 +68,9 @@ m.pin = function(opts)
         callback = function(args)
             local pin_data = v.b[args.buf].pin_data
             if not pin_data.closing then
-                pin_data.win_ref = make_win_ref(args.buf)
+                if is_auto_deleted(args.buf) then
+                    pin_data.win_ref = make_win_ref(args.buf)
+                end
                 v.b[args.buf].pin_data = pin_data
             end
         end,
@@ -107,29 +114,38 @@ m.setup = function()
                 if not win_pin_data then
                     v.w.pin_data = nil
                 else
-                    if not buf_pin_data.win_ref then
-                        return
-                    end
-
-                    local win_ref = make_win_ref(buf)
-                    if not win_ref then
-                        pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
-                        v.b[win_pin_data.buf].pin_data.win_ref = nil
-                        return
+                    local win_ref = nil
+                    if is_auto_deleted(buf) then
+                        win_ref = make_win_ref(buf)
+                        if not win_ref then
+                            if buf_pin_data.win_ref then
+                                pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
+                                v.b[win_pin_data.buf].pin_data.win_ref = nil
+                            end
+                            return
+                        end
                     end
 
                     local success, _ = pcall(v.api.nvim_win_set_buf, buf_pin_data.win, win_pin_data.buf)
                     if not success then
-                        pcall(v.api.nvim_win_close, win_ref, true)
-                        pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
-                        v.b[win_pin_data.buf].pin_data.win_ref = nil
+                        if win_ref then
+                            pcall(v.api.nvim_win_close, win_ref, true)
+                        end
+                        if buf_pin_data.win_ref then
+                            pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
+                            v.b[win_pin_data.buf].pin_data.win_ref = nil
+                        end
                         return
                     end
-                    pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
-                    v.b[win_pin_data.buf].pin_data.win_ref = nil
+                    if buf_pin_data.win_ref then
+                        pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
+                        v.b[win_pin_data.buf].pin_data.win_ref = nil
+                    end
 
                     pcall(open_in_best_win, buf)
-                    pcall(v.api.nvim_win_close, win_ref, true)
+                    if win_ref then
+                        pcall(v.api.nvim_win_close, win_ref, true)
+                    end
                     return
                 end
             end
