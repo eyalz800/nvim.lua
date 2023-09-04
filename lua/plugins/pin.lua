@@ -9,6 +9,12 @@ m.filetyeps = {
     'fugitiveblame',
     'NvimTree',
     'Outline',
+    'dapui_watches',
+    'dapui_scopes',
+    'dapui_stacks',
+    'dapui_breakpoints',
+    'dapui_console',
+    'dap-repl',
 }
 
 local make_win_ref = function(buf)
