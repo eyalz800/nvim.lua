@@ -15,7 +15,7 @@ local make_win_ref = function(buf)
     local success, win = pcall(v.api.nvim_open_win, buf, false, {
         relative = 'editor',
         width = 1,
-        height = 1,
+        height = 2,
         col = 0,
         row = 0,
         style = 'minimal',
@@ -94,8 +94,17 @@ m.setup = function()
                     return
                 end
 
-                local buf_pin_data = v.b[win_pin_data.buf].pin_data
-                if not buf_pin_data then
+                local buf_pin_data = nil
+                if not v.api.nvim_buf_is_valid(win_pin_data.buf) then
+                    win_pin_data = nil
+                else
+                    buf_pin_data = v.b[win_pin_data.buf].pin_data
+                    if not buf_pin_data then
+                        win_pin_data = nil
+                    end
+                end
+
+                if not win_pin_data then
                     v.w.pin_data = nil
                 else
                     if not buf_pin_data.win_ref then
@@ -103,6 +112,12 @@ m.setup = function()
                     end
 
                     local win_ref = make_win_ref(buf)
+                    if not win_ref then
+                        pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
+                        v.b[win_pin_data.buf].pin_data.win_ref = nil
+                        return
+                    end
+
                     local success, _ = pcall(v.api.nvim_win_set_buf, buf_pin_data.win, win_pin_data.buf)
                     if not success then
                         pcall(v.api.nvim_win_close, win_ref, true)
@@ -113,7 +128,7 @@ m.setup = function()
                     pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
                     v.b[win_pin_data.buf].pin_data.win_ref = nil
 
-                    open_in_best_win(buf)
+                    pcall(open_in_best_win, buf)
                     pcall(v.api.nvim_win_close, win_ref, true)
                     return
                 end
