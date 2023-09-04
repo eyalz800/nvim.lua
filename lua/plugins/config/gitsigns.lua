@@ -6,6 +6,14 @@ m.git_blame_current_line = function()
     cmd 'Gitsigns blame_line'
 end
 
+m.prev_hunk = function()
+    cmd 'Gitsigns prev_hunk'
+end
+
+m.next_hunk = function()
+    cmd 'Gitsigns next_hunk'
+end
+
 m.config = function()
     return {
         signs = {
