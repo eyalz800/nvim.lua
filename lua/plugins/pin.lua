@@ -12,7 +12,7 @@ m.filetyeps = {
 }
 
 local make_win_ref = function(buf)
-    local win = v.api.nvim_open_win(buf, false, {
+    local success, win = pcall(v.api.nvim_open_win, buf, false, {
         relative = 'editor',
         width = 1,
         height = 1,
@@ -21,8 +21,10 @@ local make_win_ref = function(buf)
         style = 'minimal',
         noautocmd = true,
     })
-    v.w[win].pin_data = { buf = buf }
-    return win
+    if success then
+        v.w[win].pin_data = { buf = buf }
+        return win
+    end
 end
 
 local open_in_best_win = function(buf)
@@ -93,24 +95,28 @@ m.setup = function()
                 end
 
                 local buf_pin_data = v.b[win_pin_data.buf].pin_data
-                if not buf_pin_data.win_ref then
+                if not buf_pin_data then
+                    v.w.pin_data = nil
+                else
+                    if not buf_pin_data.win_ref then
+                        return
+                    end
+
+                    local win_ref = make_win_ref(buf)
+                    local success, _ = pcall(v.api.nvim_win_set_buf, buf_pin_data.win, win_pin_data.buf)
+                    if not success then
+                        pcall(v.api.nvim_win_close, win_ref, true)
+                        pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
+                        v.b[win_pin_data.buf].pin_data.win_ref = nil
+                        return
+                    end
+                    pcall(v.api.nvim_win_close, buf_pin_data.win_ref, true)
+                    v.b[win_pin_data.buf].pin_data.win_ref = nil
+
+                    open_in_best_win(buf)
+                    pcall(v.api.nvim_win_close, win_ref, true)
                     return
                 end
-
-                local win_ref = make_win_ref(buf)
-                local success, _ = pcall(v.api.nvim_win_set_buf, buf_pin_data.win, win_pin_data.buf)
-                if not success then
-                    v.api.nvim_win_close(win_ref, true)
-                    v.api.nvim_win_close(buf_pin_data.win_ref, true)
-                    buf_pin_data.win_ref = nil
-                    return
-                end
-                v.api.nvim_win_close(buf_pin_data.win_ref, true)
-                buf_pin_data.win_ref = nil
-
-                open_in_best_win(buf)
-                v.api.nvim_win_close(win_ref, true)
-                return
             end
 
             local buf_pin_data = v.b[buf].pin_data
@@ -125,8 +131,6 @@ m.setup = function()
                 for _, ft in ipairs(m.filetyeps) do
                     if buf_ft == ft then
                         m.pin({buf=buf, win=v.api.nvim_get_current_win()})
-                        win_pin_data = { buf = buf }
-                        buf_pin_data = v.b[buf].pin_data
                         break
                     end
                 end
