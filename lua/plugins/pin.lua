@@ -6,9 +6,10 @@ local clear_autocmds = v.api.nvim_clear_autocmds
 
 m.filetyeps = {
     'qf',
-    'fugitiveblame',
     'NvimTree',
     'Outline',
+    'toggleterm',
+    'fugitiveblame',
     'dapui_watches',
     'dapui_scopes',
     'dapui_stacks',

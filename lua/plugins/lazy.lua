@@ -273,6 +273,16 @@ m.plugins = {
     },
     {
         'voldikss/vim-floaterm',
+        cond = user.settings.terminal == 'floaterm' or user.settings.float_term == 'floaterm',
+    },
+    {
+        'akinsho/toggleterm.nvim',
+        version = '*',
+        config = function()
+            local toggleterm_conf = require 'plugins.config.toggleterm'
+            require 'toggleterm'.setup(toggleterm_conf.config())
+        end,
+        cond = user.settings.terminal == 'toggleterm',
     },
     {
         'tpope/vim-fugitive',

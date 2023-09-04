@@ -48,7 +48,9 @@ m.code_explorer = 'symbols-outline'
 m.edge = nil
 m.pin_bars = 'pin'
 m.treesitter = true
-m.terminal = { set_background = true }
+m.terminal = 'toggleterm'
+m.float_term = 'lazyterm'
+m.external_terminal_opts = { set_background = true }
 m.quickfix_expand = true
 m.column = 'statuscol'
 m.debugger = 'dap'

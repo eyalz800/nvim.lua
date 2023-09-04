@@ -9,7 +9,15 @@ local system = v.fn.system
 
 v.g.asyncrun_open = 0
 v.g.asyncrun_rootmarks = user.settings.root_paths
-v.g.asynctasks_term_pos = 'floaterm'
+
+if user.settings.terminal == 'floaterm' then
+    v.g.asynctasks_term_pos = 'floaterm'
+else
+    v.g.asynctasks_term_pos = 'right'
+    v.g.asynctasks_term_rows = 10
+    v.g.asynctasks_term_cols = 40
+    v.g.asynctasks_term_reuse = 1
+end
 
 m.build_project = function()
     if #v.fn['asynctasks#list']('') == 0 then
