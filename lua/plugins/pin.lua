@@ -98,7 +98,13 @@ m.setup = function()
                 end
 
                 local win_ref = make_win_ref(buf)
-                v.api.nvim_win_set_buf(buf_pin_data.win, win_pin_data.buf)
+                local success, _ = pcall(v.api.nvim_win_set_buf, buf_pin_data.win, win_pin_data.buf)
+                if not success then
+                    v.api.nvim_win_close(win_ref, true)
+                    v.api.nvim_win_close(buf_pin_data.win_ref, true)
+                    buf_pin_data.win_ref = nil
+                    return
+                end
                 v.api.nvim_win_close(buf_pin_data.win_ref, true)
                 buf_pin_data.win_ref = nil
 
