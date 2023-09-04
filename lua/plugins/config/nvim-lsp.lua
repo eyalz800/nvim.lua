@@ -10,7 +10,7 @@ local diagnostic = v.diagnostic
 
 local settings = user.settings.lsp_config.nvim
 
-m.show_documentation = lsp.buf.hover
+m.show_documentation = function() return lsp.buf.hover() end
 m.goto_definition = lsp.buf.definition
 m.show_definitions = finder.lsp_definitions or lsp.buf.definition
 m.goto_definition_sync = lsp.buf.definition
