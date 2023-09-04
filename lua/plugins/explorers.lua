@@ -6,10 +6,12 @@ local cmd = require 'vim.cmd'.silent
 local file_readable = require 'vim.file_readable'.file_readable
 local user = require 'user'
 
-local winwidth = v.fn.winwidth
+--local winwidth = v.fn.winwidth
 local win_getid = v.fn.win_getid
 local win_gotoid = v.fn.win_gotoid
 local getqflist = v.fn.getqflist
+
+local debugger = require 'plugins.debugger'
 
 m.file = require 'plugins.file_explorer'
 m.code = require 'plugins.code_explorer'
@@ -62,6 +64,7 @@ m.arrange = function()
     end
     win_gotoid(cur_win)
     cmd 'wincmd ='
+    debugger.arrange_if_open()
 end
 
 return m

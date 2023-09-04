@@ -154,6 +154,11 @@ end
 m.on_dap_repl_attach = function()
     require 'dap.ext.autocompl'.attach()
 end
+m.arrange_if_open = function()
+    if dap.session() then
+        m.reset_ui()
+    end
+end
 
 v.cmd [=[
     hi! def link InitLuaDebugBP WarningMsg
