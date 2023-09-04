@@ -35,6 +35,7 @@ map('n', '<c-w>w', ':q<cr>', { silent=true }) -- Close window
 map('n', '<c-w>g', explorers.file.open, { silent=true }) -- Open file explorer
 map('n', '<c-w>;', explorers.code.open, { silent=true }) -- Open code explorer
 map('n', '<c-w>e', explorers.close, { silent=true }) -- Close all explorers
+map('n', '<c-w><space>', explorers.toggle, { silent=true }) -- Toggle all explorers
 map('n', '<c-w><cr>', explorers.arrange, { silent=true }) -- Arrange explorers
 map('n', '<c-s>', ':w<cr>', { silent=true }) -- Save file
 map('i', '<c-s>', '<c-o>:w<cr>', { silent=true }) -- Save file

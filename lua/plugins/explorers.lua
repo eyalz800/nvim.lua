@@ -30,6 +30,17 @@ m.display_current_directory = function()
     echo(v.fn.getcwd())
 end
 
+m.toggle = function()
+    cmd 'cclose'
+    if m.file.is_open() or m.code.is_open() then
+        m.close()
+        return
+    end
+    require 'plugins.quickfix'.open({ focus = false })
+    m.file.open({ focus = false })
+    m.code.open({ focus = false })
+end
+
 m.close = function()
     m.file.close()
     m.code.close()
