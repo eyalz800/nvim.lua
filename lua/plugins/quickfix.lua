@@ -40,7 +40,7 @@ m.on_open = function()
     v.o.relativenumber = false
     v.keymap.set('n', 'q', ':<C-u>q<cr>', { silent=true, buffer=true })
     v.keymap.set('n', 'a', explorers.arrange, { silent=true, buffer=true })
-    v.keymap.set('n', 'C', '<cmd>vs +terminal<cr>a', { silent=true, buffer=true })
+    v.keymap.set('n', 'C', '<cmd>vert rightb new +terminal<cr>a', { silent=true, buffer=true })
 end
 
 return m
