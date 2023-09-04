@@ -35,7 +35,7 @@ map('n', '<c-w>w', ':q<cr>', { silent=true }) -- Close window
 map('n', '<c-w>g', explorers.file.open, { silent=true }) -- Open file explorer
 map('n', '<c-w>;', explorers.code.open, { silent=true }) -- Open code explorer
 map('n', '<c-w>e', explorers.close, { silent=true }) -- Close all explorers
-map('n', '<c-w>a', explorers.arrange, { silent=true }) -- Arrange explorers
+map('n', '<c-w><cr>', explorers.arrange, { silent=true }) -- Arrange explorers
 map('n', '<c-s>', ':w<cr>', { silent=true }) -- Save file
 map('i', '<c-s>', '<c-o>:w<cr>', { silent=true }) -- Save file
 map({'n', 'v'}, '<leader>=', '<c-a>', { silent=true }) -- Increment
@@ -48,7 +48,7 @@ map({'n', 'i'}, '<c-v>', clipboard.paste, { silent=true }) -- Paste
 map('n', '<f8>', paste.toggle, { silent=true }) -- Paste mode
 map('n', 'L', ':vertical resize +1<cr>', { silent=true }) -- Resize vertically
 map('n', 'H', ':vertical resize -1<cr>', { silent=true }) -- Resize vertically
-map('n', '<c-w>=', ':resize +1<cr>', { silent=true }) -- Resize horizontal window
+--map('n', '<c-w>=', ':resize +1<cr>', { silent=true }) -- Resize horizontal window
 map('', '<c-w>z', zoom.toggle_zoom, { silent=true }) -- Toggle zoom
 map('n', '<c-w>b', ':below 10new +terminal<cr>a', { silent=true }) -- New terminal below
 map('n', '<c-w>t', ':vert rightb new +terminal<cr>a', { silent=true }) -- New terminal on right side
