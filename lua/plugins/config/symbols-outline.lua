@@ -13,6 +13,7 @@ m.open = function(options)
         if not options.focus then
             cmd 'wincmd p'
         end
+        v.wo[symbols_outline.view.winnr].signcolumn = 'no'
     elseif options.focus and symbols_outline.view.winnr then
         v.fn.win_gotoid(symbols_outline.view.winnr)
     end

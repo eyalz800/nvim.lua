@@ -41,7 +41,7 @@ m.on_open = function()
     v.o.relativenumber = false
     v.keymap.set('n', 'q', ':<C-u>q<cr>', { silent=true, buffer=true })
     v.keymap.set('n', 'a', explorers.arrange, { silent=true, buffer=true })
-    v.keymap.set('n', 'C', terminal.open_split, { silent = true, buffer = true })
+    v.keymap.set('n', 'C', terminal.open_below, { silent = true, buffer = true })
 end
 
 return m

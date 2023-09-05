@@ -2,6 +2,7 @@ local m = {}
 local v = require 'vim'
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
+local explorers = require 'plugins.explorers'
 
 if user.settings.float_term == 'floaterm' then
     m.open_floating_terminal = function(command)
@@ -42,11 +43,7 @@ m.open_split = function()
 end
 
 m.open_below = function()
-    cmd 'below 10new +terminal'
-    v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
-    v.wo.winbar = ''
-    v.bo.buflisted = false
-    v.cmd.startinsert()
+    explorers.open_terminal()
 end
 
 return m

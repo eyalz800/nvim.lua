@@ -74,7 +74,7 @@ m.pin = function(opts)
         buffer = buf,
         callback = function(args)
             local pin_data = v.b[args.buf].pin_data
-            if not pin_data.closing then
+            if pin_data and not pin_data.closing then
                 if is_auto_deleted(args.buf) then
                     pin_data.win_ref = make_win_ref(args.buf)
                 end
@@ -90,10 +90,28 @@ m.pin = function(opts)
         buffer = buf,
         callback = function(args)
             local pin_data = v.b[args.buf].pin_data
-            pin_data.closing = true
-            v.b[args.buf].pin_data = pin_data
+            if pin_data then
+                pin_data.closing = true
+                v.b[args.buf].pin_data = pin_data
+            end
         end,
     })
+end
+
+m.unpin = function(opts)
+    opts = opts or {}
+
+    local buf = opts.buf or v.api.nvim_get_current_buf()
+    local win = opts.win or v.api.nvim_get_current_win()
+
+    local group = augroup('init.lua.pin.bufwinleave', { clear = false })
+    clear_autocmds({ group = group, buffer = buf })
+
+    group = augroup('init.lua.pin.winclosed', { clear = false })
+    clear_autocmds({ group = group, buffer = buf })
+
+    v.b[buf].pin_data = nil
+    v.w[win].pin_data = nil
 end
 
 m.setup = function()
