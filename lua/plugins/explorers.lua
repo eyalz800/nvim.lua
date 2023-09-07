@@ -135,7 +135,7 @@ m.open_terminal = function(options)
         cmd 'below 10new +terminal'
     end
 
-    v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
+    v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB,CursorLine:'
     v.wo.winbar = ''
     v.bo.buflisted = false
 
