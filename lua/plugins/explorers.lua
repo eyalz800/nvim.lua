@@ -81,7 +81,6 @@ m.arrange = function()
             else
                 cmd 'below 10new'
                 cmd 'wincmd J'
-                cmd('resize ' .. 10)
                 v.bo.bufhidden = 'wipe'
             end
             local term_win = v.api.nvim_get_current_win()
@@ -92,6 +91,7 @@ m.arrange = function()
             v.api.nvim_win_close(m.terminal, true)
             pin.pin()
             m.terminal = term_win
+            v.cmd.resize(10)
         end
     end
     if m.code.is_open() then
@@ -109,7 +109,7 @@ m.arrange = function()
         cmd('vertical resize ' .. 30)
     end
     win_gotoid(cur_win)
-    v.cmd.wincmd '='
+    cmd 'horizontal wincmd ='
     debugger.arrange_if_open()
 end
 
