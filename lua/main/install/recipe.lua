@@ -99,7 +99,7 @@ return {
     {
         name = 'install-basic',
         command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y curl exuberant-ctags cscope git unzip ca-certificates gnupg ' ..
-                  'make autoconf automake pkg-config openjdk-8-jre python3 python3-pip python3-venv gdb golang tig',
+                  'make autoconf automake pkg-config openjdk-17-jre python3 python3-pip python3-venv gdb golang tig language-pack-en',
         os = 'Linux',
     },
     {
