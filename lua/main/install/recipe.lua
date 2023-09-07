@@ -59,13 +59,14 @@ return {
         os = 'Darwin',
     },
     {
-        name = 'openjdk-tap',
-        command = 'brew tap AdoptOpenJDK/openjdk',
+        name = 'openjdk-install',
+        command = 'brew install openjdk@17',
         os = 'Darwin',
     },
     {
-        name = 'openjdk-install',
-        command = 'brew install --cask adoptopenjdk/openjdk/adoptopenjdk8',
+        name = 'java-link',
+        command = 'rm -rf ' .. programs_path .. '/java' ..
+               ' ; ln -s /opt/homebrew/opt/java/bin/java ' .. programs_path .. '/java',
         os = 'Darwin',
     },
     {
