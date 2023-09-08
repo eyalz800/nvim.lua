@@ -84,7 +84,6 @@ m.arrange = function()
                 v.bo.bufhidden = 'wipe'
             end
             local term_win = v.api.nvim_get_current_win()
-            v.wo.winbar = ''
             v.api.nvim_win_set_buf(v.api.nvim_get_current_win(), term_buf)
             v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
             v.wo.winbar = ''
