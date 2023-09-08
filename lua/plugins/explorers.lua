@@ -139,7 +139,7 @@ m.open_terminal = function(options)
     v.wo.winbar = ''
     v.wo.cursorline = false
     v.bo.buflisted = false
-
+    v.keymap.set('x', 'a', '<esc><cmd>startinsert<cr>', { silent = true, buffer = true, nowait = true })
     m.terminal = v.api.nvim_get_current_win()
     pin.pin()
 
