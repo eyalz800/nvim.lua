@@ -40,12 +40,17 @@ m.open_split = function()
     v.wo.winbar = ''
     v.wo.cursorline = false
     v.bo.buflisted = false
+    v.bo.bufhidden = 'wipe'
     v.keymap.set('x', 'a', '<esc><cmd>startinsert<cr>', { silent = true, buffer = true, nowait = true })
     v.cmd.startinsert()
 end
 
 m.open_below = function()
     explorers.open_terminal()
+end
+
+m.split_below = function()
+    explorers.open_terminal({ new = true })
 end
 
 return m

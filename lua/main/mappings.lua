@@ -50,9 +50,9 @@ map({'n', 'i'}, '<c-v>', clipboard.paste, { silent=true }) -- Paste
 map('n', '<f8>', paste.toggle, { silent=true }) -- Paste mode
 map('n', 'L', ':vertical resize +1<cr>', { silent=true }) -- Resize vertically
 map('n', 'H', ':vertical resize -1<cr>', { silent=true }) -- Resize vertically
---map('n', '<c-w>=', ':resize +1<cr>', { silent=true }) -- Resize horizontal window
 map('', '<c-w>z', zoom.toggle_zoom, { silent=true }) -- Toggle zoom
 map('n', '<c-w>b', terminal.open_below, { silent=true }) -- New terminal below
+map('n', '<c-w>B', terminal.split_below, { silent=true }) -- Split terminal below
 map('n', '<c-w>t', terminal.open_split, { silent=true }) -- New terminal on right side
 map('t', '<c-w>w', '<c-\\><c-n>:q<cr>', { silent=true }) -- Close terminal
 map('t', '<c-w>n', '<c-\\><c-n>', { silent=true }) -- Terminal normal mode
