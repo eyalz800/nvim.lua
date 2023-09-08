@@ -87,6 +87,7 @@ m.arrange = function()
             v.api.nvim_win_set_buf(v.api.nvim_get_current_win(), term_buf)
             v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
             v.wo.winbar = ''
+            v.wo.cursorline = false
             v.api.nvim_win_close(m.terminal, true)
             pin.pin()
             m.terminal = term_win
