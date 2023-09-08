@@ -36,8 +36,9 @@ end
 
 m.open_split = function()
     cmd 'vert rightb new +terminal'
-    v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB,CursorLine:'
+    v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
     v.wo.winbar = ''
+    v.wo.cursorline = false
     v.bo.buflisted = false
     v.cmd.startinsert()
 end

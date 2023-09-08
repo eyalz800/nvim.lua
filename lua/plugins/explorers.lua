@@ -135,8 +135,9 @@ m.open_terminal = function(options)
         cmd 'below 10new +terminal'
     end
 
-    v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB,CursorLine:'
+    v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
     v.wo.winbar = ''
+    v.wo.cursorline = false
     v.bo.buflisted = false
 
     m.terminal = v.api.nvim_get_current_win()
