@@ -43,7 +43,7 @@ return {
     },
     {
         name = 'install-basic',
-        command = 'brew install curl ag ctags cscope llvm make autoconf automake unzip' ..
+        command = 'brew install curl ctags cscope llvm make autoconf automake unzip' ..
                   ' pkg-config python3 nodejs gnu-sed bat ripgrep lazygit tig golang pandoc || true',
         'brew install git || true',
         os = 'Darwin',
