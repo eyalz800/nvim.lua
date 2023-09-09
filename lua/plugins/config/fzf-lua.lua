@@ -153,6 +153,7 @@ m.keymaps = function()
         i = "red",
         c = "yellow",
         v = "magenta",
+        x = "magenta",
         t = "green"
     }
     local keymaps = {}
