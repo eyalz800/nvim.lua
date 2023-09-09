@@ -278,11 +278,26 @@ m.setup = function()
         },
     }
 
-    keys.register(mappings.n, { mode = 'n' })
-    keys.register(mappings.x, { mode = 'x' })
-    keys.register(mappings.i, { mode = 'i' })
-    keys.register(mappings.t, { mode = 't' })
-    keys.register(mappings.c, { mode = 'c' })
+    local documentation = {
+        n = {
+        },
+        x = {
+        },
+        i = {
+        },
+        t = {
+        },
+        c = {
+        },
+    }
+
+    for _, entry in ipairs({ mappings, documentation }) do
+        keys.register(entry.n, { mode = 'n' })
+        keys.register(entry.x, { mode = 'x' })
+        keys.register(entry.i, { mode = 'i' })
+        keys.register(entry.t, { mode = 't' })
+        keys.register(entry.c, { mode = 'c' })
+    end
 
     -- Internal mappings
 
