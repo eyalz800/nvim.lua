@@ -27,6 +27,7 @@ m.setup = function()
     local indent_guides = require 'plugins.indent_guides'
     local quickfix = require 'plugins.quickfix'
     local terminal = require 'plugins.terminal'
+    local pin = require 'plugins.pin'
 
     local keys = require 'which-key'
 
@@ -229,6 +230,8 @@ m.setup = function()
             ['<leader><leader>lf'] = { '<cmd>lua require "plugins.large_files".set()<cr>', 'Set large file', },
             ['gp'] = { '<cmd>lua require("goto-preview").goto_preview_definition()<CR>', 'Goto definition preview', },
             ['<leader>gp'] = { '<cmd>lua require("goto-preview").close_all_win()<CR>', 'Close preview windows', },
+            ['<leader><leader>p'] = { pin.pin, 'Pin window' },
+            ['<leader><leader>P'] = { pin.unpin, 'Unpin window' },
         },
         x = {
             ['<tab>'] = { '%', 'Jump to matching pairs', },
