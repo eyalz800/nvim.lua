@@ -5,7 +5,8 @@ local user = require 'user'
 ---@diagnostic disable: different-requires
 
 m.start = function()
-    require 'lazy'.setup(m.plugins)
+    local lazy_conf = require 'plugins.config.lazy'
+    require 'lazy'.setup(m.plugins, lazy_conf.config())
 end
 
 m.on_update = function()
