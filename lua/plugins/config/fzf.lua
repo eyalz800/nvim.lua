@@ -79,6 +79,8 @@ m.custom_grep = function(command, options)
     return v.fn['fzf#vim#grep'](command, 0, fzf_opts, 0)
 end
 
+m.keymaps = function() end
+
 m.rg = function(fullscreen)
     local initial_command = 'rg --column --line-number --no-heading --color=always --smart-case . '
     local reload_command =

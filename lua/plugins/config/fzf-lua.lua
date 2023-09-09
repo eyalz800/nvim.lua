@@ -139,6 +139,12 @@ m.custom_grep = function(command)
     })
 end
 
+m.keymaps = function()
+    fzf_lua.keymaps({
+        fzf_colors = v.g.fzf_colors,
+    })
+end
+
 m.config = function()
     fzf_lua = require 'fzf-lua'
     local actions = require 'fzf-lua.actions'

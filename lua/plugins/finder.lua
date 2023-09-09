@@ -22,6 +22,7 @@ else
     m.find_file_list_hidden_invalidate = function() end
     m.custom_grep = function() end
     m.color_picker = function() end
+    m.keymaps = function() end
 end
 
 return m
