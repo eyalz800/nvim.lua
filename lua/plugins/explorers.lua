@@ -50,11 +50,13 @@ m.close = function()
     m.file.close()
     m.code.close()
     for _, terminal in ipairs(m.terminals) do
-        local buffer = v.api.nvim_win_get_buf(terminal)
-        if v.api.nvim_buf_is_valid(buffer) then
-            v.bo[buffer].bufhidden = 'wipe'
+        if v.api.nvim_win_is_valid(terminal) then
+            local buffer = v.api.nvim_win_get_buf(terminal)
+            if v.api.nvim_buf_is_valid(buffer) then
+                v.bo[buffer].bufhidden = 'wipe'
+            end
+            v.api.nvim_win_close(terminal, true)
         end
-        v.api.nvim_win_close(terminal, true)
     end
     m.terminals = {}
     v.cmd.cclose()
