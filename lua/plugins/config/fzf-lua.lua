@@ -140,10 +140,61 @@ m.custom_grep = function(command)
 end
 
 m.keymaps = function()
-    fzf_lua.keymaps({
-        fzf_colors = v.g.fzf_colors,
-        winopts = { preview = { hidden = 'hidden' } },
-    })
+    local core = require 'fzf-lua.core'
+    local utils = require 'fzf-lua.utils'
+    local config = require 'fzf-lua.config'
+    local opts = config.normalize_opts(
+    { fzf_colors = v.g.fzf_colors, winopts = { preview = { hidden = 'hidden',  } } },
+        config.globals.keymap)
+    if not opts then return end
+
+    local modes = {
+        n = "blue",
+        i = "red",
+        c = "yellow",
+        v = "magenta",
+        t = "green"
+    }
+    local keymaps = {}
+
+    local add_keymap = function(keymap)
+        local keymap_desc = keymap.desc or keymap.rhs or string.format("%s", keymap.callback);
+        -- ignore dummy mappings
+        if type(keymap.rhs) == "string" and #keymap.rhs == 0 then
+            return
+        end
+        keymap.str = string.format("%s : %-40s : %s",
+            utils.ansi_codes[modes[keymap.mode] or "blue"](keymap.mode),
+            keymap.lhs:gsub("%s", "<Space>"),
+            keymap_desc or "")
+
+        local k = string.format("[%s:%s:%s]",
+            keymap.buffer, keymap.mode, keymap.lhs)
+        keymaps[k] = keymap
+    end
+
+    for mode, _ in pairs(modes) do
+        local global = v.api.nvim_get_keymap(mode)
+        for _, keymap in pairs(global) do
+            add_keymap(keymap)
+        end
+        local buf_local = v.api.nvim_buf_get_keymap(0, mode)
+        for _, keymap in pairs(buf_local) do
+            add_keymap(keymap)
+        end
+    end
+
+    local entries = {}
+    for _, val in pairs(keymaps) do
+        table.insert(entries, val.str)
+    end
+
+    opts.fzf_opts["--no-multi"] = ""
+
+    -- sort alphabetically
+    table.sort(entries)
+
+    core.fzf_exec(entries, opts)
 end
 
 m.config = function()
