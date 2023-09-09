@@ -45,6 +45,13 @@ m.plugins = {
         end,
     },
     {
+        'folke/which-key.nvim',
+        config = function()
+            local which_key_conf = require 'plugins.config.which-key'
+            require 'which-key'.setup(which_key_conf.config())
+        end,
+    },
+    {
         'williamboman/mason.nvim',
         config = function()
             local mason_conf = require 'plugins.config.mason'

@@ -28,241 +28,321 @@ m.setup = function()
     local quickfix = require 'plugins.quickfix'
     local terminal = require 'plugins.terminal'
 
-    map('n', 'Y', 'y$', { silent = true })                                                                                            -- Yank to end of line
-    map('v', '<tab>', '%', { silent = true })                                                                                         -- Jump to matching pairs
-    map('n', 'g[', '0', { silent = true })                                                                                            -- Go to beginning of line
-    map('n', 'g]', '$', { silent = true })                                                                                            -- Go to end of line
-    map('n', '`', ':noh<cr>', { silent = true })                                                                                      -- Turn off highlights
-    map('n', '<c-q>', '<c-v>', { silent = true })                                                                                     -- Visual block
-    map('n', '<c-w>w', ':q<cr>', { silent = true })                                                                                   -- Close window
-    map('n', '<c-w>g', explorers.file.open, { silent = true })                                                                        -- Open file explorer
-    map('n', '<c-w>;', explorers.code.open, { silent = true })                                                                        -- Open code explorer
-    map('n', '<c-w>e', explorers.close, { silent = true })                                                                            -- Close all explorers
-    map('n', '<c-w><space>', explorers.toggle, { silent = true })                                                                     -- Toggle all explorers
-    map('n', '<c-w><cr>', explorers.arrange, { silent = true })                                                                       -- Arrange explorers
-    map('n', '<c-s>', ':w<cr>', { silent = true })                                                                                    -- Save file
-    map('i', '<c-s>', '<c-o>:w<cr>', { silent = true })                                                                               -- Save file
-    map({ 'n', 'v' }, '<leader>=', '<c-a>', { silent = true })                                                                        -- Increment
-    map({ 'n', 'v' }, '<leader>-', '<c-x>', { silent = true })                                                                        -- Decrement
-    map('n', '<c-a>', 'ggVG', { silent = true })                                                                                      -- Select all
-    map({ 'v', 'i' }, '<c-a>', '<esc>ggVG', { silent = true })                                                                        -- Select all
-    map('v', '<c-c>', clipboard.copy, { silent = true })                                                                              -- Copy
-    map('v', '<c-x>', clipboard.cut, { silent = true })                                                                               -- Cut
-    map({ 'n', 'i' }, '<c-v>', clipboard.paste, { silent = true })                                                                    -- Paste
-    map('n', '<f8>', paste.toggle, { silent = true })                                                                                 -- Paste mode
-    map('n', 'L', ':vertical resize +1<cr>', { silent = true })                                                                       -- Resize vertically
-    map('n', 'H', ':vertical resize -1<cr>', { silent = true })                                                                       -- Resize vertically
-    map('', '<c-w>z', zoom.toggle_zoom, { silent = true })                                                                            -- Toggle zoom
-    map('n', '<c-w>b', terminal.open_below, { silent = true })                                                                        -- New terminal below
-    map('n', '<c-w>B', terminal.split_below, { silent = true })                                                                       -- Split terminal below
-    map('n', '<c-w>t', terminal.open_split, { silent = true })                                                                        -- New terminal on right side
-    map('t', '<c-w>w', '<c-\\><c-n>:q<cr>', { silent = true })                                                                        -- Close terminal
-    map('t', '<c-w>n', '<c-\\><c-n>', { silent = true })                                                                              -- Terminal normal mode
-    map({ 'n', 'x' }, '<c-l>', indent_guides.refresh_trigger('20zl', { expr = false }), { silent = true })                            -- Side scrolling
-    map({ 'n', 'x' }, '<c-h>', indent_guides.refresh_trigger('20zh', { expr = false }), { silent = true })                            -- Side scrolling
-    map('n', '<leader>rw', whitespace.strip, { silent = true })                                                                       -- Strip whitespace
-    map('n', '<leader>tw', whitespace.toggle, { silent = true })                                                                      -- Toggle whitespace
-    map('n', '<leader>ts', ':set spell! spelloptions=camel spelllang=en<cr>', { silent = true })                                      -- Toggle spell
-    map('n', 'cro', root_paths.switch_to_root, { silent = true })                                                                     -- Switch to root
-    map('n', 'cp', root_paths.switch_to_project_root, { silent = true })                                                              -- Switch to project root
-    map('n', '<leader>ef', explorers.display_current_file, { silent = true })                                                         -- Echo current file
-    map('n', 'cq', explorers.display_current_directory, { silent = true })                                                            -- Echo current directory
-    map('n', 'cd', function() cmd('cd ' .. expand('%:p:h')) end, { silent = true })                                                   -- Enter current file directory
-    map('n', 'cu', function() cmd('cd ..') end, { silent = true })                                                                    -- Go up one directory
-    map('n', 'gb', git.git_blame, { silent = true })                                                                                  -- Git blame
-    map('n', 'gv', ':DiffviewFileHistory %<cr>', { silent = true })                                                                   -- Diff view currnent file
-    map('n', 'gV', ':DiffviewFileHistory<cr>', { silent = true })                                                                     -- Diff view currnent branch
-    map('n', 'gl', git.show_git, { silent = true })                                                                                   -- Show git
-    map('n', 'gm', git.show_staging_buffer, { silent = true })                                                                        -- Show git staging buffer
-    map('n', ']c', git.prev_hunk, { silent = true })                                                                                  -- Git prev hunk
-    map('n', ']c', git.next_hunk, { silent = true })                                                                                  -- Git next hunk
-    map('n', 'gs', source_index.goto_symbol_definition, { silent = true })                                                            -- Goto indexed symbol prefer definition
-    map('n', 'gS', source_index.goto_symbol_declaration, { silent = true })                                                           -- Goto indexed symbol prefer declaration
-    map('n', 'gd', lsp.goto_definition, { silent = true })                                                                            -- Goto definition lsp
-    map('n', '<leader>gd', lsp.show_definitions, { silent = true })                                                                   -- Browse definitions lsp
-    map('n', 'gD', lsp.goto_declaration, { silent = true })                                                                           -- Goto declaration lsp synchronously
-    map('n', '<leader><leader>gd', lsp.goto_definition_sync, { silent = true })                                                       -- Goto definition lsp synchronously
-    map('n', 'gr', lsp.show_references, { silent = true })                                                                            -- Browse references lsp
-    map('n', 'ga', lsp.code_action, { silent = true })                                                                                -- Code action
-    map('n', '<leader>qf', lsp.quick_fix, { silent = true })                                                                          -- Quick fix using lsp
-    map('n', '<leader>gy', lsp.type_definition, { silent = true })                                                                    -- Goto type definition
-    map('n', 'go', lsp.switch_source_header, { silent = true })                                                                       -- Switch between source and header
-    map('n', 'K', lsp.show_documentation, { silent = true })                                                                          -- Show documentation
-    map('n', '[d', lsp.prev_diagnostic, { silent = true })                                                                            -- Show previous diagnostic
-    map('n', ']d', lsp.next_diagnostic, { silent = true })                                                                            -- Show next diagnostic
-    map('n', '<leader>rn', lsp.rename, { silent = true })                                                                             -- Rename symbol
-    map('x', 'gf', lsp.format_selected, { silent = true })                                                                            -- Format selected
-    map('i', '<c-d>', lsp.expand_snippets, { silent = true })                                                                         -- Expand snippets (with nvim-lsp just use tab to select then enter)
-    map('x', '<c-r>', lsp.select_snippets, { silent = true })                                                                         -- Select snippets
-    map('n', '<leader>ld', lsp.list_diagnostics, { silent = true })                                                                   -- List diagnostics
-    map('n', '<leader><leader><tab>', finder.find_buffer, { silent = true })                                                          -- Find buffer
-    map('n', '<c-p>', finder.find_file, { silent = true })                                                                            -- Find file
-    map('n', '<leader><c-p>', finder.find_file_list, { silent = true })                                                               -- Find file with cache while populating files list for later use.
-    map('n', '<leader><leader><c-p>', finder.find_file_list_invalidate, { silent = true })                                            -- Similar to previous but invalidate cache.
-    map('n', '<c-]>', finder.find_file_hidden, { silent = true })                                                                     -- Find file include hidden files
-    map('n', '<leader><c-]>', finder.find_file_list_hidden, { silent = true })                                                        -- Find file include hidden files with cache while populating files list for later use.
-    map('n', '<leader><leader><c-]>', finder.find_file_list_hidden_invalidate, { silent = true })                                     -- Similar to previous but invalidate cache.
-    map('n', '<c-g>', finder.find_in_files, { silent = true })                                                                        -- Search in all files fuzzy
-    map('n', '<c-\\>', finder.find_in_files_precise, { silent = true })                                                               -- Search in all files precisely
-    map('n', '<leader><c-\\>', finder.find_in_files_precise_native, { silent = true })                                                -- Search in all files precisely (may be faster)
-    map('n', 'g<c-g>', finder.find_current_in_files, { silent = true })                                                               -- Search in all files fuzzy
-    map('n', 'g<c-\\>', finder.find_current_in_files_precise, { silent = true })                                                      -- Search in all files precisely
-    map('n', 'g<leader><c-\\>', finder.find_current_in_files_precise_native, { silent = true })                                       -- Search in all files precisely (may be faster)
-    map('n', '//', finder.find_line, { silent = true })                                                                               -- Find a line in current file
-    map('n', '<c-j>', '<plug>(VM-Add-Cursor-Down)', { silent = true })                                                                -- Add cursor down
-    map('n', '<c-k>', '<plug>(VM-Add-Cursor-Up)', { silent = true })                                                                  -- Add cursor down
-    map({ 'n', 't' }, '<c-w>h', tmux_navigator.tmux_navigate_left, { silent = true })                                                 -- Navigate left
-    map({ 'n', 't' }, '<c-w>j', tmux_navigator.tmux_navigate_down, { silent = true })                                                 -- Navigate down
-    map({ 'n', 't' }, '<c-w>k', tmux_navigator.tmux_navigate_up, { silent = true })                                                   -- Navigate right
-    map({ 'n', 't' }, '<c-w>l', tmux_navigator.tmux_navigate_right, { silent = true })                                                -- Navigate up
-    map({ 'n', 't' }, '<c-w><left>', tmux_navigator.tmux_navigate_left, { silent = true })                                            -- Navigate left
-    map({ 'n', 't' }, '<c-w><down>', tmux_navigator.tmux_navigate_down, { silent = true })                                            -- Navigate down
-    map({ 'n', 't' }, '<c-w><up>', tmux_navigator.tmux_navigate_up, { silent = true })                                                -- Navigate right
-    map({ 'n', 't' }, '<c-w><right>', tmux_navigator.tmux_navigate_right, { silent = true })                                          -- Navigate up
-    map('n', '<leader>u', fold.toggle, { silent = true })                                                                             -- Toggle fold
-    map('n', '<c-w>,', buffers.prev_buffer, { silent = true })                                                                        -- Previous buffer
-    map('n', '<c-w>.', buffers.next_buffer, { silent = true })                                                                        -- Next buffer
-    map('n', '<s-tab>', buffers.prev_buffer, { silent = true })                                                                       -- Previous buffer
-    map('n', '<tab>', buffers.next_buffer, { silent = true })                                                                         -- Next buffer
-    map('n', '<c-w>d', buffers.delete_buffer, { silent = true })                                                                      -- Close buffer
-    map('n', '<leader>1', buffers.switch_to_buffer(1), { silent = true })                                                             -- Switch buffer 1
-    map('n', '<leader>2', buffers.switch_to_buffer(2), { silent = true })                                                             -- Switch buffer 2
-    map('n', '<leader>3', buffers.switch_to_buffer(3), { silent = true })                                                             -- Switch buffer 3
-    map('n', '<leader>4', buffers.switch_to_buffer(4), { silent = true })                                                             -- Switch buffer 4
-    map('n', '<leader>5', buffers.switch_to_buffer(5), { silent = true })                                                             -- Switch buffer 5
-    map('n', '<leader>6', buffers.switch_to_buffer(6), { silent = true })                                                             -- Switch buffer 6
-    map('n', '<leader>7', buffers.switch_to_buffer(7), { silent = true })                                                             -- Switch buffer 7
-    map('n', '<leader>8', buffers.switch_to_buffer(8), { silent = true })                                                             -- Switch buffer 8
-    map('n', '<leader>9', buffers.switch_to_buffer(9), { silent = true })                                                             -- Switch buffer 9
-    map('n', '<leader>0', buffers.switch_to_buffer(0), { silent = true })                                                             -- Switch buffer 10
-    map('n', '<leader><tab>', buffers.pick_buffer, { silent = true })                                                                 -- Pick buffer
-    map('n', '<c-w>p', ':below copen<cr>', { silent = true })                                                                         -- Quickfix open below
-    map('n', '<c-w>m', quickfix.map_open, { silent = true })                                                                          -- Go to quickfix
-    map('n', '<c-w>q', ':cclose<cr>', { silent = true })                                                                              -- Quickfix close
-    map('c', '<c-k>', '<plug>CmdlineCompleteBackward', { silent = true })                                                             -- Complete prev in vim command mode
-    map('c', '<c-j>', '<plug>CmdlineCompleteForward', { silent = true })                                                              -- Complete next in vim command mode
-    map('n', '-', ':setlocal wrap! lbr!<cr>', { silent = true })                                                                      -- Wrap words
-    map('n', 'cr', '<plug>(abolish-coerce-word)', { silent = true })                                                                  -- Change word case (s-snake_case, m-MixedCase, c-camelCase, u-UPPER, -/. dash/dot)
-    map('n', '<leader>bv', binary_view.binary_view, { silent = true })                                                                -- Binary view with xxd
-    map('n', '<leader>dv', disasm_view.disasm_view, { silent = true })                                                                -- Disassembly view
-    map({ 'n', 'i' }, '<f7>', tasks.build_project, { silent = true })                                                                 -- Build project
-    map({ 'n', 'i' }, '<c-f5>', tasks.run_project, { silent = true })                                                                 -- Run project
-    map({ 'n', 'i' }, '<f29>', tasks.run_project, { silent = true })                                                                  -- Run project
-    map({ 'n', 'i' }, '<s-f7>', tasks.clean_project, { silent = true })                                                               -- Clean project
-    map({ 'n', 'i' }, '<f19>', tasks.clean_project, { silent = true })                                                                -- Clean project
-    map({ 'n', 'i' }, '<c-f7>', tasks.run_project, { silent = true })                                                                 -- Run project
-    map({ 'n', 'i' }, '<f31>', tasks.build_config, { silent = true })                                                                 -- Build config
-    map('n', '<leader>dl', debugger.launch_settings, { silent = true })                                                               -- Debug launch settings
-    map('n', '<leader>dj', debugger.launch_settings, { silent = true })                                                               -- Debug launch settings
-    map('n', '<leader>dd', debugger.launch, { silent = true })                                                                        -- Debug launch
-    map('n', '<leader>dc', debugger.continue, { silent = true })                                                                      -- Debug continue
-    map('n', '<F5>', debugger.continue, { silent = true })                                                                            -- Debug continue
-    map('n', '<leader>dr', debugger.restart, { silent = true })                                                                       -- Debug restart
-    map('n', '<S-F5>', debugger.restart, { silent = true })                                                                           -- Debug restart
-    map('n', '<F17>', debugger.restart, { silent = true })                                                                            -- Debug restart
-    map('n', '<leader>dp', debugger.pause, { silent = true })                                                                         -- Debug pause
-    map('n', '<F6>', debugger.pause, { silent = true })                                                                               -- Debug pause
-    map('n', '<leader>ds', debugger.stop, { silent = true })                                                                          -- Debug stop
-    map('n', '<S-F6>', debugger.stop, { silent = true })                                                                              -- Debug stop
-    map('n', '<F18>', debugger.stop, { silent = true })                                                                               -- Debug stop
-    map('n', '<leader>db', debugger.breakpoint, { silent = true })                                                                    -- Debug breakpoint
-    map('n', '<F9>', debugger.breakpoint, { silent = true })                                                                          -- Debug breakpoint
-    map('n', '<leader><leader>db', debugger.breakpoint_cond, { silent = true })                                                       -- Debug conditional breakpoint
-    map('n', '<S-F9>', debugger.breakpoint_cond, { silent = true })                                                                   -- Debug conditional breakpoint
-    map('n', '<F21>', debugger.breakpoint_cond, { silent = true })                                                                    -- Debug conditional breakpoint
-    map('n', '<leader>df', debugger.breakpoint_function, { silent = true })                                                           -- Debug function breakpoint
-    map('n', '<leader><F9>', debugger.breakpoint_function, { silent = true })                                                         -- Debug function breakpoint
-    map('n', '<leader>dB', debugger.clear_breakpoints, { silent = true })                                                             -- Debug clear breakpoints
-    map('n', '<leader><leader><F9>', debugger.clear_breakpoints, { silent = true })                                                   -- Debug clear breakpoints
-    map('n', '<leader>dn', debugger.step_over, { silent = true })                                                                     -- Debug step over
-    map('n', '<F10>', debugger.step_over, { silent = true })                                                                          -- Debug step over
-    map('n', '<leader>di', debugger.step_into, { silent = true })                                                                     -- Debug step into
-    map('n', '<F11>', debugger.step_into, { silent = true })                                                                          -- Debug step into
-    map('n', '<leader>do', debugger.step_out, { silent = true })                                                                      -- Debug step out
-    map('n', '<S-F11>', debugger.step_out, { silent = true })                                                                         -- Debug step out
-    map('n', '<F23>', debugger.step_out, { silent = true })                                                                           -- Debug step out
-    map('n', '<leader>dN', debugger.run_to_cursor, { silent = true })                                                                 -- Debug run to cursor
-    map('n', '<C-F10>', debugger.run_to_cursor, { silent = true })                                                                    -- Debug run to cursor
-    map('n', '<F34>', debugger.run_to_cursor, { silent = true })                                                                      -- Debug run to cursor
-    map('n', '<leader>dD', debugger.disassemble, { silent = true })                                                                   -- Debug disassemble
-    map({ 'n', 'x' }, '<leader>de', debugger.eval_window, { silent = true })                                                          -- Debug eval window
-    map('n', '<leader>du', debugger.reset_ui, { silent = true })                                                                      -- Debugger toggle UI
-    map('n', '<leader>dU', debugger.toggle_ui, { silent = true })                                                                     -- Debugger toggle UI
-    map('n', '<leader>dq', debugger.reset, { silent = true })                                                                         -- Debug close
-    map('n', '<leader>ca', source_index.cscope_assignments, { silent = true })                                                        -- CScope assignments
-    map('n', '<leader>cc', source_index.cscope_function_calling, { silent = true })                                                   -- CScope function calling
-    map('n', '<leader>cd', source_index.cscope_functions_called_by, { silent = true })                                                -- CScope functions called by
-    map('n', '<leader>ce', source_index.cscope_egrep, { silent = true })                                                              -- CScope egrep
-    map('n', '<leader>cf', source_index.cscope_file, { silent = true })                                                               -- CScope file
-    map('n', '<leader>cg', source_index.cscope_definition, { silent = true })                                                         -- CScope definition
-    map('n', '<leader>ci', source_index.cscope_files_including, { silent = true })                                                    -- CScope files including
-    map('n', '<leader>cs', source_index.cscope_symbol, { silent = true })                                                             -- CScope symbol
-    map('n', '<leader>ct', source_index.cscope_text, { silent = true })                                                               -- CScope text
-    map('n', '<leader><leader>ca', source_index.cscope_assignments, { silent = true })                                                -- CScope assignments
-    map('n', '<leader><leader>cc', source_index.cscope_input_function_calling, { silent = true })                                     -- CScope function calling (input)
-    map('n', '<leader><leader>cd', source_index.cscope_input_functions_called_by, { silent = true })                                  -- CScope functions called by (input)
-    map('n', '<leader><leader>ce', source_index.cscope_input_egrep, { silent = true })                                                -- CScope egrep (input)
-    map('n', '<leader><leader>cf', source_index.cscope_input_file, { silent = true })                                                 -- CScope file (input)
-    map('n', '<leader><leader>cg', source_index.cscope_input_definition, { silent = true })                                           -- CScope definition (input)
-    map('n', '<leader><leader>ci', source_index.cscope_input_files_including, { silent = true })                                      -- CScope files including (input)
-    map('n', '<leader><leader>cs', source_index.cscope_input_symbol, { silent = true })                                               -- CScope symbol (input)
-    map('n', '<leader><leader>ct', source_index.cscope_input_text, { silent = true })                                                 -- CScope text (input)
-    map('n', 'gw', source_index.opengrok_query_f, { silent = true })                                                                  -- Opengrok query symbol
-    map('n', 'gW', source_index.opengrok_query_d, { silent = true })                                                                  -- Opengrok query symbol defintiion
-    map('n', '<leader>gw', source_index.opengrok_query_input_f, { silent = true })                                                    -- Opengrok query symbol (input)
-    map('n', '<leader>gW', source_index.opengrok_query_input_d, { silent = true })                                                    -- Opengrok query symbol defintiion (input)
-    map('n', '<leader>o', ':pop<cr>', { silent = true })                                                                              -- Pop tag stack
-    map('n', '<leader>i', ':tag<cr>', { silent = true })                                                                              -- Unpop tag stack
-    map('n', '<leader>gcp', source_index.generate_cpp, { silent = true })                                                             -- Generate cpp index
-    map('n', '<leader>gt', source_index.generate_tags, { silent = true })                                                             -- Generate common tags
-    map('n', '<leader>gT', source_index.generate_all_tags, { silent = true })                                                         -- Generate all tags
-    map('n', '<leader>gf', source_index.generate_source_files_list, { silent = true })                                                -- Generate source files list
-    map('n', '<leader>gF', source_index.generate_all_files_list, { silent = true })                                                   -- Generate all files list
-    map('n', '<leader>gcf', source_index.generate_flags, { silent = true })                                                           -- Generate flags
-    map('n', '<leader>go', source_index.generate_opengrok, { silent = true })                                                         -- Generate opengrok
-    map('n', '<leader>ga', source_index.generate_cpp_and_opengrok, { silent = true })                                                 -- Generate cpp and opengrok
-    map('n', '<leader><leader>gc', source_index.clean, { silent = true })                                                             -- Clean
-    map('t', '<scrollwheelleft>', '<nop>', { silent = true })                                                                         -- Disable terminal horizontal scrolling
-    map('t', '<scrollwheelright>', '<nop>', { silent = true })                                                                        -- Disable terminal horizontal scrolling
-    map('t', '<mousemove>', '<nop>', { silent = true })                                                                               -- Disable terminal mouse move
-    map({ 'n', 'x' }, '<scrollwheelleft>', indent_guides.refresh_trigger('<scrollwheelleft>', { expr = true }),
-        { silent = true, expr = true })                                                                                               -- Refresh indent guides on horizontal scroll
-    map({ 'n', 'x' }, '<scrollwheelright>', indent_guides.refresh_trigger('<scrollwheelright>', { expr = true }),
-        { silent = true, expr = true })                                                                                               -- Refresh indent guides on horizontal scroll
-    map('n', '<leader>cp', finder.color_picker, { silent = true })                                                                    -- Pick color
-    map('n', '<leader>p', ':YankHistoryRgPaste<cr>', { silent = true })                                                               -- Paste from history
-    map({ 'n', 'x' }, '<f1>', ':set relativenumber!<cr>', { silent = true })                                                          -- Relative number
-    map({ 'n', 'x' }, '<f2>', ':set number!<cr>', { silent = true })                                                                  -- Number
-    map('n', '<leader>bt', ':lua require "barbecue.ui".toggle()<cr>', { silent = true })                                              -- Toggle barbecue bar
-    map('n', '<leader><leader>lf', ':lua require "plugins.large_files".set()<cr>', { silent = true })                                 -- Set large file
-    map('n', 'gp', '<cmd>lua require("goto-preview").goto_preview_definition()<CR>', { noremap = true })                              -- Goto definition preview
-    map('n', '<leader>gp', '<cmd>lua require("goto-preview").close_all_win()<CR>', { noremap = true })                                -- Close preview windows
+    local keys = require 'which-key'
 
-    if jump.needs_mapping then
-        map('n', 's', jump.search_jump, { silent = true })       -- Search and jump to location
-        map('x', 's', jump.search_jump_visual, { silent = true }) -- Search and jump to location
-        map('x', 'S', jump.search_jump_back_visual, { silent = true }) -- Search backwards and jump to location
-        map({ 'n', 'x' }, 'f', jump.find_jump, { silent = true }) -- Find and jump to location
-        map({ 'n', 'x' }, 'F', jump.find_jump_back, { silent = true }) -- Find backwards and jump to location
-        map({ 'n', 'x' }, 't', jump.till_jump, { silent = true }) -- Find and jump to until location
-        map({ 'n', 'x' }, 'T', jump.till_jump_back, { silent = true }) -- Find backwards and jump until location
-    end
+    local mappings = {
+        n = {
+            ['g?'] = { '<cmd>WhichKey<cr>', 'Show key bindings' },
+            ['Y'] = { 'y$', 'Yank to end of line', },
+            ['g['] = { '0', 'Go to beginning of line', },
+            ['g]'] = { '$', 'Go to end of line', },
+            ['`'] = { '<cmd>noh<cr>', 'Turn off highlights', },
+            ['<c-q>'] = { '<c-v>', 'Visual block', },
+            ['<c-w>w'] = { '<cmd>q<cr>', 'Close window', },
+            ['<c-w>g'] = { explorers.file.open, 'Open file explorer', },
+            ['<c-w>;'] = { explorers.code.open, 'Open code explorer', },
+            ['<c-w>e'] = { explorers.close, 'Close all explorers', },
+            ['<c-w><space>'] = { explorers.toggle, 'Toggle all explorers', },
+            ['<c-w><cr>'] = { explorers.arrange, 'Arrange explorers', },
+            ['<c-s>'] = { '<cmd>w<cr>', 'Save file', },
+            ['<leader>='] = { '<c-a>', 'Increment', },
+            ['<leader>-'] = { '<c-x>', 'Decrement', },
+            ['<c-a>'] = { 'ggVG', 'Select all', },
+            ['<c-v>'] = { clipboard.paste, 'Paste', },
+            ['<f8>'] = { paste.toggle, 'Paste mode', },
+            ['L'] = { '<cmd>vertical resize +1<cr>', 'Resize vertically', },
+            ['H'] = { '<cmd>vertical resize -1<cr>', 'Resize vertically', },
+            ['<c-w>z'] = { zoom.toggle_zoom, 'Toggle zoom', },
+            ['<c-w>b'] = { terminal.open_below, 'New terminal below', },
+            ['<c-w>B'] = { terminal.split_below, 'Split terminal below', },
+            ['<c-w>t'] = { terminal.open_split, 'New terminal on right side', },
+            ['<c-l>'] = { indent_guides.refresh_trigger('20zl', { expr = false }), 'Side scrolling', },
+            ['<c-h>'] = { indent_guides.refresh_trigger('20zh', { expr = false }), 'Side scrolling', },
+            ['<leader>rw'] = { whitespace.strip, 'Strip whitespace', },
+            ['<leader>tw'] = { whitespace.toggle, 'Toggle whitespace', },
+            ['<leader>ts'] = { ':set spell! spelloptions=camel spelllang=en<cr>', 'Toggle spell', },
+            ['cro'] = { root_paths.switch_to_root, 'Switch to root', },
+            ['cp'] = { root_paths.switch_to_project_root, 'Switch to project root', },
+            ['<leader>ef'] = { explorers.display_current_file, 'Echo current file', },
+            ['cq'] = { explorers.display_current_directory, 'Echo current directory', },
+            ['cd'] = { function() cmd('cd ' .. expand('%:p:h')) end, 'Enter current file directory', },
+            ['cu'] = { function() cmd('cd ..') end, 'Go up one directory', },
+            ['gb'] = { git.git_blame, 'Git blame', },
+            ['gv'] = { '<cmd>DiffviewFileHistory %<cr>', 'Diff view currnent file', },
+            ['gV'] = { '<cmd>DiffviewFileHistory<cr>', 'Diff view currnent branch', },
+            ['gl'] = { git.show_git, 'Show git', },
+            ['gm'] = { git.show_staging_buffer, 'Show git staging buffer', },
+            ['[c'] = { git.prev_hunk, 'Git prev hunk', },
+            [']c'] = { git.next_hunk, 'Git next hunk', },
+            ['gs'] = { source_index.goto_symbol_definition, 'Goto indexed symbol prefer definition', },
+            ['gS'] = { source_index.goto_symbol_declaration, 'Goto indexed symbol prefer declaration', },
+            ['gd'] = { lsp.goto_definition, 'Goto definition lsp', },
+            ['<leader>gd'] = { lsp.show_definitions, 'Browse definitions lsp', },
+            ['gD'] = { lsp.goto_declaration, 'Goto declaration lsp synchronously', },
+            ['<leader><leader>gd'] = { lsp.goto_definition_sync, 'Goto definition lsp synchronously', },
+            ['gr'] = { lsp.show_references, 'Browse references lsp', },
+            ['ga'] = { lsp.code_action, 'Code action', },
+            ['<leader>qf'] = { lsp.quick_fix, 'Quick fix using lsp', },
+            ['<leader>gy'] = { lsp.type_definition, 'Goto type definition', },
+            ['go'] = { lsp.switch_source_header, 'Switch between source and header', },
+            ['K'] = { lsp.show_documentation, 'Show documentation', },
+            ['[d'] = { lsp.prev_diagnostic, 'Show previous diagnostic', },
+            [']d'] = { lsp.next_diagnostic, 'Show next diagnostic', },
+            ['<leader>rn'] = { lsp.rename, 'Rename symbol', },
+            ['<leader>ld'] = { lsp.list_diagnostics, 'List diagnostics', },
+            ['<leader><leader><tab>'] = { finder.find_buffer, 'Find buffer', },
+            ['<c-p>'] = { finder.find_file, 'Find file', },
+            ['<leader><c-p>'] = { finder.find_file_list,
+                'Find file with cache while populating files list for later use.', },
+            ['<leader><leader><c-p>'] = { finder.find_file_list_invalidate, 'Similar to previous but invalidate cache.', },
+            ['<c-]>'] = { finder.find_file_hidden, 'Find file include hidden files', },
+            ['<leader><c-]>'] = { finder.find_file_list_hidden,
+                'Find file include hidden files with cache while populating files list for later use.', },
+            ['<leader><leader><c-]>'] = { finder.find_file_list_hidden_invalidate,
+                'Similar to previous but invalidate cache.', },
+            ['<c-g>'] = { finder.find_in_files, 'Search in all files fuzzy', },
+            ['<c-\\>'] = { finder.find_in_files_precise, 'Search in all files precisely', },
+            ['<leader><c-\\>'] = { finder.find_in_files_precise_native, 'Search in all files precisely (may be faster)', },
+            ['g<c-g>'] = { finder.find_current_in_files, 'Search in all files fuzzy', },
+            ['g<c-\\>'] = { finder.find_current_in_files_precise, 'Search in all files precisely', },
+            ['g<leader><c-\\>'] = { finder.find_current_in_files_precise_native,
+                'Search in all files precisely (may be faster)', },
+            ['//'] = { finder.find_line, 'Find a line in current file', },
+            ['<c-j>'] = { '<plug>(VM-Add-Cursor-Down)', 'Add cursor down', },
+            ['<c-k>'] = { '<plug>(VM-Add-Cursor-Up)', 'Add cursor down', },
+            ['<c-w>h'] = { tmux_navigator.tmux_navigate_left, 'Navigate left', },
+            ['<c-w>j'] = { tmux_navigator.tmux_navigate_down, 'Navigate down', },
+            ['<c-w>k'] = { tmux_navigator.tmux_navigate_up, 'Navigate right', },
+            ['<c-w>l'] = { tmux_navigator.tmux_navigate_right, 'Navigate up', },
+            ['<c-w><left>'] = { tmux_navigator.tmux_navigate_left, 'Navigate left', },
+            ['<c-w><down>'] = { tmux_navigator.tmux_navigate_down, 'Navigate down', },
+            ['<c-w><up>'] = { tmux_navigator.tmux_navigate_up, 'Navigate right', },
+            ['<c-w><right>'] = { tmux_navigator.tmux_navigate_right, 'Navigate up', },
+            ['<leader>u'] = { fold.toggle, 'Toggle fold', },
+            ['<c-w>,'] = { 'Previous buffer', },
+            ['<c-w>.'] = { buffers.next_buffer, 'Next buffer', },
+            ['<s-tab>'] = { buffers.prev_buffer, 'Previous buffer', },
+            ['<tab>'] = { buffers.next_buffer, 'Next buffer', },
+            ['<c-w>d'] = { buffers.delete_buffer, 'Close buffer', },
+            ['<leader>1'] = { buffers.switch_to_buffer(1), 'Switch buffer 1', },
+            ['<leader>2'] = { buffers.switch_to_buffer(2), 'Switch buffer 2', },
+            ['<leader>3'] = { buffers.switch_to_buffer(3), 'Switch buffer 3', },
+            ['<leader>4'] = { buffers.switch_to_buffer(4), 'Switch buffer 4', },
+            ['<leader>5'] = { buffers.switch_to_buffer(5), 'Switch buffer 5', },
+            ['<leader>6'] = { buffers.switch_to_buffer(6), 'Switch buffer 6', },
+            ['<leader>7'] = { buffers.switch_to_buffer(7), 'Switch buffer 7', },
+            ['<leader>8'] = { buffers.switch_to_buffer(8), 'Switch buffer 8', },
+            ['<leader>9'] = { buffers.switch_to_buffer(9), 'Switch buffer 9', },
+            ['<leader>0'] = { buffers.switch_to_buffer(0), 'Switch buffer 10', },
+            ['<leader><tab>'] = { buffers.pick_buffer, 'Pick buffer', },
+            ['<c-w>p'] = { ':below copen<cr>', 'Quickfix open below', },
+            ['<c-w>m'] = { quickfix.map_open, 'Go to quickfix', },
+            ['<c-w>q'] = { ':cclose<cr>', 'Quickfix close', },
+            ['-'] = { ':setlocal wrap! lbr!<cr>', 'Wrap words', },
+            ['cr'] = { '<plug>(abolish-coerce-word)', 'Change word case (s/m/c/u/-/.)', },
+            ['<leader>bv'] = { binary_view.binary_view, 'Binary view with xxd', },
+            ['<leader>dv'] = { disasm_view.disasm_view, 'Disassembly view', },
+            ['<f7>'] = { tasks.build_project, 'Build project', },
+            ['<c-f5>'] = { tasks.run_project, 'Run project', },
+            ['<f29>'] = { tasks.run_project, 'Run project', },
+            ['<s-f7>'] = { tasks.clean_project, 'Clean project', },
+            ['<f19>'] = { tasks.clean_project, 'Clean project', },
+            ['<c-f7>'] = { tasks.run_project, 'Run project', },
+            ['<f31>'] = { tasks.build_config, 'Build config', },
+            ['<leader>dl'] = { debugger.launch_settings, 'Debug launch settings', },
+            ['<leader>dj'] = { debugger.launch_settings, 'Debug launch settings', },
+            ['<leader>dd'] = { debugger.launch, 'Debug launch', },
+            ['<leader>dc'] = { debugger.continue, 'Debug continue', },
+            ['<F5>'] = { debugger.continue, 'Debug continue', },
+            ['<leader>dr'] = { debugger.restart, 'Debug restart', },
+            ['<S-F5>'] = { debugger.restart, 'Debug restart', },
+            ['<F17>'] = { debugger.restart, 'Debug restart', },
+            ['<leader>dp'] = { debugger.pause, 'Debug pause', },
+            ['<F6>'] = { debugger.pause, 'Debug pause', },
+            ['<leader>ds'] = { debugger.stop, 'Debug stop', },
+            ['<S-F6>'] = { debugger.stop, 'Debug stop', },
+            ['<F18>'] = { debugger.stop, 'Debug stop', },
+            ['<leader>db'] = { debugger.breakpoint, 'Debug breakpoint', },
+            ['<F9>'] = { debugger.breakpoint, 'Debug breakpoint', },
+            ['<leader><leader>db'] = { debugger.breakpoint_cond, 'Debug conditional breakpoint', },
+            ['<S-F9>'] = { debugger.breakpoint_cond, 'Debug conditional breakpoint', },
+            ['<F21>'] = { debugger.breakpoint_cond, 'Debug conditional breakpoint', },
+            ['<leader>df'] = { debugger.breakpoint_function, 'Debug function breakpoint', },
+            ['<leader><F9>'] = { debugger.breakpoint_function, 'Debug function breakpoint', },
+            ['<leader>dB'] = { debugger.clear_breakpoints, 'Debug clear breakpoints', },
+            ['<leader><leader><F9>'] = { debugger.clear_breakpoints, 'Debug clear breakpoints', },
+            ['<leader>dn'] = { debugger.step_over, 'Debug step over', },
+            ['<F10>'] = { debugger.step_over, 'Debug step over', },
+            ['<leader>di'] = { debugger.step_into, 'Debug step into', },
+            ['<F11>'] = { debugger.step_into, 'Debug step into', },
+            ['<leader>do'] = { debugger.step_out, 'Debug step out', },
+            ['<S-F11>'] = { debugger.step_out, 'Debug step out', },
+            ['<F23>'] = { debugger.step_out, 'Debug step out', },
+            ['<leader>dN'] = { debugger.run_to_cursor, 'Debug run to cursor', },
+            ['<C-F10>'] = { debugger.run_to_cursor, 'Debug run to cursor', },
+            ['<F34>'] = { debugger.run_to_cursor, 'Debug run to cursor', },
+            ['<leader>dD'] = { debugger.disassemble, 'Debug disassemble', },
+            ['<leader>de'] = { debugger.eval_window, 'Debug eval window', },
+            ['<leader>du'] = { debugger.reset_ui, 'Debugger toggle UI', },
+            ['<leader>dU'] = { debugger.toggle_ui, 'Debugger toggle UI', },
+            ['<leader>dq'] = { debugger.reset, 'Debug close', },
+            ['<leader>ca'] = { source_index.cscope_assignments, 'CScope assignments', },
+            ['<leader>cc'] = { source_index.cscope_function_calling, 'CScope function calling', },
+            ['<leader>cd'] = { source_index.cscope_functions_called_by, 'CScope functions called by', },
+            ['<leader>ce'] = { source_index.cscope_egrep, 'CScope egrep', },
+            ['<leader>cf'] = { source_index.cscope_file, 'CScope file', },
+            ['<leader>cg'] = { source_index.cscope_definition, 'CScope definition', },
+            ['<leader>ci'] = { source_index.cscope_files_including, 'CScope files including', },
+            ['<leader>cs'] = { source_index.cscope_symbol, 'CScope symbol', },
+            ['<leader>ct'] = { source_index.cscope_text, 'CScope text', },
+            ['<leader><leader>ca'] = { source_index.cscope_assignments, 'CScope assignments', },
+            ['<leader><leader>cc'] = { source_index.cscope_input_function_calling, 'CScope function calling (input)', },
+            ['<leader><leader>cd'] = { source_index.cscope_input_functions_called_by,
+                'CScope functions called by (input)', },
+            ['<leader><leader>ce'] = { source_index.cscope_input_egrep, 'CScope egrep (input)', },
+            ['<leader><leader>cf'] = { source_index.cscope_input_file, 'CScope file (input)', },
+            ['<leader><leader>cg'] = { source_index.cscope_input_definition, 'CScope definition (input)', },
+            ['<leader><leader>ci'] = { source_index.cscope_input_files_including, 'CScope files including (input)', },
+            ['<leader><leader>cs'] = { source_index.cscope_input_symbol, 'CScope symbol (input)', },
+            ['<leader><leader>ct'] = { source_index.cscope_input_text, 'CScope text (input)', },
+            ['gw'] = { source_index.opengrok_query_f, 'Opengrok query symbol', },
+            ['gW'] = { source_index.opengrok_query_d, 'Opengrok query symbol defintiion', },
+            ['<leader>gw'] = { source_index.opengrok_query_input_f, 'Opengrok query symbol (input)', },
+            ['<leader>gW'] = { source_index.opengrok_query_input_d, 'Opengrok query symbol defintiion (input)', },
+            ['<leader>o'] = { ':pop<cr>', 'Pop tag stack', },
+            ['<leader>i'] = { ':tag<cr>', 'Unpop tag stack', },
+            ['<leader>gcp'] = { source_index.generate_cpp, 'Generate cpp index', },
+            ['<leader>gt'] = { source_index.generate_tags, 'Generate common tags', },
+            ['<leader>gT'] = { source_index.generate_all_tags, 'Generate all tags', },
+            ['<leader>gf'] = { source_index.generate_source_files_list, 'Generate source files list', },
+            ['<leader>gF'] = { source_index.generate_all_files_list, 'Generate all files list', },
+            ['<leader>gcf'] = { source_index.generate_flags, 'Generate flags', },
+            ['<leader>go'] = { source_index.generate_opengrok, 'Generate opengrok', },
+            ['<leader>ga'] = { source_index.generate_cpp_and_opengrok, 'Generate cpp and opengrok', },
+            ['<leader><leader>gc'] = { source_index.clean, 'Clean', },
+            ['<leader>cp'] = { finder.color_picker, 'Pick color', },
+            ['<leader>p'] = { '<cmd>YankHistoryRgPaste<cr>', 'Paste from history', },
+            ['<f1>'] = { '<cmd>set relativenumber!<cr>', 'Relative number', },
+            ['<f2>'] = { '<cmd>set number!<cr>', 'Number', },
+            ['<leader>bt'] = { '<cmd>lua require "barbecue.ui".toggle()<cr>', 'Toggle barbecue bar', },
+            ['<leader><leader>lf'] = { '<cmd>lua require "plugins.large_files".set()<cr>', 'Set large file', },
+            ['gp'] = { '<cmd>lua require("goto-preview").goto_preview_definition()<CR>', 'Goto definition preview', },
+            ['<leader>gp'] = { '<cmd>lua require("goto-preview").close_all_win()<CR>', 'Close preview windows', },
+        },
+        x = {
+            ['<tab>'] = { '%', 'Jump to matching pairs', },
+            ['<leader>='] = { '<c-a>', 'Increment', },
+            ['<leader>-'] = { '<c-x>', 'Decrement', },
+            ['<c-a>'] = { '<esc>ggVG', 'Select all', },
+            ['<c-c>'] = { clipboard.copy, 'Copy', },
+            ['<c-x>'] = { clipboard.cut, 'Cut', },
+            ['<c-l>'] = { indent_guides.refresh_trigger('20zl', { expr = false }), 'Side scrolling', },
+            ['<c-h>'] = { indent_guides.refresh_trigger('20zh', { expr = false }), 'Side scrolling', },
+            ['gf'] = { lsp.format_selected, 'Format selected', },
+            ['<c-r>'] = { lsp.select_snippets, 'Select snippets', },
+            ['<f1>'] = { ':set relativenumber!<cr>', 'Relative number', },
+            ['<f2>'] = { ':set number!<cr>', 'Number', },
+        },
+        i = {
+            ['<c-s>'] = { '<c-o>:w<cr>', 'Save file', },
+            ['<c-a>'] = { '<esc>ggVG', 'Select all', },
+            ['<c-v>'] = { clipboard.paste, 'Paste', },
+            ['<f7>'] = { tasks.build_project, 'Build project', },
+            ['<c-f5>'] = { tasks.run_project, 'Run project', },
+            ['<f29>'] = { tasks.run_project, 'Run project', },
+            ['<s-f7>'] = { tasks.clean_project, 'Clean project', },
+            ['<f19>'] = { tasks.clean_project, 'Clean project', },
+            ['<c-f7>'] = { tasks.run_project, 'Run project', },
+            ['<f31>'] = { tasks.build_config, 'Build config', },
+            ['<c-d>'] = { lsp.expand_snippets, 'Expand snippets (with nvim-lsp just use tab to select then enter)', },
+        },
+        t = {
+            ['<c-w>w'] = { '<c-\\><c-n>:q<cr>', 'Close terminal', },
+            ['<c-w>n'] = { '<c-\\><c-n>', 'Terminal normal mode', },
+            ['<c-w>h'] = { tmux_navigator.tmux_navigate_left, 'Navigate left', },
+            ['<c-w>j'] = { tmux_navigator.tmux_navigate_down, 'Navigate down', },
+            ['<c-w>k'] = { tmux_navigator.tmux_navigate_up, 'Navigate right', },
+            ['<c-w>l'] = { tmux_navigator.tmux_navigate_right, 'Navigate up', },
+            ['<c-w><left>'] = { tmux_navigator.tmux_navigate_left, 'Navigate left', },
+            ['<c-w><down>'] = { tmux_navigator.tmux_navigate_down, 'Navigate down', },
+            ['<c-w><up>'] = { tmux_navigator.tmux_navigate_up, 'Navigate right', },
+            ['<c-w><right>'] = { tmux_navigator.tmux_navigate_right, 'Navigate up', },
+        },
+        c = {
+            ['<c-k>'] = { '<plug>CmdlineCompleteBackward', 'Complete prev in vim command mode', },
+            ['<c-j>'] = { '<plug>CmdlineCompleteForward', 'Complete next in vim command mode', },
+        },
+    }
 
-    -- Additional mappings
-    --   * 'gc' - :h commentary -- Comment selected code
-    --   * 'ysw' / 'csXY' - :h surround - Surround / change surrounding
+    keys.register(mappings.n, { mode = 'n' })
+    keys.register(mappings.x, { mode = 'x' })
+    keys.register(mappings.i, { mode = 'i' })
+    keys.register(mappings.t, { mode = 't' })
+    keys.register(mappings.c, { mode = 'c' })
 
     -- Internal mappings
+
+    keys.register(
+        {
+            ['<scrollwheelleft>'] = { indent_guides.refresh_trigger('<scrollwheelleft>', { expr = true }),
+                'Refresh indent guides on horizontal scroll' },
+            ['<scrollwheelright>'] = { indent_guides.refresh_trigger('<scrollwheelright>', { expr = true }),
+                'Refresh indent guides on horizontal scroll' },
+        }, { mode = 'n', expr = true })
+    keys.register(
+        {
+            ['<scrollwheelleft>'] = { indent_guides.refresh_trigger('<scrollwheelleft>', { expr = true }),
+                'Refresh indent guides on horizontal scroll' },
+            ['<scrollwheelright>'] = { indent_guides.refresh_trigger('<scrollwheelright>', { expr = true }),
+                'Refresh indent guides on horizontal scroll' },
+        }, { mode = 'x', expr = true })
+
+    keys.register({
+
+        ['<scrollwheelleft>'] = { '<nop>', 'Disable terminal horizontal scrolling', },
+        ['<scrollwheelright>'] = { '<nop>', 'Disable terminal horizontal scrolling', },
+        ['<mousemove>'] = { '<nop>', 'Disable terminal mouse move', },
+    }, { mode = 't' })
+
+    if jump.needs_mapping then
+        local jump_mappings = {
+            n = {
+                ['s'] = { jump.search_jump, 'Search and jump to location' },
+                ['f'] = { jump.find_jump, 'Find and jump to location' },
+                ['F'] = { jump.find_jump_back, 'Find backwards and jump to location' },
+                ['t'] = { jump.till_jump, 'Find and jump until location' },
+                ['T'] = { jump.till_jump_back, 'Find backwards and jump until location' },
+            },
+            x = {
+                ['s'] = { jump.search_jump_visual, 'Search and jump to location' },
+                ['S'] = { jump.search_jump_back_visual, 'Search backwards and jump to location' },
+                ['f'] = { jump.find_jump, 'Find and jump to location' },
+                ['F'] = { jump.find_jump_back, 'Find backwards and jump to location' },
+                ['t'] = { jump.till_jump, 'Find and jump until location' },
+                ['T'] = { jump.till_jump_back, 'Find backwards and jump until location' },
+            }
+        }
+        keys.register(jump_mappings.n, { mode = 'n' })
+        keys.register(jump_mappings.x, { mode = 'x' })
+    end
+
     if lsp.completion_mappings then
-        map('i', '<tab>', lsp.tab, { silent = true, expr = true }) -- Lsp complete
-        map('i', '<s-tab>', lsp.shift_tab, { silent = true, expr = true }) -- Lsp prev complete
-        map('i', '<cr>', lsp.enter, { silent = true, expr = true }) -- Lsp enter
+        keys.register({
+            ['<tab>'] = { lsp.tab, 'Lsp complete' },
+            ['<s-tab>'] = { lsp.shift_tab, ' Lsp prev complete' },
+            ['<cr>'] = { lsp.enter, 'Lsp enter' },
+        }, { mode = 'i', expr = true })
     end
 
     if user.settings.pairs == 'pear-tree' then
+        keys.register({
+            ['<bs>'] = { '<plug>(PearTreeBackspace)', 'Pear tree internal backspace processing' },
+        }, { mode = 'i' })
         map('i', '<bs>', '<plug>(PearTreeBackspace)', { silent = true }) -- Pear tree internal backspace processing
         if user.settings.lsp ~= 'coc' and user.settings.format_on_pairs then
-            map('i', '<cr>', '<plug>(PearTreeExpand)', { silent = true })
+            keys.register({
+                ['<cr>'] = { '<plug>(PearTreeExpand)', 'Pear tree internal enter processing' },
+            }, { mode = 'i' })
         end
     end
 end
