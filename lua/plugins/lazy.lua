@@ -4,7 +4,7 @@ local user = require 'user'
 
 ---@diagnostic disable: different-requires
 
-m.start = function()
+m.setup = function()
     local lazy_conf = require 'plugins.config.lazy'
     require 'lazy'.setup(m.plugins, lazy_conf.config())
 end
