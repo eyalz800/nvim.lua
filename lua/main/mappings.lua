@@ -32,7 +32,8 @@ m.setup = function()
 
     local mappings = {
         n = {
-            ['g?'] = { finder.keymaps, 'Show key bindings' },
+            ['<space>?'] = { '<cmd>WhichKey<cr>', 'Show key bindings' },
+            ['g?'] = { finder.keymaps, 'Search key bindings' },
             ['Y'] = { 'y$', 'Yank to end of line', },
             ['g['] = { '0', 'Go to beginning of line', },
             ['g]'] = { '$', 'Go to end of line', },
