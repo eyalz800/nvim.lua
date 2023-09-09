@@ -47,9 +47,6 @@ m.set = function()
     if exists ':IndentBlankLineDisable' then
         cmd 'IndentBlankLineDisable'
     end
-    if exists ':HexokinaseTurnOff' then
-        cmd 'HexokinaseTurnOff'
-    end
     if exists ':ColorizerDetachFromBuffer' then
         cmd 'ColorizerDetachFromBuffer'
     end

@@ -403,12 +403,6 @@ m.plugins = {
         cmd = 'Obsession',
     },
     {
-        'rrethy/vim-hexokinase',
-        event = 'VeryLazy',
-        build = 'make hexokinase',
-        cond = user.settings.colorizer == 'hexokinase',
-    },
-    {
         'NvChad/nvim-colorizer.lua',
         config = function()
             local nvim_colorizer_conf = require 'plugins.config.colorizer'
