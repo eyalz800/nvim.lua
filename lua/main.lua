@@ -1,20 +1,20 @@
 local m = {}
 
 local startup = function()
-    require 'builtins.nested'
-    require 'main.root_paths'
-    require 'main.path'
-    require 'main.basic'
+    require 'builtins.nested'.setup()
+    require 'main.root_paths'.setup()
+    require 'main.path'.setup()
+    require 'main.basic'.setup()
     require 'main.plugin_manager'.create()
-    require 'plugins'
-    require 'main.mappings'
-    require 'main.commands'
-    require 'main.autocmd'
+    require 'plugins'.setup()
+    require 'main.mappings'.setup()
+    require 'main.commands'.setup()
+    require 'main.autocmd'.setup()
     require 'plugins.colors'.set()
 end
 
 if not require 'main.install'.installed() then
-    require 'main.install'.install({ on_finish = startup })
+    require 'main.install'.setup({ on_finish = startup })
 else
     startup()
 end

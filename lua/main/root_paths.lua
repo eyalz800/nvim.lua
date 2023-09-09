@@ -7,7 +7,9 @@ local user = require 'user'
 local cmd = require 'vim.cmd'.silent
 local getcwd = v.fn.getcwd
 
-m.root = v.env.PWD
+m.setup = function()
+    m.root = v.env.PWD
+end
 
 m.switch_to_root = function()
     cmd('cd ' .. m.root)

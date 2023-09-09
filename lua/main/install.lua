@@ -15,7 +15,7 @@ m.installed = function()
     return file_readable(m.install_status_dir .. '/success')
 end
 
-m.install = function(options)
+m.setup = function(options)
     if m.installed() then
         return
     end
