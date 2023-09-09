@@ -262,5 +262,4 @@ if user.settings.pairs == 'pear-tree' then
     end
 end
 
-require 'user.mappings'
 return m
