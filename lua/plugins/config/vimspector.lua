@@ -101,16 +101,16 @@ m.on_ui_created = function()
     v.bo.buftype = 'prompt'
     v.bo.modifiable = false
     v.bo.textwidth = 0
-    v.wo.cursorline = false
-    v.wo.number = false
-    v.wo.winbar = [=[%#ToolbarButton#%0@v:lua.require'plugins.config.vimspector'.on_winbar_stop@ ■ Stop %X%*]=] ..
-                [=[  %#ToolbarButton#%1@v:lua.require'plugins.config.vimspector'.on_winbar_continue@ ▶ Cont %X%*]=] ..
-                [=[  %#ToolbarButton#%2@v:lua.require'plugins.config.vimspector'.on_winbar_pause@ 󰏤 Pause %X%*]=] ..
-                [=[  %#ToolbarButton#%3@v:lua.require'plugins.config.vimspector'.on_winbar_step_over@ ↷ Next %X%*]=] ..
-                [=[  %#ToolbarButton#%4@v:lua.require'plugins.config.vimspector'.on_winbar_step_into@ → Step %X%*]=] ..
-                [=[  %#ToolbarButton#%5@v:lua.require'plugins.config.vimspector'.on_winbar_step_out@ ← Out %X%*]=] ..
-                [=[  %#ToolbarButton#%6@v:lua.require'plugins.config.vimspector'.on_winbar_restart@ ↺ %X%*]=] ..
-                [=[  %#ToolbarButton#%7@v:lua.require'plugins.config.vimspector'.on_winbar_exit@ ✕ %X%*]=]
+    v.opt_local.cursorline = false
+    v.opt_local.number = false
+    v.opt_local.winbar = [=[%#ToolbarButton#%0@v:lua.require'plugins.config.vimspector'.on_winbar_stop@ ■ Stop %X%*]=] ..
+                         [=[  %#ToolbarButton#%1@v:lua.require'plugins.config.vimspector'.on_winbar_continue@ ▶ Cont %X%*]=] ..
+                         [=[  %#ToolbarButton#%2@v:lua.require'plugins.config.vimspector'.on_winbar_pause@ 󰏤 Pause %X%*]=] ..
+                         [=[  %#ToolbarButton#%3@v:lua.require'plugins.config.vimspector'.on_winbar_step_over@ ↷ Next %X%*]=] ..
+                         [=[  %#ToolbarButton#%4@v:lua.require'plugins.config.vimspector'.on_winbar_step_into@ → Step %X%*]=] ..
+                         [=[  %#ToolbarButton#%5@v:lua.require'plugins.config.vimspector'.on_winbar_step_out@ ← Out %X%*]=] ..
+                         [=[  %#ToolbarButton#%6@v:lua.require'plugins.config.vimspector'.on_winbar_restart@ ↺ %X%*]=] ..
+                         [=[  %#ToolbarButton#%7@v:lua.require'plugins.config.vimspector'.on_winbar_exit@ ✕ %X%*]=]
     win_gotoid(v.g.vimspector_session_windows.code)
 end
 

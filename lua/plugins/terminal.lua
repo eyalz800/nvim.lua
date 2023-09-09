@@ -36,9 +36,9 @@ end
 
 m.open_split = function()
     cmd 'vert rightb new +terminal'
-    v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
-    v.wo.winbar = ''
-    v.wo.cursorline = false
+    v.opt_local.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
+    v.opt_local.winbar = ''
+    v.opt_local.cursorline = false
     v.bo.buflisted = false
     v.bo.bufhidden = 'wipe'
     v.keymap.set('x', 'a', '<esc><cmd>startinsert<cr>', { silent = true, buffer = true, nowait = true })

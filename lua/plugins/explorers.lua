@@ -94,9 +94,9 @@ m.arrange = function()
                 local term_win = v.api.nvim_get_current_win()
                 v.api.nvim_win_set_buf(v.api.nvim_get_current_win(), term_buf)
                 v.bo.bufhidden = 'wipe'
-                v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
-                v.wo.winbar = ''
-                v.wo.cursorline = false
+                v.opt_local.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
+                v.opt_local.winbar = ''
+                v.opt_local.cursorline = false
                 v.api.nvim_win_close(terminal, true)
                 pin.pin()
                 m.terminals[terminal_index] = term_win
@@ -174,9 +174,9 @@ m.open_terminal = function(options)
         cmd 'below 10new +terminal'
     end
 
-    v.wo.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
-    v.wo.winbar = ''
-    v.wo.cursorline = false
+    v.opt_local.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
+    v.opt_local.winbar = ''
+    v.opt_local.cursorline = false
     v.bo.buflisted = false
     v.bo.bufhidden = 'wipe'
     v.keymap.set('x', 'a', '<esc><cmd>startinsert<cr>', { silent = true, buffer = true, nowait = true })
