@@ -1,8 +1,6 @@
 local m = {}
 
 m.config = function()
-    pcall(function() require 'which-key.plugins.presets'.operators['v'] = nil end) -- disable whichkey visual operator
-
     return {
         plugins = {
             marks = true, -- shows a list of your marks on ' and `
@@ -14,7 +12,7 @@ m.config = function()
                 suggestions = 20, -- how many suggestions should be shown in the list?
             },
             presets = {
-                operators = true, -- adds help for operators like d, y, ...
+                operators = false, -- adds help for operators like d, y, ...
                 motions = true, -- adds help for motions
                 text_objects = true, -- help for text objects triggered after entering an operator
                 windows = true, -- default bindings on <c-w>
@@ -25,7 +23,21 @@ m.config = function()
         },
         -- add operators that will trigger motion and text object completion
         -- to enable all native operators, set the preset / operators plugin above
-        operators = { gc = "Comments" },
+        operators = {
+            d = "Delete",
+            c = "Change",
+            y = "Yank (copy)",
+            ["g~"] = "Toggle case",
+            ["gu"] = "Lowercase",
+            ["gU"] = "Uppercase",
+            [">"] = "Indent right",
+            ["<lt>"] = "Indent left",
+            ["zf"] = "Create fold",
+            ["!"] = "Filter though external program",
+            -- ["v"] = "Visual Character Mode",
+            -- ["V"] = "Visual Line Mode",
+            gc = "Comments",
+        },
         key_labels = {
             -- override the label used to display some keys. It doesn't effect WK in any other way.
             -- For example:
