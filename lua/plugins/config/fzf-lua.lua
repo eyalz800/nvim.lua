@@ -159,8 +159,7 @@ m.keymaps = function()
 
     local add_keymap = function(keymap)
         local keymap_desc = keymap.desc or keymap.rhs or string.format("%s", keymap.callback);
-        -- ignore dummy mappings
-        if type(keymap.rhs) == "string" and #keymap.rhs == 0 then
+        if type(keymap.rhs) == "string" and #keymap.rhs == 0 or keymap.lhs:lower():match('^<plug>') then
             return
         end
         keymap.str = string.format("%s : %-40s : %s",
