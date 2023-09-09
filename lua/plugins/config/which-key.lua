@@ -1,6 +1,8 @@
 local m = {}
 
 m.config = function()
+    pcall(function() require 'which-key.plugins.presets'.operators['v'] = nil end) -- disable whichkey visual operator
+
     return {
         plugins = {
             marks = true, -- shows a list of your marks on ' and `
