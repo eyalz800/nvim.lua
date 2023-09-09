@@ -13,6 +13,7 @@ local win_gotoid = v.fn.win_gotoid
 local getqflist = v.fn.getqflist
 
 local debugger = require 'plugins.debugger'
+local code_explorer_auto_open_min_columns = user.settings.code_explorer_config.auto_open_min_columns or 0
 
 m.file = require 'plugins.file_explorer'
 m.code = require 'plugins.code_explorer'
@@ -42,7 +43,9 @@ m.toggle = function()
     require 'plugins.quickfix'.open({ focus = false })
     m.open_terminal({ focus = false })
     m.file.open({ focus = false })
-    m.code.open({ focus = false })
+    if code_explorer_auto_open_min_columns <= v.o.columns then
+        m.code.open({ focus = false })
+    end
     m.arrange()
 end
 
