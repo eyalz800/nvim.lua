@@ -10,10 +10,12 @@ m.open = function(options)
     end
     symbols_outline.open_outline()
     if v.bo.filetype == 'Outline' then
-        v.opt_local.signcolumn = 'no'
         if not options.focus then
             cmd 'wincmd p'
         end
+
+        v.api.nvim_set_option_value('signcolumn', 'no',
+            { scope = 'local', win = symbols_outline.view.winnr })
     elseif options.focus and symbols_outline.view.winnr then
         v.fn.win_gotoid(symbols_outline.view.winnr)
     end
