@@ -253,8 +253,11 @@ m.setup = function()
             ['ms'] = { '<plug>(VM-Find-Subword-Under)', 'Multicursor Select Subword' },
             ['mf'] = { '<plug>(VM-Visual-Find)', 'Multicursor Visual Find' },
             ['mc'] = { '<plug>(VM-Visual-Cursors)', 'Multicursor Visual Cursors' },
+            ['ma'] = { '<plug>(VM-Visual-Add)', 'Multicursor Add Region' },
             ['mA'] = { '<plug>(VM-Visual-All)', 'Multicursor Select All' },
             ['m/'] = { '<plug>(VM-Visual-Regex)', 'Multicursor Search' },
+        },
+        v = {
         },
         i = {
             ['<c-s>'] = { '<c-o>:w<cr>', 'Save file', },
@@ -292,6 +295,8 @@ m.setup = function()
         },
         x = {
         },
+        v = {
+        },
         i = {
         },
         t = {
@@ -303,6 +308,7 @@ m.setup = function()
     for _, entry in ipairs({ mappings, documentation }) do
         keys.register(entry.n, { mode = 'n' })
         keys.register(entry.x, { mode = 'x' })
+        keys.register(entry.v, { mode = 'v' })
         keys.register(entry.i, { mode = 'i' })
         keys.register(entry.t, { mode = 't' })
         keys.register(entry.c, { mode = 'c' })
