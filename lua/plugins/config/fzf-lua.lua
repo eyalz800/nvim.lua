@@ -142,6 +142,7 @@ end
 m.keymaps = function()
     fzf_lua.keymaps({
         fzf_colors = v.g.fzf_colors,
+        winopts = { preview = { hidden = 'hidden' } },
     })
 end
 
