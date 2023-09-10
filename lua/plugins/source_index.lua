@@ -34,21 +34,21 @@ local opengrok_jar = bin_path .. '/opengrok/lib/opengrok.jar'
 local opengrok_ctags = bin_path .. '/ctags-exuberant/ctags/ctags'
 local generate_files_command = 'rg --files ' ..
     ctags_file_patterns ..
-    ' > cscope.files && if ! [ -f .files ]; then cp cscope.files .files; fi && rg --files ' ..
+    ' > cscope.files ; if ! [ -f .files ]; then cp cscope.files .files; fi ; rg --files ' ..
     other_file_patterns .. ' >> .files'
 local generate_cpp_command = 'cscope -bq'
 local generate_opengrok_command = 'java -Xmx2048m -jar ' .. opengrok_jar .. ' -q -c ' ..
         opengrok_ctags .. ' -s . -d .opengrok ' .. opengrok_file_patterns .. ' -P -S -G -W .opengrok/configuration.xml'
-local generate_tags_command = 'echo ' .. ctags_options .. ' > .gutctags && ' .. sed .. " -i 's/ /\\n/g' .gutctags && ctags " .. ctags_options
-local generate_all_tags_command = 'echo ' .. ctags_everything_options .. ' > .gutctags && ' .. sed .. " -i 's/ /\\n/g' .gutctags && ctags " .. ctags_options
+local generate_tags_command = 'echo ' .. ctags_options .. ' > .gutctags ; ' .. sed .. " -i 's/ /\\n/g' .gutctags ; ctags " .. ctags_options
+local generate_all_tags_command = 'echo ' .. ctags_everything_options .. ' > .gutctags ; ' .. sed .. " -i 's/ /\\n/g' .gutctags ; ctags " .. ctags_options
 local generate_flags_command = 'echo -std=c++20 > compile_flags.txt' ..
-    ' && echo -x >> compile_flags.txt' ..
-    ' && echo c++ >> compile_flags.txt' ..
-    ' && set +e ; find . -type d -name inc -or -name include -or -name Include | grep -v \"/\\.\" | ' ..
+    ' ; echo -x >> compile_flags.txt' ..
+    ' ; echo c++ >> compile_flags.txt' ..
+    ' ; set +e ; find . -type d -name inc -or -name include -or -name Include | grep -v \"/\\.\" | ' ..
     sed .. ' s@^@-isystem\\\\n@g >> compile_flags.txt ; set -e'
 
 m.generate_cpp = function()
-    async_cmd(generate_files_command .. ' && ' .. generate_cpp_command, { visible=true })
+    async_cmd(generate_files_command .. ' ; ' .. generate_cpp_command, { visible=true })
 end
 
 m.generate_tags = function()
@@ -60,11 +60,11 @@ m.generate_all_tags = function()
 end
 
 m.generate_opengrok = function()
-    async_cmd(generate_files_command .. ' && ' .. generate_opengrok_command, { visible=true })
+    async_cmd(generate_files_command .. ' ; ' .. generate_opengrok_command, { visible=true })
 end
 
 m.generate_cpp_and_opengrok = function()
-    async_cmd(generate_files_command .. ' && ' .. generate_cpp_command .. ' && ' .. generate_opengrok_command, { visible=true })
+    async_cmd(generate_files_command .. ' ; ' .. generate_cpp_command .. ' ; ' .. generate_opengrok_command, { visible=true })
 end
 
 m.generate_source_files_list = function()
