@@ -173,7 +173,6 @@ m.plugins = {
     },
     {
         'nvim-tree/nvim-tree.lua',
-        event = 'VeryLazy',
         config = function()
             local nvim_tree_conf = require 'plugins.config.nvim-tree'
             require 'nvim-tree'.setup(nvim_tree_conf.config())
@@ -229,7 +228,6 @@ m.plugins = {
         --'simrat39/symbols-outline.nvim',
         'eyalz800/symbols-outline.nvim',
         branch = 'main',
-        event = 'VeryLazy',
         config = function()
             local symbols_outline_conf = require 'plugins.config.symbols-outline'
             require 'symbols-outline'.setup(symbols_outline_conf.config())
