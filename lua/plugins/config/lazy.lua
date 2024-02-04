@@ -1,7 +1,7 @@
 local m = {}
 
 m.config = function()
-    return {}
+    return { mode = 'restore' }
 end
 
 return m
