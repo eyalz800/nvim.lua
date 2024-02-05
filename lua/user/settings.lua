@@ -37,7 +37,7 @@ m.lsp_config = {
             'coc-spell-checker' }
     },
 }
-m.install_options = { clang_version = 16 }
+m.install_options = { clang_version = 17 }
 m.finder = 'fzf-lua'
 m.line = 'lualine'
 m.buffer_line = 'bufferline'
