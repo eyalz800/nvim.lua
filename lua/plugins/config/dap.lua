@@ -22,8 +22,8 @@ local load_launch_json = nil
 local lldb_mi = stdpath 'data' .. '/mason/packages/cpptools/extension/debugAdapters/lldb-mi/bin/lldb-mi'
 
 local translation = {
-    codelldb = { 'c', 'cpp' },
-    cppdbg = { 'c', 'cpp' },
+    codelldb = { 'c', 'cpp', 'rust' },
+    cppdbg = { 'c', 'cpp', 'rust' },
 }
 
 local setup_lldb_mi = function()
@@ -66,7 +66,7 @@ m.launch_settings = function()
         error('Invalid debug type, current configuration: ' .. inspect(dap.configurations))
     end
 
-    if debug_type == 'cpp' or debug_type == 'c' then
+    if debug_type == 'cpp' or debug_type == 'c' or debug_type == 'rust' then
         m.generate_cpp_config()
     elseif debug_type == 'python' then
         m.generate_py_config()
