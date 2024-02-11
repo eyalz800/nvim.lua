@@ -22,7 +22,7 @@ end
 
 m.plugins = {
     {
-        'eyalz800/tokyonight.nvim',
+        'folke/tokyonight.nvim',
         priority = 1000,
         config = function()
             local tokyonight_color = require 'plugins.colors.tokyonight'
@@ -361,9 +361,6 @@ m.plugins = {
         event = 'VeryLazy',
     },
     {
-        'lukas-reineke/indent-blankline.nvim',
-    },
-    {
         'tpope/vim-abolish',
         event = 'VeryLazy',
     },
@@ -399,6 +396,13 @@ m.plugins = {
     {
         'tpope/vim-obsession',
         cmd = 'Obsession',
+    },
+    {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+            local indent_blankline_conf = require 'plugins.config.indent-blankline'
+            require 'ibl'.setup(indent_blankline_conf.config())
+        end,
     },
     {
         'NvChad/nvim-colorizer.lua',
