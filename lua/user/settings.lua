@@ -19,11 +19,12 @@ m.lsp_config = {
         virtual_text = true,
         diagnostic_hover = true,
         completion_border = true,
+        snippets = true,
         servers = {
-            clangd = true,
-            lua = true,
-            pyright = true,
-            snippets = true,
+            cpp = 'clangd',
+            lua = 'lua_ls',
+            python = 'pyright',
+            rust = 'rust_analyzer',
         },
     },
     coc = {

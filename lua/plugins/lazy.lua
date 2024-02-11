@@ -103,7 +103,7 @@ m.plugins = {
                     'hrsh7th/cmp-buffer',
                     {
                         'eyalz800/friendly-snippets',
-                        cond = user.settings.lsp_config.nvim.servers.snippets,
+                        cond = user.settings.lsp_config.nvim.snippets,
                     },
                 },
                 cond = user.settings.lsp == 'nvim',

@@ -60,8 +60,6 @@ m.expand_snippets = function() end
 m.select_snippets = function() end
 
 m.setup = function()
-    local servers = {}
-
     local sign = function(opts)
         v.fn.sign_define(opts.name, {
             texthl = opts.name,
@@ -99,12 +97,11 @@ m.setup = function()
         },
     })
 
-    if settings.servers.clangd then
-        servers.clangd = {}
-    end
-
-    if settings.servers.pyright then
-        servers.pyright = {}
+    local servers = {}
+    for _, name in pairs(settings.servers) do
+        if name then
+            servers[name] = {}
+        end
     end
 
     if settings.servers.lua then
