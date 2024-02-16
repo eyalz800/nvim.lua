@@ -1,10 +1,10 @@
 local m = {}
 local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
-local user = require 'user'
 
 local dap = nil
 m.dapui = nil
+m.dapui_windows = nil
 
 local nvim_win_is_valid = v.api.nvim_win_is_valid
 local nvim_set_current_win = v.api.nvim_set_current_win
@@ -95,6 +95,7 @@ end
 m.config = function()
     dap = require 'dap'
     m.dapui = require 'dapui'
+    m.dapui_windows = require 'dapui.windows'
     return {
         controls = {
             element = 'repl',

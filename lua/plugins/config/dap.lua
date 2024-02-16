@@ -155,7 +155,9 @@ m.on_dap_repl_attach = function()
     require 'dap.ext.autocompl'.attach()
 end
 m.arrange_if_open = function()
-    if dap.session() then
+    if dap.session() or (#ui.dapui_windows.layouts > 1 and
+            (ui.dapui_windows.layouts[1]:is_open() or
+                ui.dapui_windows.layouts[2]:is_open())) then
         m.reset_ui()
     end
 end
