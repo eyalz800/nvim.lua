@@ -70,7 +70,7 @@ m.config = function()
                 border = border 'Pmenu',
             },
             documentation = {
-                border = border 'Pmenu'
+                border = border 'Pmenu',
             },
         },
     }
