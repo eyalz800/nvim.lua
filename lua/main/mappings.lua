@@ -1,6 +1,5 @@
 local m = {}
 local v = require 'vim'
-local map = v.keymap.set
 local expand = v.fn.expand
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
@@ -372,7 +371,6 @@ m.setup = function()
         keys.register({
             ['<bs>'] = { '<plug>(PearTreeBackspace)', 'Pear tree internal backspace processing' },
         }, { mode = 'i' })
-        map('i', '<bs>', '<plug>(PearTreeBackspace)', { silent = true }) -- Pear tree internal backspace processing
         if user.settings.lsp ~= 'coc' and user.settings.format_on_pairs then
             keys.register({
                 ['<cr>'] = { '<plug>(PearTreeExpand)', 'Pear tree internal enter processing' },

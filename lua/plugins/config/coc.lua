@@ -2,6 +2,7 @@ local m = {}
 local v = require 'vim'
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
+local feed_keys = require 'vim.feed_keys'.feed_keys
 
 local enabled = true
 local settings = user.settings.lsp_config.coc or {}
@@ -57,7 +58,7 @@ m.tab = function()
         return v.fn['coc#pum#next'](1)
     end
     if not settings.tab_trigger or check_back_space() then
-        return "<tab>"
+        feed_keys '<tab>'
     end
     return v.fn['coc#refresh']()
 end
@@ -65,7 +66,7 @@ m.shift_tab = function()
     if v.fn['coc#pum#visible']() ~= 0 then
         return v.fn['coc#pum#prev'](1)
     end
-    return '<s-tab>'
+    feed_keys '<s-tab>'
 end
 m.enter = function()
     return '<c-g>u<cr><c-r>=coc#on_enter()<cr>'
