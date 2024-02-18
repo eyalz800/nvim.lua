@@ -13,10 +13,6 @@ m.git_blame = function()
     cmd 'Git blame'
 end
 
-m.git_commits = function()
-    cmd 'BCommits'
-end
-
 m.show_staging_buffer = function()
     cmd 'MagitOnly'
 end
