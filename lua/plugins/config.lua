@@ -7,6 +7,7 @@ m.setup = function()
     require 'plugins.config.tmux_navigator'
     require 'plugins.config.asynctasks'
     require 'plugins.config.abolish'
+    require 'plugins.config.fugitive'
 
     if user.settings.line == 'airline' then
         require 'plugins.config.airline'
