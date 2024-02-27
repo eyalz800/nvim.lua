@@ -15,7 +15,7 @@ m.prev_buffer = function()
 end
 
 m.delete_buffer = function(id)
-    bufdelete(id or 0, true)
+    pcall(bufdelete, id or 0, true)
 end
 
 m.switch_to_buffer = function(number)
