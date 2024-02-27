@@ -63,6 +63,7 @@ m.close = function()
     end
     m.terminals = {}
     v.cmd.cclose()
+    m.arrange()
 end
 
 m.arrange = function()
@@ -126,7 +127,9 @@ m.arrange = function()
     end
     win_gotoid(cur_win)
     cmd 'horizontal wincmd ='
-    debugger.arrange_if_open()
+    if debugger.is_ui_open() then
+        debugger.reset_ui()
+    end
     if v.bo.buftype ~= 'terminal' then
         v.cmd.stopinsert()
     end

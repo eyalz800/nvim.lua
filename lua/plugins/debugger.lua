@@ -26,6 +26,7 @@ else
     m.toggle_breakpoint = function() end
     m.reset_ui = function() end
     m.toggle_ui = function() end
+    m.is_ui_open = function() end
 end
 
 return m
