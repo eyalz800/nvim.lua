@@ -6,7 +6,7 @@ m.config = function()
         ensure_installed = {
             'codelldb',
             'cppdbg',
-            --'python',
+            'python',
         },
     }
 end
