@@ -145,7 +145,7 @@ m.setup = function()
         end
     }
 
-    require 'plugins.config.cmp'.config()
+    require 'plugins.config.cmp'.setup()
 end
 
 return m

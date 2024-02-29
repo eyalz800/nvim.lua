@@ -1,7 +1,7 @@
 local m = {}
 local user = require 'user'
 
-m.config = function()
+m.setup = function()
     local border = function(hl_name)
         return {
             { "╭", hl_name },
@@ -73,6 +73,7 @@ m.config = function()
                 border = border 'Pmenu',
             },
         },
+        preselect = cmp.PreselectMode.None,
     }
 end
 
