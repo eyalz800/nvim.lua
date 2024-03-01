@@ -68,10 +68,10 @@ m.setup = function()
         })
     end
 
-    sign({name = 'DiagnosticSignInfo', text = ''})
-    sign({name = 'DiagnosticSignHint', text = '󰌶'})
-    sign({name = 'DiagnosticSignWarn', text = ''})
-    sign({name = 'DiagnosticSignError', text = ''})
+    sign({ name = 'DiagnosticSignInfo', text = '' })
+    sign({ name = 'DiagnosticSignHint', text = '󰌶' })
+    sign({ name = 'DiagnosticSignWarn', text = '' })
+    sign({ name = 'DiagnosticSignError', text = '' })
 
     local virtual_text = nil
     if settings.virtual_text then
@@ -97,39 +97,34 @@ m.setup = function()
         },
     })
 
-    local servers = {}
-    for _, name in pairs(settings.servers) do
-        if name then
-            servers[name] = {}
+    m.servers = {}
+
+    for _, server in pairs(settings.servers) do
+        if server then
+            m.servers[server.name or server] = server.settings or {}
         end
     end
 
-    if settings.servers.lua then
-        servers.lua_ls = {
-            Lua = {
-                workspace = { checkThirdParty = false },
-                telemetry = { enable = false },
-            },
-        }
-    end
-
-    local capabilities = v.lsp.protocol.make_client_capabilities()
-    capabilities = require 'cmp_nvim_lsp' .default_capabilities(capabilities)
+    m.capabilities = require 'cmp_nvim_lsp'.default_capabilities(
+        v.lsp.protocol.make_client_capabilities()
+    )
 
     local lspconfig = require 'lspconfig'
     local mason_lspconfig = require 'mason-lspconfig'
     mason_lspconfig.setup {
-        ensure_installed = v.tbl_keys(servers),
+        ensure_installed = v.tbl_keys(m.servers),
     }
 
     mason_lspconfig.setup_handlers {
         function(server_name)
-            local config = servers[server_name]
+            local server_settings = m.servers[server_name]
 
             local on_attach = function() end
 
             if user.settings.bar == 'barbecue' then
+                local prev_attach = on_attach
                 on_attach = function(client, bufnr)
+                    prev_attach()
                     if client.server_capabilities['documentSymbolProvider'] then
                         require 'nvim-navic'.attach(client, bufnr)
                     end
@@ -137,9 +132,9 @@ m.setup = function()
             end
 
             lspconfig[server_name].setup {
-                capabilities = capabilities,
-                settings = config,
-                filetypes = (config or {}).filetypes,
+                capabilities = m.capabilities,
+                settings = server_settings,
+                filetypes = (server_settings or {}).filetypes,
                 on_attach = on_attach,
             }
         end

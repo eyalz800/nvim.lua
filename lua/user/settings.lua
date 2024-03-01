@@ -13,31 +13,6 @@ m.enable_gutentags = false
 m.colorscheme = v.fn.system('if [ -e ~/.tmux.color ] ; then cat ~/.tmux.color ; else echo tokyonight; fi')
 m.colorscheme_settings = { tokyonight={style='storm'} }
 m.powerline = true
-m.lsp = 'nvim'
-m.lsp_config = {
-    nvim = {
-        virtual_text = true,
-        diagnostic_hover = true,
-        completion_border = true,
-        snippets = true,
-        servers = {
-            cpp = 'clangd',
-            lua = 'lua_ls',
-            python = 'pyright',
-            rust = 'rust_analyzer',
-        },
-    },
-    coc = {
-        tab_trigger = true,
-        plugins = {
-            'coc-clangd',
-            'coc-pyright',
-            'coc-vimlsp',
-            'coc-lua',
-            'coc-snippets',
-            'coc-spell-checker' }
-    },
-}
 m.install_options = { clang_version = 17 }
 m.finder = 'fzf-lua'
 m.line = 'lualine'
@@ -68,5 +43,38 @@ m.line_number = {
 m.colorizer = 'nvim-colorizer'
 m.zoom = 'zoomwintab'
 m.cscope_dynamic = false
+m.lsp = 'nvim'
+m.lsp_config = {
+    nvim = {
+        virtual_text = true,
+        diagnostic_hover = true,
+        completion_border = true,
+        snippets = true,
+        servers = {
+            cpp = 'clangd',
+            lua = {
+                name = 'lua_ls',
+                settings = {
+                    Lua = {
+                        workspace = { checkThirdParty = false },
+                        telemetry = { enable = false },
+                    },
+                }
+            },
+            python = 'pyright',
+            rust = 'rust_analyzer',
+        },
+    },
+    coc = {
+        tab_trigger = true,
+        plugins = {
+            'coc-clangd',
+            'coc-pyright',
+            'coc-vimlsp',
+            'coc-lua',
+            'coc-snippets',
+            'coc-spell-checker' }
+    },
+}
 
 return m
