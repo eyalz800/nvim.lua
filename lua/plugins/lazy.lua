@@ -514,6 +514,7 @@ m.plugins = {
         'aklt/plantuml-syntax',
         config = function()
             v.g.plantuml_set_makeprg = 0
+            v.g.plantuml_executable_script = ''
         end,
     },
 }
