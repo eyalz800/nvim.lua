@@ -340,6 +340,9 @@ m.plugins = {
         'christoomey/vim-tmux-navigator',
     },
     {
+        'aklt/plantuml-syntax',
+    },
+    {
         'tpope/vim-surround',
         event = 'VeryLazy',
     },
@@ -382,10 +385,6 @@ m.plugins = {
     },
     {
         'mbbill/undotree',
-        event = 'VeryLazy',
-    },
-    {
-        'aklt/plantuml-syntax',
         event = 'VeryLazy',
     },
     {
