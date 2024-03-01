@@ -42,7 +42,7 @@
   "plantuml-syntax": { "branch": "master", "commit": "309c15c77794433f276fb09eb4e3b8f381003cfd" },
   "python-syntax": { "branch": "master", "commit": "2cc00ba72929ea5f9456a26782db57fb4cc56a65" },
   "statuscol.nvim": { "branch": "main", "commit": "d954893262a57a92e46edd87de67e2b3fe72305e" },
-  "symbols-outline.nvim": { "branch": "main", "commit": "b0b2a30b0b082886a4528b645efcff6ac9166d83" },
+  "symbols-outline.nvim": { "branch": "main", "commit": "bf9aa9cd336a2e79181787dc3c8bf511ccfe96b1" },
   "targets.vim": { "branch": "master", "commit": "642d3a4ce306264b05ea3219920b13ea80931767" },
   "toggleterm.nvim": { "branch": "main", "commit": "193786e0371e3286d3bc9aa0079da1cd41beaa62" },
   "tokyonight.nvim": { "branch": "main", "commit": "610179f7f12db3d08540b6cc61434db2eaecbcff" },
