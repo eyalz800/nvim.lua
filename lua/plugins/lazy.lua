@@ -378,7 +378,7 @@ m.plugins = {
     },
     {
         'jreybert/vimagit',
-        cmd = {'Magit', 'MagitOnly'}
+        cmd = { 'Magit', 'MagitOnly' }
     },
     {
         'mbbill/undotree',
