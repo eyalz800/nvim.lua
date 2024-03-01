@@ -1,7 +1,4 @@
 local m = {}
-local v = require 'vim'
-
-v.g.plantuml_set_makeprg = 0 -- plantuml-syntax disable plugin
 
 m.config = function()
     return {

@@ -505,14 +505,15 @@ m.plugins = {
         'https://gitlab.com/itaranto/plantuml.nvim',
         version = '*',
         event = 'VeryLazy',
-        dependencies = {
-            {
-                'aklt/plantuml-syntax',
-            },
-        },
         config = function()
             local plantuml_conf = require 'plugins.config.plantuml'
-            require'plantuml'.setup(plantuml_conf.config())
+            require 'plantuml'.setup(plantuml_conf.config())
+        end,
+    },
+    {
+        'aklt/plantuml-syntax',
+        config = function()
+            v.g.plantuml_set_makeprg = 0
         end,
     },
 }
