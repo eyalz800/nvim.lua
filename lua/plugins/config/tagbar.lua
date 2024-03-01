@@ -8,7 +8,7 @@ v.g.tagbar_indent = 0
 v.g.tagbar_compact = 2
 v.g.tagbar_iconchars = {'', ''}
 
-m.open = function()
+m.open = function(_)
     cmd 'TagbarOpenAutoClose'
 end
 
