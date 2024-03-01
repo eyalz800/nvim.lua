@@ -340,9 +340,6 @@ m.plugins = {
         'christoomey/vim-tmux-navigator',
     },
     {
-        'aklt/plantuml-syntax',
-    },
-    {
         'tpope/vim-surround',
         event = 'VeryLazy',
     },
@@ -503,6 +500,14 @@ m.plugins = {
             require 'goto-preview'.setup(goto_preview_conf.config())
         end,
         cond = user.settings.lsp == 'nvim',
+    },
+    {
+        'https://gitlab.com/itaranto/plantuml.nvim',
+        version = '*',
+        config = function()
+            local plantuml_conf = require 'plugins.config.plantuml'
+            require'plantuml'.setup(plantuml_conf.config())
+        end,
     },
 }
 

@@ -39,7 +39,7 @@
   "nvim-tree.lua": { "branch": "master", "commit": "d52fdeb0a300ac42b9cfa65ae0600a299f8e8677" },
   "nvim-treesitter": { "branch": "master", "commit": "c2a265156d5799adbd9f9e7d5385735fa5d21776" },
   "nvim-web-devicons": { "branch": "master", "commit": "0bb67ef952ea3eb7b1bac9c011281471d99a27bc" },
-  "plantuml-syntax": { "branch": "master", "commit": "309c15c77794433f276fb09eb4e3b8f381003cfd" },
+  "plantuml.nvim": { "branch": "master", "commit": "956987e29b3b560fa2e1f6fec86b7cdf9b293f99" },
   "python-syntax": { "branch": "master", "commit": "2cc00ba72929ea5f9456a26782db57fb4cc56a65" },
   "statuscol.nvim": { "branch": "main", "commit": "d954893262a57a92e46edd87de67e2b3fe72305e" },
   "symbols-outline.nvim": { "branch": "main", "commit": "bf9aa9cd336a2e79181787dc3c8bf511ccfe96b1" },

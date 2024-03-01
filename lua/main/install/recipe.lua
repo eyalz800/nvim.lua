@@ -44,7 +44,7 @@ return {
     {
         name = 'install-basic',
         command = 'brew install curl ctags cscope llvm make autoconf automake unzip' ..
-                  ' pkg-config python3 nodejs gnu-sed bat ripgrep lazygit tig pandoc || true',
+                  ' pkg-config python3 nodejs gnu-sed bat ripgrep lazygit tig pandoc plantuml || true',
         'brew install git || true',
         os = 'Darwin',
     },
@@ -100,7 +100,7 @@ return {
     {
         name = 'install-basic',
         command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y curl exuberant-ctags cscope git unzip ca-certificates gnupg ' ..
-                  'make autoconf automake pkg-config openjdk-17-jre python3 python3-pip python3-venv gdb tig language-pack-en',
+                  'make autoconf automake pkg-config openjdk-17-jre python3 python3-pip python3-venv gdb tig language-pack-en plantuml',
         os = 'Linux',
     },
     {
