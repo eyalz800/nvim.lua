@@ -189,7 +189,7 @@ m.keymaps = function()
         table.insert(entries, val.str)
     end
 
-    opts.fzf_opts["--no-multi"] = ""
+    --opts.fzf_opts["--no-multi"] = ""
 
     -- sort alphabetically
     table.sort(entries)
