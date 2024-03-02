@@ -51,7 +51,15 @@ m.lsp_config = {
         completion_border = true,
         snippets = true,
         servers = {
-            cpp = 'clangd',
+            cpp = {
+                name = 'clangd',
+                settings = {
+                    cmd = {
+                        'clangd',
+                        '--fallback-style=microsoft',
+                    },
+                }
+            },
             lua = {
                 name = 'lua_ls',
                 settings = {

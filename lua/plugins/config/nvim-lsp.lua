@@ -132,6 +132,7 @@ m.setup = function()
             end
 
             lspconfig[server_name].setup {
+                cmd = (server_settings or {}).cmd,
                 capabilities = m.capabilities,
                 settings = server_settings,
                 filetypes = (server_settings or {}).filetypes,
