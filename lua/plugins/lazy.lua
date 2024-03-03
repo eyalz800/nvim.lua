@@ -348,10 +348,6 @@ m.plugins = {
         event = 'VeryLazy',
     },
     {
-        'scrooloose/vim-slumlord',
-        event = 'VeryLazy',
-    },
-    {
         'skywind3000/asynctasks.vim',
         event = 'VeryLazy',
     },
