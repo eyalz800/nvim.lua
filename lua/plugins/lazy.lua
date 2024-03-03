@@ -514,7 +514,8 @@ m.plugins = {
         end,
     },
     {
-        'zbirenbaum/copilot.lua',
+        'eyalz800/copilot.lua',
+        --'zbirenbaum/copilot.lua',
         enabled = true,
         dependencies = {
             'hrsh7th/nvim-cmp',
