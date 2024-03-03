@@ -513,6 +513,22 @@ m.plugins = {
             v.g.plantuml_executable_script = ''
         end,
     },
+    {
+        'zbirenbaum/copilot.lua',
+        enabled = true,
+        dependencies = {
+            'hrsh7th/nvim-cmp',
+        },
+        cmd = 'Copilot',
+        build = ':Copilot auth',
+        event = 'InsertEnter',
+        config = function()
+            local copilot_conf = require 'plugins.config.copilot'
+            require 'copilot'.setup(copilot_conf.config())
+            copilot_conf.setup()
+        end,
+        cond = user.settings.copilot,
+    },
 }
 
 return m

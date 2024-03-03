@@ -43,6 +43,7 @@ m.line_number = {
 m.colorizer = 'nvim-colorizer'
 m.zoom = 'zoomwintab'
 m.cscope_dynamic = false
+m.copilot = false
 m.lsp = 'nvim'
 m.lsp_config = {
     nvim = {
