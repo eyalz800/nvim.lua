@@ -14,12 +14,12 @@ m.config = function()
             auto_trigger = true,
             debounce = 75,
             keymap = {
-                accept = '<C-k>',
+                accept = '<C-l>',
                 accept_word = false,
                 accept_line = false,
-                next = '<C-h>',
-                prev = '<C-l>',
-                dismiss = '<C-j>',
+                next = '<C-j>',
+                prev = '<C-k>',
+                dismiss = '<C-h>',
             },
         },
         filetypes = {
