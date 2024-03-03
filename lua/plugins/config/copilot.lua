@@ -4,19 +4,10 @@ local v = require 'vim'
 m.config = function()
     return {
         panel = {
-            enabled = true,
-            auto_refresh = true,
-            keymap = {
-                jump_prev = '[[',
-                jump_next = ']]',
-                accept = "<CR>",
-                refresh = 'gr',
-                open = "<leader>gp"
-            },
-            layout = {
-                position = 'bottom', -- | top | left | right
-                ratio = 0.4
-            },
+            enabled = false,
+            auto_refresh = false,
+            keymap = {},
+            layout = {},
         },
         suggestion = {
             enabled = true,
