@@ -2,6 +2,7 @@ local m = {}
 local v = require 'vim'
 
 m.config = function()
+    local ok, _ = pcall(require, 'copilot_cmp')
     return {
         panel = {
             enabled = false,
@@ -10,7 +11,7 @@ m.config = function()
             layout = {},
         },
         suggestion = {
-            enabled = true,
+            enabled = ok and true or false,
             auto_trigger = true,
             debounce = 75,
             keymap = {
@@ -39,7 +40,8 @@ m.config = function()
 end
 
 m.setup = function()
-    local hide_on_cmp = false
+    local ok, _ = pcall(require, 'copilot_cmp')
+    local hide_on_cmp = ok and true or false
     if hide_on_cmp then
         -- hide copilot suggestions when cmp menu is open
         -- to prevent odd behavior/garbled up suggestions
