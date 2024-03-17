@@ -35,6 +35,7 @@ end
 m.find_file_list_hidden = function()
     fzf_lua.files({
         cmd = 'if [ -f .files ]; then cat .files; else rg --files --no-ignore-vcs --hidden | tee .files; fi;',
+        fzf_colors = v.g.fzf_colors,
     })
 end
 
