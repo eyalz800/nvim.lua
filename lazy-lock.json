@@ -14,7 +14,7 @@
   "codi.vim": { "branch": "master", "commit": "83b9859aaf8066d95892e01eb9c01571a4b325dd" },
   "diffview.nvim": { "branch": "main", "commit": "3dc498c9777fe79156f3d32dddd483b8b3dbd95f" },
   "fidget.nvim": { "branch": "main", "commit": "0ba1e16d07627532b6cae915cc992ecac249fb97" },
-  "flash.nvim": { "branch": "main", "commit": "48817af25f51c0590653bbc290866e4890fe1cbe" },
+  "flash.nvim": { "branch": "main", "commit": "34c7be146a91fec3555c33fe89c7d643f6ef5cf1" },
   "friendly-snippets": { "branch": "main", "commit": "a1889c7cb3cc498dafede69cc4823ac1239449fa" },
   "fzf": { "branch": "master", "commit": "1833670fb91dfa17047af320ce7f015e0d500ba6" },
   "fzf-lua": { "branch": "main", "commit": "5483f2fc95712b715acb5f5e94cd8e217df1d24c" },
