@@ -464,7 +464,7 @@ m.plugins = {
     },
     {
         'haya14busa/incsearch.vim',
-        cond = user.settings.jumper ~= 'flash',
+        cond = user.settings.jumper ~= 'flash' and user.settings.jumper ~= '',
     },
     {
         'sindrets/diffview.nvim',
