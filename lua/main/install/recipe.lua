@@ -4,6 +4,7 @@ local executable = require 'vim.executable'.executable
 local file_readable = require 'vim.file_readable'.file_readable
 local options = require 'user'.settings.install_options
 
+local expand = v.fn.expand
 local stdpath = v.fn.stdpath
 local system = v.fn.system
 
@@ -248,6 +249,12 @@ return {
                   [=[ echo '    selectedLineBgColor: ' >> ~/.config/jesseduffield/lazygit/config.yml ; ]=] ..
                   [=[ echo '      - reverse' >> ~/.config/jesseduffield/lazygit/config.yml ]=],
         os = 'Linux',
+    },
+    {
+        name = 'fzf-install',
+        command = [=[ git clone https://github.com/junegunn/fzf.git ~/.fzf && ]=] ..
+                  [=[ ~/.fzf/install --all ]=],
+        cond = not file_readable(expand '~/.fzf/install'),
     },
     {
         name = 'pynvim',
