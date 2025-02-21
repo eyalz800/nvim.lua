@@ -22,6 +22,11 @@ return {
                   installation_path .. ' ' .. bin_path .. ' ' .. programs_path .. ' ' .. misc_path .. ' ' .. undo_path
     },
     {
+        name = 'apt-software-properties-common',
+        command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y software-properties-common',
+        os = 'Linux',
+    },
+    {
         name = 'apt-add-repository-git',
         command = 'sudo DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:git-core/ppa',
         os = 'Linux',
@@ -100,8 +105,8 @@ return {
     },
     {
         name = 'install-basic',
-        command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y curl exuberant-ctags cscope git unzip ca-certificates gnupg ' ..
-                  'make autoconf automake pkg-config openjdk-17-jre python3 python3-pip python3-venv gdb tig language-pack-en plantuml',
+        command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y wget curl exuberant-ctags cscope git unzip ca-certificates gnupg bat ripgrep ' ..
+                  'make autoconf automake pkg-config openjdk-17-jre python3 python3-pip python3-venv gdb tig language-pack-en plantuml pandoc',
         os = 'Linux',
     },
     {
@@ -124,6 +129,11 @@ return {
     {
         name = 'clangd-link',
         command = 'rm -rf ' .. programs_path .. '/clangd && ln -s $(command -v clangd-' .. options.clang_version .. ') ' .. programs_path .. '/clangd',
+        os = 'Linux',
+    },
+    {
+        name = 'python-extenlly-managed',
+        command = 'sudo rm -rf /usr/lib/python*/EXTERNALLY-MANAGED || true',
         os = 'Linux',
     },
     {
@@ -204,30 +214,6 @@ return {
         name = 'install-bat',
         command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y bat',
         cond = function() return not executable 'bat' and system [=[ apt-cache search --names-only ^bat\$' ]=] ~= '' end,
-        os = 'Linux',
-    },
-    {
-        name = 'download-install-bat',
-        command = 'curl -fLo ' .. misc_path .. '/bat --create-dirs ' ..
-                  'https://github.com/sharkdp/bat/releases/download/v0.15.1/bat_0.15.1_amd64.deb && ' ..
-                  'sudo dpkg -i ' .. misc_path .. '/bat',
-        cond = function() return not executable 'bat' and system [=[ apt-cache search --names-only ^bat\$' ]=] == '' end,
-        os = 'Linux',
-    },
-    {
-        name = 'download-install-ripgrep',
-        command = 'curl -fLo ' .. misc_path .. '/ripgrep --create-dirs ' ..
-                  'https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb ; ' ..
-                  'sudo dpkg -i ' .. misc_path .. '/ripgrep',
-        cond = not executable 'rg',
-        os = 'Linux',
-    },
-    {
-        name = 'download-install-pandoc',
-        command = 'curl -fLo ' .. misc_path .. '/pandoc.deb --create-dirs ' ..
-                  'https://github.com/jgm/pandoc/releases/download/2.10.1/pandoc-2.10.1-1-amd64.deb ; ' ..
-                  'sudo dpkg -i ' .. misc_path .. '/pandoc.deb',
-        cond = not file_readable(misc_path .. '/pandoc.deb'),
         os = 'Linux',
     },
     {
