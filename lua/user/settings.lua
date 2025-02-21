@@ -13,7 +13,7 @@ m.enable_gutentags = false
 m.colorscheme = v.fn.system('if [ -e ~/.tmux.color ] ; then cat ~/.tmux.color ; else echo tokyonight; fi')
 m.colorscheme_settings = { tokyonight={style='storm'} }
 m.powerline = true
-m.install_options = { clang_version = 18 }
+m.install_options = { clang_version = 19 }
 m.finder = 'fzf-lua'
 m.line = 'lualine'
 m.buffer_line = 'bufferline'
