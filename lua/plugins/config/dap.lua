@@ -250,7 +250,7 @@ m.generate_cpp_config = function()
                 "echo '            \"args\": [],' >> launch.json && " ..
                 "echo '            \"environment\": [],' >> launch.json && " ..
                 "echo '            \"setupCommands\": [' >> launch.json && " ..
-                "echo '                { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": false },' >> launch.json && " ..
+                "echo '                { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": true },' >> launch.json && " ..
                 "echo '                { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> launch.json && " ..
                 "echo '            ],' >> launch.json && " ..
                 "echo '            \"stopAtEntry\": true,' >> launch.json && " ..
@@ -274,7 +274,7 @@ m.generate_cpp_config = function()
                 "echo '            \"args\": [],' >> launch.json && " ..
                 "echo '            \"environment\": [],' >> launch.json && " ..
                 "echo '            \"setupCommands\": [' >> launch.json && " ..
-                "echo '                { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": false },' >> launch.json && " ..
+                "echo '                { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": true },' >> launch.json && " ..
                 "echo '                { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> launch.json && " ..
                 "echo '            ],' >> launch.json && " ..
                 "echo '            \"stopAtEntry\": true,' >> launch.json && " ..

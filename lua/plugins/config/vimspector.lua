@@ -191,7 +191,7 @@ m.generate_cpp_config = function()
                 "echo '                \"cwd\": \"${workspaceRoot}\",' >> .vimspector.json &&" ..
                 "echo '                \"type\": \"cppdbg\",' >> .vimspector.json &&" ..
                 "echo '                \"setupCommands\": [' >> .vimspector.json &&" ..
-                "echo '                    { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": false },' >> .vimspector.json &&" ..
+                "echo '                    { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": true },' >> .vimspector.json &&" ..
                 "echo '                    { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> .vimspector.json &&" ..
                 "echo '                ],' >> .vimspector.json &&" ..
                 "echo '                \"miDebuggerServerAddress\": \"" .. target .. "\",' >> .vimspector.json &&" ..
@@ -220,7 +220,7 @@ m.generate_cpp_config = function()
                 "echo '                \"externalConsole\": true,' >> .vimspector.json && " ..
                 "echo '                \"stopAtEntry\": true,' >> .vimspector.json && " ..
                 "echo '                \"setupCommands\": [' >> .vimspector.json && " ..
-                "echo '                    { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": false },' >> .vimspector.json && " ..
+                "echo '                    { \"text\": \"set disassembly-flavor intel\", \"description\": \"\", \"ignoreFailures\": true },' >> .vimspector.json && " ..
                 "echo '                    { \"text\": \"-enable-pretty-printing\", \"description\": \"\", \"ignoreFailures\": false }' >> .vimspector.json && " ..
                 "echo '                ],' >> .vimspector.json && " ..
                 "echo '                \"MIMode\": \"" .. debugger .. "\"' >> .vimspector.json && " ..
