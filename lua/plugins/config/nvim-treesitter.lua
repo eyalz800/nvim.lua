@@ -4,7 +4,7 @@ local v = require 'vim'
 m.config = function()
     return {
         ensure_installed = { 'c', 'cpp', 'lua', 'vim', 'vimdoc', 'python', 'query', 'gitcommit', 'markdown',
-            'make', 'cmake', 'ninja', 'json', 'asm', 'nasm', 'rust', 'gitignore', 'xml', 'kconfig', },
+            'make', 'cmake', 'ninja', 'json', 'asm', 'nasm', 'rust', 'gitignore', 'xml', 'kconfig', 'diff', 'bash' },
         sync_install = false,
         auto_install = true,
         highlight = {
