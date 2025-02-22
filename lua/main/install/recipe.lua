@@ -106,7 +106,7 @@ return {
     {
         name = 'install-basic',
         command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y wget curl exuberant-ctags cscope git unzip ca-certificates gnupg bat ripgrep ' ..
-                  'make autoconf automake pkg-config openjdk-17-jre python3 python3-pip python3-venv gdb tig language-pack-en plantuml pandoc',
+                  'make autoconf xz-utils automake pkg-config openjdk-17-jre python3 python3-pip python3-venv gdb tig language-pack-en plantuml pandoc',
         os = 'Linux',
     },
     {
