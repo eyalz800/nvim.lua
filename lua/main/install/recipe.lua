@@ -248,7 +248,7 @@ return {
     },
     {
         name = 'coc-settings',
-        command = 'rm -rf ' .. stdpath('config') .. '/coc-settings.json ; ' .. "echo -e '" ..
+        command = 'rm -rf ' .. stdpath('config') .. '/coc-settings.json ; ' .. "printf '" ..
             '{\n' ..
             '    "clangd.semanticHighlighting": false,\n' ..
             '    "inlayHint.enable": false,\n' ..
@@ -283,7 +283,7 @@ return {
             '    "diagnostic.errorSign": "",\n' ..
             '    "diagnostic.virtualText": true,\n' ..
             '    "diagnostic.virtualTextCurrentLineOnly": false,\n' ..
-            '    "diagnostic.virtualTextFormat": "%message ",\n' ..
+            '    "diagnostic.virtualTextFormat": "%%message ",\n' ..
             '    "diagnostic.virtualTextPrefix": "■ ",\n' ..
             '    "cSpell.userWords": [\n' ..
             '        "GTEST",\n' ..
