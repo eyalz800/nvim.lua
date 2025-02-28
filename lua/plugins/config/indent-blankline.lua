@@ -2,6 +2,7 @@ local m = {}
 
 m.config = function()
     return {
+        debounce = 100,
         indent = {
             char = '│',
             smart_indent_cap = false,

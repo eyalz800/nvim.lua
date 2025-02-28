@@ -4,79 +4,97 @@ local fzf_lua = nil
 
 local expand = v.fn.expand
 
+m.fzf_colors = true
+-- m.fzf_colors = {
+--     fg = { "fg", "Normal" },
+--     bg = { "bg", "Normal" },
+--     hl = { "fg", "SpecialKey" },
+--     ["fg+"] = { "fg", "CursorLine" },
+--     ["bg+"] = { "bg", "CursorLine" },
+--     ["hl+"] = { "fg", "String" },
+--     info = { "fg", "Comment" },
+--     prompt = { "fg", "StorageClass" },
+--     pointer = { "fg", "Error" },
+--     marker = { "fg", "Keyword" },
+--     spinner = { "fg", "Label" },
+--     header = { "fg", "Comment" },
+--     border = { "fg", "Ignore" },
+--     gutter = "-1",
+-- }
+
 m.find_file = function()
     fzf_lua.files({
         cmd = 'rg --files --color=never --hidden -g "!.git"',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.find_file_hidden = function()
     fzf_lua.files({
         cmd = 'rg --files --no-ignore-vcs --color=never --hidden',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.find_file_list = function()
     fzf_lua.files({
         cmd = 'if [ -f .files ]; then cat .files; else rg --files --color=never --hidden -g "!.git" | tee .files; fi;',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.find_file_list_invalidate = function()
     fzf_lua.files({
         cmd = 'rm -rf .files; rg --files --color=never --hidden -g "!.git" | tee .files',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.find_file_list_hidden = function()
     fzf_lua.files({
         cmd = 'if [ -f .files ]; then cat .files; else rg --files --no-ignore-vcs --hidden | tee .files; fi;',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.find_file_list_hidden_invalidate = function()
     fzf_lua.files({
         cmd = 'rm -rf .files; rg --files --color=never --no-ignore-vcs --hidden | tee .files',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.find_line = function()
     fzf_lua.blines({
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.find_in_files = function()
     fzf_lua.grep_project({
         cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.find_in_files_precise = function()
     fzf_lua.live_grep_glob({
         cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.find_in_files_precise_native = function()
     fzf_lua.live_grep_native({
         cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.find_current_in_files = function()
     fzf_lua.grep_cword({
         cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
@@ -84,7 +102,7 @@ m.find_current_in_files_precise = function()
     fzf_lua.live_grep_glob({
         cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
         search = expand '<cword>',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
@@ -92,14 +110,14 @@ m.find_current_in_files_precise_native = function()
     fzf_lua.live_grep_native({
         cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
         search = expand '<cword>',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.find_buffer = function()
     fzf_lua.buffers({
         search = expand '<cword>',
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
@@ -107,36 +125,36 @@ m.lsp_capable = true
 
 m.lsp_definitions = function()
     fzf_lua.lsp_definitions({
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.lsp_references = function()
     fzf_lua.lsp_references({
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.lsp_diagnostics = function()
     fzf_lua.diagnostics_document({
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
 m.color_picker = function()
     fzf_lua.colorschemes({
-        fzf_colors = v.g.fzf_colors,
-        ignore_patterns   = { '^blue$', '^darkblue$', '^default$', '^delek$', '^desert$', '^elflord$', '^evening$', '^habamax$', '^industry$', '^koehler$', '^lunaperche$', '^morning$', '^murphy$', '^pablo$', '^peachpuff$', '^quiet$', '^retrobox$', '^ron$', '^shine$', '^slate$', '^sorbet$', '^torte$', '^wildcharm$', '^zaibatsu$', '^zellner$',
-                              '^tokyonight$',
-                              '^catppuccin$',
-                            },
+        fzf_colors = m.fzf_colors,
+        ignore_patterns = { '^vim$', '^blue$', '^darkblue$', '^default$', '^delek$', '^desert$', '^elflord$', '^evening$',
+            '^habamax$', '^industry$', '^koehler$', '^lunaperche$', '^morning$', '^murphy$', '^pablo$', '^peachpuff$',
+            '^quiet$', '^retrobox$', '^ron$', '^shine$', '^slate$', '^sorbet$', '^torte$', '^wildcharm$', '^zaibatsu$',
+            '^zellner$', '^tokyonight$', '^catppuccin$',  },
     })
 end
 
 m.custom_grep = function(command)
     fzf_lua.grep_project({
         cmd = command,
-        fzf_colors = v.g.fzf_colors,
+        fzf_colors = m.fzf_colors,
     })
 end
 
@@ -145,7 +163,7 @@ m.keymaps = function()
     local utils = require 'fzf-lua.utils'
     local config = require 'fzf-lua.config'
     local opts = config.normalize_opts(
-    { fzf_colors = v.g.fzf_colors, winopts = { preview = { hidden = 'hidden',  } } },
+    { fzf_colors = m.fzf_colors, winopts = { preview = { hidden = 'hidden',  } } },
         config.globals.keymap)
     if not opts then return end
 
@@ -403,7 +421,7 @@ m.config = function()
                 -- enable specific filetypes with: `{ enable = { "lua" } }
                 -- exclude specific filetypes with: `{ disable = { "lua" } }
                 -- disable fully with: `{ enable = false }`
-                treesitter      = { enable = true, disable = {} },
+                treesitter      = { enabled = true, disabled = {} },
                 -- By default, the main window dimensions are calculted as if the
                 -- preview is visible, when hidden the main window will extend to
                 -- full size. Set the below to "extend" to prevent the main window

@@ -241,7 +241,7 @@ m.plugins = {
     {
         'junegunn/fzf',
         name = 'fzf',
-        dir = '~/.fzf',
+        --dir = '~/.fzf',
         build = './install --all',
     },
     {
@@ -436,6 +436,7 @@ m.plugins = {
         end,
         dependencies = {
             'mfussenegger/nvim-dap',
+            'nvim-neotest/nvim-nio',
             'edgy.nvim',
         },
         cond = user.settings.debugger == 'dap',
