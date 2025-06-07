@@ -437,6 +437,7 @@ m.plugins = {
         dependencies = {
             'mfussenegger/nvim-dap',
             'edgy.nvim',
+            'nvim-neotest/nvim-nio',
         },
         cond = user.settings.debugger == 'dap',
     },

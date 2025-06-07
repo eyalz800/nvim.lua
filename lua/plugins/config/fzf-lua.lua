@@ -226,7 +226,20 @@ m.config = function()
             -- can be sent individually to any provider to set the win title
             -- title         = "Title",
             -- title_pos     = "center",    -- 'left', 'center' or 'right'
+            -- Backdrop opacity, 0 is fully opaque, 100 is fully transparent (i.e. disabled)
+            backdrop         = 60,
+            -- title         = "Title",
+            -- title_pos     = "center",        -- 'left', 'center' or 'right'
+            title_flags   = false,           -- uncomment to disable title flags
             fullscreen = false,   -- start fullscreen?
+            -- enable treesitter highlighting for the main fzf window will only have
+            -- effect where grep like results are present, i.e. "file:line:col:text"
+            -- due to highlight color collisions will also override `fzf_colors`
+            -- set `fzf_colors=false` or `fzf_colors.hl=...` to override
+            treesitter       = {
+              enabled    = true,
+              fzf_colors = { ["hl"] = "-1:reverse", ["hl+"] = "-1:reverse" }
+            },
             preview    = {
                 -- default     = 'bat',           -- override the default previewer?
                 -- default uses the 'builtin' previewer
@@ -403,7 +416,7 @@ m.config = function()
                 -- enable specific filetypes with: `{ enable = { "lua" } }
                 -- exclude specific filetypes with: `{ disable = { "lua" } }
                 -- disable fully with: `{ enable = false }`
-                treesitter      = { enable = true, disable = {} },
+                treesitter      = { enabled = true, disabled = {} },
                 -- By default, the main window dimensions are calculted as if the
                 -- preview is visible, when hidden the main window will extend to
                 -- full size. Set the below to "extend" to prevent the main window

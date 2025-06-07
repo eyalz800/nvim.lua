@@ -36,6 +36,7 @@ m.config = function()
         dim_inactive = false,
         lualine_bold = false,
         on_highlights = function(highlights, color)
+            highlights['CursorLineNr'] = { fg = color.fg_dark }
             highlights['FloatBorder'] = { fg = color.fg, bg = color.bg_dark }
             highlights['Folded'] = { fg = color.comment, bg = color.none }
             highlights['Ignore'] = { fg = v.o.background == 'dark' and '#444b6a' or color.bg_dark}
@@ -59,6 +60,10 @@ m.config = function()
             highlights['@punctuation.delimiter'] = { fg = color.fg }
             highlights['@operator'] = { fg = color.fg }
             highlights['@conditional.ternary'] = { fg = color.fg }
+            highlights['FzfLuaBorder'] = { fg = color.fg_dark }
+            highlights['FzfLuaTitle'] = { fg = color.fg, bg = color.bg }
+            highlights['FzfLuaPreviewTitle'] = { fg = color.fg, bg = color.bg }
+            highlights['FzfLuaTitleFlags'] = { fg = color.fg, bg = color.bg }
 
             highlights.InitLuaBufferLineVisibleFg = { fg = color.fg_dark }
             highlights.InitLuaBufferLineSelectedFg = { fg = color.fg }
