@@ -1,6 +1,7 @@
 local m = {}
 local v = require 'vim'
 local fzf_lua = nil
+local cmd = require 'vim.cmd'.silent
 
 local expand = v.fn.expand
 
@@ -47,9 +48,13 @@ m.find_file_list_hidden_invalidate = function()
 end
 
 m.find_line = function()
-    fzf_lua.blines({
-        fzf_colors = v.g.fzf_colors,
-    })
+    if v.bo.filetype == 'qf' then
+        cmd 'BLines'
+    else
+        fzf_lua.blines({
+            fzf_colors = v.g.fzf_colors,
+        })
+    end
 end
 
 m.find_in_files = function()
@@ -568,7 +573,7 @@ m.config = function()
                 },
                 fzf_opts = {
                     ["--no-multi"]  = '',
-                    ['--delimiter'] = "'[:]'",
+                    ['--delimiter'] = "[:]",
                 },
             },
             icons = {
@@ -663,7 +668,7 @@ m.config = function()
             },
             fzf_opts    = {
                 -- hide tabnr
-                ['--delimiter'] = "'[\\):]'",
+                ['--delimiter'] = "[\\):]",
                 ["--with-nth"]  = '2..',
             },
         },
@@ -676,7 +681,7 @@ m.config = function()
             fzf_opts        = {
                 -- do not include bufnr in fuzzy matching
                 -- tiebreak by line no.
-                ['--delimiter'] = "'[\\]:]'",
+                ['--delimiter'] = "[\\]:]",
                 ["--nth"]       = '2..',
                 ["--tiebreak"]  = 'index',
                 ["--tabstop"]   = "1",
@@ -695,7 +700,7 @@ m.config = function()
             no_term_buffers = false,   -- include 'term' buffers
             fzf_opts        = {
                 -- hide filename, tiebreak by line no.
-                ['--delimiter'] = "'[\\]:]'",
+                ['--delimiter'] = "[\\]:]",
                 ["--with-nth"]  = '2..',
                 ["--tiebreak"]  = 'index',
                 ["--tabstop"]   = "1",
@@ -736,7 +741,7 @@ m.config = function()
             rg_opts       = "--no-heading --color=always",
             grep_opts     = "--color=auto --perl-regexp",
             fzf_opts      = {
-                ['--delimiter'] = "'[\\]:]'",
+                ['--delimiter'] = "[\\]:]",
                 ["--with-nth"]  = '2..',
                 ["--tiebreak"]  = 'index',
             },
