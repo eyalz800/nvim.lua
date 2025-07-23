@@ -531,6 +531,21 @@ m.plugins = {
         end,
         cond = user.settings.copilot,
     },
+    {
+        'olimorris/codecompanion.nvim',
+        version = 'v16.3.0',
+        event = 'InsertEnter',
+        cmd = { 'CodeCompanion', 'CodeCompanionActions', 'CodeCompanionCmd' },
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-treesitter/nvim-treesitter',
+        },
+        config = function()
+            local codecompanion_conf = require 'plugins.config.codecompanion'
+            require 'codecompanion'.setup(codecompanion_conf.config())
+        end,
+        cond = user.settings.codecompanion,
+    },
 }
 
 return m
