@@ -1,7 +1,10 @@
 local m = {}
+local user = require 'user'
 
 m.config = function()
     return {
+        adapters = user.settings.codecompanion_config.adapters,
+        strategies = user.settings.codecompanion_config.strategies,
         display = {
             chat = {
                 window = {

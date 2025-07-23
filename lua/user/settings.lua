@@ -46,6 +46,7 @@ m.zoom = 'zoomwintab'
 m.cscope_dynamic = false
 m.copilot = false
 m.codecompanion = false
+m.codecompanion_config = {}
 m.avante = false
 m.minuet_ai = false
 m.minuet_config = {
