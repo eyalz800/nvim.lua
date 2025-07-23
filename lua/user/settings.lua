@@ -46,6 +46,12 @@ m.zoom = 'zoomwintab'
 m.cscope_dynamic = false
 m.copilot = false
 m.codecompanion = false
+m.avante = false
+m.minuet_ai = false
+m.minuet_config = {
+    provider = 'openai',
+    provider_options = nil,
+}
 m.lsp = 'nvim'
 m.lsp_config = {
     nvim = {
