@@ -25,7 +25,7 @@ m.code_explorer_config = { auto_open_min_columns = 180 }
 m.edge = nil
 m.pin_bars = 'pin'
 m.treesitter = true
-m.treesitter_auto_install = false
+m.treesitter_auto_install = true
 m.terminal = 'toggleterm'
 m.float_term = 'lazyterm'
 m.external_terminal_opts = { set_background = true }
