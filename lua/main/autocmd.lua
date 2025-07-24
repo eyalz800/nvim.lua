@@ -179,6 +179,17 @@ m.setup = function()
                 v.wo.winbar = '  Blame'
             end
         })
+
+        if user.settings.codecompanion then
+            autocmd('User', {
+                pattern = 'CodeCompanionDiffAttached',
+                group = augroup('init.lua.codecompanion-barbecue', {}),
+                callback = function(data)
+                    local winid = vim.fn.win_getid(data.winnr)
+                    v.wo[winid].winbar = ' Code Companion '
+                end
+            })
+        end
     end
 end
 
