@@ -166,9 +166,19 @@ m.setup = function()
         [=[nnoremap <buffer> <silent> q <cmd>q<cr> | nnoremap <buffer> <silent> d <cmd>silent exec 'norm! 0eb"xyw' <bar> wincmd l <bar> silent exec 'DiffviewFileHistory % --range='.getreg('x')<cr>]=]
     })
 
-    if user.settings.bar == 'barbecue' and user.settings.lsp == 'nvim' then
-        autocmd({ 'WinResized', 'BufWinEnter', 'CursorHold', 'InsertLeave' },
-            { group = augroup('init.lua.barbecue.updater', {}), callback = require 'plugins.config.barbecue'.on_update })
+    if user.settings.bar == 'barbecue' then
+        if user.settings.lsp == 'nvim' then
+            autocmd({ 'WinResized', 'BufWinEnter', 'CursorHold', 'InsertLeave' },
+                { group = augroup('init.lua.barbecue.updater', {}), callback = require 'plugins.config.barbecue'.on_update })
+        end
+
+        autocmd('filetype', {
+            pattern = 'fugitiveblame',
+            group = augroup('init.lua.fugitive-barbecue', {}),
+            callback = function()
+                v.wo.winbar = '  Blame'
+            end
+        })
     end
 end
 
