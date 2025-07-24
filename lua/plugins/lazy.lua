@@ -60,6 +60,13 @@ m.plugins = {
         cond = user.settings.lsp == 'nvim' or user.settings.debugger == 'dap'
     },
     {
+        'j-hui/fidget.nvim',
+        config = function()
+            require 'fidget'.setup({})
+        end,
+        cond = user.settings.lsp == 'nvim',
+    },
+    {
         'neovim/nvim-lspconfig',
         dependencies = {
             {
@@ -71,11 +78,6 @@ m.plugins = {
             },
             {
                 'j-hui/fidget.nvim',
-                tag = 'legacy',
-                config = function()
-                    require 'fidget'.setup({})
-                end,
-                cond = user.settings.lsp == 'nvim',
             },
             {
                 'folke/neoconf.nvim',
@@ -541,10 +543,12 @@ m.plugins = {
         dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-treesitter/nvim-treesitter',
+            'j-hui/fidget.nvim',
         },
         config = function()
             local codecompanion_conf = require 'plugins.config.codecompanion'
             require 'codecompanion'.setup(codecompanion_conf.config())
+            codecompanion_conf.setup()
         end,
         cond = user.settings.codecompanion,
     },

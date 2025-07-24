@@ -33,4 +33,8 @@ m.config = function()
     }
 end
 
+m.setup = function()
+    require 'plugins.codecompanion-fidget':init()
+end
+
 return m
