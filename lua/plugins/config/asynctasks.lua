@@ -12,6 +12,8 @@ v.g.asyncrun_rootmarks = user.settings.root_paths
 
 if user.settings.terminal == 'floaterm' then
     v.g.asynctasks_term_pos = 'floaterm'
+elseif user.settings.terminal == 'toggleterm' then
+    v.g.asynctasks_term_pos = 'toggleterm2'
 else
     v.g.asynctasks_term_pos = 'right'
     v.g.asynctasks_term_rows = 10
