@@ -46,11 +46,23 @@ m.zoom = 'zoomwintab'
 m.cscope_dynamic = false
 m.copilot = false
 m.codecompanion = false
-m.codecompanion_config = {}
+m.codecompanion_config = {
+    -- strategies = {
+    --     chat = {
+    --         adapter = 'openai'
+    --         adapter = 'gemini'
+    --     },
+    --     inline = {
+    --         adapter = 'openai'
+    --         adapter = 'gemini'
+    --     },
+    -- },
+}
 m.avante = false
 m.minuet_ai = false
 m.minuet_config = {
     provider = 'openai',
+    --provider = 'gemini',
     provider_options = nil,
 }
 m.lsp = 'nvim'
@@ -81,6 +93,7 @@ m.lsp_config = {
             },
             python = 'pyright',
             rust = 'rust_analyzer',
+            ts = 'tsserver',
         },
     },
     coc = {
