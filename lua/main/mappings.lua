@@ -27,6 +27,7 @@ m.setup = function()
     local quickfix = require 'plugins.quickfix'
     local terminal = require 'plugins.terminal'
     local pin = require 'plugins.pin'
+    local ai_chat = require 'plugins.ai_chat'
 
     local keys = require 'which-key'
 
@@ -58,6 +59,7 @@ m.setup = function()
             ['<c-w>b'] = { terminal.open_below, 'New terminal below', },
             ['<c-w>B'] = { terminal.split_below, 'Split terminal below', },
             ['<c-w>t'] = { terminal.open_split, 'New terminal on right side', },
+            ['<c-w>a'] = { ai_chat.open, 'New AI chat', },
             ['<c-l>'] = { indent_guides.refresh_trigger('20zl', { expr = false }), 'Side scrolling', },
             ['<c-h>'] = { indent_guides.refresh_trigger('20zh', { expr = false }), 'Side scrolling', },
             ['<leader>rw'] = { whitespace.strip, 'Strip whitespace', },
