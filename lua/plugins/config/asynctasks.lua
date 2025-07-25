@@ -73,7 +73,7 @@ m.build_config = function()
     end
 
     if #command ~= 0 then
-        system("echo '[project-run]' >> .tmptasks; echo -e 'command=" .. command .. "\n' >> .tmptasks; echo output=terminal >> .tmptasks")
+        system("echo '[project-run]' >> .tmptasks; echo -e 'command=" .. command .. "; read\n' >> .tmptasks; echo output=terminal >> .tmptasks")
     end
 
     system 'mv .tmptasks .tasks'
