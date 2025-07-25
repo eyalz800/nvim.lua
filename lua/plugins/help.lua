@@ -4,6 +4,7 @@ local v = require 'vim'
 m.on_open = function()
     v.keymap.set('n', 'q', ':<c-u>q<cr>', { silent=true, buffer=true })
     v.keymap.set('n', 'a', ':wincmd L<cr>', { silent=true, buffer=true })
+    v.opt_local.conceallevel = 0
 end
 
 return m
