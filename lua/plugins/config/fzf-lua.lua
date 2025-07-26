@@ -131,7 +131,7 @@ end
 m.color_picker = function()
     fzf_lua.colorschemes({
         fzf_colors = v.g.fzf_colors,
-        ignore_patterns   = { '^blue$', '^darkblue$', '^default$', '^delek$', '^desert$', '^elflord$', '^evening$', '^habamax$', '^industry$', '^koehler$', '^lunaperche$', '^morning$', '^murphy$', '^pablo$', '^peachpuff$', '^quiet$', '^retrobox$', '^ron$', '^shine$', '^slate$', '^sorbet$', '^torte$', '^wildcharm$', '^zaibatsu$', '^zellner$',
+        ignore_patterns   = { '^blue$', '^darkblue$', '^default$', '^delek$', '^desert$', '^elflord$', '^evening$', '^habamax$', '^industry$', '^koehler$', '^lunaperche$', '^morning$', '^murphy$', '^pablo$', '^peachpuff$', '^quiet$', '^retrobox$', '^ron$', '^shine$', '^slate$', '^sorbet$', '^torte$', '^wildcharm$', '^zaibatsu$', '^zellner$', '^vim$', '^unokai$',
                               '^tokyonight$',
                               '^catppuccin$',
                             },
