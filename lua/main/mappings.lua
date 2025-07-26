@@ -6,6 +6,22 @@ local cmd = require 'vim.cmd'.silent
 local root_paths = require 'main.root_paths'
 local paste = require 'builtins.paste'
 local clipboard = require 'builtins.clipboard'
+local map = v.keymap.set
+
+local keys = {}
+keys.register = function(map_entries, options)
+    local mode = options.mode
+    local map_opts = { silent = true, noremap = true, expr = false, nowait = false, buffer = nil }
+    for opt, val in pairs(map_opts) do
+        if options[opt] ~= nil then
+            map_opts[opt] = val
+        end
+    end
+    for map_key, map_value in pairs(map_entries) do
+        map_opts.desc = map_value[2]
+        map(mode, map_key, map_value[1], map_opts)
+    end
+end
 
 m.setup = function()
     local source_index = require 'plugins.source_index'
@@ -28,8 +44,7 @@ m.setup = function()
     local terminal = require 'plugins.terminal'
     local pin = require 'plugins.pin'
     local ai_chat = require 'plugins.ai_chat'
-
-    local keys = require 'which-key'
+    local _ = require 'which-key'
 
     local mappings = {
         n = {
@@ -292,29 +307,12 @@ m.setup = function()
         },
     }
 
-    local documentation = {
-        n = {
-        },
-        x = {
-        },
-        v = {
-        },
-        i = {
-        },
-        t = {
-        },
-        c = {
-        },
-    }
-
-    for _, entry in ipairs({ mappings, documentation }) do
-        keys.register(entry.n, { mode = 'n' })
-        keys.register(entry.x, { mode = 'x' })
-        keys.register(entry.v, { mode = 'v' })
-        keys.register(entry.i, { mode = 'i' })
-        keys.register(entry.t, { mode = 't' })
-        keys.register(entry.c, { mode = 'c' })
-    end
+    keys.register(mappings.n, { mode = 'n' })
+    keys.register(mappings.x, { mode = 'x' })
+    keys.register(mappings.v, { mode = 'v' })
+    keys.register(mappings.i, { mode = 'i' })
+    keys.register(mappings.t, { mode = 't' })
+    keys.register(mappings.c, { mode = 'c' })
 
     -- Internal mappings
 
