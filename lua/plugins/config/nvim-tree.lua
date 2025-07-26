@@ -28,7 +28,7 @@ m.open_current_directory = function()
 end
 
 m.is_open = function()
-    return require 'nvim-tree.view'.is_visible()
+    return require 'nvim-tree.api'.tree.is_visible()
 end
 
 m.toggle = function()
