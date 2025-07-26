@@ -72,7 +72,7 @@
   "vim-visual-multi": { "branch": "master", "commit": "a6975e7c1ee157615bbc80fc25e4392f71c344d4" },
   "vimagit": { "branch": "master", "commit": "fc7eda97da4f8182c8abbe6ea7befbd789b8b935" },
   "vscode.nvim": { "branch": "main", "commit": "57cec1509bfb57dfc3c4d5ba5e8db9a5b5e42be2" },
-  "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" },
+  "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
   "yank-history": { "branch": "master", "commit": "e05fd5a1c467250ca31569d9f0597955af3a89fc" },
   "zoomwintab.vim": { "branch": "master", "commit": "3b76f740534ecc4114bc8a207ecb0db77b2fb002" }
 }
