@@ -78,12 +78,12 @@ m.setup = function()
                 [diagnostic.severity.INFO]  = '',
                 [diagnostic.severity.HINT]  = '󰌶',
             },
-            linehl = {
-                [diagnostic.severity.ERROR] = 'DiagnosticSignError',
-                [diagnostic.severity.WARN] = 'DiagnosticSignWarn',
-                [diagnostic.severity.INFO]  = 'DiagnosticSignInfo',
-                [diagnostic.severity.HINT]  = 'DiagnosticSignHint',
-            },
+            -- linehl = {
+            --     [diagnostic.severity.ERROR] = 'DiagnosticSignError',
+            --     [diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+            --     [diagnostic.severity.INFO]  = 'DiagnosticSignInfo',
+            --     [diagnostic.severity.HINT]  = 'DiagnosticSignHint',
+            -- },
         },
         update_in_insert = false,
         underline = true,
