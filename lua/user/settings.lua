@@ -65,6 +65,9 @@ m.minuet_config = {
     --provider = 'gemini',
     provider_options = nil,
 }
+m.quickfix_config = {
+    winhl = 'edge-window'
+}
 m.lsp = 'nvim'
 m.lsp_config = {
     nvim = {
