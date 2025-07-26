@@ -19,8 +19,12 @@ m.show_declarations = finder.lsp_declarations or lsp.buf.declaration
 m.show_references = finder.lsp_references or lsp.buf.references
 m.code_action = lsp.buf.code_action
 m.type_definition = lsp.buf.type_definition
-m.prev_diagnostic = diagnostic.goto_prev
-m.next_diagnostic = diagnostic.goto_next
+m.prev_diagnostic = function()
+    diagnostic.jump({ count = -1 })
+end
+m.next_diagnostic = function()
+    diagnostic.jump({ count = 1 })
+end
 m.rename = lsp.buf.rename
 m.list_diagnostics = finder.lsp_diagnostics or diagnostic.open_float
 m.format_selected = function() lsp.buf.format({ async = true }) end
