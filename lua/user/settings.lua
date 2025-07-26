@@ -21,7 +21,10 @@ m.bar = 'barbecue'
 m.file_explorer = 'nvim-tree'
 m.file_explorer_config = { nvim_tree = { window_picker = false } }
 m.code_explorer = 'symbols-outline'
-m.code_explorer_config = { auto_open_min_columns = 180 }
+m.code_explorer_config = {
+    auto_open_min_columns = 180,
+    winhl = 'edge-window'
+}
 m.edge = nil
 m.pin_bars = 'pin'
 m.treesitter = true

@@ -133,6 +133,11 @@ m.setup = function()
     autocmd('filetype', { pattern = 'help', group = augroup('init.lua.help', {}), callback = require 'plugins.help'
     .on_open })
 
+    if user.settings.code_explorer == 'symbols-outline' then
+        autocmd('filetype',
+            { pattern = 'Outline', group = augroup('init.lua.symbols-outline', {}), callback = require 'plugins.code_explorer'.on_open })
+    end
+
     if lsp.diagnostic_hover then
         autocmd('CursorHold', { group = augroup('init.lua.lsp_diagnostics_hover', {}), callback = lsp.diagnostic_hover })
     end
