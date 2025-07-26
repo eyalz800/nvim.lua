@@ -10,7 +10,7 @@ local win_gotoid = v.fn.win_gotoid
 local getqflist = v.fn.getqflist
 local quickfix_winhls = {
     none = nil,
-    ['edge-window'] = 'WinSeparator:NvimTreeWinSeparator,Normal:NvimTreeNormal,SignColumn:NvimTreeSignColumn',
+    ['edge-window'] = 'EndOfBuffer:NvimTreeEndOfBuffer,CursorLine:NvimTreeCursorLine,CursorLineNr:NvimTreeCursorLineNr,LineNr:NvimTreeLineNr,WinSeparator:NvimTreeWinSeparator,StatusLine:NvimTreeStatusLine,StatusLineNC:NvimTreeStatuslineNC,SignColumn:NvimTreeSignColumn,Normal:NvimTreeNormal,NormalNC:NvimTreeNormalNC,NormalFloat:NvimTreeNormalFloat,FloatBorder:NvimTreeNormalFloatBorder',
 }
 local quickfix_winhl = quickfix_winhls[user.settings.quickfix_config.winhl or 'none']
 
