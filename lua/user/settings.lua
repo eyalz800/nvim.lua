@@ -96,7 +96,7 @@ m.lsp_config = {
             },
             python = 'pyright',
             rust = 'rust_analyzer',
-            ts = 'tsserver',
+            ts = 'ts_ls',
         },
     },
     coc = {

@@ -538,7 +538,6 @@ m.plugins = {
     },
     {
         'olimorris/codecompanion.nvim',
-        version = 'v16.3.0',
         cmd = { 'CodeCompanion', 'CodeCompanionChat', 'CodeCompanionActions', 'CodeCompanionCmd' },
         dependencies = {
             'nvim-lua/plenary.nvim',
