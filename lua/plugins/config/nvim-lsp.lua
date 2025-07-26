@@ -60,19 +60,6 @@ m.expand_snippets = function() end
 m.select_snippets = function() end
 
 m.setup = function()
-    local sign = function(opts)
-        v.fn.sign_define(opts.name, {
-            texthl = opts.name,
-            text = opts.text,
-            numhl = ''
-        })
-    end
-
-    sign({ name = 'DiagnosticSignInfo', text = '' })
-    sign({ name = 'DiagnosticSignHint', text = '󰌶' })
-    sign({ name = 'DiagnosticSignWarn', text = '' })
-    sign({ name = 'DiagnosticSignError', text = '' })
-
     local virtual_text = nil
     if settings.virtual_text then
         virtual_text = {
@@ -84,14 +71,27 @@ m.setup = function()
     end
 
     diagnostic.config({
-        signs = true,
+        signs = {
+            text = {
+                [diagnostic.severity.ERROR] = '',
+                [diagnostic.severity.WARN] = '',
+                [diagnostic.severity.INFO]  = '',
+                [diagnostic.severity.HINT]  = '󰌶',
+            },
+            linehl = {
+                [diagnostic.severity.ERROR] = 'DiagnosticSignError',
+                [diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+                [diagnostic.severity.INFO]  = 'DiagnosticSignInfo',
+                [diagnostic.severity.HINT]  = 'DiagnosticSignHint',
+            },
+        },
         update_in_insert = false,
         underline = true,
         virtual_text = virtual_text or false,
         severity_sort = true,
         float = {
             border = 'rounded',
-            source = 'always',
+            source = true,
             header = '',
             prefix = '',
         },
@@ -142,32 +142,6 @@ m.setup = function()
             on_attach = on_attach_callback,
         }
     end
-
-    -- mason_lspconfig.setup_handlers {
-    --     function(server_name)
-    --         local server_settings = m.servers[server_name]
-
-    --         local on_attach = function() end
-
-    --         if user.settings.bar == 'barbecue' then
-    --             local prev_attach = on_attach
-    --             on_attach = function(client, bufnr)
-    --                 prev_attach()
-    --                 if client.server_capabilities['documentSymbolProvider'] then
-    --                     require 'nvim-navic'.attach(client, bufnr)
-    --                 end
-    --             end
-    --         end
-
-    --         lspconfig[server_name].setup {
-    --             cmd = (server_settings or {}).cmd,
-    --             capabilities = m.capabilities,
-    --             settings = server_settings,
-    --             filetypes = (server_settings or {}).filetypes,
-    --             on_attach = on_attach,
-    --         }
-    --     end
-    -- }
 
     require 'plugins.config.cmp'.setup()
 end
