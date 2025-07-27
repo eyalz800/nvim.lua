@@ -1,6 +1,10 @@
 local m = {}
 local user = require 'user'
 
+m.setup = function()
+    require 'lualine'.setup(m.config())
+end
+
 m.config = function()
     local options = {
         options = {

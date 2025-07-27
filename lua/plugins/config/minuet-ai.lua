@@ -1,6 +1,10 @@
 local m = {}
 local user = require 'user'
 
+m.setup = function()
+    require 'minuet'.setup(m.config())
+end
+
 m.config = function()
     return {
         provider = user.settings.minuet_config.provider or 'openai',

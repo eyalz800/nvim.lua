@@ -3,6 +3,10 @@ local v = require 'vim'
 local user = require 'user'
 local nvim_set_hl = v.api.nvim_set_hl
 
+m.setup = function()
+    require 'vscode'.setup(m.config())
+end
+
 m.set_background = function(color_name)
     if color_name == 'vscode-light' then
         v.opt.background = 'light'

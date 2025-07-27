@@ -5,6 +5,10 @@ local user = require 'user'
 local nvim_get_hl = v.api.nvim_get_hl
 local nvim_set_hl = v.api.nvim_set_hl
 
+m.setup = function()
+    require 'edgy'.setup(m.config())
+end
+
 m.config = function()
     require 'plugins.colors'.subscribe(m.on_color)
     m.on_color()

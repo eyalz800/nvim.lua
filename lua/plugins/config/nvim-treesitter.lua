@@ -2,6 +2,10 @@ local m = {}
 local v = require 'vim'
 local user = require 'user'
 
+m.setup = function()
+    require 'nvim-treesitter.configs'.setup(m.config())
+end
+
 m.config = function()
     return {
         ensure_installed = { 'c', 'cpp', 'lua', 'vim', 'vimdoc', 'python', 'query', 'gitcommit', 'gitignore', 'gitattributes',

@@ -1,5 +1,9 @@
 local m = {}
 
+m.setup = function()
+    require 'diffview'.setup(m.config())
+end
+
 m.config = function()
     local actions = require 'diffview.actions'
     return {

@@ -3,6 +3,10 @@ local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 local symbols_outline = nil
 
+m.setup = function()
+    require 'symbols-outline'.setup(m.config())
+end
+
 m.open = function(options)
     options = options or { focus = true }
     if not m.is_open() and options.focus ~= 'always' then

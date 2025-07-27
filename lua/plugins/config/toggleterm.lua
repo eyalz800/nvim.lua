@@ -1,5 +1,9 @@
 local m = {}
 
+m.setup = function()
+    require 'toggleterm'.setup(m.config())
+end
+
 m.config = function()
     return {
         size = 40,

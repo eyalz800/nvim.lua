@@ -1,6 +1,11 @@
 local m = {}
 local user = require 'user'
 
+m.setup = function()
+    require 'codecompanion'.setup(m.config())
+    require 'plugins.codecompanion-fidget':init()
+end
+
 m.config = function()
     return {
         adapters = user.settings.codecompanion_config.adapters,
@@ -31,10 +36,6 @@ m.config = function()
             },
         }
     }
-end
-
-m.setup = function()
-    require 'plugins.codecompanion-fidget':init()
 end
 
 return m

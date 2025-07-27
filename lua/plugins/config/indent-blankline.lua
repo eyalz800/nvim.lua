@@ -1,5 +1,9 @@
 local m = {}
 
+m.setup = function()
+    require 'ibl'.setup(m.config())
+end
+
 m.config = function()
     return {
         indent = {

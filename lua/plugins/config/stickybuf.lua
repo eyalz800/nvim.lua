@@ -1,6 +1,10 @@
 local m = {}
 local v = require 'vim'
 
+m.setup = function()
+    require 'stickybuf'.setup(m.config())
+end
+
 m.config = function()
     m.stickybuf = require 'stickybuf'
     local pin_filetypes = {

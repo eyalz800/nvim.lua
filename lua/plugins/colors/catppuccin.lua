@@ -5,17 +5,20 @@ local nvim_set_hl = v.api.nvim_set_hl
 
 m.name = 'catppuccin'
 
-m.config = function()
-    local settings = user.settings.colorscheme_settings
+m.setup = function()
+    m.settings = user.settings.colorscheme_settings
     m.catppuccin = require 'catppuccin'
+    m.catppuccin.setup(m.config())
+end
 
+m.config = function()
     return {
         flavour = 'mocha',
         background = {
             light = 'latte',
             dark = 'mocha',
         },
-        transparent_background = settings.transparent, -- disables setting the background color.
+        transparent_background = m.settings.transparent, -- disables setting the background color.
         show_end_of_buffer = false,
         term_colors = true,
         dim_inactive = {

@@ -1,6 +1,10 @@
 local m = {}
 local v = require 'vim'
 
+m.setup = function()
+    require 'flash'.setup(m.config())
+end
+
 m.config = function()
     return {
         -- labels = "abcdefghijklmnopqrstuvwxyz",

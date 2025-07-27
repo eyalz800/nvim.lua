@@ -1,5 +1,9 @@
 local m = {}
 
+m.setup = function()
+    require 'neoconf'.setup(m.config())
+end
+
 m.config = function()
     return {
         -- name of the local settings files
@@ -41,4 +45,5 @@ m.config = function()
         },
     }
 end
+
 return m

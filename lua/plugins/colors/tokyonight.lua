@@ -5,6 +5,10 @@ local nvim_set_hl = v.api.nvim_set_hl
 
 m.name = 'tokyonight'
 
+m.setup = function()
+    require 'tokyonight'.setup(m.config())
+end
+
 m.set_background = function(color_name)
     if color_name == 'tokyonight-day' then
         v.opt.background = 'light'

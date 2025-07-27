@@ -50,6 +50,10 @@ m.close = function()
 end
 
 m.setup = function()
+    dap = require 'dap'
+    m.dapui = require 'dapui'
+    m.dapui_windows = require 'dapui.windows'
+    m.dapui.setup(m.config())
     require 'plugins.colors'.subscribe(m.on_color)
     m.on_color()
     dap.listeners.after.event_initialized['dapui_config'] = function()
@@ -93,9 +97,6 @@ m.on_color = function()
 end
 
 m.config = function()
-    dap = require 'dap'
-    m.dapui = require 'dapui'
-    m.dapui_windows = require 'dapui.windows'
     return {
         controls = {
             element = 'repl',

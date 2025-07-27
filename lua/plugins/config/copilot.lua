@@ -1,6 +1,26 @@
 local m = {}
 local v = require 'vim'
 
+m.setup = function()
+    require 'copilot'.setup(m.config())
+
+    local hide_on_cmp = false
+    if hide_on_cmp then
+        -- hide copilot suggestions when cmp menu is open
+        -- to prevent odd behavior/garbled up suggestions
+        local cmp_status_ok, cmp = pcall(require, 'cmp')
+        if cmp_status_ok then
+            cmp.event:on('menu_opened', function()
+                v.b.copilot_suggestion_hidden = true
+            end)
+
+            cmp.event:on('menu_closed', function()
+                v.b.copilot_suggestion_hidden = false
+            end)
+        end
+    end
+end
+
 m.config = function()
     return {
         panel = {
@@ -36,24 +56,6 @@ m.config = function()
         copilot_node_command = 'node', -- Node.js version must be > 18.x
         server_opts_overrides = {},
     }
-end
-
-m.setup = function()
-    local hide_on_cmp = false
-    if hide_on_cmp then
-        -- hide copilot suggestions when cmp menu is open
-        -- to prevent odd behavior/garbled up suggestions
-        local cmp_status_ok, cmp = pcall(require, 'cmp')
-        if cmp_status_ok then
-            cmp.event:on('menu_opened', function()
-                v.b.copilot_suggestion_hidden = true
-            end)
-
-            cmp.event:on('menu_closed', function()
-                v.b.copilot_suggestion_hidden = false
-            end)
-        end
-    end
 end
 
 return m

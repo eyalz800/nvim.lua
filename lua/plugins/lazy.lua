@@ -25,44 +25,39 @@ m.plugins = {
         'folke/tokyonight.nvim',
         priority = 1000,
         config = function()
-            local tokyonight_color = require 'plugins.colors.tokyonight'
-            require 'tokyonight'.setup(tokyonight_color.config())
+            require 'plugins.colors.tokyonight'.setup()
         end,
     },
     {
         'Mofiqul/vscode.nvim',
         config = function()
-            local vscode = require 'plugins.colors.vscode'
-            require 'vscode'.setup(vscode.config())
+            require 'plugins.colors.vscode'.setup()
         end,
     },
     {
         'catppuccin/nvim',
         name = 'catppuccin',
         config = function()
-            local catppuccin = require 'plugins.colors.catppuccin'
-            require 'catppuccin'.setup(catppuccin.config())
+            require 'plugins.colors.catppuccin'.setup()
         end,
     },
     {
         'folke/which-key.nvim',
         config = function()
-            local which_key_conf = require 'plugins.config.which-key'
-            require 'which-key'.setup(which_key_conf.config())
+            require 'plugins.config.which-key'.setup()
         end,
     },
     {
         'williamboman/mason.nvim',
         config = function()
-            local mason_conf = require 'plugins.config.mason'
-            require 'mason'.setup(mason_conf.config())
+            require 'plugins.config.mason'.setup()
         end,
         cond = user.settings.lsp == 'nvim' or user.settings.debugger == 'dap'
     },
     {
         'j-hui/fidget.nvim',
         config = function()
-            require 'fidget'.setup({})
+            require 'plugins.config.fidget'.setup()
         end,
         cond = user.settings.lsp == 'nvim',
     },
@@ -76,22 +71,18 @@ m.plugins = {
                 },
                 cond = user.settings.lsp == 'nvim',
             },
-            {
-                'j-hui/fidget.nvim',
-            },
+            'j-hui/fidget.nvim',
             {
                 'folke/neoconf.nvim',
                 config = function()
-                    local neoconf_conf = require 'plugins.config.neoconf'
-                    require 'neoconf'.setup(neoconf_conf.config())
+                    require 'plugins.config.neoconf'.setup()
                 end,
                 cond = user.settings.lsp == 'nvim',
             },
             {
                 'folke/neodev.nvim',
                 config = function()
-                    local neodev_conf = require 'plugins.config.neodev'
-                    require 'neodev'.setup(neodev_conf.config())
+                    require 'plugins.config.neodev'.setup()
                 end,
                 cond = user.settings.lsp == 'nvim',
             },
@@ -119,8 +110,7 @@ m.plugins = {
     {
         'luukvbaal/statuscol.nvim',
         config = function()
-            local statuscol_conf = require 'plugins.config.statuscol'
-            require 'statuscol'.setup(statuscol_conf.config())
+            require 'plugins.config.statuscol'.setup()
         end,
         cond = user.settings.column == 'statuscol',
     },
@@ -128,16 +118,14 @@ m.plugins = {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
         config = function()
-            local nvim_treesitter = require 'plugins.config.nvim-treesitter'
-            require 'nvim-treesitter.configs'.setup(nvim_treesitter.config())
+            require 'plugins.config.nvim-treesitter'.setup()
         end,
         cond = user.settings.treesitter,
     },
     {
         'lewis6991/gitsigns.nvim',
         config = function()
-            local gitsigns_conf = require 'plugins.config.gitsigns'
-            require 'gitsigns'.setup(gitsigns_conf.config())
+            require 'plugins.config.gitsigns'.setup()
         end,
         cond = user.settings.git_plugin == 'gitsigns'
     },
@@ -152,8 +140,7 @@ m.plugins = {
     {
         'nvim-lualine/lualine.nvim',
         config = function()
-            local lualine_conf = require 'plugins.config.lualine'
-            require 'lualine'.setup(lualine_conf.config())
+            require 'plugins.config.lualine'.setup()
         end,
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         cond = user.settings.line == 'lualine'
@@ -164,8 +151,7 @@ m.plugins = {
         event = 'UIEnter',
         version = '*',
         config = function()
-            local barbecue_conf = require 'plugins.config.barbecue'
-            require 'barbecue'.setup(barbecue_conf.config())
+            require 'plugins.config.barbecue'.setup()
         end,
         dependencies = {
             'SmiteshP/nvim-navic',
@@ -176,8 +162,7 @@ m.plugins = {
     {
         'nvim-tree/nvim-tree.lua',
         config = function()
-            local nvim_tree_conf = require 'plugins.config.nvim-tree'
-            require 'nvim-tree'.setup(nvim_tree_conf.config())
+            require 'plugins.config.nvim-tree'.setup()
         end,
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         cond = user.settings.file_explorer == 'nvim-tree',
@@ -195,8 +180,7 @@ m.plugins = {
         'akinsho/bufferline.nvim',
         event = 'UIEnter',
         config = function()
-            local bufferline_conf = require 'plugins.config.bufferline'
-            require 'bufferline'.setup(bufferline_conf.config())
+            require 'plugins.config.bufferline'.setup()
         end,
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         cond = user.settings.buffer_line == 'bufferline',
@@ -209,8 +193,7 @@ m.plugins = {
         'folke/edgy.nvim',
         event = 'VeryLazy',
         config = function()
-            local edgy_conf = require 'plugins.config.edgy'
-            require 'edgy'.setup(edgy_conf.config())
+            require 'plugins.config.edgy'.setup()
         end,
         dependencies = {
             'nvim-tree/nvim-tree.lua',
@@ -221,8 +204,7 @@ m.plugins = {
     {
         'stevearc/stickybuf.nvim',
         config = function()
-            local stickybuf_conf = require 'plugins.config.stickybuf'
-            require 'stickybuf'.setup(stickybuf_conf.config())
+            require 'plugins.config.stickybuf'.setup()
         end,
         cond = user.settings.pin_bars == 'stickybuf',
     },
@@ -231,8 +213,7 @@ m.plugins = {
         'eyalz800/symbols-outline.nvim',
         branch = 'main',
         config = function()
-            local symbols_outline_conf = require 'plugins.config.symbols-outline'
-            require 'symbols-outline'.setup(symbols_outline_conf.config())
+            require 'plugins.config.symbols-outline'.setup()
         end,
         cond = user.settings.code_explorer == 'symbols-outline',
     },
@@ -259,8 +240,7 @@ m.plugins = {
             'junegunn/fzf',
         },
         config = function()
-            local fzf_lua_conf = require 'plugins.config.fzf-lua'
-            require 'fzf-lua'.setup(fzf_lua_conf.config())
+            require 'plugins.config.fzf-lua'.setup()
         end,
         cond = user.settings.finder == 'fzf-lua',
     },
@@ -286,8 +266,7 @@ m.plugins = {
         'akinsho/toggleterm.nvim',
         version = '*',
         config = function()
-            local toggleterm_conf = require 'plugins.config.toggleterm'
-            require 'toggleterm'.setup(toggleterm_conf.config())
+            require 'plugins.config.toggleterm'.setup()
         end,
         cond = user.settings.terminal == 'toggleterm',
     },
@@ -308,9 +287,7 @@ m.plugins = {
         'windwp/nvim-autopairs',
         event = 'InsertEnter',
         config = function()
-            local nvim_autopairs_conf = require 'plugins.config.nvim-autopairs'
-            require 'nvim-autopairs'.setup(nvim_autopairs_conf.config())
-            nvim_autopairs_conf.setup()
+            require 'plugins.config.nvim-autopairs'.setup()
         end,
         dependencies = {
             'hrsh7th/nvim-cmp',
@@ -333,8 +310,7 @@ m.plugins = {
         'nyngwang/NeoZoom.lua',
         event = 'VeryLazy',
         config = function()
-            local neo_zoom_conf = require 'plugins.config.neo-zoom'
-            require 'neo-zoom'.setup(neo_zoom_conf.config())
+            require 'plugins.config.neo-zoom'.setup()
         end,
         cond = user.settings.zoom == 'neo-zoom',
     },
@@ -394,15 +370,13 @@ m.plugins = {
     {
         'lukas-reineke/indent-blankline.nvim',
         config = function()
-            local indent_blankline_conf = require 'plugins.config.indent-blankline'
-            require 'ibl'.setup(indent_blankline_conf.config())
+            require 'plugins.config.indent-blankline'.setup()
         end,
     },
     {
         'NvChad/nvim-colorizer.lua',
         config = function()
-            local nvim_colorizer_conf = require 'plugins.config.colorizer'
-            require 'colorizer'.setup(nvim_colorizer_conf.config())
+            require 'plugins.config.colorizer'.setup()
         end,
         cond = user.settings.colorizer == 'nvim-colorizer',
     },
@@ -410,8 +384,7 @@ m.plugins = {
         'jay-babu/mason-nvim-dap.nvim',
         event = 'VeryLazy',
         config = function()
-            local mason_nvim_dap_conf = require 'plugins.config.mason-nvim-dap'
-            require 'mason-nvim-dap'.setup(mason_nvim_dap_conf.config())
+            require 'plugins.config.mason-nvim-dap'.setup()
         end,
         dependencies = {
             'williamboman/mason.nvim',
@@ -423,8 +396,7 @@ m.plugins = {
         'mfussenegger/nvim-dap',
         event = 'VeryLazy',
         config = function()
-            local nvim_dap_conf = require 'plugins.config.dap'
-            nvim_dap_conf.config()
+            require 'plugins.config.dap'.setup()
         end,
         cond = user.settings.debugger == 'dap',
     },
@@ -432,9 +404,7 @@ m.plugins = {
         'rcarriga/nvim-dap-ui',
         event = 'VeryLazy',
         config = function()
-            local dap_ui_conf = require 'plugins.config.dap-ui'
-            require 'dapui'.setup(dap_ui_conf.config())
-            dap_ui_conf.setup()
+            require 'plugins.config.dap-ui'.setup()
         end,
         dependencies = {
             'mfussenegger/nvim-dap',
@@ -447,8 +417,7 @@ m.plugins = {
         'folke/flash.nvim',
         event = 'VeryLazy',
         config = function()
-            local flash_conf = require 'plugins.config.flash'
-            require 'flash'.setup(flash_conf.config())
+            require 'plugins.config.flash'.setup()
         end,
         keys = function()
             return require 'plugins.config.flash'.keys
@@ -472,8 +441,7 @@ m.plugins = {
     {
         'sindrets/diffview.nvim',
         config = function()
-            local diff_view_conf = require 'plugins.config.diffview'
-            require 'diffview'.setup(diff_view_conf.config())
+            require 'plugins.config.diffview'
         end,
         event = 'VeryLazy',
     },
@@ -498,8 +466,7 @@ m.plugins = {
         'rmagatti/goto-preview',
         event = 'VeryLazy',
         config = function()
-            local goto_preview_conf = require 'plugins.config.goto-preview'
-            require 'goto-preview'.setup(goto_preview_conf.config())
+            require 'plugins.config.goto-preview'.setup()
         end,
         cond = user.settings.lsp == 'nvim',
     },
@@ -508,8 +475,7 @@ m.plugins = {
         version = '*',
         event = 'VeryLazy',
         config = function()
-            local plantuml_conf = require 'plugins.config.plantuml'
-            require 'plantuml'.setup(plantuml_conf.config())
+            require 'plugins.config.plantuml'.setup()
         end,
     },
     {
@@ -530,9 +496,7 @@ m.plugins = {
         build = ':Copilot auth',
         event = 'InsertEnter',
         config = function()
-            local copilot_conf = require 'plugins.config.copilot'
-            require 'copilot'.setup(copilot_conf.config())
-            copilot_conf.setup()
+            require 'plugins.config.copilot'.setup()
         end,
         cond = user.settings.copilot,
     },
@@ -545,9 +509,7 @@ m.plugins = {
             'j-hui/fidget.nvim',
         },
         config = function()
-            local codecompanion_conf = require 'plugins.config.codecompanion'
-            require 'codecompanion'.setup(codecompanion_conf.config())
-            codecompanion_conf.setup()
+            require 'plugins.config.codecompanion'.setup()
         end,
         cond = user.settings.codecompanion,
     },
@@ -627,8 +589,7 @@ m.plugins = {
     {
         'milanglacier/minuet-ai.nvim',
         config = function()
-            local minuet_conf = require 'plugins.config.minuet-ai'
-            require 'minuet'.setup(minuet_conf.config())
+            require 'plugins.config.minuet-ai'.setup()
         end,
         cond = user.settings.minuet_ai,
     },

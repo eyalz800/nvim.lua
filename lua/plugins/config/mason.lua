@@ -3,6 +3,10 @@ local v = require 'vim'
 
 local stdpath = v.fn.stdpath
 
+m.setup = function()
+    require 'mason'.setup(m.config())
+end
+
 m.config = function()
     return {
         -- The directory in which to install packages.

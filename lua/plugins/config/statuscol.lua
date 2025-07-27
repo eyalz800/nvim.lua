@@ -6,6 +6,10 @@ local git = require 'plugins.git'
 
 local curwin = v.api.nvim_get_current_win
 
+m.setup = function()
+    require 'statuscol'.setup(m.config())
+end
+
 m.config = function()
     local builtin = require 'statuscol.builtin'
 

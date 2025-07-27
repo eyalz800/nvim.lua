@@ -10,6 +10,10 @@ local getcwd = v.fn.getcwd
 
 local width = 30
 
+m.setup = function()
+    require 'nvim-tree'.setup(m.config())
+end
+
 m.open = function(options)
     options = options or { focus=true }
     if file_readable(expand '%') then

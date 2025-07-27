@@ -1,5 +1,9 @@
 local m = {}
 
+m.setup = function()
+    require 'goto-preview'.setup(m.config())
+end
+
 m.config = function()
     return {
         width = 120, -- Width of the floating window

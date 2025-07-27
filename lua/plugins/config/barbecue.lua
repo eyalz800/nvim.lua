@@ -2,6 +2,10 @@ local m = {}
 local barbecue = nil
 local v = require 'vim'
 
+m.setup = function()
+    require 'barbecue'.setup(m.config())
+end
+
 m.on_update = function()
     if not barbecue then
         return

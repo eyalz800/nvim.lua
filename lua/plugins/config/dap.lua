@@ -51,6 +51,18 @@ local find_launch_json = function(directory)
     end
 end
 
+m.setup = function()
+    dap = require 'dap'
+    load_launch_json = require 'dap.ext.vscode'.load_launchjs
+    sign_define('DapBreakpoint', { text='', texthl='InitLuaDebugBP' })
+    sign_define('DapBreakpointCondition', { text='', texthl='InitLuaDebugBP' })
+    sign_define('DapLogPoint', { text='󰛿', texthl='InitLuaDebugBP' })
+    sign_define('DapBreakpointRejected', { text='', texthl='InitLuaDebugBPDisabled' })
+    sign_define('DapStopped', { text='', texthl='InitLuaDebugPC', linehl='CursorLine' })
+
+    return {}
+end
+
 m.launch_settings = function()
     local debug_type = v.bo.filetype
     local success = nil
@@ -168,18 +180,6 @@ v.cmd [=[
     hi! def link InitLuaDebugBPDisabled LineNr
     hi! def link InitLuaDebugPC  String
 ]=]
-
-m.config = function()
-    dap = require 'dap'
-    load_launch_json = require 'dap.ext.vscode'.load_launchjs
-    sign_define('DapBreakpoint', { text='', texthl='InitLuaDebugBP' })
-    sign_define('DapBreakpointCondition', { text='', texthl='InitLuaDebugBP' })
-    sign_define('DapLogPoint', { text='󰛿', texthl='InitLuaDebugBP' })
-    sign_define('DapBreakpointRejected', { text='', texthl='InitLuaDebugBPDisabled' })
-    sign_define('DapStopped', { text='', texthl='InitLuaDebugPC', linehl='CursorLine' })
-
-    return {}
-end
 
 m.generate_cpp_config = function()
     local target = input('(launch.json) target: ', getcwd() .. '/', 'file')

@@ -2,6 +2,10 @@ local m = {}
 local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 
+m.setup = function()
+    require 'gitsigns'.setup(m.config())
+end
+
 m.git_blame_current_line = function()
     cmd 'Gitsigns blame_line'
 end

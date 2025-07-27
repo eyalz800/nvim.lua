@@ -1,7 +1,7 @@
 local m = {}
 
 m.setup = function()
-    require 'which-key'.setup(m.config())
+    require 'fidget'.setup(m.config())
 end
 
 m.config = function()
@@ -9,3 +9,4 @@ m.config = function()
 end
 
 return m
+

@@ -5,6 +5,10 @@ local cmd = require 'vim.cmd'.silent
 
 local expand = v.fn.expand
 
+m.setup = function()
+    require 'fzf-lua'.setup(m.config())
+end
+
 m.find_file = function()
     fzf_lua.files({
         cmd = 'rg --files --color=never --hidden -g "!.git"',

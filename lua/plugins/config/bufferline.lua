@@ -6,6 +6,10 @@ local bufdelete = require 'bufdelete'.bufdelete
 
 local bufferline = nil
 
+m.setup = function()
+    require 'bufferline'.setup(m.config())
+end
+
 m.next_buffer = function()
     cmd 'BufferLineCycleNext'
 end
