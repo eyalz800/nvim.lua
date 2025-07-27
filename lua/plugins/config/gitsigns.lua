@@ -16,6 +16,7 @@ end
 
 m.config = function()
     return {
+        sign_priority = 100,
         signs = {
             add          = { text = '┃' },
             change       = { text = '┃' },
