@@ -123,7 +123,7 @@ m.config = function()
         },
         on_attach = function(bufnr)
             local api = require 'nvim-tree.api'
-            local map = vim.keymap.set
+            local map = v.keymap.set
             local opts = function(desc)
                 return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
             end

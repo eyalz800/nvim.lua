@@ -29,7 +29,7 @@ m.config = function()
         group_overrides = {
             NormalFloat = { fg = color.vscFront, bg = color.vscBack },
             BufferLineFill = { fg = color.vscBack },
-            NvimTreeWinSeparator = { fg = color.vscLeftDark, bg = color.vscLeftDark },
+            --NvimTreeWinSeparator = { fg = color.vscLeftDark, bg = color.vscLeftDark },
             NvimTreeCursorLineNr = { fg = color.vscPopupFront, bg = color.vscLeftDark },
             NvimTreeLineNr = { fg = color.vscLineNumber, bg = color.vscLeftDark },
             BufferLineOffsetSeparator = { fg = color.vscLeftDark, bg = color.vscLeftDark },

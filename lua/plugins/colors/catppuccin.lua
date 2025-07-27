@@ -58,7 +58,7 @@ m.config = function()
                     Ignore = { fg = color.subtext1 },
                     BufferLineFill = { fg = color.mantle },
                     BufferLineOffsetSeparator = { fg = color.mantle, bg = color.mantle },
-                    NvimTreeWinSeparator = { fg = color.mantle, bg = color.mantle },
+                    --NvimTreeWinSeparator = { fg = color.mantle, bg = color.mantle },
                     InitLuaBufferLineSelectedBg = { bg = color.mantle },
                     InitLuaBufferLineVisibleBg = { bg = color.mantle },
                 }
