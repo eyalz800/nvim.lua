@@ -288,6 +288,11 @@ m.setup = function()
             ['<c-f7>'] = { tasks.run_project, 'Configure project task', },
             ['<f31>'] = { tasks.build_config, 'Build config', },
             ['<c-d>'] = { lsp.expand_snippets, 'Expand snippets (with nvim-lsp just use tab to select then enter)', },
+            ['<c-w>'] = { '<nop>', 'Window motion', },
+            ['<c-w>h'] = { function() cmd 'stopinsert'; tmux_navigator.tmux_navigate_left() end, 'Navigate left', },
+            ['<c-w>j'] = { function() cmd 'stopinsert'; tmux_navigator.tmux_navigate_down() end, 'Navigate down', },
+            ['<c-w>k'] = { function() cmd 'stopinsert'; tmux_navigator.tmux_navigate_up() end, 'Navigate right', },
+            ['<c-w>l'] = { function() cmd 'stopinsert'; tmux_navigator.tmux_navigate_right() end, 'Navigate up', },
         },
         t = {
             ['<c-w>w'] = { '<c-\\><c-n>:q<cr>', 'Close terminal', },
