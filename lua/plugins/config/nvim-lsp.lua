@@ -117,6 +117,7 @@ m.setup = function()
     local mason_lspconfig = require 'mason-lspconfig'
     mason_lspconfig.setup {
         ensure_installed = v.tbl_keys(m.servers),
+        automatic_enable = false,
     }
 
     -- Manually configure individual LSP servers with custom settings and on_attach logic
