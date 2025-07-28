@@ -296,7 +296,16 @@ m.plugins = {
     },
     {
         'tpope/vim-commentary',
+        event = 'verylazy',
+        cond = user.settings.comment == 'vim-commentary',
+    },
+    {
+        'numToStr/Comment.nvim',
         event = 'VeryLazy',
+        config = function()
+            require 'plugins.config.comment-nvim'.setup()
+        end,
+        cond = user.settings.comment == 'comment.nvim',
     },
     {
         'ntpeters/vim-better-whitespace',

@@ -47,6 +47,7 @@ m.line_number = {
 m.colorizer = 'nvim-colorizer'
 m.zoom = 'zoomwintab'
 m.cscope_dynamic = false
+m.comment = 'comment.nvim'
 m.copilot = true
 m.codecompanion = true
 m.codecompanion_config = {
