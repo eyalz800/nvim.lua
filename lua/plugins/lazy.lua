@@ -142,7 +142,9 @@ m.plugins = {
         config = function()
             require 'plugins.config.lualine'.setup()
         end,
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        dependencies = {
+            'nvim-tree/nvim-web-devicons',
+        },
         cond = user.settings.line == 'lualine'
     },
     {
@@ -164,7 +166,9 @@ m.plugins = {
         config = function()
             require 'plugins.config.nvim-tree'.setup()
         end,
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        dependencies = {
+            'nvim-tree/nvim-web-devicons',
+        },
         cond = user.settings.file_explorer == 'nvim-tree',
     },
     {
@@ -522,6 +526,18 @@ m.plugins = {
             require 'plugins.config.minuet-ai'.setup()
         end,
         cond = user.settings.minuet_ai,
+    },
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        ft = { 'markdown', 'codecompanion' },
+        event = 'VeryLazy',
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter',
+            'nvim-tree/nvim-web-devicons',
+        },
+        config = function()
+            require 'plugins.config.render-markdown'.setup()
+        end,
     },
 }
 

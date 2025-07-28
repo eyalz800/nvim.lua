@@ -253,6 +253,7 @@ m.setup = function()
             ['m/'] = { '<plug>(VM-Start-Regex-Search)', 'Multicursor Search' },
             ['<c-j>'] = { '<plug>(VM-Add-Cursor-Down)', 'Add cursor down', },
             ['<c-k>'] = { '<plug>(VM-Add-Cursor-Up)', 'Add cursor down', },
+            ['<leader>rm'] = { ':RenderMarkdown toggle<cr>', 'Toggle markdown rendering', },
         },
         x = {
             ['<tab>'] = { '%', 'Jump to matching pairs', },
