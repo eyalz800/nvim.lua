@@ -456,10 +456,6 @@ m.plugins = {
         cond = user.settings.cscope_dynamic,
     },
     {
-        'metakirby5/codi.vim',
-        cmd = 'Codi',
-    },
-    {
         'nvim-lua/plenary.nvim',
     },
     {
