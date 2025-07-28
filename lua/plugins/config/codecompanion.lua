@@ -7,9 +7,27 @@ m.setup = function()
 end
 
 m.config = function()
+    local adapters = user.settings.codecompanion_config.adapters or {}
+    local strategies = user.settings.codecompanion_config.strategies or {}
+
+    strategies.inline = strategies.inline or {}
+
+    if not strategies.inline.keymaps then
+        strategies.inline.keymaps = {
+            accept_change = {
+                modes = { n = 'gra' },
+                description = 'Accept the suggested change',
+            },
+            reject_change = {
+                modes = { n = 'grd' },
+                description = 'Reject the suggested change',
+            },
+        }
+    end
+
     return {
-        adapters = user.settings.codecompanion_config.adapters,
-        strategies = user.settings.codecompanion_config.strategies,
+        adapters = adapters,
+        strategies = strategies,
         display = {
             chat = {
                 window = {
