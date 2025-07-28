@@ -48,24 +48,20 @@ m.colorizer = 'nvim-colorizer'
 m.zoom = 'zoomwintab'
 m.cscope_dynamic = false
 m.copilot = false
-m.codecompanion = false
+m.codecompanion = true
 m.codecompanion_config = {
-    -- strategies = {
-    --     chat = {
-    --         adapter = 'openai'
-    --         adapter = 'gemini'
-    --     },
-    --     inline = {
-    --         adapter = 'openai'
-    --         adapter = 'gemini'
-    --     },
-    -- },
+    strategies = {
+        chat = {
+            adapter = 'gemini'
+        },
+        inline = {
+            adapter = 'gemini'
+        },
+    },
 }
-m.avante = false
-m.minuet_ai = false
+m.minuet_ai = true
 m.minuet_config = {
-    provider = 'openai',
-    --provider = 'gemini',
+    provider = 'gemini',
     provider_options = nil,
 }
 m.quickfix_config = {
