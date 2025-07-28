@@ -9,6 +9,7 @@ local lsp = v.lsp
 local diagnostic = v.diagnostic
 
 local settings = user.settings.lsp_config.nvim
+local sign_prefix = user.settings.signcolumn_config.lsp_prefix or ''
 
 m.show_documentation = function() return lsp.buf.hover() end
 m.goto_definition = lsp.buf.definition
@@ -77,10 +78,10 @@ m.setup = function()
     diagnostic.config({
         signs = {
             text = {
-                [diagnostic.severity.ERROR] = '',
-                [diagnostic.severity.WARN] = '',
-                [diagnostic.severity.INFO]  = '',
-                [diagnostic.severity.HINT]  = '󰌶',
+                [diagnostic.severity.ERROR] = sign_prefix .. '',
+                [diagnostic.severity.WARN] = sign_prefix .. '',
+                [diagnostic.severity.INFO]  = sign_prefix .. '',
+                [diagnostic.severity.HINT]  = sign_prefix .. '󰌶',
             },
             -- linehl = {
             --     [diagnostic.severity.ERROR] = 'DiagnosticSignError',

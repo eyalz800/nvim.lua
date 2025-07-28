@@ -67,6 +67,11 @@ m.minuet_config = {
 m.quickfix_config = {
     winhl = 'edge-window'
 }
+m.signcolumn_config = {
+    git_prefix = '',
+    dbg_prefix = ' ',
+    lsp_prefix = ' ',
+}
 m.lsp = 'nvim'
 m.lsp_config = {
     nvim = {

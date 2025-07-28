@@ -53,12 +53,13 @@ end
 
 m.setup = function()
     dap = require 'dap'
+    local sign_prefix = user.settings.signcolumn_config.dbg_prefix or ''
     load_launch_json = require 'dap.ext.vscode'.load_launchjs
-    sign_define('DapBreakpoint', { text='', texthl='InitLuaDebugBP' })
-    sign_define('DapBreakpointCondition', { text='', texthl='InitLuaDebugBP' })
-    sign_define('DapLogPoint', { text='󰛿', texthl='InitLuaDebugBP' })
-    sign_define('DapBreakpointRejected', { text='', texthl='InitLuaDebugBPDisabled' })
-    sign_define('DapStopped', { text='', texthl='InitLuaDebugPC', linehl='CursorLine' })
+    sign_define('DapBreakpoint', { text=sign_prefix .. '', texthl='InitLuaDebugBP' })
+    sign_define('DapBreakpointCondition', { text=sign_prefix .. '', texthl='InitLuaDebugBP' })
+    sign_define('DapLogPoint', { text=sign_prefix .. '󰛿', texthl='InitLuaDebugBP' })
+    sign_define('DapBreakpointRejected', { text=sign_prefix .. '', texthl='InitLuaDebugBPDisabled' })
+    sign_define('DapStopped', { text=sign_prefix .. '', texthl='InitLuaDebugPC', linehl='CursorLine' })
 
     return {}
 end
