@@ -46,7 +46,6 @@ m.setup = function()
     opt.visualbell = true -- Do not play bell sounds
     opt.belloff = 'all' -- Turn off all bells
     opt.ttyfast = true -- Fast terminal
-    opt.lazyredraw = true -- Redraw screen lazily
     opt.re = 1 -- Regex engine 1 feels smoother most of the times
     opt.foldmethod = 'marker' -- Marker based fold method
     opt.keymodel = 'startsel' -- Shifted special key starts selection
