@@ -26,4 +26,14 @@ v.g.VM_leader = 'm'
 --     ['Visual Regex'] = 'm/',
 -- }
 
+m.active = false
+
+m.on_visual_multi_start = function()
+    m.active = true
+end
+
+m.on_visual_multi_exit = function()
+    m.active = false
+end
+
 return m

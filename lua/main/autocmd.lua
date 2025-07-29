@@ -84,6 +84,24 @@ m.setup = function()
             end
         })
 
+    autocmd('User',
+        {
+            pattern = 'visual_multi_start',
+            group = augroup('init.lua.visual_multi_start.state', {}),
+            callback = function()
+                require 'plugins.config.visual_multi'.on_visual_multi_start()
+            end
+        })
+
+    autocmd('User',
+        {
+            pattern = 'visual_multi_exit',
+            group = augroup('init.lua.visual_multi_exit.state', {}),
+            callback = function()
+                require 'plugins.config.visual_multi'.on_visual_multi_exit()
+            end
+        })
+
     if user.settings.line == 'lualine' then
         local lualine = require 'lualine'
         autocmd('User',

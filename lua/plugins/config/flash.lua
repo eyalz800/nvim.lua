@@ -165,12 +165,15 @@ m.config = function()
                 --
                 -- dynamic configuration for ftFT motions
                 config = function(opts)
+                    local visual_multi_active = require 'plugins.config.visual_multi'.active
+
                     -- autohide flash when in operator-pending mode
-                    opts.autohide = v.fn.mode(true):find("no") and v.v.operator == "y"
+                    opts.autohide = visual_multi_active or (v.fn.mode(true):find("no") and v.v.operator == "y")
 
                     -- disable jump labels when not enabled, when using a count,
                     -- and when recording/executing registers
-                    opts.jump_labels = opts.jump_labels and v.v.count == 0 and
+                    opts.jump_labels = not visual_multi_active and
+                                       opts.jump_labels and v.v.count == 0 and
                                        v.fn.reg_executing() == "" and v.fn.reg_recording() == ""
                     -- Show jump labels only in operator-pending mode
                     -- opts.jump_labels = vim.v.count == 0 and vim.fn.mode(true):find("o")
