@@ -5,6 +5,9 @@ local user = require 'user'
 local finder = require 'plugins.finder'
 local exists = require 'vim.exists'.exists
 
+local augroup = v.api.nvim_create_augroup
+local autocmd = v.api.nvim_create_autocmd
+
 local lsp = v.lsp
 local diagnostic = v.diagnostic
 
@@ -42,17 +45,32 @@ if settings.diagnostic_hover then
             end
         end
 
-        diagnostic.open_float({}, {
+        local close_events = {
+            "CursorMoved",
+            "CursorMovedI",
+            "BufHidden",
+            "InsertCharPre",
+            "WinLeave",
+        }
+
+        local _, winid = diagnostic.open_float({}, {
             scope = "cursor",
             focusable = false,
-            close_events = {
-                "CursorMoved",
-                "CursorMovedI",
-                "BufHidden",
-                "InsertCharPre",
-                "WinLeave",
-            },
         })
+
+        if winid then
+            autocmd(close_events, {
+                buffer = v.api.nvim_get_current_buf(),
+                group = augroup('init.lua.lsp.diagnostic-hover.close', { clear = false }),
+                once = true,
+                callback = function()
+                    if winid and v.api.nvim_win_is_valid(winid) then
+                        pcall(v.api.nvim_win_close, winid, true)
+                        winid = nil
+                    end
+                end
+            })
+        end
     end
 end
 
