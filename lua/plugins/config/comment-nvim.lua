@@ -1,7 +1,9 @@
 local m = {}
+local v = require 'vim'
 
 m.setup = function()
     require 'Comment'.setup(m.config())
+    v.keymap.del('x', 'gcb')
 end
 
 m.config = function()

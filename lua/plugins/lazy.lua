@@ -59,7 +59,7 @@ m.plugins = {
         config = function()
             require 'plugins.config.fidget'.setup()
         end,
-        cond = user.settings.lsp == 'nvim',
+        cond = user.settings.fidget and user.settings.lsp == 'nvim',
     },
     {
         'neovim/nvim-lspconfig',
@@ -470,6 +470,7 @@ m.plugins = {
     },
     {
         'nvim-lua/plenary.nvim',
+        event = 'VeryLazy',
     },
     {
         'rmagatti/goto-preview',
@@ -538,6 +539,26 @@ m.plugins = {
         config = function()
             require 'plugins.config.render-markdown'.setup()
         end,
+    },
+    {
+        'rcarriga/nvim-notify',
+        event = 'VeryLazy',
+        config = function()
+            require 'plugins.config.nvim-notify'.setup()
+        end,
+        cond = user.settings.noice,
+    },
+    {
+        'folke/noice.nvim',
+        event = 'VeryLazy',
+        config = function()
+            require 'plugins.config.noice'.setup()
+        end,
+        dependencies = {
+            'MunifTanjim/nui.nvim',
+            'rcarriga/nvim-notify',
+        },
+        cond = user.settings.noice,
     },
 }
 

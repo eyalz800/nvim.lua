@@ -3,7 +3,7 @@ local user = require 'user'
 
 m.setup = function()
     require 'codecompanion'.setup(m.config())
-    require 'plugins.codecompanion-fidget':init()
+    require 'plugins.codecompanion-progress':init()
 end
 
 m.config = function()
