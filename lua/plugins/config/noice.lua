@@ -15,6 +15,20 @@ m.config = function()
             -- notify = {
             --     replace = 'true',
             -- }
+            split = {
+                win_options = {
+                    winhighlight = {
+                        Normal = 'NoiceSplit',
+                        FloatBorder = 'NoiceSplitBorder',
+                        LineNr = 'NoiceSplit',
+                        StatusLine = 'NoiceSplit',
+                        StatusLineNC = 'NoiceSplit',
+                        SignColumn = 'NoiceSplit',
+                        SignColumnNC = 'NoiceSplit',
+                        NormalNC = 'NoiceSplit',
+                    },
+                }
+            }
         },
         lsp = {
             progress = {
@@ -37,7 +51,15 @@ m.config = function()
         },
         routes = {
             {
-                filter = { event = 'msg_show', kind = { 'shell_out', 'shell_err' } },
+                filter = {
+                    event = 'msg_show',
+                    kind = {
+                        'shell_out',
+                        'shell_err',
+                        'list_cmd',
+                        'lua_print',
+                    }
+                },
                 view = 'cmdline_popup',
                 opts = {
                     level = 'info',
@@ -52,11 +74,48 @@ m.config = function()
                         col = 0.5,
                     },
                     focusable = true,
-
-                        win_options = {
-                            foldenable = false,
-                            cursorline = true,
+                    win_options = {
+                        foldenable = false,
+                        cursorline = true,
+                        winhighlight = {
+                            Normal = 'NoiceCmdlinePopup',
+                            Search = 'Search',
+                            IncSearch = 'IncSearch',
+                            FloatTitle = 'NoiceCmdlinePopupTitle',
+                            FloatBorder = 'NoiceCmdlinePopupBorder',
                         },
+                    },
+                },
+            },
+            {
+                filter = {
+                    event = 'msg_history_show',
+                },
+                view = 'cmdline_popup',
+                opts = {
+                    level = 'info',
+                    skip = false,
+                    replace = false,
+                    enter = true,
+                    close = {
+                        keys = { 'q', '<esc>', },
+                    },
+                    position = {
+                        row = 0.5,
+                        col = 0.5,
+                    },
+                    focusable = true,
+                    win_options = {
+                        foldenable = false,
+                        cursorline = true,
+                        winhighlight = {
+                            Normal = 'NoiceCmdlinePopup',
+                            Search = 'Search',
+                            IncSearch = 'IncSearch',
+                            FloatTitle = 'NoiceCmdlinePopupTitle',
+                            FloatBorder = 'NoiceCmdlinePopupBorder',
+                        },
+                    },
                 },
             },
             {
