@@ -35,6 +35,17 @@ m.config = function()
         health = {
             checker = false,
         },
+        routes = {
+            {
+                filter = { event = "msg_show", kind = { 'shell_out', 'shell_err' } },
+                view = "notify",
+                opts = {
+                    level = "info",
+                    skip = false,
+                    replace = false,
+                }
+            },
+        },
         throttle = 1000 / 30,
     }
 end
