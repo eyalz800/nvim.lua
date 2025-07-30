@@ -139,31 +139,26 @@ m.setup = function()
         automatic_enable = false,
     }
 
-    -- Manually configure individual LSP servers with custom settings and on_attach logic
-    for server_name, server_config_table in pairs(m.servers) do
-        local on_attach_callback = function(client, bufnr)
-            -- Common on_attach logic here (e.g., setting up keymaps, global autocommands)
-            -- if type(user.map.lsp_default) == 'function' then user.map.lsp_default(bufnr) end
+    for server_name, server_settings in pairs(m.servers) do
+        local on_attach = function(...) end
 
-            -- Nvim-navic (barbecue) integration
-            if user.settings.bar == 'barbecue' then
+        if user.settings.bar == 'barbecue' then
+            local prev_attach = on_attach
+            on_attach = function(client, bufnr)
+                prev_attach(client, bufnr)
                 if client.server_capabilities['documentSymbolProvider'] then
                     require('nvim-navic').attach(client, bufnr)
                 end
-            end
-
-            if server_config_table.on_attach then
-                server_config_table.on_attach(client, bufnr)
             end
         end
 
         -- Configure the LSP server
         lspconfig[server_name].setup {
-            cmd = server_config_table.cmd,
-            capabilities = v.tbl_deep_extend('force', m.capabilities, server_config_table.capabilities or {}),
-            settings = server_config_table.settings, -- This is the actual LSP server's configuration (e.g., { Lua = {...} })
-            filetypes = server_config_table.filetypes,
-            on_attach = on_attach_callback,
+            cmd = (server_settings or {}).cmd,
+            capabilities = m.capabilities,
+            settings = server_settings,
+            filetypes = (server_settings or {}).filetypes,
+            on_attach = on_attach,
         }
     end
 
