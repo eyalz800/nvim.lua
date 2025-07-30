@@ -1,5 +1,6 @@
 local m = {}
 local v = require 'vim'
+local user = require 'user'
 
 m.setup = function()
     require 'noice'.setup(m.config())
@@ -32,7 +33,7 @@ m.config = function()
         },
         lsp = {
             progress = {
-                enabled = true,
+                enabled = not user.settings.fidget,
                 format = 'lsp_progress',
                 format_done = 'lsp_progress_done',
                 throttle = 1000 / 30,
