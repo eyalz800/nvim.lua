@@ -6,6 +6,7 @@ m.setup = function()
     v.keymap.set('n', '<leader>`', ':Noice dismiss<cr>', { desc = 'Dismiss Noice', noremap = true, silent = true })
     v.keymap.set('n', '<leader>nd', ':Noice disable<cr>', { desc = 'Disable Noice', noremap = true, silent = true })
     v.keymap.set('n', '<leader>ne', ':Noice enable<cr>', { desc = 'Enable Noice', noremap = true, silent = true })
+    v.keymap.set('n', '<leader>nh', ':Noice history<cr>', { desc = 'Noice history', noremap = true, silent = true })
 end
 
 m.config = function()
