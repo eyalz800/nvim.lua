@@ -15,7 +15,6 @@ m.setup = function()
     v.cmd 'filetype plugin indent on'
 
     opt.ignorecase = true -- Ignore case
-    opt.smartcase = true -- Smart case
     opt.autoindent = true -- Automatic indendation
     opt.expandtab = user.settings.expand_tabs -- Expands tabs to spaces
     opt.ignorecase = true -- Ignore case
