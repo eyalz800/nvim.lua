@@ -80,9 +80,10 @@ m.plugins = {
                 cond = user.settings.lsp == 'nvim',
             },
             {
-                'folke/neodev.nvim',
+                'folke/lazydev.nvim',
+                ft = 'lua',
                 config = function()
-                    require 'plugins.config.neodev'.setup()
+                    require 'plugins.config.lazydev'.setup()
                 end,
                 cond = user.settings.lsp == 'nvim',
             },
