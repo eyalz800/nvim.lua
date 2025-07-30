@@ -53,6 +53,28 @@ m.config = function()
             {
                 filter = {
                     event = 'msg_show',
+                    kind = 'lua_print',
+                    find = 'Running healthchecks%.%.%.'
+                },
+                opts = { skip = true, },
+            },
+            {
+                filter = {
+                    event = 'msg_show',
+                    find = 'Exited Visual%-Multi%.',
+                },
+                opts = { skip = true, },
+            },
+            {
+                filter = {
+                    event = 'msg_show',
+                    find = 'VM has started with warnings%.',
+                },
+                opts = { skip = true, },
+            },
+            {
+                filter = {
+                    event = 'msg_show',
                     kind = {
                         'shell_out',
                         'shell_err',
