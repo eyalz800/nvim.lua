@@ -37,13 +37,41 @@ m.config = function()
         },
         routes = {
             {
-                filter = { event = "msg_show", kind = { 'shell_out', 'shell_err' } },
-                view = "notify",
+                filter = { event = 'msg_show', kind = { 'shell_out', 'shell_err' } },
+                view = 'cmdline_popup',
                 opts = {
-                    level = "info",
+                    level = 'info',
                     skip = false,
                     replace = false,
-                }
+                    enter = true,
+                    close = {
+                        keys = { 'q', '<esc>', },
+                    },
+                    position = {
+                        row = 0.5,
+                        col = 0.5,
+                    },
+                    focusable = true,
+
+                        win_options = {
+                            foldenable = false,
+                            cursorline = true,
+                        },
+                },
+            },
+            {
+                filter = {
+                    event = 'msg_show', kind = { 'confirm' } },
+                view = 'confirm',
+                opts = {
+                    level = 'info',
+                    skip = false,
+                    replace = false,
+                    position = {
+                        row = 0.5,
+                        col = 0.5,
+                    },
+                },
             },
         },
         throttle = 1000 / 30,
