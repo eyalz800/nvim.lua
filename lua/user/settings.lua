@@ -103,7 +103,16 @@ m.lsp_config = {
                     },
                 }
             },
-            python = 'pylsp',
+            python = {
+                name = 'pylsp',
+                settings = {
+                    pylsp = {
+                        plugins = {
+                            pycodestyle = { ignore = { 'E501' } },
+                        },
+                    },
+                },
+            },
             rust = 'rust_analyzer',
             ts = 'ts_ls',
         },
