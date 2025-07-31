@@ -15,6 +15,7 @@ m.filetyeps = {
     'dapui_breakpoints',
     'dapui_console',
     'dap-repl',
+    'noice',
 }
 
 local make_win_ref = function(buf)
