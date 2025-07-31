@@ -3,10 +3,11 @@ local user = require 'user'
 
 m.setup = function()
     require 'noice'.setup(m.config())
-    vim.keymap.set('n', '<leader>`', ':Noice dismiss<cr>', { desc = 'Dismiss Noice', noremap = true, silent = true })
+    vim.keymap.set('n', '<leader>nq', ':Noice dismiss<cr>', { desc = 'Dismiss Noice', noremap = true, silent = true })
     vim.keymap.set('n', '<leader>nd', ':Noice disable<cr>', { desc = 'Disable Noice', noremap = true, silent = true })
     vim.keymap.set('n', '<leader>ne', ':Noice enable<cr>', { desc = 'Enable Noice', noremap = true, silent = true })
     vim.keymap.set('n', '<leader>nh', ':Noice history<cr>', { desc = 'Noice history', noremap = true, silent = true })
+    vim.keymap.set('n', '<leader>na', ':Noice all<cr>', { desc = 'Noice all messages', noremap = true, silent = true })
 end
 
 m.config = function()
@@ -16,6 +17,7 @@ m.config = function()
             --     replace = 'true',
             -- }
             split = {
+                enter = true,
                 win_options = {
                     winhighlight = {
                         Normal = 'NoiceSplit',
@@ -27,7 +29,7 @@ m.config = function()
                         SignColumnNC = 'NoiceSplit',
                         NormalNC = 'NoiceSplit',
                     },
-                }
+                },
             }
         },
         lsp = {
@@ -50,6 +52,27 @@ m.config = function()
             checker = false,
         },
         routes = {
+            {
+                filter = {
+                    event = 'msg_show',
+                    kind = {
+                        'shell_out',
+                        'shell_err',
+                    },
+                    min_height = 30,
+                },
+                view = 'split',
+                opts ={
+                    enter = true,
+                }
+            },
+            {
+                filter = {
+                    event = 'msg_show',
+                    min_height = 30,
+                },
+                view = 'split',
+            },
             {
                 filter = {
                     event = 'msg_show',
@@ -78,65 +101,61 @@ m.config = function()
                     kind = {
                         'shell_out',
                         'shell_err',
-                        'list_cmd',
-                        'lua_print',
+                        -- 'list_cmd',
+                        -- 'lua_print',
                     }
                 },
-                view = 'cmdline_popup',
+                view = 'notify',
                 opts = {
                     level = 'info',
-                    skip = false,
-                    replace = false,
-                    enter = true,
-                    close = {
-                        keys = { 'q', '<esc>', },
-                    },
-                    position = {
-                        row = 0.5,
-                        col = 0.5,
-                    },
-                    focusable = true,
-                    win_options = {
-                        foldenable = false,
-                        cursorline = true,
-                        winhighlight = {
-                            Normal = 'NoiceCmdlinePopup',
-                            Search = 'Search',
-                            IncSearch = 'IncSearch',
-                            FloatTitle = 'NoiceCmdlinePopupTitle',
-                            FloatBorder = 'NoiceCmdlinePopupBorder',
-                        },
-                    },
+                    -- enter = true,
+                    -- close = {
+                    --     keys = { 'q', '<esc>', },
+                    -- },
+                    -- position = {
+                    --     row = 0.5,
+                    --     col = 0.5,
+                    -- },
+                    -- focusable = true,
+                    -- win_options = {
+                        -- foldenable = false,
+                        -- cursorline = true,
+                        -- winhighlight = {
+                        --     Normal = 'NoiceCmdlinePopup',
+                        --     Search = 'Search',
+                        --     IncSearch = 'IncSearch',
+                        --     FloatTitle = 'NoiceCmdlinePopupTitle',
+                        --     FloatBorder = 'NoiceCmdlinePopupBorder',
+                        -- },
+                    -- },
                 },
             },
             {
                 filter = {
                     event = 'msg_history_show',
                 },
-                view = 'cmdline_popup',
+                view = 'split',
                 opts = {
                     level = 'info',
-                    skip = false,
-                    replace = false,
                     enter = true,
                     close = {
                         keys = { 'q', '<esc>', },
                     },
-                    position = {
-                        row = 0.5,
-                        col = 0.5,
-                    },
+                    -- position = {
+                    --     row = 0.5,
+                    --     col = 0.5,
+                    -- },
                     focusable = true,
                     win_options = {
                         foldenable = false,
                         cursorline = true,
-                        winhighlight = {
-                            Normal = 'NoiceCmdlinePopup',
-                            Search = 'Search',
-                            IncSearch = 'IncSearch',
-                            FloatTitle = 'NoiceCmdlinePopupTitle',
-                            FloatBorder = 'NoiceCmdlinePopupBorder',
-                        },
+                        -- winhighlight = {
+                        --     Normal = 'NoiceCmdlinePopup',
+                        --     Search = 'Search',
+                        --     IncSearch = 'IncSearch',
+                        --     FloatTitle = 'NoiceCmdlinePopupTitle',
+                        --     FloatBorder = 'NoiceCmdlinePopupBorder',
+                        -- },
                     },
                 },
             },
@@ -146,7 +165,6 @@ m.config = function()
                 view = 'confirm',
                 opts = {
                     level = 'info',
-                    skip = false,
                     replace = false,
                     position = {
                         row = 0.5,
