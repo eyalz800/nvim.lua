@@ -561,6 +561,14 @@ m.plugins = {
         },
         cond = user.settings.noice,
     },
+    {
+        'echasnovski/mini.diff',
+        event = 'VeryLazy',
+        config = function()
+            require 'plugins.config.mini-diff'.setup()
+        end,
+        cond = user.settings.diff == 'mini',
+    },
 }
 
 return m

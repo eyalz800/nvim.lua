@@ -50,6 +50,7 @@ m.cscope_dynamic = false
 m.comment = 'comment.nvim'
 m.noice = true
 m.fidget = true
+m.diff = 'mini'
 m.copilot = true
 m.codecompanion = true
 m.codecompanion_config = {
