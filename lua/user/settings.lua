@@ -113,6 +113,7 @@ m.lsp_config = {
                     },
                 },
             },
+            pyright = 'pyright',
             rust = 'rust_analyzer',
             ts = 'ts_ls',
         },
