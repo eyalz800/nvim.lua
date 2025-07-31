@@ -28,6 +28,7 @@ m.config = function()
     return {
         adapters = adapters,
         strategies = strategies,
+        --opts = { log_level = 'TRACE' },
         display = {
             chat = {
                 window = {
