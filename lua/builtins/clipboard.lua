@@ -1,10 +1,10 @@
 local m = {}
-local v = require 'vim'
+
 local os = require 'lib.os'.os
 local user = require 'user'
 local feed_keys = require 'vim.feed_keys'.feed_keys
-local system = v.fn.system
-local getreg = v.fn.getreg
+local system = vim.fn.system
+local getreg = vim.fn.getreg
 
 local tty = nil
 
@@ -19,7 +19,7 @@ local ptty_osc_copy = function()
         tty = system('(tty || tty </proc/$PPID/fd/0) 2>/dev/null | grep /dev/')
     end
 
-    if v.env.TMUX then
+    if vim.env.TMUX then
         system([=[echo -en "\x1bPtmux;\x1b\x1b]52;;]=] .. osc_encode(getreg('@', 1)) .. [=[\x1b\x1b\\\\\x1b\\" > ]=] .. tty)
     else
         system([=[echo -en "\x1b]52;;]=] .. osc_encode(getreg('@', 1)) .. [=[\x1b\\" > ]=] .. tty)
@@ -27,7 +27,7 @@ local ptty_osc_copy = function()
 end
 
 local osc_copy = function()
-    if v.env.TMUX then
+    if vim.env.TMUX then
         system([=[echo -en "\x1bPtmux;\x1b\x1b]52;;]=] .. osc_encode(getreg('@', 1)) .. [=[\x1b\x1b\\\\\x1b\\" > /dev/tty]=])
     else
         system([=[echo -en "\x1b]52;;]=] .. osc_encode(getreg('@', 1)) .. [=[\x1b\\" > /dev/tty]=])
@@ -47,7 +47,7 @@ if user.settings.osc_copy then
         end
 
         m.paste = function()
-            local mode = v.fn.mode()
+            local mode = vim.fn.mode()
             if mode == 'i' then
                 feed_keys '<C-o>""gp'
             elseif mode == 'n' then
@@ -66,7 +66,7 @@ if user.settings.osc_copy then
         end
 
         m.paste = function()
-            local mode = v.fn.mode()
+            local mode = vim.fn.mode()
             if mode == 'i' then
                 feed_keys '<C-o>"*gp'
             elseif mode == 'n' then
@@ -84,7 +84,7 @@ else
     end
 
     m.paste = function()
-        local mode = v.fn.mode()
+        local mode = vim.fn.mode()
         if mode == 'i' then
             feed_keys '<C-o>"*gp'
         elseif mode == 'n' then

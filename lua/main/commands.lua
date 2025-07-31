@@ -1,9 +1,8 @@
 local m = {}
-local v = require 'vim'
-local cmd = v.api.nvim_create_user_command
+local cmd = vim.api.nvim_create_user_command
 
 m.setup = function()
-    local config_path = v.fn.stdpath 'config'
+    local config_path = vim.fn.stdpath 'config'
 
     -- Settings
     cmd('Settings', 'n ' .. config_path .. '/lua/user/settings.lua', {})

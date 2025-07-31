@@ -1,12 +1,11 @@
-local v = require 'vim'
 local sed = require 'lib.os_bin'.sed
 local executable = require 'vim.executable'.executable
 local file_readable = require 'vim.file_readable'.file_readable
 local options = require 'user'.settings.install_options
 
-local expand = v.fn.expand
-local stdpath = v.fn.stdpath
-local system = v.fn.system
+local expand = vim.fn.expand
+local stdpath = vim.fn.stdpath
+local system = vim.fn.system
 
 local data_path = stdpath 'data'
 local installation_path = data_path .. '/installation'

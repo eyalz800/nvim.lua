@@ -1,6 +1,4 @@
 local m = {}
-local v = require 'vim'
-
 m.indentation = 4
 m.expand_tabs = true
 m.respect_editor_config = true
@@ -10,7 +8,7 @@ m.gui_colors = true
 m.root_paths = {'.git', '.repo', '.files'}
 m.git_plugin = 'gitsigns'
 m.enable_gutentags = false
-m.colorscheme = v.fn.system('if [ -e ~/.tmux.color ] ; then cat ~/.tmux.color ; else echo tokyonight; fi')
+m.colorscheme = vim.fn.system('if [ -e ~/.tmux.color ] ; then cat ~/.tmux.color ; else echo tokyonight; fi')
 m.colorscheme_settings = { tokyonight={style='storm'} }
 m.powerline = true
 m.install_options = { clang_version = 20 }
@@ -55,14 +53,14 @@ m.copilot = true
 m.codecompanion = true
 m.codecompanion_config = {
     progress = m.fidget and 'fidget' or 'noice',
-    -- strategies = {
-    --     chat = {
-    --         adapter = 'gemini'
-    --     },
-    --     inline = {
-    --         adapter = 'gemini'
-    --     },
-    -- },
+    strategies = {
+        chat = {
+            adapter = 'gemini'
+        },
+        inline = {
+            adapter = 'gemini'
+        },
+    },
 }
 m.minuet_ai = false
 m.minuet_config = {

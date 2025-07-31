@@ -1,5 +1,4 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
 local feed_keys = require 'vim.feed_keys'.feed_keys
@@ -7,21 +6,21 @@ local feed_keys = require 'vim.feed_keys'.feed_keys
 local enabled = true
 local settings = user.settings.lsp_config.coc or {}
 
-v.g.coc_global_extensions = settings.plugins or {}
+vim.g.coc_global_extensions = settings.plugins or {}
 
 local check_back_space = function()
-    local col = v.fn.col('.') - 1
-    return col == 0 or v.fn.getline('.'):sub(col, col):match('%s') ~= nil
+    local col = vim.fn.col('.') - 1
+    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
 end
 
 m.show_documentation = function()
-    local cw = v.fn.expand('<cword>')
-    if v.fn.index({'v', 'help'}, v.bo.filetype) >= 0 then
-        v.api.nvim_command('h ' .. cw)
-    elseif v.api.nvim_eval('coc#rpc#ready()') then
-        v.fn.CocActionAsync('doHover')
+    local cw = vim.fn.expand('<cword>')
+    if vim.fn.index({'v', 'help'}, vim.bo.filetype) >= 0 then
+        vim.api.nvim_command('h ' .. cw)
+    elseif vim.api.nvim_eval('coc#rpc#ready()') then
+        vim.fn.CocActionAsync('doHover')
     else
-        v.api.nvim_command('!' .. v.o.keywordprg .. ' ' .. cw)
+        vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
     end
 end
 
@@ -29,7 +28,7 @@ m.goto_definition = '<plug>(coc-definition)'
 m.goto_declaration = '<plug>(coc-declaration)'
 m.show_definitions = '<plug>(coc-definition)'
 m.show_declarations = '<plug>(coc-declaration)'
-m.goto_definition_sync = function() v.fn.CocAction('jumpDefinition') end
+m.goto_definition_sync = function() vim.fn.CocAction('jumpDefinition') end
 m.show_references = '<plug>(coc-references)'
 m.code_action = '<plug>(coc-codeaction-cursor)'
 m.quick_fix = '<plug>(coc-fix-current)'
@@ -54,17 +53,17 @@ m.disable = function()
 end
 
 m.tab = function()
-    if v.fn['coc#pum#visible']() ~= 0 then
-        return v.fn['coc#pum#next'](1)
+    if vim.fn['coc#pum#visible']() ~= 0 then
+        return vim.fn['coc#pum#next'](1)
     end
     if not settings.tab_trigger or check_back_space() then
         feed_keys '<tab>'
     end
-    return v.fn['coc#refresh']()
+    return vim.fn['coc#refresh']()
 end
 m.shift_tab = function()
-    if v.fn['coc#pum#visible']() ~= 0 then
-        return v.fn['coc#pum#prev'](1)
+    if vim.fn['coc#pum#visible']() ~= 0 then
+        return vim.fn['coc#pum#prev'](1)
     end
     feed_keys '<s-tab>'
 end
@@ -74,7 +73,7 @@ end
 
 m.completion_mappings = true
 
-v.g.tagfunc = 'CocTagFunc'
-v.g.coc_fzf_preview = 'right:50%'
+vim.g.tagfunc = 'CocTagFunc'
+vim.g.coc_fzf_preview = 'right:50%'
 
 return m

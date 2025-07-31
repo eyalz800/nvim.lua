@@ -1,12 +1,11 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
 
 if user.settings.fidget and user.settings.codecompanion_config.progress == 'fidget' then
     function m:init()
-        local group = v.api.nvim_create_augroup("CodeCompanionFidgetHooks", {})
+        local group = vim.api.nvim_create_augroup("CodeCompanionFidgetHooks", {})
 
-        v.api.nvim_create_autocmd({ "User" }, {
+        vim.api.nvim_create_autocmd({ "User" }, {
             pattern = "CodeCompanionRequestStarted",
             group = group,
             callback = function(request)
@@ -15,7 +14,7 @@ if user.settings.fidget and user.settings.codecompanion_config.progress == 'fidg
             end,
         })
 
-        v.api.nvim_create_autocmd({ "User" }, {
+        vim.api.nvim_create_autocmd({ "User" }, {
             pattern = "CodeCompanionRequestFinished",
             group = group,
             callback = function(request)
@@ -81,9 +80,9 @@ elseif user.settings.noice and user.settings.codecompanion_config.progress == 'n
 
     m.handles = {}
     function m.init()
-        local group = v.api.nvim_create_augroup("NoiceCompanionRequests", {})
+        local group = vim.api.nvim_create_augroup("NoiceCompanionRequests", {})
 
-        v.api.nvim_create_autocmd({ "User" }, {
+        vim.api.nvim_create_autocmd({ "User" }, {
             pattern = "CodeCompanionRequestStarted",
             group = group,
             callback = function(request)
@@ -93,7 +92,7 @@ elseif user.settings.noice and user.settings.codecompanion_config.progress == 'n
             end,
         })
 
-        v.api.nvim_create_autocmd({ "User" }, {
+        vim.api.nvim_create_autocmd({ "User" }, {
             pattern = "CodeCompanionRequestFinished",
             group = group,
             callback = function(request)
@@ -131,7 +130,7 @@ elseif user.settings.noice and user.settings.codecompanion_config.progress == 'n
     function m.update(message)
         if m.handles[message.opts.progress.id] then
             manager.add(format.format(message, "lsp_progress"))
-            v.defer_fn(function()
+            vim.defer_fn(function()
                 m.update(message)
             end, throttle_time)
         end

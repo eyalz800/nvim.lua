@@ -1,6 +1,5 @@
 local m = {}
 local user = require 'user'
-local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 
 local sign_prefix = user.settings.signcolumn_config.git_prefix or ''
@@ -33,7 +32,7 @@ m.config = function()
             untracked    = { text = sign_prefix .. '┆' },
         },
         on_attach = function()
-            if v.b.large_file then
+            if vim.b.large_file then
                 return false
             end
             return true

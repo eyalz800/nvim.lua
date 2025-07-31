@@ -1,26 +1,24 @@
 local m = {}
-local v = require 'vim'
-
 local cmd = require 'vim.cmd'.silent
 local async_cmd = require 'plugins.async_cmd'.async_cmd
 local sed = require 'lib.os_bin'.sed
 local echo = require 'vim.echo'.echo
 local finder = require 'plugins.finder'
 
-local split = v.split
-local bufnr = v.api.nvim_get_current_buf
-local winnr = v.fn.winnr
-local expand = v.fn.expand
-local input = v.fn.input
-local stdpath = v.fn.stdpath
-local getcurpos = v.fn.getcurpos
-local settagstack = v.fn.settagstack
-local gettagstack = v.fn.gettagstack
-local shellescape = v.fn.shellescape
-local system = v.fn.system
-local index = v.fn.index
-local trim = v.fn.trim
-local fnameescape = v.fn.fnameescape
+local split = vim.split
+local bufnr = vim.api.nvim_get_current_buf
+local winnr = vim.fn.winnr
+local expand = vim.fn.expand
+local input = vim.fn.input
+local stdpath = vim.fn.stdpath
+local getcurpos = vim.fn.getcurpos
+local settagstack = vim.fn.settagstack
+local gettagstack = vim.fn.gettagstack
+local shellescape = vim.fn.shellescape
+local system = vim.fn.system
+local index = vim.fn.index
+local trim = vim.fn.trim
+local fnameescape = vim.fn.fnameescape
 
 local bin_path = stdpath 'data' .. '/installation/bin'
 
@@ -208,7 +206,7 @@ m.lib.goto_symbol = function(symbol, type)
     end
 
     -- CScope
-    if v.loop.fs_stat 'cscope.out'  then
+    if vim.loop.fs_stat 'cscope.out'  then
         local awk_program = [=[{ x = $1; $1 = ""; z = $3; $3 = ""; printf "%s:%s:%s\n", x,z,$0; }]=]
         local cscope_command = 'cscope -dL' .. cscope_query_type .. " " .. shellescape(symbol) .. " | awk '" .. awk_program .. "'"
 
@@ -250,13 +248,13 @@ m.lib.goto_symbol = function(symbol, type)
             end
         end
 
-        if not v.loop.fs_stat '.opengrok/configuration.xml' or not v.loop.fs_stat(opengrok_jar) then
+        if not vim.loop.fs_stat '.opengrok/configuration.xml' or not vim.loop.fs_stat(opengrok_jar) then
             return m.lib.cscope(cscope_query_type, symbol, 1)
         end
     end
 
     -- Opengrok
-    if v.loop.fs_stat '.opengrok/configuration.xml'  and v.loop.fs_stat(opengrok_jar) then
+    if vim.loop.fs_stat '.opengrok/configuration.xml'  and vim.loop.fs_stat(opengrok_jar) then
         local awk_program = [=[{ x = $1; $1 = ""; z = $3; $3 = ""; printf "%s:%s:%s\n", x,z,$0; }]=]
         local opengrok_command =
             "java -Xmx2048m -cp " .. opengrok_jar .. " org.opensolaris.opengrok.search.Search -R .opengrok/configuration.xml -" ..

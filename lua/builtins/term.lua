@@ -1,8 +1,6 @@
 local m = {}
-local v = require 'vim'
-
-local termopen = v.fn.termopen
-local jobwait = v.fn.jobwait
+local termopen = vim.fn.termopen
+local jobwait = vim.fn.jobwait
 
 m.open = function(command, options)
     local exit_code = nil
@@ -23,7 +21,7 @@ m.open = function(command, options)
 
     local join_result = nil
 
-    v.wait(1000, function()
+    vim.wait(1000, function()
         join_result = jobwait({term}, 0)[1]
         return join_result >= -1 or (join_result == -3 and exit_code)
     end)

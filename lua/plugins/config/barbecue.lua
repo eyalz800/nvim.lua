@@ -1,7 +1,5 @@
 local m = {}
 local barbecue = nil
-local v = require 'vim'
-
 m.setup = function()
     require 'barbecue'.setup(m.config())
 end
@@ -78,7 +76,7 @@ m.config = function()
         ---NOTE: This can be used to get file modified status from SCM (e.g. git)
         ---
         ---@type fun(bufnr: number): boolean
-        modified = function(bufnr) return v.bo[bufnr].modified end,
+        modified = function(bufnr) return vim.bo[bufnr].modified end,
 
         ---Whether to show/use navic in the winbar.
         ---

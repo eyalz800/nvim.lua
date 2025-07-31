@@ -1,9 +1,7 @@
 local m = {}
-local v = require 'vim'
-
-v.g['sneak#use_ic_scs'] = 1
-v.g['sneak#s_next'] = 0
-v.g['sneak#label'] = 1
+vim.g['sneak#use_ic_scs'] = 1
+vim.g['sneak#s_next'] = 0
+vim.g['sneak#label'] = 1
 
 m.search_jump = '<plug>Sneak_s'
 m.search_jump_back = '<plug>Sneak_S'

@@ -1,12 +1,11 @@
 local m = {}
-local v = require 'vim'
 local exists = require 'vim.exists'.exists
-local system = v.fn.system
+local system = vim.fn.system
 local echo = require 'vim.echo'.echo
 local cmd = require 'vim.cmd'.silent
 local quickfix = require 'plugins.quickfix'
 
-v.g.asyncrun_open = 0
+vim.g.asyncrun_open = 0
 
 m.async_cmd = function(command, options)
     options = options or {}

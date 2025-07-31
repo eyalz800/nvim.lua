@@ -1,5 +1,4 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
 local explorers = require 'plugins.explorers'
@@ -14,15 +13,15 @@ else
         opts = opts or {}
 
         local float = lazy.float(opts)
-        v.fn.termopen(command, v.tbl_isempty(opts) and v.empty_dict() or opts)
+        vim.fn.termopen(command, vim.tbl_isempty(opts) and vim.empty_dict() or opts)
         if opts.interactive ~= false then
-            v.cmd.startinsert()
-            v.api.nvim_create_autocmd("TermClose", {
+            vim.cmd.startinsert()
+            vim.api.nvim_create_autocmd("TermClose", {
                 once = true,
                 buffer = float.buf,
                 callback = function()
                     float:close({ wipe = true })
-                    v.cmd.checktime()
+                    vim.cmd.checktime()
                 end,
             })
         end
@@ -36,13 +35,13 @@ end
 
 m.open_split = function()
     cmd 'vert rightb new +terminal'
-    v.opt_local.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
-    v.opt_local.winbar = ''
-    v.opt_local.cursorline = false
-    v.bo.buflisted = false
-    v.bo.bufhidden = 'wipe'
-    v.keymap.set('x', 'a', '<esc><cmd>startinsert<cr>', { silent = true, buffer = true, nowait = true })
-    v.cmd.startinsert()
+    vim.opt_local.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
+    vim.opt_local.winbar = ''
+    vim.opt_local.cursorline = false
+    vim.bo.buflisted = false
+    vim.bo.bufhidden = 'wipe'
+    vim.keymap.set('x', 'a', '<esc><cmd>startinsert<cr>', { silent = true, buffer = true, nowait = true })
+    vim.cmd.startinsert()
 end
 
 m.open_below = function()

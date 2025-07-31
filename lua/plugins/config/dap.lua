@@ -1,20 +1,18 @@
 local m = {}
-local v = require 'vim'
-
 local ui = require 'plugins.config.dap-ui'
 local user = require 'user'
 local executable = require 'vim.executable'.executable
 
-local fs_stat = v.loop.fs_stat
-local fs_chmod = v.loop.fs_chmod
-local stdpath = v.fn.stdpath
-local input = v.fn.input
-local system = v.fn.system
-local inspect = v.inspect
-local getcwd = v.fn.getcwd
-local sign_define = v.fn.sign_define
-local expand = v.fn.expand
-local fnamemodify = v.fn.fnamemodify
+local fs_stat = vim.loop.fs_stat
+local fs_chmod = vim.loop.fs_chmod
+local stdpath = vim.fn.stdpath
+local input = vim.fn.input
+local system = vim.fn.system
+local inspect = vim.inspect
+local getcwd = vim.fn.getcwd
+local sign_define = vim.fn.sign_define
+local expand = vim.fn.expand
+local fnamemodify = vim.fn.fnamemodify
 
 local dap = nil
 local load_launch_json = nil
@@ -65,7 +63,7 @@ m.setup = function()
 end
 
 m.launch_settings = function()
-    local debug_type = v.bo.filetype
+    local debug_type = vim.bo.filetype
     local success = nil
 
     if not dap.configurations[debug_type] then
@@ -89,7 +87,7 @@ m.launch_settings = function()
 end
 
 m.launch = function(options)
-    local debug_type = (options or {}).debug_type or v.bo.filetype
+    local debug_type = (options or {}).debug_type or vim.bo.filetype
     local success = nil
 
     if not dap.configurations[debug_type] then
@@ -176,7 +174,7 @@ m.is_ui_open = function()
                 ui.dapui_windows.layouts[2]:is_open()))
 end
 
-v.cmd [=[
+vim.cmd [=[
     hi! def link InitLuaDebugBP WarningMsg
     hi! def link InitLuaDebugBPDisabled LineNr
     hi! def link InitLuaDebugPC  String

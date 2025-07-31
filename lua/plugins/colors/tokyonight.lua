@@ -1,7 +1,6 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
-local nvim_set_hl = v.api.nvim_set_hl
+local nvim_set_hl = vim.api.nvim_set_hl
 
 m.name = 'tokyonight'
 
@@ -11,9 +10,9 @@ end
 
 m.set_background = function(color_name)
     if color_name == 'tokyonight-day' then
-        v.opt.background = 'light'
+        vim.opt.background = 'light'
     else
-        v.opt.background = 'dark'
+        vim.opt.background = 'dark'
     end
 end
 
@@ -43,7 +42,7 @@ m.config = function()
             highlights['CursorLineNr'] = { fg = color.fg_dark }
             highlights['FloatBorder'] = { fg = color.fg, bg = color.bg_dark }
             highlights['Folded'] = { fg = color.comment, bg = color.none }
-            highlights['Ignore'] = { fg = v.o.background == 'dark' and '#444b6a' or color.bg_dark}
+            highlights['Ignore'] = { fg = vim.o.background == 'dark' and '#444b6a' or color.bg_dark}
             highlights['InitLuaDebugBP'] = { fg = color.orange }
             highlights['InitLuaDebugPC'] = { fg = color.green }
             highlights['@variable.builtin'] = { fg = color.magenta }
@@ -73,7 +72,7 @@ m.config = function()
             highlights.InitLuaBufferLineVisibleFg = { fg = color.fg_dark }
             highlights.InitLuaBufferLineSelectedFg = { fg = color.fg }
 
-            if v.env.TERM == 'xterm-kitty' then
+            if vim.env.TERM == 'xterm-kitty' then
                 highlights.InitLuaBufferLineIndicator = { bg = color.red }
                 if user.settings.bar == 'barbecue' then
                     highlights.InitLuaBufferLineNormalBg = { bg = color.bg_highlight }
@@ -88,16 +87,16 @@ end
 m.apply = function()
     m.name = 'tokyonight-' .. m.tokyonight_config.options.style
 
-    if v.o.background == 'dark' then
+    if vim.o.background == 'dark' then
         if m.tokyonight_config.options.style == 'day' then
-            v.opt.background = 'light'
+            vim.opt.background = 'light'
         end
-        v.env.BAT_THEME = 'Monokai Extended Origin'
+        vim.env.BAT_THEME = 'Monokai Extended Origin'
     else
         if m.tokyonight_config.options.style ~= 'day' then
-            v.opt.background = 'dark'
+            vim.opt.background = 'dark'
         end
-        v.env.BAT_THEME = 'Monokai Extended Light'
+        vim.env.BAT_THEME = 'Monokai Extended Light'
     end
 
     if user.settings.lsp == 'coc' then
@@ -106,7 +105,7 @@ m.apply = function()
         nvim_set_hl(0, 'DiagnosticUnnecessary', { link = 'DiagnosticUnderlineWarn' })
     end
 
-    v.cmd [=[
+    vim.cmd [=[
         hi! link CocUnusedHighlight DiagnosticUnderlineWarn
         hi! DiagnosticVirtualTextError guibg=NONE
         hi! DiagnosticVirtualTextWarn guibg=NONE
@@ -115,7 +114,7 @@ m.apply = function()
     ]=]
 
     if user.settings.finder == 'fzf' or user.settings.finder == 'fzf-lua' then
-        v.g.fzf_colors = {
+        vim.g.fzf_colors = {
             fg = { 'fg', 'Normal' },
             bg = { 'bg', 'Normal' },
             hl = { 'fg', 'SpecialKey' },
@@ -133,7 +132,7 @@ m.apply = function()
     end
 
     if user.settings.line == 'airline' then
-        v.cmd [=[
+        vim.cmd [=[
             function! Init_lua_tokyonight_airline_theme_patch(palette)
                 if g:airline_theme != 'tokyonight'
                     return
@@ -161,7 +160,7 @@ m.apply = function()
                 let a:palette.terminal.airline_error = airline_error
             endfunction
         ]=]
-        v.g.airline_theme_patch_func = 'Init_lua_tokyonight_airline_theme_patch'
+        vim.g.airline_theme_patch_func = 'Init_lua_tokyonight_airline_theme_patch'
     end
 
     return true

@@ -1,10 +1,9 @@
 local m = {}
-local v = require 'vim'
 local debugger = require 'plugins.debugger'
 local user = require 'user'
 local git = require 'plugins.git'
 
-local curwin = v.api.nvim_get_current_win
+local curwin = vim.api.nvim_get_current_win
 
 m.setup = function()
     require 'statuscol'.setup(m.config())

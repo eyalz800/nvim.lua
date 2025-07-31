@@ -1,20 +1,19 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
 
 local file_readable = require 'vim.file_readable'.file_readable
 local executable = require 'vim.executable'.executable
 local feed_keys = require 'vim.feed_keys'.feed_keys
 
-local map = v.keymap.set
-local getline = v.fn.getline
-local setline = v.fn.setline
-local win_gotoid = v.fn.win_gotoid
-local input = v.fn.input
-local system = v.fn.system
+local map = vim.keymap.set
+local getline = vim.fn.getline
+local setline = vim.fn.setline
+local win_gotoid = vim.fn.win_gotoid
+local input = vim.fn.input
+local system = vim.fn.system
 
 m.launch_settings = function()
-    local debug_type = v.bo.filetype
+    local debug_type = vim.bo.filetype
     if debug_type ~= 'cpp' and debug_type ~= 'c' and debug_type ~= 'python' then
         debug_type = input('Debugger type (cpp/python): ')
     end
@@ -37,7 +36,7 @@ m.launch = function()
         return
     end
 
-    v.fn['vimspector#Launch']()
+    vim.fn['vimspector#Launch']()
 end
 
 m.continue = '<plug>VimspectorContinue'
@@ -47,31 +46,31 @@ m.stop = '<plug>VimspectorStop'
 m.breakpoint = '<plug>VimspectorToggleBreakpoint'
 m.breakpoint_cond = '<plug>VimspectorToggleConditionalBreakpoint'
 m.breakpoint_function = '<plug>VimspectorAddFunctionBreakpoint'
-m.clear_breakpoints = v.fn['vimspector#ClearBreakpoints']
+m.clear_breakpoints = vim.fn['vimspector#ClearBreakpoints']
 m.step_over = '<plug>VimspectorStepOver'
 m.step_into = '<plug>VimspectorStepInto'
 m.step_out = '<plug>VimspectorStepOut'
 m.run_to_cursor = '<plug>VimspectorRunToCursor'
 m.disassemble = '<plug>VimspectorDisassemble'
 m.eval_window = '<plug>VimspectorBalloonEval'
-m.reset = v.fn['vimspector#Reset']
+m.reset = vim.fn['vimspector#Reset']
 
-m.on_winbar_stop = function() v.fn['vimspector#Stop']() end
-m.on_winbar_continue = function() v.fn['vimspector#Continue']() end
-m.on_winbar_pause = function() v.fn['vimspector#Pause']() end
-m.on_winbar_step_over = function() v.fn['vimspector#StepOver']() end
-m.on_winbar_step_into = function() v.fn['vimspector#StepInto']() end
-m.on_winbar_step_out = function() v.fn['vimspector#StepOut']() end
-m.on_winbar_restart = function() v.fn['vimspector#Restart']() end
-m.on_winbar_exit = function() v.fn['vimspector#Reset']() end
+m.on_winbar_stop = function() vim.fn['vimspector#Stop']() end
+m.on_winbar_continue = function() vim.fn['vimspector#Continue']() end
+m.on_winbar_pause = function() vim.fn['vimspector#Pause']() end
+m.on_winbar_step_over = function() vim.fn['vimspector#StepOver']() end
+m.on_winbar_step_into = function() vim.fn['vimspector#StepInto']() end
+m.on_winbar_step_out = function() vim.fn['vimspector#StepOut']() end
+m.on_winbar_restart = function() vim.fn['vimspector#Restart']() end
+m.on_winbar_exit = function() vim.fn['vimspector#Reset']() end
 
-m.toggle_breakpoint = v.fn['vimspector#ToggleBreakpoint']
+m.toggle_breakpoint = vim.fn['vimspector#ToggleBreakpoint']
 m.reset_ui = function() end
 m.toggle_ui = function() end
 m.is_ui_open = function() end
 
-v.g.vimspector_install_gadgets = {'debugpy', 'CodeLLDB', 'vscode-cpptools'}
-v.g.vimspector_sign_priority = {
+vim.g.vimspector_install_gadgets = {'debugpy', 'CodeLLDB', 'vscode-cpptools'}
+vim.g.vimspector_sign_priority = {
     vimspectorBP = 300,
     vimspectorBPCond = 200,
     vimspectorBPDisabled = 100,
@@ -82,29 +81,29 @@ v.g.vimspector_sign_priority = {
 m.on_initialize_prompt = function()
     map('n', 'x', 'i-exec<space>', {silent=true, buffer=true})
 
-    if not v.b.vimspector_command_history then
-        v.b.vimspector_command_history = {}
-        v.b.vimspector_command_history_pos = 0
+    if not vim.b.vimspector_command_history then
+        vim.b.vimspector_command_history = {}
+        vim.b.vimspector_command_history_pos = 0
         m.command_history_initialize()
     end
 end
 
 m.on_ui_created = function()
-    win_gotoid(v.g.vimspector_session_windows.output)
-    v.bo.filetype='asm'
-    win_gotoid(v.g.vimspector_session_windows.code)
-    v.cmd [=[
+    win_gotoid(vim.g.vimspector_session_windows.output)
+    vim.bo.filetype='asm'
+    win_gotoid(vim.g.vimspector_session_windows.code)
+    vim.cmd [=[
         split
         resize -1000
         enew
     ]=]
-    v.bo.filetype = 'VimspectorPrompt'
-    v.bo.buftype = 'prompt'
-    v.bo.modifiable = false
-    v.bo.textwidth = 0
-    v.opt_local.cursorline = false
-    v.opt_local.number = false
-    v.opt_local.winbar = [=[%#ToolbarButton#%0@v:lua.require'plugins.config.vimspector'.on_winbar_stop@ ■ Stop %X%*]=] ..
+    vim.bo.filetype = 'VimspectorPrompt'
+    vim.bo.buftype = 'prompt'
+    vim.bo.modifiable = false
+    vim.bo.textwidth = 0
+    vim.opt_local.cursorline = false
+    vim.opt_local.number = false
+    vim.opt_local.winbar = [=[%#ToolbarButton#%0@v:lua.require'plugins.config.vimspector'.on_winbar_stop@ ■ Stop %X%*]=] ..
                          [=[  %#ToolbarButton#%1@v:lua.require'plugins.config.vimspector'.on_winbar_continue@ ▶ Cont %X%*]=] ..
                          [=[  %#ToolbarButton#%2@v:lua.require'plugins.config.vimspector'.on_winbar_pause@ 󰏤 Pause %X%*]=] ..
                          [=[  %#ToolbarButton#%3@v:lua.require'plugins.config.vimspector'.on_winbar_step_over@ ↷ Next %X%*]=] ..
@@ -112,7 +111,7 @@ m.on_ui_created = function()
                          [=[  %#ToolbarButton#%5@v:lua.require'plugins.config.vimspector'.on_winbar_step_out@ ← Out %X%*]=] ..
                          [=[  %#ToolbarButton#%6@v:lua.require'plugins.config.vimspector'.on_winbar_restart@ ↺ %X%*]=] ..
                          [=[  %#ToolbarButton#%7@v:lua.require'plugins.config.vimspector'.on_winbar_exit@ ✕ %X%*]=]
-    win_gotoid(v.g.vimspector_session_windows.code)
+    win_gotoid(vim.g.vimspector_session_windows.code)
 end
 
 m.command_history_initialize = function()
@@ -122,42 +121,42 @@ m.command_history_initialize = function()
 end
 
 m.command_history_add = function()
-    local history = v.b.vimspector_command_history
+    local history = vim.b.vimspector_command_history
     table.insert(history, getline('.'))
-    v.b.vimspector_command_history = history
-    v.b.vimspector_command_history_pos = #v.b.vimspector_command_history
+    vim.b.vimspector_command_history = history
+    vim.b.vimspector_command_history_pos = #vim.b.vimspector_command_history
     return '<cr>'
 end
 
 m.command_history_up = function()
-    if #v.b.vimspector_command_history == 0 or v.b.vimspector_command_history_pos == 0 then
+    if #vim.b.vimspector_command_history == 0 or vim.b.vimspector_command_history_pos == 0 then
         return
     end
 
-    setline('.', v.b.vimspector_command_history[v.b.vimspector_command_history_pos])
-    if v.b.vimspector_command_history_pos ~= 1 then
-        v.b.vimspector_command_history_pos = v.b.vimspector_command_history_pos - 1
+    setline('.', vim.b.vimspector_command_history[vim.b.vimspector_command_history_pos])
+    if vim.b.vimspector_command_history_pos ~= 1 then
+        vim.b.vimspector_command_history_pos = vim.b.vimspector_command_history_pos - 1
     end
     feed_keys '<c-o>A'
 end
 
 m.command_history_down = function()
-    if #v.b.vimspector_command_history == v.b.vimspector_command_history_pos then
+    if #vim.b.vimspector_command_history == vim.b.vimspector_command_history_pos then
         setline('.', '> ')
     else
-        v.b.vimspector_command_history_pos = v.b.vimspector_command_history_pos + 1
-        setline('.', v.b.vimspector_command_history[v.b.vimspector_command_history_pos])
+        vim.b.vimspector_command_history_pos = vim.b.vimspector_command_history_pos + 1
+        setline('.', vim.b.vimspector_command_history[vim.b.vimspector_command_history_pos])
     end
     feed_keys '<c-o>A'
 end
 
 m.on_visual_multi_exit = function()
-    if v.bo.filetype == 'VimspectorPrompt' then
+    if vim.bo.filetype == 'VimspectorPrompt' then
         m.command_history_initialize()
     end
 end
 
-v.cmd [=[
+vim.cmd [=[
     hi! def link InitLuaDebugBP WarningMsg
     hi! def link InitLuaDebugBPDisabled LineNr
     hi! def link InitLuaDebugPC  String
@@ -178,7 +177,7 @@ m.generate_cpp_config = function()
     end
 
     if user.settings.native_debugger_plugin == 'vscode-cpptools' then
-        if string.find(target, ':', 1, true) and not v.loop.fs_stat(target) then
+        if string.find(target, ':', 1, true) and not vim.loop.fs_stat(target) then
             local main_file = input 'Main File: '
             system(
                 "echo '{' > .vimspector.json &&" ..
@@ -231,7 +230,7 @@ m.generate_cpp_config = function()
             )
         end
     else
-        if string.find(target, ':', 1, true) and not v.loop.fs_stat(target) then
+        if string.find(target, ':', 1, true) and not vim.loop.fs_stat(target) then
             local main_file = input 'Main File: '
             system(
                 "echo '{' > .vimspector.json && " ..

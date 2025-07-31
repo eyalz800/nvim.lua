@@ -1,18 +1,17 @@
 local m = {}
-local v = require 'vim'
-local opt = v.opt
+local opt = vim.opt
 
 local user = require 'user'
 local has = require 'vim.has'.has
 local exists = require 'vim.exists'.exists
-local stdpath = v.fn.stdpath
+local stdpath = vim.fn.stdpath
 
 m.setup = function()
     if not user.settings.treesitter then
-        v.cmd 'syntax enable'
+        vim.cmd 'syntax enable'
     end
 
-    v.cmd 'filetype plugin indent on'
+    vim.cmd 'filetype plugin indent on'
 
     opt.ignorecase = true -- Ignore case
     opt.autoindent = true -- Automatic indendation
@@ -67,8 +66,8 @@ m.setup = function()
     opt.undolevels = 10000 -- Undo levels
     opt.undofile = true -- Enable undo file
 
-    v.g.loaded_gzip = 0 -- Disable loading gzip plugin"
-    v.g.editorconfig = user.settings.respect_editor_config -- Respect or ignore editor config file
+    vim.g.loaded_gzip = 0 -- Disable loading gzip plugin"
+    vim.g.editorconfig = user.settings.respect_editor_config -- Respect or ignore editor config file
 
     -- Gui colors
     if has('termguicolors') == 1 and user.settings.gui_colors then

@@ -1,12 +1,11 @@
 local m = {}
-local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 local user = require 'user'
 local terminal = require 'plugins.terminal'.open_floating_terminal
-local expand = v.fn.expand
+local expand = vim.fn.expand
 
 m.show_git = function()
-    terminal(v.env.SHELL .. ' -c "cd ' .. expand('%:p:h') .. ' ; lazygit"')
+    terminal(vim.env.SHELL .. ' -c "cd ' .. expand('%:p:h') .. ' ; lazygit"')
 end
 
 m.git_blame = function()

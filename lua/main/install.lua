@@ -1,13 +1,12 @@
 local m = {}
-local v = require 'vim'
 local file_readable = require 'vim.file_readable'.file_readable
 local cmd = require 'vim.cmd'.silent
 local term = require 'builtins.term'
 local os = require 'lib.os'.os
 local echo = require 'vim.echo'.echo
-local system = v.fn.system
-local schedule = v.schedule
-local stdpath = v.fn.stdpath
+local system = vim.fn.system
+local schedule = vim.schedule
+local stdpath = vim.fn.stdpath
 
 m.install_status_dir = stdpath('config') .. '/install'
 
@@ -51,9 +50,9 @@ m.setup = function(options)
             echo('(install) ' .. command.name)
 
             cmd 'enew'
-            local timer = v.loop.new_timer()
-            timer:start(0, 1000, v.schedule_wrap(function()
-                if v.fn.mode() == 'n' then
+            local timer = vim.loop.new_timer()
+            timer:start(0, 1000, vim.schedule_wrap(function()
+                if vim.fn.mode() == 'n' then
                     cmd 'normal! G'
                 end
             end))
@@ -83,7 +82,7 @@ m.setup = function(options)
         end
     end)
 
-    schedule(v.schedule_wrap(function()
+    schedule(vim.schedule_wrap(function()
         local status, result = coroutine.resume(co)
         if not status then
             error(result)

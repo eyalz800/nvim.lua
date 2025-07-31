@@ -1,17 +1,15 @@
 local m = {}
-local v = require 'vim'
+vim.g.VM_default_mappings = 0
 
-v.g.VM_default_mappings = 0
-
-if v.o.background == 'dark' then
-    v.g.VM_theme = 'iceblue'
+if vim.o.background == 'dark' then
+    vim.g.VM_theme = 'iceblue'
 else
-    v.g.VM_theme = 'lightblue1'
+    vim.g.VM_theme = 'lightblue1'
 end
 
-v.g.VM_leader = 'm'
+vim.g.VM_leader = 'm'
 
--- v.g.VM_maps = {
+-- vim.g.VM_maps = {
 --     ['Find Under'] = 'ms',
 --     ['Find Subword Under'] = 'ms',
 --     ['Add Cursor At Pos'] = 'mm',

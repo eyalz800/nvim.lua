@@ -1,6 +1,5 @@
 local m = {}
 local user = require 'user'
-local v = require 'vim'
 local explorer_winhls = {
     none = nil,
     ['edge-window'] = 'EndOfBuffer:NvimTreeEndOfBuffer,CursorLine:NvimTreeCursorLine,CursorLineNr:NvimTreeCursorLineNr,LineNr:NvimTreeLineNr,WinSeparator:NvimTreeWinSeparator,StatusLine:NvimTreeStatusLine,StatusLineNC:NvimTreeStatuslineNC,SignColumn:NvimTreeSignColumn,Normal:NvimTreeNormal,NormalNC:NvimTreeNormalNC,NormalFloat:NvimTreeNormalFloat,FloatBorder:NvimTreeNormalFloatBorder',
@@ -24,7 +23,7 @@ m.close = explorer.close
 m.is_open = explorer.is_open
 m.toggle = explorer.toggle
 m.on_open = function()
-    v.opt_local.winhl = explorer_winhl
+    vim.opt_local.winhl = explorer_winhl
 end
 
 return m

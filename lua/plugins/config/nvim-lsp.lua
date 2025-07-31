@@ -1,15 +1,14 @@
 local m = {}
-local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 local user = require 'user'
 local finder = require 'plugins.finder'
 local exists = require 'vim.exists'.exists
 
-local augroup = v.api.nvim_create_augroup
-local autocmd = v.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
 
-local lsp = v.lsp
-local diagnostic = v.diagnostic
+local lsp = vim.lsp
+local diagnostic = vim.diagnostic
 
 local settings = user.settings.lsp_config.nvim
 local sign_prefix = user.settings.signcolumn_config.lsp_prefix or ''
@@ -39,8 +38,8 @@ m.semantic_highlighting = true
 
 if settings.diagnostic_hover then
     m.diagnostic_hover = function()
-        for _, winid in pairs(v.api.nvim_tabpage_list_wins(0)) do
-            if v.api.nvim_win_get_config(winid).zindex then
+        for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+            if vim.api.nvim_win_get_config(winid).zindex then
                 return
             end
         end
@@ -60,12 +59,12 @@ if settings.diagnostic_hover then
 
         if winid then
             autocmd(close_events, {
-                buffer = v.api.nvim_get_current_buf(),
+                buffer = vim.api.nvim_get_current_buf(),
                 group = augroup('init.lua.lsp.diagnostic-hover.close', { clear = false }),
                 once = true,
                 callback = function()
-                    if winid and v.api.nvim_win_is_valid(winid) then
-                        pcall(v.api.nvim_win_close, winid, true)
+                    if winid and vim.api.nvim_win_is_valid(winid) then
+                        pcall(vim.api.nvim_win_close, winid, true)
                         winid = nil
                     end
                 end
@@ -130,13 +129,13 @@ m.setup = function()
     end
 
     m.capabilities = require 'cmp_nvim_lsp'.default_capabilities(
-        v.lsp.protocol.make_client_capabilities()
+        vim.lsp.protocol.make_client_capabilities()
     )
 
     local lspconfig = require 'lspconfig'
     local mason_lspconfig = require 'mason-lspconfig'
     mason_lspconfig.setup {
-        ensure_installed = v.tbl_keys(m.servers),
+        ensure_installed = vim.tbl_keys(m.servers),
         automatic_enable = false,
     }
 

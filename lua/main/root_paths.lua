@@ -1,14 +1,13 @@
 local m = {}
-local v = require 'vim'
 local echo = require 'vim.echo'.echo
 local file_readable = require 'vim.file_readable'.file_readable
 local is_directory = require 'vim.is_directory'.is_directory
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
-local getcwd = v.fn.getcwd
+local getcwd = vim.fn.getcwd
 
 m.setup = function()
-    m.root = v.env.PWD
+    m.root = vim.env.PWD
 end
 
 m.switch_to_root = function()
@@ -16,7 +15,7 @@ m.switch_to_root = function()
 end
 
 m.switch_to_project_root = function()
-    local directory = v.fn.expand '%:p:h'
+    local directory = vim.fn.expand '%:p:h'
     if #directory == 0 then
         directory = getcwd()
     end
@@ -44,7 +43,7 @@ m.switch_to_project_root = function()
             ::continue::
         end
 
-        current_path = v.fn.fnamemodify(current_path, ':h')
+        current_path = vim.fn.fnamemodify(current_path, ':h')
         iteration = iteration + 1
     end
 

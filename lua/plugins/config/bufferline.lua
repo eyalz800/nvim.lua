@@ -1,5 +1,4 @@
 local m = {}
-local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 local user = require 'user'
 local bufdelete = require 'bufdelete'.bufdelete
@@ -32,7 +31,7 @@ m.config = function()
     bufferline = require 'bufferline'
 
     if user.settings.bar == 'barbecue' then
-        v.cmd [=[
+        vim.cmd [=[
             hi def link InitLuaBufferLineBg Pmenu
             hi def link InitLuaBufferLineOffsetSep Pmenu
             hi def link InitLuaBufferLineSelectedBg Normal
@@ -44,7 +43,7 @@ m.config = function()
             hi def link InitLuaBufferLineIndicator InitLuaBufferLineSelectedBg
         ]=]
     else
-        v.cmd [=[
+        vim.cmd [=[
             hi def link InitLuaBufferLineBg Normal
             hi def link InitLuaBufferLineOffsetSep Pmenu
             hi def link InitLuaBufferLineSelectedBg Pmenu
@@ -69,7 +68,7 @@ m.config = function()
     local fg = { highlight = 'InitLuaBufferLineNormalFg', attribute = 'fg' }
     local bg = { highlight = 'InitLuaBufferLineNormalBg', attribute = 'bg' }
     local underline_sp = { highlight = 'InitLuaBufferLineIndicator', attribute = 'bg' }
-    local underline_enabled = v.env.TERM == 'xterm-kitty'
+    local underline_enabled = vim.env.TERM == 'xterm-kitty'
 
     return {
         options = {
@@ -95,9 +94,9 @@ m.config = function()
             sort_by = 'insert_after_current',
             custom_filter = function(bufnr)
                 local exclude_ft = { 'qf', 'fugitive', 'git', 'dirvish', 'nerdtree', 'tagbar', 'NvimTree' }
-                local cur_ft = v.bo[bufnr].filetype
-                local should_show = not v.tbl_contains(exclude_ft, cur_ft)
-                should_show = should_show and v.fn.bufname(bufnr) ~= ''
+                local cur_ft = vim.bo[bufnr].filetype
+                local should_show = not vim.tbl_contains(exclude_ft, cur_ft)
+                should_show = should_show and vim.fn.bufname(bufnr) ~= ''
                 return should_show
             end,
             offsets = {

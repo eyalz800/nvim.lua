@@ -1,16 +1,15 @@
 local m = {}
-local v = require 'vim'
 local echo = require 'vim.echo'.echo
-local expand = v.fn.expand
+local expand = vim.fn.expand
 local cmd = require 'vim.cmd'.silent
 local file_readable = require 'vim.file_readable'.file_readable
 local pin = require 'plugins.pin'
 local user = require 'user'
 
---local winwidth = v.fn.winwidth
-local win_getid = v.fn.win_getid
-local win_gotoid = v.fn.win_gotoid
-local getqflist = v.fn.getqflist
+local win_getid = vim.fn.win_getid
+local win_gotoid = vim.fn.win_gotoid
+local getqflist = vim.fn.getqflist
+local getcwd = vim.fn.getcwd
 
 local debugger = require 'plugins.debugger'
 local code_explorer_auto_open_min_columns = user.settings.code_explorer_config.auto_open_min_columns or 0
@@ -23,18 +22,18 @@ m.display_current_file = function()
     if m.file.is_open() and file_readable(expand '%') then
         m.file.open({ focus=false })
     end
-    echo(v.fn.expand('%:p'))
+    echo(expand '%:p')
 end
 
 m.display_current_directory = function()
     if m.file.is_open() then
         m.file.open_current_directory({ focus=false })
     end
-    echo(v.fn.getcwd())
+    echo(getcwd())
 end
 
 m.toggle = function()
-    v.cmd.cclose()
+    vim.cmd.cclose()
     if m.file.is_open() or m.code.is_open() then
         m.close()
         m.arrange()
@@ -43,7 +42,7 @@ m.toggle = function()
     require 'plugins.quickfix'.open({ focus = false })
     m.open_terminal({ focus = false })
     m.file.open({ focus = false })
-    if code_explorer_auto_open_min_columns <= v.o.columns then
+    if code_explorer_auto_open_min_columns <= vim.o.columns then
         m.code.open({ focus = false })
     end
     m.arrange()
@@ -53,16 +52,16 @@ m.close = function()
     m.file.close()
     m.code.close()
     for _, terminal in ipairs(m.terminals) do
-        if v.api.nvim_win_is_valid(terminal) then
-            local buffer = v.api.nvim_win_get_buf(terminal)
-            if v.api.nvim_buf_is_valid(buffer) then
-                v.bo[buffer].bufhidden = 'wipe'
+        if vim.api.nvim_win_is_valid(terminal) then
+            local buffer = vim.api.nvim_win_get_buf(terminal)
+            if vim.api.nvim_buf_is_valid(buffer) then
+                vim.bo[buffer].bufhidden = 'wipe'
             end
-            v.api.nvim_win_close(terminal, true)
+            vim.api.nvim_win_close(terminal, true)
         end
     end
     m.terminals = {}
-    v.cmd.cclose()
+    vim.cmd.cclose()
     m.arrange()
 end
 
@@ -76,38 +75,38 @@ m.arrange = function()
 
     if qf > 0 then
         win_gotoid(qf)
-        v.cmd.wincmd 'J'
-        v.cmd.resize(10)
+        vim.cmd.wincmd 'J'
+        vim.cmd.resize(10)
     end
     for terminal_index, terminal in ipairs(m.terminals) do
-        if v.api.nvim_win_is_valid(terminal) and
-            (v.api.nvim_win_get_tabpage(terminal) == v.api.nvim_get_current_tabpage() or
-                v.api.nvim_get_current_tabpage() == 1)
+        if vim.api.nvim_win_is_valid(terminal) and
+            (vim.api.nvim_win_get_tabpage(terminal) == vim.api.nvim_get_current_tabpage() or
+                vim.api.nvim_get_current_tabpage() == 1)
         then
-            term_buf = v.api.nvim_win_get_buf(terminal)
-            if v.api.nvim_buf_is_valid(term_buf) then
+            term_buf = vim.api.nvim_win_get_buf(terminal)
+            if vim.api.nvim_buf_is_valid(term_buf) then
                 pin.unpin({ buf = term_buf, win = terminal })
                 if terminal_index ~= 1 or qf > 0 then
                     cmd 'vert rightb split'
-                    v.bo.bufhidden = 'wipe'
+                    vim.bo.bufhidden = 'wipe'
                 else
                     cmd 'below 10new'
                     cmd 'wincmd J'
-                    v.bo.bufhidden = 'wipe'
+                    vim.bo.bufhidden = 'wipe'
                 end
-                local term_win = v.api.nvim_get_current_win()
-                v.api.nvim_win_set_buf(v.api.nvim_get_current_win(), term_buf)
-                v.bo.bufhidden = 'wipe'
-                v.opt_local.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
-                v.opt_local.winbar = ''
-                v.opt_local.cursorline = false
-                v.api.nvim_win_close(terminal, true)
+                local term_win = vim.api.nvim_get_current_win()
+                vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), term_buf)
+                vim.bo.bufhidden = 'wipe'
+                vim.opt_local.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
+                vim.opt_local.winbar = ''
+                vim.opt_local.cursorline = false
+                vim.api.nvim_win_close(terminal, true)
                 pin.pin()
                 m.terminals[terminal_index] = term_win
                 if cur_win == terminal then
                     cur_win = term_win
                 end
-                v.cmd.resize(10)
+                vim.cmd.resize(10)
             end
         end
     end
@@ -115,14 +114,14 @@ m.arrange = function()
         m.code.open({ focus = true })
 
         --local width = winwidth(0)
-        v.cmd.wincmd 'L'
+        vim.cmd.wincmd 'L'
         cmd('vertical resize ' .. 30)
     end
     if m.file.is_open() then
         m.file.open({ focus = true })
 
         --local width = winwidth(0)
-        v.cmd.wincmd 'H'
+        vim.cmd.wincmd 'H'
         cmd('vertical resize ' .. 30)
     end
     win_gotoid(cur_win)
@@ -130,8 +129,8 @@ m.arrange = function()
     if debugger.is_ui_open() then
         debugger.reset_ui()
     end
-    if v.bo.buftype ~= 'terminal' then
-        v.cmd.stopinsert()
+    if vim.bo.buftype ~= 'terminal' then
+        vim.cmd.stopinsert()
     end
 end
 
@@ -141,15 +140,15 @@ m.open_terminal = function(options)
 
     local return_win = nil
     if not options.focus then
-        return_win = v.api.nvim_get_current_win()
+        return_win = vim.api.nvim_get_current_win()
     end
 
     local below_win = nil
 
     if not options.new then
         for _, terminal in ipairs(m.terminals) do
-            if v.api.nvim_win_is_valid(terminal) then
-                v.api.nvim_set_current_win(terminal)
+            if vim.api.nvim_win_is_valid(terminal) then
+                vim.api.nvim_set_current_win(terminal)
                 return
             end
         end
@@ -158,9 +157,9 @@ m.open_terminal = function(options)
     else
         for i = #m.terminals, 1, -1 do
             local terminal = m.terminals[i]
-            if v.api.nvim_win_is_valid(terminal) then
+            if vim.api.nvim_win_is_valid(terminal) then
                 below_win = terminal
-                v.api.nvim_set_current_win(terminal)
+                vim.api.nvim_set_current_win(terminal)
             end
         end
     end
@@ -180,14 +179,14 @@ m.open_terminal = function(options)
         cmd 'below 10new +terminal'
     end
 
-    v.opt_local.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
-    v.opt_local.winbar = ''
-    v.opt_local.cursorline = false
-    v.bo.buflisted = false
-    v.bo.bufhidden = 'wipe'
-    v.keymap.set('x', 'a', '<esc><cmd>startinsert<cr>', { silent = true, buffer = true, nowait = true })
-    v.keymap.set('t', '<c-w>v', function()
-        local cur_win = v.api.nvim_get_current_win()
+    vim.opt_local.winhighlight = 'Normal:NormalSB,WinBar:NormalSB'
+    vim.opt_local.winbar = ''
+    vim.opt_local.cursorline = false
+    vim.bo.buflisted = false
+    vim.bo.bufhidden = 'wipe'
+    vim.keymap.set('x', 'a', '<esc><cmd>startinsert<cr>', { silent = true, buffer = true, nowait = true })
+    vim.keymap.set('t', '<c-w>v', function()
+        local cur_win = vim.api.nvim_get_current_win()
         local terminal_index = #m.terminals
         for index, terminal in ipairs(m.terminals) do
             if terminal == cur_win then
@@ -195,18 +194,18 @@ m.open_terminal = function(options)
             end
         end
         m.open_terminal({new = true, focus = true})
-        v.api.nvim_set_current_win(m.terminals[terminal_index + 1])
+        vim.api.nvim_set_current_win(m.terminals[terminal_index + 1])
     end, { silent = true, buffer = true, nowait = true })
 
-    table.insert(m.terminals, v.api.nvim_get_current_win())
+    table.insert(m.terminals, vim.api.nvim_get_current_win())
     pin.pin()
 
     m.arrange()
 
     if not options.focus then
-        v.api.nvim_set_current_win(return_win)
+        vim.api.nvim_set_current_win(return_win)
     else
-        v.cmd.startinsert()
+        vim.cmd.startinsert()
     end
 end
 

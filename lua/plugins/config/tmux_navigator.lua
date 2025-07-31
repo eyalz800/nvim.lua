@@ -1,11 +1,10 @@
 local m = {}
-local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 
-v.g.tmux_navigator_no_mappings = true
+vim.g.tmux_navigator_no_mappings = true
 
 m.tmux_navigation_enabled = false
-if v.env.TMUX then
+if vim.env.TMUX then
     m.tmux_navigation_enabled = true
 end
 

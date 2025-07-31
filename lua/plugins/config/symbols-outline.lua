@@ -1,5 +1,4 @@
 local m = {}
-local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 local symbols_outline = nil
 
@@ -13,15 +12,15 @@ m.open = function(options)
         options.focus = false
     end
     symbols_outline.open_outline()
-    if v.bo.filetype == 'Outline' then
+    if vim.bo.filetype == 'Outline' then
         if not options.focus then
             cmd 'wincmd p'
         end
 
-        v.api.nvim_set_option_value('signcolumn', 'no',
+        vim.api.nvim_set_option_value('signcolumn', 'no',
             { scope = 'local', win = symbols_outline.view.winnr })
     elseif options.focus and symbols_outline.view.winnr then
-        v.fn.win_gotoid(symbols_outline.view.winnr)
+        vim.fn.win_gotoid(symbols_outline.view.winnr)
     end
 end
 

@@ -1,28 +1,27 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
 local quickfix = require 'plugins.quickfix'
 
-local input = v.fn.input
-local system = v.fn.system
+local input = vim.fn.input
+local system = vim.fn.system
 
-v.g.asyncrun_open = 0
-v.g.asyncrun_rootmarks = user.settings.root_paths
+vim.g.asyncrun_open = 0
+vim.g.asyncrun_rootmarks = user.settings.root_paths
 
 if user.settings.terminal == 'floaterm' then
-    v.g.asynctasks_term_pos = 'floaterm'
+    vim.g.asynctasks_term_pos = 'floaterm'
 elseif user.settings.terminal == 'toggleterm' then
-    v.g.asynctasks_term_pos = 'toggleterm2'
+    vim.g.asynctasks_term_pos = 'toggleterm2'
 else
-    v.g.asynctasks_term_pos = 'right'
-    v.g.asynctasks_term_rows = 10
-    v.g.asynctasks_term_cols = 40
-    v.g.asynctasks_term_reuse = 1
+    vim.g.asynctasks_term_pos = 'right'
+    vim.g.asynctasks_term_rows = 10
+    vim.g.asynctasks_term_cols = 40
+    vim.g.asynctasks_term_reuse = 1
 end
 
 m.build_project = function()
-    if #v.fn['asynctasks#list']('') == 0 then
+    if #vim.fn['asynctasks#list']('') == 0 then
         if not m.build_config() then
             return
         end
@@ -32,7 +31,7 @@ m.build_project = function()
 end
 
 m.run_project = function()
-    if #v.fn['asynctasks#list']('') == 0 then
+    if #vim.fn['asynctasks#list']('') == 0 then
         if not m.build_config() then
             return
         end
@@ -41,7 +40,7 @@ m.run_project = function()
 end
 
 m.clean_project = function()
-    if #v.fn['asynctasks#list']('') == 0 then
+    if #vim.fn['asynctasks#list']('') == 0 then
         m.build_config()
     end
     quickfix.open({ focus = false, expand = true })

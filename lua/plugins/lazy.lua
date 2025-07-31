@@ -1,5 +1,4 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
 
 ---@diagnostic disable: different-requires
@@ -10,14 +9,14 @@ m.setup = function()
 end
 
 m.on_update = function()
-    local lazy_locks = v.fn.stdpath('config') .. '/lazy-locks'
-    local lazy_lock = v.fn.stdpath('config') .. '/lazy-lock.json'
+    local lazy_locks = vim.fn.stdpath('config') .. '/lazy-locks'
+    local lazy_lock = vim.fn.stdpath('config') .. '/lazy-lock.json'
     local snapshot = lazy_locks .. os.date('/%Y-%m-%dT%H:%M:%S.json')
-    if not v.loop.fs_stat(lazy_lock) then
+    if not vim.loop.fs_stat(lazy_lock) then
         return
     end
-    v.fn.mkdir(lazy_locks, 'p')
-    v.loop.fs_copyfile(lazy_lock, snapshot)
+    vim.fn.mkdir(lazy_locks, 'p')
+    vim.loop.fs_copyfile(lazy_lock, snapshot)
 end
 
 m.plugins = {
@@ -492,8 +491,8 @@ m.plugins = {
     {
         'aklt/plantuml-syntax',
         config = function()
-            v.g.plantuml_set_makeprg = 0
-            v.g.plantuml_executable_script = ''
+            vim.g.plantuml_set_makeprg = 0
+            vim.g.plantuml_executable_script = ''
         end,
     },
     {

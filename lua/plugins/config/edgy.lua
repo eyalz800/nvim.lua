@@ -1,9 +1,8 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
 
-local nvim_get_hl = v.api.nvim_get_hl
-local nvim_set_hl = v.api.nvim_set_hl
+local nvim_get_hl = vim.api.nvim_get_hl
+local nvim_set_hl = vim.api.nvim_set_hl
 
 m.setup = function()
     require 'edgy'.setup(m.config())
@@ -51,10 +50,10 @@ m.config = function()
             fps = 100, -- frames per second
             cps = 120, -- cells per second
             on_begin = function()
-                v.g.minianimate_disable = true
+                vim.g.minianimate_disable = true
             end,
             on_end = function()
-                v.g.minianimate_disable = false
+                vim.g.minianimate_disable = false
             end,
             -- Spinner for pinned views that are loading.
             -- if you have noice.nvim installed, you can use any spinner from it, like:
@@ -153,7 +152,7 @@ m.config = function()
             closed = "",
             open = "",
         },
-      fix_win_height = v.fn.has("nvim-0.10.0") == 0,
+      fix_win_height = vim.fn.has("nvim-0.10.0") == 0,
     }
 end
 

@@ -1,12 +1,11 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
 
 local file_readable = require 'vim.file_readable'.file_readable
 local cmd = require 'vim.cmd'.silent
 
-local expand = v.fn.expand
-local getcwd = v.fn.getcwd
+local expand = vim.fn.expand
+local getcwd = vim.fn.getcwd
 
 local width = 30
 
@@ -65,7 +64,7 @@ m.config = function()
             ignore = false,
         },
         filesystem_watchers = {
-            enable = v.loop.fs_stat('/mnt/c/Windows') == nil,
+            enable = vim.loop.fs_stat('/mnt/c/Windows') == nil,
         },
         actions = {
             open_file = {
@@ -123,7 +122,7 @@ m.config = function()
         },
         on_attach = function(bufnr)
             local api = require 'nvim-tree.api'
-            local map = v.keymap.set
+            local map = vim.keymap.set
             local opts = function(desc)
                 return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
             end

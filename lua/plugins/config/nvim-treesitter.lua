@@ -1,5 +1,4 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
 
 m.setup = function()
@@ -22,7 +21,7 @@ m.config = function()
                 end
 
                 local max_filesize = 10 * 1024 * 1024
-                local ok, stats = pcall(v.loop.fs_stat, v.api.nvim_buf_get_name(buf))
+                local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
                 if ok and stats and stats.size > max_filesize then
                     return true
                 end

@@ -1,6 +1,4 @@
 local m = {}
-local v = require 'vim'
-
 m.setup = function()
     require 'stickybuf'.setup(m.config())
 end
@@ -15,14 +13,14 @@ m.config = function()
 
     return {
         get_auto_pin = function(bufnr)
-            local buftype = v.bo[bufnr].buftype
-            local filetype = v.bo[bufnr].filetype
-            local bufname = v.api.nvim_buf_get_name(bufnr)
+            local buftype = vim.bo[bufnr].buftype
+            local filetype = vim.bo[bufnr].filetype
+            local bufname = vim.api.nvim_buf_get_name(bufnr)
             if buftype == 'help' or buftype == 'quickfix' then
                 return 'buftype'
-            elseif buftype == 'prompt' or v.startswith(bufname, 'DAP ') then
+            elseif buftype == 'prompt' or vim.startswith(bufname, 'DAP ') then
                 return 'bufnr'
-            elseif v.tbl_contains(pin_filetypes, filetype) then
+            elseif vim.tbl_contains(pin_filetypes, filetype) then
                 return 'filetype'
             end
         end

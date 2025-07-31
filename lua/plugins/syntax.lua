@@ -1,16 +1,15 @@
 local m = {}
-local v = require 'vim'
 local lsp = require 'plugins.lsp'
 
-v.g.python_highlight_all = 1
-v.g.python_highlight_operators = 0
+vim.g.python_highlight_all = 1
+vim.g.python_highlight_operators = 0
 
 m.apply_c_and_cpp_syntax = function()
     if lsp.semantic_highlighting then
         return
     end
 
-    v.cmd [=[
+    vim.cmd [=[
         syntax match cCustomDot "\." contained
         syntax match cCustomPtr "->" contained
         syntax match cCustomParen "(" contained contains=cParen contains=cCppParen " )
@@ -71,7 +70,7 @@ m.apply_py_syntax = function()
         return
     end
 
-    v.cmd [=[
+    vim.cmd [=[
         syntax keyword pythonLambda lambda
         hi def link pythonLambda pythonStatement
         syntax keyword pythonDef def

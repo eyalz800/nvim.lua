@@ -1,7 +1,6 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
-local nvim_set_hl = v.api.nvim_set_hl
+local nvim_set_hl = vim.api.nvim_set_hl
 
 m.name = 'catppuccin'
 
@@ -88,16 +87,16 @@ end
 
 m.apply = function()
     m.name = 'catppuccin-' .. m.catppuccin.flavour
-    if v.o.background == 'dark' then
+    if vim.o.background == 'dark' then
         if m.catppuccin.flavour == 'latte' then
-            v.opt.background = 'light'
+            vim.opt.background = 'light'
         end
-        v.env.BAT_THEME = 'Monokai Extended Origin'
+        vim.env.BAT_THEME = 'Monokai Extended Origin'
     else
         if m.catppuccin.flavour ~= 'latte' then
-            v.opt.background = 'dark'
+            vim.opt.background = 'dark'
         end
-        v.env.BAT_THEME = 'Monokai Extended Light'
+        vim.env.BAT_THEME = 'Monokai Extended Light'
     end
 
     if user.settings.lsp == 'coc' then
@@ -106,7 +105,7 @@ m.apply = function()
         nvim_set_hl(0, 'DiagnosticUnnecessary', { link = 'DiagnosticUnderlineWarn' })
     end
 
-    v.cmd [=[
+    vim.cmd [=[
         hi! DiagnosticVirtualTextError guibg=NONE
         hi! DiagnosticVirtualTextWarn guibg=NONE
         hi! DiagnosticVirtualTextHint guibg=NONE
@@ -114,7 +113,7 @@ m.apply = function()
     ]=]
 
     if user.settings.finder == 'fzf' or user.settings.finder == 'fzf-lua' then
-        v.g.fzf_colors = {
+        vim.g.fzf_colors = {
             fg = { 'fg', 'Normal' },
             bg = { 'bg', 'Normal' },
             hl = { 'fg', 'SpecialKey' },

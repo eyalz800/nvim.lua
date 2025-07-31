@@ -1,6 +1,4 @@
 local m = {}
-local v = require 'vim'
-
 m.setup = function()
     require 'flash'.setup(m.config())
 end
@@ -41,7 +39,7 @@ m.config = function()
                 "flash_prompt",
                 function(win)
                     -- exclude non-focusable windows
-                    return not v.api.nvim_win_get_config(win).focusable
+                    return not vim.api.nvim_win_get_config(win).focusable
                 end,
             },
             -- Optional trigger character that needs to be typed before
@@ -168,13 +166,13 @@ m.config = function()
                     local visual_multi_active = require 'plugins.config.visual_multi'.active
 
                     -- autohide flash when in operator-pending mode
-                    opts.autohide = visual_multi_active or (v.fn.mode(true):find("no") and v.v.operator == "y")
+                    opts.autohide = visual_multi_active or (vim.fn.mode(true):find("no") and vim.v.operator == "y")
 
                     -- disable jump labels when not enabled, when using a count,
                     -- and when recording/executing registers
                     opts.jump_labels = not visual_multi_active and
-                                       opts.jump_labels and v.v.count == 0 and
-                                       v.fn.reg_executing() == "" and v.fn.reg_recording() == ""
+                                       opts.jump_labels and vim.v.count == 0 and
+                                       vim.fn.reg_executing() == "" and vim.fn.reg_recording() == ""
                     -- Show jump labels only in operator-pending mode
                     -- opts.jump_labels = vim.v.count == 0 and vim.fn.mode(true):find("o")
                 end,

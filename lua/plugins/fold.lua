@@ -1,11 +1,9 @@
 local m = {}
-local v = require 'vim'
-
 m.toggle = function()
-    if v.o.foldlevel == 0 then
-        v.o.foldlevel = 1000
+    if vim.o.foldlevel == 0 then
+        vim.o.foldlevel = 1000
     else
-        v.o.foldlevel = 0
+        vim.o.foldlevel = 0
     end
 end
 

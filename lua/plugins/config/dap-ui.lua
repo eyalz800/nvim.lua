@@ -1,18 +1,17 @@
 local m = {}
-local v = require 'vim'
 local cmd = require 'vim.cmd'.silent
 
 local dap = nil
 m.dapui = nil
 m.dapui_windows = nil
 
-local nvim_win_is_valid = v.api.nvim_win_is_valid
-local nvim_set_current_win = v.api.nvim_set_current_win
-local nvim_win_get_tabpage = v.api.nvim_win_get_tabpage
-local nvim_tabpage_get_number = v.api.nvim_tabpage_get_number
-local win_getid = v.fn.win_getid
-local expand = v.fn.expand
-local fs_stat = v.loop.fs_stat
+local nvim_win_is_valid = vim.api.nvim_win_is_valid
+local nvim_set_current_win = vim.api.nvim_set_current_win
+local nvim_win_get_tabpage = vim.api.nvim_win_get_tabpage
+local nvim_tabpage_get_number = vim.api.nvim_tabpage_get_number
+local win_getid = vim.fn.win_getid
+local expand = vim.fn.expand
+local fs_stat = vim.loop.fs_stat
 
 m.debug_win = nil
 m.debug_tab = nil
@@ -73,8 +72,8 @@ m.on_color = function()
         pcall(hl.setup)
     end
 
-    local nvim_get_hl = v.api.nvim_get_hl
-    local nvim_set_hl = v.api.nvim_set_hl
+    local nvim_get_hl = vim.api.nvim_get_hl
+    local nvim_set_hl = vim.api.nvim_set_hl
 
     local bg = nvim_get_hl(0, { name = 'WinBar' }).bg
     nvim_set_hl(0, 'DapUIStepOver', { fg = nvim_get_hl(0, { name = 'DapUIStepOver' }).fg, bg = bg })

@@ -1,12 +1,11 @@
 local m = {}
-local v = require 'vim'
-local expand = v.fn.expand
+local expand = vim.fn.expand
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
 local root_paths = require 'main.root_paths'
 local paste = require 'builtins.paste'
 local clipboard = require 'builtins.clipboard'
-local map = v.keymap.set
+local map = vim.keymap.set
 
 local keys = {}
 keys.register = function(map_entries, options)

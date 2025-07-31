@@ -1,10 +1,8 @@
 local m = {}
-local v = require 'vim'
-
-m.cmd = v.cmd
+m.cmd = vim.cmd
 
 m.silent = function(str)
-    v.cmd('silent ' .. str)
+    vim.cmd('silent ' .. str)
 end
 
 return m

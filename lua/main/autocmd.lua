@@ -1,5 +1,4 @@
 local m = {}
-local v = require 'vim'
 local colors = require 'plugins.colors'
 local whitespace = require 'plugins.whitespace'
 local lsp = require 'plugins.lsp'
@@ -8,9 +7,9 @@ local syntax = require 'plugins.syntax'
 local binary_view = require 'plugins.binary_view'
 local doc_reader = require 'plugins.doc_reader'
 local user = require 'user'
-local augroup = v.api.nvim_create_augroup
-local autocmd = v.api.nvim_create_autocmd
-local opt_local = v.opt_local
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+local opt_local = vim.opt_local
 
 m.setup = function()
     local indentation = augroup('init.lua.file_indentatoin', {})
@@ -199,7 +198,7 @@ m.setup = function()
             pattern = 'fugitiveblame',
             group = augroup('init.lua.fugitive-barbecue', {}),
             callback = function()
-                v.wo.winbar = '  Blame'
+                vim.wo.winbar = '  Blame'
             end
         })
 
@@ -209,7 +208,7 @@ m.setup = function()
                 group = augroup('init.lua.codecompanion-barbecue', {}),
                 callback = function(data)
                     local winid = vim.fn.win_getid(data.winnr)
-                    v.wo[winid].winbar = ' Code Companion '
+                    vim.wo[winid].winbar = ' Code Companion '
                 end
             })
         end

@@ -1,7 +1,6 @@
 local m = {}
-local v = require 'vim'
 local user = require 'user'
-local nvim_set_hl = v.api.nvim_set_hl
+local nvim_set_hl = vim.api.nvim_set_hl
 
 m.setup = function()
     require 'vscode'.setup(m.config())
@@ -9,9 +8,9 @@ end
 
 m.set_background = function(color_name)
     if color_name == 'vscode-light' then
-        v.opt.background = 'light'
+        vim.opt.background = 'light'
     else
-        v.opt.background = 'dark'
+        vim.opt.background = 'dark'
     end
 end
 
@@ -58,15 +57,15 @@ m.config = function()
 end
 
 m.apply = function()
-    if v.o.background == 'dark' then
-        v.env.BAT_THEME = 'Monokai Extended Origin'
+    if vim.o.background == 'dark' then
+        vim.env.BAT_THEME = 'Monokai Extended Origin'
     else
-        v.env.BAT_THEME = 'Monokai Extended Light'
+        vim.env.BAT_THEME = 'Monokai Extended Light'
     end
 
     local color = require 'vscode.colors' .get_colors()
 
-    v.cmd([=[
+    vim.cmd([=[
         hi! DiagnosticUnderlineWarn guisp=]=] .. color.vscUiOrange .. [=[
     ]=])
 
@@ -77,7 +76,7 @@ m.apply = function()
     end
 
     if user.settings.finder == 'fzf' or user.settings.finder == 'fzf-lua' then
-        v.g.fzf_colors = {
+        vim.g.fzf_colors = {
             fg = { 'fg', 'Normal' },
             bg = { 'bg', 'Normal' },
             hl = { 'fg', 'SpecialKey' },
