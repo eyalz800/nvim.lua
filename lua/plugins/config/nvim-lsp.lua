@@ -83,6 +83,7 @@ m.expand_snippets = function() end
 m.select_snippets = function() end
 
 m.setup = function()
+    m.navic = require 'nvim-navic'
     local virtual_text = nil
     if settings.virtual_text then
         virtual_text = {
@@ -147,7 +148,9 @@ m.setup = function()
             on_attach = function(client, bufnr)
                 prev_attach(client, bufnr)
                 if client.server_capabilities['documentSymbolProvider'] then
-                    require('nvim-navic').attach(client, bufnr)
+                    if not m.navic.is_available(bufnr) then
+                        m.navic.attach(client, bufnr)
+                    end
                 end
             end
         end
