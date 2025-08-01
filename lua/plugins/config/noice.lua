@@ -13,9 +13,6 @@ end
 m.config = function()
     return {
         views = {
-            -- notify = {
-            --     replace = 'true',
-            -- }
             split = {
                 enter = true,
                 win_options = {
@@ -38,7 +35,6 @@ m.config = function()
                 format = 'lsp_progress',
                 format_done = 'lsp_progress_done',
                 throttle = 1000 / 30,
-                -- view = 'notify',
             },
         },
         presets = {
@@ -101,33 +97,11 @@ m.config = function()
                     kind = {
                         'shell_out',
                         'shell_err',
-                        -- 'list_cmd',
-                        -- 'lua_print',
                     }
                 },
                 view = 'notify',
                 opts = {
                     level = 'info',
-                    -- enter = true,
-                    -- close = {
-                    --     keys = { 'q', '<esc>', },
-                    -- },
-                    -- position = {
-                    --     row = 0.5,
-                    --     col = 0.5,
-                    -- },
-                    -- focusable = true,
-                    -- win_options = {
-                        -- foldenable = false,
-                        -- cursorline = true,
-                        -- winhighlight = {
-                        --     Normal = 'NoiceCmdlinePopup',
-                        --     Search = 'Search',
-                        --     IncSearch = 'IncSearch',
-                        --     FloatTitle = 'NoiceCmdlinePopupTitle',
-                        --     FloatBorder = 'NoiceCmdlinePopupBorder',
-                        -- },
-                    -- },
                 },
             },
             {
@@ -141,21 +115,10 @@ m.config = function()
                     close = {
                         keys = { 'q', '<esc>', },
                     },
-                    -- position = {
-                    --     row = 0.5,
-                    --     col = 0.5,
-                    -- },
                     focusable = true,
                     win_options = {
                         foldenable = false,
                         cursorline = true,
-                        -- winhighlight = {
-                        --     Normal = 'NoiceCmdlinePopup',
-                        --     Search = 'Search',
-                        --     IncSearch = 'IncSearch',
-                        --     FloatTitle = 'NoiceCmdlinePopupTitle',
-                        --     FloatBorder = 'NoiceCmdlinePopupBorder',
-                        -- },
                     },
                 },
             },
