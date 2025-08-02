@@ -17,22 +17,20 @@ m.subscribe = function(subscriber)
 end
 
 m.set = function()
-    local color_name = user.settings.colorscheme
-    local success, colorscheme = pcall(require, 'plugins.colors.' .. color_name)
-    if success and colorscheme.set_background then
-        colorscheme.set_background(color_name)
-    end
-    cmd('colorscheme ' .. color_name)
+    cmd('colorscheme ' .. user.settings.colorscheme)
 end
 
-m.pre_switch_color = function() end
+m.pre_switch_color = function(colors_name)
+    local success, colorscheme = pcall(require, 'plugins.colors.' .. colors_name)
+    if success and colorscheme.pre_apply then
+        colorscheme.pre_apply()
+    end
+end
 
-m.post_switch_color = function()
-    local success, colorscheme = pcall(require, 'plugins.colors.' .. vim.g.colors_name)
+m.post_switch_color = function(colors_name)
+    local success, colorscheme = pcall(require, 'plugins.colors.' .. colors_name)
     if success and colorscheme.apply then
-        if not colorscheme.apply() then
-            return
-        end
+        colorscheme.apply(colors_name)
 
         vim.opt.guicursor = 'n-v-c-sm:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20'
 

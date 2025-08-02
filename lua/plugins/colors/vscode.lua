@@ -2,16 +2,10 @@ local m = {}
 local user = require 'user'
 local nvim_set_hl = vim.api.nvim_set_hl
 
+m.name = 'vscode'
+
 m.setup = function()
     require 'vscode'.setup(m.config())
-end
-
-m.set_background = function(color_name)
-    if color_name == 'vscode-light' then
-        vim.opt.background = 'light'
-    else
-        vim.opt.background = 'dark'
-    end
 end
 
 m.config = function()
@@ -56,12 +50,13 @@ m.config = function()
     return options
 end
 
-m.apply = function()
-    if vim.o.background == 'dark' then
-        vim.env.BAT_THEME = 'Monokai Extended Origin'
-    else
-        vim.env.BAT_THEME = 'Monokai Extended Light'
-    end
+m.pre_apply = function(colors_name)
+    vim.opt.background = 'dark'
+    vim.env.BAT_THEME = 'Monokai Extended Origin'
+end
+
+m.apply = function(colors_name)
+    m.name = colors_name
 
     local color = require 'vscode.colors' .get_colors()
 
@@ -69,10 +64,10 @@ m.apply = function()
         hi! DiagnosticUnderlineWarn guisp=]=] .. color.vscUiOrange .. [=[
     ]=])
 
-    if user.settings.lsp == 'coc' then
-        nvim_set_hl(0, 'CocUnusedHighlight', { link = 'DiagnosticUnderlineWarn' })
-    elseif user.settings.lsp == 'nvim' then
+    if user.settings.lsp == 'nvim' then
         nvim_set_hl(0, 'DiagnosticUnnecessary', { link = 'DiagnosticUnderlineWarn' })
+    elseif user.settings.lsp == 'coc' then
+        nvim_set_hl(0, 'CocUnusedHighlight', { link = 'DiagnosticUnderlineWarn' })
     end
 
     if user.settings.finder == 'fzf' or user.settings.finder == 'fzf-lua' then
@@ -92,9 +87,6 @@ m.apply = function()
             header = { 'fg', 'Comment' }
         }
     end
-
-    return true
 end
 
 return m
-

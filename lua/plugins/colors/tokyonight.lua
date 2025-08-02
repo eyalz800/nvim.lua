@@ -8,14 +8,6 @@ m.setup = function()
     require 'tokyonight'.setup(m.config())
 end
 
-m.set_background = function(color_name)
-    if color_name == 'tokyonight-day' then
-        vim.opt.background = 'light'
-    else
-        vim.opt.background = 'dark'
-    end
-end
-
 m.config = function()
     local settings = user.settings.colorscheme_settings
     m.tokyonight_config = require 'tokyonight.config'
@@ -84,20 +76,18 @@ m.config = function()
     }
 end
 
-m.apply = function()
-    m.name = 'tokyonight-' .. m.tokyonight_config.options.style
-
-    if vim.o.background == 'dark' then
-        if m.tokyonight_config.options.style == 'day' then
-            vim.opt.background = 'light'
-        end
-        vim.env.BAT_THEME = 'Monokai Extended Origin'
-    else
-        if m.tokyonight_config.options.style ~= 'day' then
-            vim.opt.background = 'dark'
-        end
+m.pre_apply = function(colors_name)
+    if colors_name == 'tokyonight-day' then
+        vim.opt.background = 'light'
         vim.env.BAT_THEME = 'Monokai Extended Light'
+    else
+        vim.opt.background = 'dark'
+        vim.env.BAT_THEME = 'Monokai Extended Origin'
     end
+end
+
+m.apply = function(colors_name)
+    m.name = colors_name
 
     if user.settings.lsp == 'coc' then
         nvim_set_hl(0, 'CocUnusedHighlight', {link = 'DiagnosticUnderlineWarn'})
@@ -162,8 +152,6 @@ m.apply = function()
         ]=]
         vim.g.airline_theme_patch_func = 'Init_lua_tokyonight_airline_theme_patch'
     end
-
-    return true
 end
 
 return m

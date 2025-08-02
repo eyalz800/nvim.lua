@@ -85,24 +85,23 @@ m.config = function()
     }
 end
 
-m.apply = function()
-    m.name = 'catppuccin-' .. m.catppuccin.flavour
-    if vim.o.background == 'dark' then
-        if m.catppuccin.flavour == 'latte' then
-            vim.opt.background = 'light'
-        end
-        vim.env.BAT_THEME = 'Monokai Extended Origin'
-    else
-        if m.catppuccin.flavour ~= 'latte' then
-            vim.opt.background = 'dark'
-        end
+m.pre_apply = function(colors_name)
+    if colors_name == 'catppuccin-latte' then
+        vim.opt.background = 'light'
         vim.env.BAT_THEME = 'Monokai Extended Light'
+    else
+        vim.opt.background = 'dark'
+        vim.env.BAT_THEME = 'Monokai Extended Origin'
     end
+end
 
-    if user.settings.lsp == 'coc' then
-        nvim_set_hl(0, 'CocUnusedHighlight', {link = 'DiagnosticUnderlineWarn'})
-    elseif user.settings.lsp == 'nvim' then
+m.apply = function(colors_name)
+    m.name = colors_name
+
+    if user.settings.lsp == 'nvim' then
         nvim_set_hl(0, 'DiagnosticUnnecessary', { link = 'DiagnosticUnderlineWarn' })
+    elseif user.settings.lsp == 'coc' then
+        nvim_set_hl(0, 'CocUnusedHighlight', {link = 'DiagnosticUnderlineWarn'})
     end
 
     vim.cmd [=[
@@ -129,8 +128,6 @@ m.apply = function()
             header = { 'fg', 'Comment' }
         }
     end
-
-    return true
 end
 
 return m

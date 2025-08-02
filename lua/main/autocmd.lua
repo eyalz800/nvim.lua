@@ -56,8 +56,20 @@ m.setup = function()
         end
     })
 
-    autocmd('colorschemepre', { group = augroup('init.lua.colorscheme_pre', {}), callback = colors.pre_switch_color })
-    autocmd('colorscheme', { group = augroup('init.lua.colorscheme', {}), callback = colors.post_switch_color })
+    autocmd('colorschemepre',
+        {
+            group = augroup('init.lua.colorscheme_pre', {}),
+            callback = function(event)
+                colors.pre_switch_color(event.match)
+            end
+        })
+    autocmd('colorscheme',
+        {
+            group = augroup('init.lua.colorscheme', {}),
+            callback = function(event)
+                colors.post_switch_color(event.match)
+            end
+        })
 
     local lsp_was_enabled = nil
     if user.settings.lsp == 'coc' then
