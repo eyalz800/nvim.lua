@@ -149,6 +149,14 @@ m.setup = function()
         { pattern = 'qf', group = augroup('init.lua.quickfix', {}), callback = require 'plugins.quickfix'.on_open })
     autocmd('filetype', { pattern = 'help', group = augroup('init.lua.help', {}), callback = require 'plugins.help'
     .on_open })
+    autocmd('bufwinenter', {
+        group = augroup('init.lua.help-buftype', {}),
+        callback = function()
+            if vim.bo.buftype == 'help' and vim.bo.filetype ~= 'help' then
+                require('plugins.help').on_open()
+            end
+        end
+    })
 
     if user.settings.code_explorer == 'symbols-outline' then
         autocmd('filetype',
