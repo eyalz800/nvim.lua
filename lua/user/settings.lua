@@ -1,5 +1,6 @@
 local m = {}
 m.indentation = 4
+m.guess_indent = true
 m.expand_tabs = true
 m.respect_editor_config = true
 m.swap_files = false

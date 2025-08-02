@@ -568,6 +568,13 @@ m.plugins = {
         end,
         cond = user.settings.diff == 'mini',
     },
+    {
+        'NMAC427/guess-indent.nvim',
+        config = function()
+            require 'plugins.config.guess-indent'.setup()
+        end,
+        cond = user.settings.guess_indent,
+    },
 }
 
 return m
