@@ -72,6 +72,16 @@ m.config = function()
             {
                 filter = {
                     event = 'msg_show',
+                    kind = 'bufwrite',
+                },
+                view = 'notify',
+                opts = {
+                    level = 'info',
+                },
+            },
+            {
+                filter = {
+                    event = 'msg_show',
                     kind = 'lua_print',
                     find = 'Running healthchecks%.%.%.'
                 },
