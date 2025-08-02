@@ -24,6 +24,7 @@ m.config = function()
                 accept_line = nil,
                 accept_n_lines = nil,
             },
+            show_on_completion_menu = true,
         },
         cmp = {
             enable_auto_complete = false,
@@ -34,7 +35,6 @@ m.config = function()
         lsp = {
             enabled_ft = {},
         },
-        show_on_completion_menu = true,
         notify = false,
         proxy = nil,
 
