@@ -53,14 +53,14 @@ m.copilot = true
 m.codecompanion = true
 m.codecompanion_config = {
     progress = m.fidget and 'fidget' or 'noice',
-    strategies = {
-        chat = {
-            adapter = 'gemini'
-        },
-        inline = {
-            adapter = 'gemini'
-        },
-    },
+    -- strategies = {
+    --     chat = {
+    --         adapter = 'gemini'
+    --     },
+    --     inline = {
+    --         adapter = 'gemini'
+    --     },
+    -- },
 }
 m.minuet_ai = false
 m.minuet_config = {
