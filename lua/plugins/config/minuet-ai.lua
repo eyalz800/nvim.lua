@@ -10,6 +10,7 @@ m.config = function()
         provider = user.settings.minuet_config.provider or 'openai',
         provider_options = user.settings.minuet_config.provider_options,
         request_timeout = user.settings.minuet_config.request_timeout or 2.5,
+        n_completions = user.settings.minuet_config.n_completions or 3,
         throttle = user.settings.minuet_config.throttle or nil, -- Increase to reduce costs and avoid rate limits
         debounce = user.settings.minuet_config.debounce or nil, -- Increase to reduce costs and avoid rate limits
         virtualtext = {
@@ -37,27 +38,6 @@ m.config = function()
         },
         notify = false,
         proxy = nil,
-
-        default_system = {
-            template = '...',
-            prompt = '...',
-            guidelines = '...',
-            n_completion_template = '...',
-        },
-        default_system_prefix_first = {
-            template = '...',
-            prompt = '...',
-            guidelines = '...',
-            n_completion_template = '...',
-        },
-        default_fim_template = {
-            prompt = '...',
-            suffix = '...',
-        },
-        default_few_shots = { '...' },
-        default_chat_input = { '...' },
-        default_few_shots_prefix_first = { '...' },
-        default_chat_input_prefix_first = { '...' },
     }
 end
 
