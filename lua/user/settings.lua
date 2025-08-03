@@ -114,6 +114,7 @@ m.lsp_config = {
                                     'E302', -- expected 2 blank lines, found 1
                                     'E305', -- expected 2 blank lines after class or function definition, found 1
                                     'E261', -- at least two blank lines required before a class or function
+                                    'E114', -- indentation is not a multiple of four
                                 }
                             },
                         },
