@@ -117,6 +117,7 @@ m.lsp_config = {
                                     'E114', -- indentation is not a multiple of four
                                 }
                             },
+                            pyflakes = { enabled = false },
                         },
                     },
                 },
