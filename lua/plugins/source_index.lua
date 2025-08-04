@@ -24,10 +24,10 @@ local bin_path = stdpath 'data' .. '/installation/bin'
 
 local ctags_file_patterns = '-g "*.c" -g "*.cc" -g "*.cpp" -g "*.cxx" -g "*.h" -g "*.hh" -g "*.hpp"'
 local other_file_patterns = '-g "*.py" -g "*.te" -g "*.S" -g "*.asm" -g "*.mk" -g "*.md" -g "makefile" -g "Makefile"'
-local source_file_patterns = '-g "*.c" -g "*.cc" -g "*.cpp" -g "*.cxx" -g "*.h" -g "*.hh" -g "*.hpp" -g "*.py" -g "*.go" -g "*.java" -g "*.cs" -g "*.te" -g "*.S" -g "*.asm" -g "*.mk" -g "*.md" -g "makefile" -g "Makefile"'
+local source_file_patterns = '-g "*.c" -g "*.cc" -g "*.cpp" -g "*.cxx" -g "*.h" -g "*.hh" -g "*.hpp" -g "*.py" -g "*.go" -g "*.java" -g "*.cs" -g "*.te" -g "*.S" -g "*.asm" -g "*.mk" -g "*.md" -g "*.lua" -g "makefile" -g "Makefile"'
 local ctags_everything_options = '--c++-kinds=+p --fields=+iaSn --extras=+q --sort=foldcase --tag-relative --recurse=yes'
 local ctags_options = '--languages=C,C++ --c++-kinds=+p --fields=+iaSn --extras=+q --sort=foldcase --tag-relative --recurse=yes'
-local opengrok_file_patterns = "-I '*.cpp' -I '*.c' -I '*.cc' -I '*.cxx' -I '*.h' -I '*.hh' -I '*.hpp' -I '*.S' -I '*.s' -I '*.asm' -I '*.py' -I '*.go' -I '*.java' -I '*.cs' -I '*.mk' -I '*.te' -I makefile -I Makefile"
+local opengrok_file_patterns = "-I '*.cpp' -I '*.c' -I '*.cc' -I '*.cxx' -I '*.h' -I '*.hh' -I '*.hpp' -I '*.S' -I '*.s' -I '*.asm' -I '*.py' -I '*.go' -I '*.java' -I '*.cs' -I '*.mk' -I '*.te' -I '*.lua' -I makefile -I Makefile"
 local opengrok_jar = bin_path .. '/opengrok/lib/opengrok.jar'
 local opengrok_ctags = bin_path .. '/ctags-exuberant/ctags/ctags'
 local generate_files_command = 'rg --files ' ..
