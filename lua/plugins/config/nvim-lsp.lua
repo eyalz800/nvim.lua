@@ -148,7 +148,7 @@ m.setup = function()
 
     vim.lsp.config('*', {
         capabilities = m.capabilities,
-        on_init = m.on_init,
+        on_attach = on_attach,
     })
 
     for server_name, server in pairs(m.servers) do
@@ -157,7 +157,6 @@ m.setup = function()
             capabilities = server.capabilities,
             settings = server.settings or {},
             filetypes = server.filetypes,
-            on_attach = on_attach,
         })
         vim.lsp.enable(server_name)
     end
