@@ -39,7 +39,7 @@ m.setup = function()
 
     autocmd({ 'BufRead', 'BufNewFile' },
         {
-            pattern = { '*.cppm', "*.ixx" },
+            pattern = { '*.cppm', '*.ixx' },
             group = augroup('init.lua.cpp_module_types', {}),
             callback = function()
                 opt_local.filetype = 'cpp'
