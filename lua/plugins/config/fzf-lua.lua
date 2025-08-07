@@ -107,7 +107,6 @@ end
 
 m.find_buffer = function()
     fzf_lua.buffers({
-        search = expand '<cword>',
         fzf_colors = vim.g.fzf_colors,
     })
 end
