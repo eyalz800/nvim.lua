@@ -124,7 +124,7 @@ m.setup = function()
 
     for _, server in pairs(settings.servers) do
         if server then
-            m.servers[server.name or server] = server.settings or {}
+            m.servers[server.name or server] = server.name and server or {}
         end
     end
 
@@ -132,37 +132,50 @@ m.setup = function()
         vim.lsp.protocol.make_client_capabilities()
     )
 
-    local lspconfig = require 'lspconfig'
-    local mason_lspconfig = require 'mason-lspconfig'
-    mason_lspconfig.setup {
-        ensure_installed = vim.tbl_keys(m.servers),
-        automatic_enable = false,
-    }
+    local on_attach = function(...) end
 
-    for server_name, server_settings in pairs(m.servers) do
-        local on_attach = function(...) end
-
-        if user.settings.bar == 'barbecue' then
-            local prev_attach = on_attach
-            on_attach = function(client, bufnr)
-                prev_attach(client, bufnr)
-                if client.server_capabilities['documentSymbolProvider'] then
-                    if not m.navic.is_available(bufnr) then
-                        m.navic.attach(client, bufnr)
-                    end
+    if user.settings.bar == 'barbecue' then
+        local prev_attach = on_attach
+        on_attach = function(client, bufnr)
+            prev_attach(client, bufnr)
+            if client.server_capabilities['documentSymbolProvider'] then
+                if not m.navic.is_available(bufnr) then
+                    m.navic.attach(client, bufnr)
                 end
             end
         end
-
-        -- Configure the LSP server
-        lspconfig[server_name].setup {
-            cmd = (server_settings or {}).cmd,
-            capabilities = m.capabilities,
-            settings = server_settings,
-            filetypes = (server_settings or {}).filetypes,
-            on_attach = on_attach,
-        }
     end
+
+    vim.lsp.config('*', {
+        capabilities = m.capabilities,
+        on_init = m.on_init,
+    })
+
+    for server_name, server in pairs(m.servers) do
+        vim.lsp.config(server_name, {
+            cmd = server.cmd,
+            capabilities = server.capabilities,
+            settings = server.settings or {},
+            filetypes = server.filetypes,
+            on_attach = on_attach,
+        })
+        vim.lsp.enable(server_name)
+    end
+
+    local mason_lspconfig = require 'mason-lspconfig'
+    local mason_lspconfig_automatic_enable = nil
+    if user.settings.mason_lspconfig_autoenable == true then
+        mason_lspconfig_automatic_enable = true
+    elseif user.settings.mason_lspconfig_autoenable == 'if-not-defined' then
+        mason_lspconfig_automatic_enable = { exclude = vim.tbl_keys(m.servers) }
+    else
+        mason_lspconfig_automatic_enable = false
+    end
+
+    mason_lspconfig.setup {
+        ensure_installed = vim.tbl_keys(m.servers),
+        automatic_enable = mason_lspconfig_automatic_enable,
+    }
 
     require 'plugins.config.cmp'.setup()
 end

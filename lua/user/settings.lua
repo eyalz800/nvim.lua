@@ -87,11 +87,11 @@ m.lsp_config = {
         servers = {
             cpp = {
                 name = 'clangd',
+                cmd = {
+                    'clangd',
+                    '--fallback-style=microsoft',
+                },
                 settings = {
-                    cmd = {
-                        'clangd',
-                        '--fallback-style=microsoft',
-                    },
                 }
             },
             lua = {
@@ -138,5 +138,6 @@ m.lsp_config = {
             'coc-spell-checker' }
     },
 }
+m.mason_lspconfig_autoenable = 'if-not-defined'
 
 return m

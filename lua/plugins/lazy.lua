@@ -61,49 +61,53 @@ m.plugins = {
         cond = user.settings.fidget and user.settings.lsp == 'nvim',
     },
     {
-        'neovim/nvim-lspconfig',
+        'hrsh7th/nvim-cmp',
         dependencies = {
+            'L3MON4D3/LuaSnip',
+            'saadparwaiz1/cmp_luasnip',
+            'hrsh7th/cmp-nvim-lsp',
+            'https://codeberg.org/FelipeLema/cmp-async-path.git',
+            'hrsh7th/cmp-buffer',
             {
-                'williamboman/mason-lspconfig.nvim',
-                dependencies = {
-                    'williamboman/mason.nvim'
-                },
-                cond = user.settings.lsp == 'nvim',
+                'eyalz800/friendly-snippets',
+                cond = user.settings.lsp_config.nvim.snippets,
             },
-            'j-hui/fidget.nvim',
-            {
-                'folke/neoconf.nvim',
-                config = function()
-                    require 'plugins.config.neoconf'.setup()
-                end,
-                cond = user.settings.lsp == 'nvim',
-            },
-            {
-                'folke/lazydev.nvim',
-                ft = 'lua',
-                config = function()
-                    require 'plugins.config.lazydev'.setup()
-                end,
-                cond = user.settings.lsp == 'nvim',
-            },
-            {
-                'hrsh7th/nvim-cmp',
-                dependencies = {
-                    'L3MON4D3/LuaSnip',
-                    'saadparwaiz1/cmp_luasnip',
-                    'hrsh7th/cmp-nvim-lsp',
-                    'https://codeberg.org/FelipeLema/cmp-async-path.git',
-                    'hrsh7th/cmp-buffer',
-                    {
-                        'eyalz800/friendly-snippets',
-                        cond = user.settings.lsp_config.nvim.snippets,
-                    },
-                },
-                cond = user.settings.lsp == 'nvim',
-            },
+        },
+        cond = user.settings.lsp == 'nvim',
+    },
+    {
+        'folke/lazydev.nvim',
+        ft = 'lua',
+        config = function()
+            require 'plugins.config.lazydev'.setup()
+        end,
+        cond = user.settings.lsp == 'nvim',
+    },
+    {
+        'williamboman/mason-lspconfig.nvim',
+        dependencies = {
+            'williamboman/mason.nvim',
+            'neovim/nvim-lspconfig',
+            'folke/neoconf.nvim',
         },
         config = function()
             require 'plugins.config.nvim-lsp'.setup()
+        end,
+        cond = user.settings.lsp == 'nvim',
+    },
+    {
+        'neovim/nvim-lspconfig',
+        dependencies = {
+            'j-hui/fidget.nvim',
+            'hrsh7th/nvim-cmp',
+            'folke/lazydev.nvim',
+        },
+        cond = user.settings.lsp == 'nvim',
+    },
+    {
+        'folke/neoconf.nvim',
+        config = function()
+            require 'plugins.config.neoconf'.setup()
         end,
         cond = user.settings.lsp == 'nvim',
     },
