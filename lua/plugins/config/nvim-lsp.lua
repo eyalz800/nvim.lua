@@ -128,8 +128,9 @@ m.setup = function()
         end
     end
 
-    m.capabilities = require 'cmp_nvim_lsp'.default_capabilities(
-        vim.lsp.protocol.make_client_capabilities()
+    m.capabilities = vim.tbl_deep_extend('force',
+        vim.lsp.protocol.make_client_capabilities(),
+        require 'cmp_nvim_lsp'.default_capabilities()
     )
 
     local on_attach = function(...) end
