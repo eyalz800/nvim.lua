@@ -23,6 +23,7 @@ else
     m.custom_grep = function() end
     m.color_picker = function() end
     m.keymaps = function() end
+    m.browse_help_tags = function() end
 end
 
 return m

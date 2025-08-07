@@ -1,11 +1,12 @@
 local m = {}
-local fzf_lua = nil
+local fzf_lua = {}
 local cmd = require 'vim.cmd'.silent
 
 local expand = vim.fn.expand
 
 m.setup = function()
-    require 'fzf-lua'.setup(m.config())
+    fzf_lua = require 'fzf-lua'
+    fzf_lua.setup(m.config())
 end
 
 m.find_file = function()
@@ -134,10 +135,13 @@ end
 m.color_picker = function()
     fzf_lua.colorschemes({
         fzf_colors = vim.g.fzf_colors,
-        ignore_patterns   = { '^blue$', '^darkblue$', '^default$', '^delek$', '^desert$', '^elflord$', '^evening$', '^habamax$', '^industry$', '^koehler$', '^lunaperche$', '^morning$', '^murphy$', '^pablo$', '^peachpuff$', '^quiet$', '^retrobox$', '^ron$', '^shine$', '^slate$', '^sorbet$', '^torte$', '^wildcharm$', '^zaibatsu$', '^zellner$', '^vim$', '^unokai$',
-                              '^tokyonight$',
-                              '^catppuccin$',
-                            },
+        ignore_patterns = { '^blue$', '^darkblue$', '^default$', '^delek$', '^desert$', '^elflord$', '^evening$',
+            '^habamax$', '^industry$', '^koehler$', '^lunaperche$', '^morning$', '^murphy$', '^pablo$', '^peachpuff$',
+            '^quiet$', '^retrobox$', '^ron$', '^shine$', '^slate$', '^sorbet$', '^torte$', '^wildcharm$', '^zaibatsu$',
+            '^zellner$', '^vim$', '^unokai$',
+            '^tokyonight$',
+            '^catppuccin$',
+        },
     })
 end
 
@@ -154,8 +158,13 @@ m.keymaps = function()
     })
 end
 
+m.browse_help = function()
+    require 'fzf-lua'.help_tags ({
+        fzf_colors = vim.g.fzf_colors,
+    })
+end
+
 m.config = function()
-    fzf_lua = require 'fzf-lua'
     return {}
 end
 

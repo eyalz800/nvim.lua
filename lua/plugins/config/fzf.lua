@@ -80,6 +80,10 @@ end
 
 m.keymaps = function() end
 
+m.browse_help = function()
+    cmd 'Helptags'
+end
+
 m.rg = function(fullscreen)
     local initial_command = 'rg --column --line-number --no-heading --color=always --smart-case . '
     local reload_command =

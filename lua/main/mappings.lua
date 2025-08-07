@@ -124,6 +124,7 @@ m.setup = function()
             ['g<c-\\>'] = { finder.find_current_in_files_precise, 'Search in current file (precise) (finder.find_current_in_files_precise)' },
             ['g<leader><c-\\>'] = { finder.find_current_in_files_precise_native, 'Search in current file (native, precise) (finder.find_current_in_files_precise_native)' },
             ['//'] = { finder.find_line, 'Find line in current file (finder.find_line)' },
+            ['??'] = { finder.browse_help, 'Browse help (finder.browse_help)' },
             ['<c-w>h'] = { tmux_navigator.tmux_navigate_left, 'Navigate left (tmux/vim window)' },
             ['<c-w>j'] = { tmux_navigator.tmux_navigate_down, 'Navigate down (tmux/vim window)' },
             ['<c-w>k'] = { tmux_navigator.tmux_navigate_up, 'Navigate up (tmux/vim window)' },
