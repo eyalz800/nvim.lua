@@ -2,6 +2,7 @@ local m = {}
 local cmd = require 'vim.cmd'.silent
 local user = require 'user'
 local bufdelete = require 'bufdelete'.bufdelete
+local nvim_set_hl = vim.api.nvim_set_hl
 
 local bufferline = nil
 
@@ -30,30 +31,26 @@ m.pick_buffer = ':BufferLinePick<cr>'
 m.config = function()
     bufferline = require 'bufferline'
 
-    if user.settings.bar == 'barbecue' then
-        vim.cmd [=[
-            hi def link InitLuaBufferLineBg Pmenu
-            hi def link InitLuaBufferLineOffsetSep Pmenu
-            hi def link InitLuaBufferLineSelectedBg Normal
-            hi def link InitLuaBufferLineSelectedFg Normal
-            hi def link InitLuaBufferLineVisibleFg NonText
-            hi def link InitLuaBufferLineVisibleBg Normal
-            hi def link InitLuaBufferLineNormalFg NonText
-            hi def link InitLuaBufferLineNormalBg CursorLine
-            hi def link InitLuaBufferLineIndicator InitLuaBufferLineSelectedBg
-        ]=]
+    if user.settings.bar == 'barbecue' or user.settings.bar == 'dropbar' then
+        nvim_set_hl(0, 'InitLuaBufferLineBg', { link = 'Pmenu', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineOffsetSep', { link = 'Pmenu', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineSelectedBg', { link = 'Normal', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineSelectedFg', { link = 'Normal', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineVisibleFg', { link = 'NonText', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineVisibleBg', { link = 'Normal', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineNormalFg', { link = 'NonText', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineNormalBg', { link = 'CursorLine', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineIndicator', { link = 'InitLuaBufferLineSelectedBg', default = true })
     else
-        vim.cmd [=[
-            hi def link InitLuaBufferLineBg Normal
-            hi def link InitLuaBufferLineOffsetSep Pmenu
-            hi def link InitLuaBufferLineSelectedBg Pmenu
-            hi def link InitLuaBufferLineSelectedFg NormalSB
-            hi def link InitLuaBufferLineVisibleFg NonText
-            hi def link InitLuaBufferLineVisibleBg Pmenu
-            hi def link InitLuaBufferLineNormalFg NonText
-            hi def link InitLuaBufferLineNormalBg CursorLine
-            hi def link InitLuaBufferLineIndicator InitLuaBufferLineSelectedBg
-        ]=]
+        nvim_set_hl(0, 'InitLuaBufferLineBg', { link = 'Normal', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineOffsetSep', { link = 'Pmenu', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineSelectedBg', { link = 'Pmenu', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineSelectedFg', { link = 'NormalSB', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineVisibleFg', { link = 'NonText', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineVisibleBg', { link = 'Pmenu', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineNormalFg', { link = 'NonText', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineNormalBg', { link = 'CursorLine', default = true })
+        nvim_set_hl(0, 'InitLuaBufferLineIndicator', { link = 'InitLuaBufferLineSelectedBg', default = true })
     end
 
     local offset_sep = { highlight = 'InitLuaBufferLineOffsetSep', attribute = 'bg' }
