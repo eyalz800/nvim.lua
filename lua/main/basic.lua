@@ -59,6 +59,7 @@ m.setup = function()
     opt.shada:append({'r*://'}) -- Ignore files from shada
     opt.splitright = true -- Open new splits on the right
     opt.splitbelow = true -- Open new splits on the bottom
+    opt.jumpoptions = 'stack' -- Make jumplist behave like a stack
 
     if exists('+shellslash') then -- Use forward slash for directories
         opt.shellslash = true
