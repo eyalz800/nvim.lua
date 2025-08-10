@@ -63,7 +63,7 @@ m.config = function()
                     WinBarNC = { link = 'WinBar' },
                 }
 
-                if user.settings.bar == 'barbecue' then
+                if user.settings.bar == 'barbecue' or user.settings.bar == 'dropbar' then
                     options.BufferLineFill = nil
                     options.InitLuaBufferLineBg = { fg = color.mantle, bg = color.mantle }
                     options.InitLuaBufferLineSelectedBg = { bg = color.base }

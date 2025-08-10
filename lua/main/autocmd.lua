@@ -232,6 +232,14 @@ m.setup = function()
                 end
             })
         end
+    elseif user.settings.bar == 'dropbar' then
+        autocmd('filetype', {
+            pattern = 'fugitiveblame',
+            group = augroup('init.lua.fugitive-dropbar', {}),
+            callback = function()
+                vim.wo.winbar = '  Blame'
+            end
+        })
     end
 end
 

@@ -68,7 +68,7 @@ m.config = function()
 
             if vim.env.TERM == 'xterm-kitty' then
                 highlights.InitLuaBufferLineIndicator = { bg = color.red }
-                if user.settings.bar == 'barbecue' then
+                if user.settings.bar == 'barbecue' or user.settings.bar == 'dropbar' then
                     highlights.InitLuaBufferLineNormalBg = { bg = color.bg_highlight }
                     highlights.InitLuaBufferLineVisibleBg = { bg = color.bg }
                     highlights.InitLuaBufferLineSelectedBg = { bg = color.bg }

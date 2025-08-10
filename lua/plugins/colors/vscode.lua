@@ -50,7 +50,7 @@ m.config = function()
         options.group_overrides.InitLuaBufferLineIndicator = { bg = color.vscLightRed }
     end
 
-    if user.settings.bar == 'barbecue' then
+    if user.settings.bar == 'barbecue' or user.settings.bar == 'dropbar' then
         options.group_overrides.BufferLineFill = nil
     end
 

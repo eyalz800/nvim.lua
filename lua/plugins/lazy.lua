@@ -168,6 +168,14 @@ m.plugins = {
         cond = user.settings.bar == 'barbecue' and user.settings.lsp == 'nvim'
     },
     {
+        'Bekaboo/dropbar.nvim',
+        event = 'UIEnter',
+        config = function()
+            require 'plugins.config.dropbar'.setup()
+        end,
+        cond = user.settings.bar == 'dropbar' and user.settings.lsp == 'nvim',
+    },
+    {
         'nvim-tree/nvim-tree.lua',
         config = function()
             require 'plugins.config.nvim-tree'.setup()
