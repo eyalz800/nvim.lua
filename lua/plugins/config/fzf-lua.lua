@@ -160,6 +160,9 @@ end
 m.browse_help = function()
     require 'fzf-lua'.help_tags ({
         fzf_colors = vim.g.fzf_colors,
+        actions = {
+            default = fzf_lua.actions.help_vert,
+        },
     })
 end
 

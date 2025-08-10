@@ -57,6 +57,8 @@ m.setup = function()
     opt.mousemoveevent = true -- Mouse movement
     opt.splitkeep = 'screen' -- Keep text on the same screen line
     opt.shada:append({'r*://'}) -- Ignore files from shada
+    opt.splitright = true -- Open new splits on the right
+    opt.splitbelow = true -- Open new splits on the bottom
 
     if exists('+shellslash') then -- Use forward slash for directories
         opt.shellslash = true
