@@ -60,6 +60,7 @@ m.config = function()
                     --NvimTreeWinSeparator = { fg = color.mantle, bg = color.mantle },
                     InitLuaBufferLineSelectedBg = { bg = color.mantle },
                     InitLuaBufferLineVisibleBg = { bg = color.mantle },
+                    WinBarNC = { link = 'WinBar' },
                 }
 
                 if user.settings.bar == 'barbecue' then

@@ -29,12 +29,14 @@ m.plugins = {
     },
     {
         'Mofiqul/vscode.nvim',
+        priority = 1000,
         config = function()
             require 'plugins.colors.vscode'.setup()
         end,
     },
     {
         'catppuccin/nvim',
+        priority = 1000,
         name = 'catppuccin',
         config = function()
             require 'plugins.colors.catppuccin'.setup()
