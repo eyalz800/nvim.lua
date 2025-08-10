@@ -94,7 +94,7 @@ m.apply = function(colors_name)
     if user.settings.lsp == 'nvim' then
         nvim_set_hl(0, 'DiagnosticUnnecessary', { link = 'DiagnosticUnderlineWarn' })
     elseif user.settings.lsp == 'coc' then
-        nvim_set_hl(0, 'CocUnusedHighlight', {link = 'DiagnosticUnderlineWarn'})
+        nvim_set_hl(0, 'CocUnusedHighlight', { link = 'DiagnosticUnderlineWarn'})
     end
 
     vim.cmd [=[

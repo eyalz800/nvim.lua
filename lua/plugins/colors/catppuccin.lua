@@ -70,6 +70,10 @@ m.config = function()
                     options.InitLuaBufferLineVisibleBg = { bg = color.base }
                 end
 
+                if vim.env.TERM == 'xterm-kitty' then
+                    options.InitLuaBufferLineIndicator = { bg = color.red }
+                end
+
                 return options
             end,
             latte = function(color)
@@ -101,7 +105,7 @@ m.apply = function(colors_name)
     if user.settings.lsp == 'nvim' then
         nvim_set_hl(0, 'DiagnosticUnnecessary', { link = 'DiagnosticUnderlineWarn' })
     elseif user.settings.lsp == 'coc' then
-        nvim_set_hl(0, 'CocUnusedHighlight', {link = 'DiagnosticUnderlineWarn'})
+        nvim_set_hl(0, 'CocUnusedHighlight', { link = 'DiagnosticUnderlineWarn'})
     end
 
     vim.cmd [=[

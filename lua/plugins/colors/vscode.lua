@@ -42,7 +42,12 @@ m.config = function()
             ['@constructor.lua'] = { fg = color.vscFront },
             ['@variable.builtin'] = { fg = color.vscBlue },
         }
+
     }
+
+    if vim.env.TERM == 'xterm-kitty' then
+        options.group_overrides.InitLuaBufferLineIndicator = { bg = color.vscLightRed }
+    end
 
     if user.settings.bar == 'barbecue' then
         options.group_overrides.BufferLineFill = nil
