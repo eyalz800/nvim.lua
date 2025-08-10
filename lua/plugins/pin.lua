@@ -66,6 +66,14 @@ m.pin = function(opts)
 
     vim.b[buf].pin_data = buf_pin_data
     vim.w[win].pin_data = win_pin_data
+    vim.defer_fn(function()
+        if vim.api.nvim_win_is_valid(win) then
+            local pin_data = vim.w[win].pin_data
+            if pin_data then
+                vim.api.nvim_set_option_value('winfixbuf', false, { scope = 'local', win = win })
+            end
+        end
+    end, 0)
 
     local group = augroup('init.lua.pin.bufwinleave', { clear = false })
     clear_autocmds({ group = group, buffer = buf })
