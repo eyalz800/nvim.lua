@@ -337,7 +337,6 @@ m.setup = function()
         }, { mode = 'x', expr = true })
 
     keys.register({
-
         ['<scrollwheelleft>'] = { '<nop>', 'Disable terminal horizontal scrolling (scrollwheelleft)' },
         ['<scrollwheelright>'] = { '<nop>', 'Disable terminal horizontal scrolling (scrollwheelright)' },
         ['<mousemove>'] = { '<nop>', 'Disable terminal mouse move (mousemove)' },
