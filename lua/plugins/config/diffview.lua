@@ -5,7 +5,19 @@ m.setup = function()
 end
 
 m.config = function()
-    return {}
+    return {
+        file_panel = {
+            win_config = {
+                width = 30,
+                win_opts = {},
+            },
+        },
+        view = {
+            merge_tool = {
+                layout = 'diff3_mixed',
+            },
+        },
+    }
 end
 
 return m

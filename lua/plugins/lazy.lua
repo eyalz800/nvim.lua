@@ -457,10 +457,10 @@ m.plugins = {
     },
     {
         'sindrets/diffview.nvim',
-        config = function()
-            require 'plugins.config.diffview'
-        end,
         event = 'VeryLazy',
+        config = function()
+            require 'plugins.config.diffview'.setup()
+        end,
     },
     {
         'will133/vim-dirdiff',
