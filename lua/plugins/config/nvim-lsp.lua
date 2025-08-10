@@ -82,7 +82,9 @@ m.expand_snippets = function() end
 m.select_snippets = function() end
 
 m.setup = function()
-    m.navic = require 'nvim-navic'
+    if user.settings.bar == 'barbecue' then
+        m.navic = require 'nvim-navic'
+    end
     local virtual_text = nil
     if settings.virtual_text then
         virtual_text = {
