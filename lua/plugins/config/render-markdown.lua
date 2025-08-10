@@ -5,7 +5,10 @@ m.setup = function()
 end
 
 m.config = function()
-    return {}
+    return {
+        enabled = true,
+        render_modes = { 'n', 'c', 't', 'i' },
+    }
 end
 
 return m
