@@ -9,7 +9,6 @@ m.setup = function()
 
     -- Mappings
     cmd('Mappings', 'n ' .. config_path .. '/lua/main/mappings.lua', {})
-    cmd('UserMappings', 'n ' .. config_path .. '/lua/user/mappings.lua', {})
 
     -- Quit vim
     cmd('Q', 'q', {})
