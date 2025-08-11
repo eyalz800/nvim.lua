@@ -9,7 +9,7 @@ if user.settings.buffer_deleter == 'bufdelete' then
 elseif user.settings.buffer_deleter == 'mini' then
     local mini_bufremove = require 'mini.bufremove'
     m.delete = function(id)
-        mini_bufremove.delete(id or 0, true)
+        mini_bufremove.delete(id or 0, false)
     end
 else
     m.delete = function()

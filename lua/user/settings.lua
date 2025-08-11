@@ -16,7 +16,7 @@ m.install_options = { clang_version = 20 }
 m.finder = 'fzf-lua'
 m.line = 'lualine'
 m.buffer_line = 'bufferline'
-m.buffer_deleter = 'bufdelete'
+m.buffer_deleter = 'mini'
 m.bar = 'dropbar'
 m.file_explorer = 'nvim-tree'
 m.file_explorer_config = { nvim_tree = { window_picker = false } }

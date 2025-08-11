@@ -616,10 +616,17 @@ m.plugins = {
     },
     {
         'echasnovski/mini.files',
-        version = '*',
         config = function()
             require 'plugins.config.mini-files'.setup()
         end,
+    },
+    {
+        'echasnovski/mini.bufremove',
+        event = 'VeryLazy',
+        config = function()
+            require 'plugins.config.mini-bufremove'.setup()
+        end,
+        cond = user.settings.buffer_deleter == 'mini',
     },
 }
 
