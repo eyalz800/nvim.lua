@@ -376,6 +376,7 @@ m.plugins = {
         --'famiu/bufdelete.nvim',
         'eyalz800/bufdelete.nvim',
         event = 'VeryLazy',
+        cond = user.settings.buffer_deleter == 'bufdelete',
     },
     {
         'tpope/vim-abolish',

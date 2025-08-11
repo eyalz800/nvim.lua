@@ -26,8 +26,7 @@ m.next_buffer = '<plug>AirlineSelectNextTab'
 m.prev_buffer = '<plug>AirlineSelectPrevTab'
 
 m.delete_buffer = function(id)
-    local bufdelete = require 'bufdelete'.bufdelete
-    bufdelete(id or 0, true)
+    require 'plugins.buffer-delete'.delete(id or 0)
     vim.fn['airline#extensions#tabline#buflist#clean']()
 end
 

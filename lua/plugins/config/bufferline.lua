@@ -1,7 +1,7 @@
 local m = {}
 local cmd = require 'vim.cmd'.silent
 local user = require 'user'
-local bufdelete = require 'bufdelete'.bufdelete
+local delete_buffer = require 'plugins.buffer-delete'.delete
 local nvim_set_hl = vim.api.nvim_set_hl
 
 local bufferline = nil
@@ -19,7 +19,7 @@ m.prev_buffer = function()
 end
 
 m.delete_buffer = function(id)
-    pcall(bufdelete, id or 0, true)
+    pcall(delete_buffer, id or 0)
 end
 
 m.switch_to_buffer = function(number)
