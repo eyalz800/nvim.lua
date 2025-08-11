@@ -166,6 +166,7 @@ m.setup = function()
             ['<f19>'] = { tasks.clean_project, 'Clean project (tasks.clean_project)' },
             ['<c-f7>'] = { tasks.run_project, 'Run project (tasks.run_project)' },
             ['<f31>'] = { tasks.build_config, 'Build project config (tasks.build_config)' },
+            ['<leader>as'] = { tasks.stop, 'Stop task (tasks.stop) '},
             ['<leader>dl'] = { debugger.launch_settings, 'Debug: launch settings (debugger.launch_settings)' },
             ['<leader>dj'] = { debugger.launch_settings, 'Debug: launch settings (json) (debugger.launch_settings)' },
             ['<leader>dd'] = { debugger.launch, 'Debug: launch (debugger.launch)' },

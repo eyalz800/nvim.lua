@@ -83,4 +83,8 @@ m.build_config = function()
     return success
 end
 
+m.stop = function()
+    cmd 'AsyncStop'
+end
+
 return m
