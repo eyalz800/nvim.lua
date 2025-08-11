@@ -589,6 +589,13 @@ m.plugins = {
         end,
         cond = user.settings.guess_indent,
     },
+    {
+        'echasnovski/mini.files',
+        version = '*',
+        config = function()
+            require 'plugins.config.mini-files'.setup()
+        end,
+    },
 }
 
 return m
