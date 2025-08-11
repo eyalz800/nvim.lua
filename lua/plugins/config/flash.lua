@@ -163,7 +163,7 @@ m.config = function()
                 --
                 -- dynamic configuration for ftFT motions
                 config = function(opts)
-                    local visual_multi_active = require 'plugins.config.visual_multi'.active
+                    local visual_multi_active = require 'plugins.config.visual-multi'.active
 
                     -- autohide flash when in operator-pending mode
                     opts.autohide = visual_multi_active or (vim.fn.mode(true):find("no") and vim.v.operator == "y")

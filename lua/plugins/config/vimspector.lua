@@ -1,9 +1,9 @@
 local m = {}
 local user = require 'user'
 
-local file_readable = require 'vim.file_readable'.file_readable
+local file_readable = require 'vim.file-readable'.file_readable
 local executable = require 'vim.executable'.executable
-local feed_keys = require 'vim.feed_keys'.feed_keys
+local feed_keys = require 'vim.feed-keys'.feed_keys
 
 local map = vim.keymap.set
 local getline = vim.fn.getline
@@ -11,6 +11,26 @@ local setline = vim.fn.setline
 local win_gotoid = vim.fn.win_gotoid
 local input = vim.fn.input
 local system = vim.fn.system
+
+m.setup = function()
+    vim.api.nvim_create_autocmd('filetype', {
+        pattern = 'VimspectorPrompt',
+        group = vim.api.nvim_create_augroup('init.lua.vimspector.prompt', {}),
+        callback = require 'plugins.config.vimspector'.on_initialize_prompt
+    })
+
+    vim.api.nvim_create_autocmd('User', {
+        pattern = 'VimspectorUICreated',
+        group = vim.api.nvim_create_augroup('init.lua.vimspector.ui-created', {}),
+        callback = require 'plugins.config.vimspector'.on_ui_created
+    })
+
+    vim.api.nvim_create_autocmd('User', {
+        pattern = 'visual_multi_exit',
+        group = vim.api.nvim_create_augroup('init.lua.vimspector.visual-multi-exit', {}),
+        callback = require 'plugins.config.vimspector'.on_visual_multi_exit
+    })
+end
 
 m.launch_settings = function()
     local debug_type = vim.bo.filetype

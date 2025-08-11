@@ -1,7 +1,7 @@
 local m = {}
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
-local feed_keys = require 'vim.feed_keys'.feed_keys
+local feed_keys = require 'vim.feed-keys'.feed_keys
 
 local enabled = true
 local settings = user.settings.lsp_config.coc or {}

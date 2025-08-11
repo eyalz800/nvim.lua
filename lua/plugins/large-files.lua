@@ -15,6 +15,18 @@ local get_current_file_size = function()
     return stats.size
 end
 
+m.setup = function()
+    vim.api.nvim_create_autocmd('bufreadpre', {
+        group = vim.api.nvim_create_augroup('init.lua.large-files-pre', {}),
+        callback = m.on_buf_read_pre
+    })
+
+    vim.api.nvim_create_autocmd('bufreadpost', {
+        group = vim.api.nvim_create_augroup('init.lua.large-files-post', {}),
+        callback = m.on_buf_read_post
+    })
+end
+
 m.on_buf_read_pre = function()
     if get_current_file_size() >= 10 * 1024 * 1024 then
         m.set()

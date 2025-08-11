@@ -2,7 +2,7 @@ local m = {}
 local cmd = require 'vim.cmd'.silent
 local expand = vim.fn.expand
 local exists = require 'vim.exists'.exists
-local file_readable = require 'vim.file_readable'.file_readable
+local file_readable = require 'vim.file-readable'.file_readable
 
 vim.g.NERDTreeWinSize = 30
 vim.g.NERDTreeAutoCenter = 0
@@ -28,6 +28,17 @@ vim.g.NERDTreeGitStatusIndicatorMapCustom = {
                  Clean     = 'C',
                  Unknown   = '?',
              }
+
+m.setup = function()
+    vim.api.nvim_create_autocmd('filetype', {
+        pattern = 'nerdtree',
+        group = vim.api.nvim_create_augroup('init.lua.nerdtree', {}),
+        callback = function()
+            vim.opt_local.signcolumn = 'no'
+        end
+    })
+
+end
 
 m.open = function(options)
     options = options or { focus=true }

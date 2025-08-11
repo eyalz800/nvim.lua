@@ -3,8 +3,8 @@ local user = require 'user'
 
 m.setup = function()
     require 'plugins.config.zip'
-    require 'plugins.config.visual_multi'
-    require 'plugins.config.tmux_navigator'
+    require 'plugins.config.visual-multi'
+    require 'plugins.config.tmux-navigator'
     require 'plugins.config.asynctasks'
     require 'plugins.config.abolish'
     require 'plugins.config.fugitive'

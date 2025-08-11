@@ -2,7 +2,7 @@ local m = {}
 
 local os = require 'lib.os'.os
 local user = require 'user'
-local feed_keys = require 'vim.feed_keys'.feed_keys
+local feed_keys = require 'vim.feed-keys'.feed_keys
 local system = vim.fn.system
 local getreg = vim.fn.getreg
 

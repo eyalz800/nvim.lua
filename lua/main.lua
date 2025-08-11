@@ -2,10 +2,10 @@ local m = {}
 
 local startup = function()
     require 'builtins.nested'.setup()
-    require 'main.root_paths'.setup()
+    require 'main.root-paths'.setup()
     require 'main.path'.setup()
     require 'main.basic'.setup()
-    require 'main.plugin_manager'.create()
+    require 'main.plugin-manager'.create()
     require 'plugins'.setup()
     require 'main.mappings'.setup()
     require 'main.commands'.setup()

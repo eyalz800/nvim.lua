@@ -59,6 +59,12 @@ m.setup = function()
     sign_define('DapBreakpointRejected', { text=sign_prefix .. '', texthl='InitLuaDebugBPDisabled' })
     sign_define('DapStopped', { text=sign_prefix .. '', texthl='InitLuaDebugPC', linehl='CursorLine' })
 
+    vim.api.nvim_create_autocmd('filetype', {
+        pattern = 'dap-repl',
+        group = vim.api.nvim_create_augroup('init.lua.dap.repl_complete', {}),
+        callback = require 'plugins.config.dap'.on_dap_repl_attach
+    })
+
     return {}
 end
 

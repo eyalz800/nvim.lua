@@ -25,7 +25,7 @@ m.config = function()
                 title = "Symbols",
                 ft = "Outline",
                 pinned = false,
-                open = function() require 'plugins.code_explorer'.open({focus='always'}) end,
+                open = function() require 'plugins.code-explorer'.open({focus='always'}) end,
             },
         },
         bottom = {

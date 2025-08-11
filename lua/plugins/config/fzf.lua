@@ -1,6 +1,6 @@
 local m = {}
 local user = require 'user'
-local sed = require 'lib.os_bin'.sed
+local sed = require 'lib.os-bin'.sed
 local cmd = require 'vim.cmd'.silent
 
 local expand = vim.fn.expand

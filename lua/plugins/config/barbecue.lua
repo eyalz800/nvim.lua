@@ -1,7 +1,35 @@
 local m = {}
 local barbecue = nil
+local user = require 'user'
+
 m.setup = function()
     require 'barbecue'.setup(m.config())
+
+    if user.settings.lsp == 'nvim' then
+        vim.api.nvim_create_autocmd({ 'winresized', 'bufwinenter', 'cursorhold', 'insertleave' }, {
+            group = vim.api.nvim_create_augroup('init.lua.barbecue.updater', {}),
+            callback = require 'plugins.config.barbecue'.on_update
+        })
+    end
+
+    vim.api.nvim_create_autocmd('filetype', {
+        pattern = 'fugitiveblame',
+        group = vim.api.nvim_create_augroup('init.lua.fugitive-barbecue', {}),
+        callback = function()
+            vim.wo.winbar = '  Blame'
+        end
+    })
+
+    if user.settings.codecompanion then
+        vim.api.nvim_create_autocmd('User', {
+            pattern = 'CodeCompanionDiffAttached',
+            group = vim.api.nvim_create_augroup('init.lua.codecompanion-barbecue', {}),
+            callback = function(data)
+                local winid = vim.fn.win_getid(data.winnr)
+                vim.wo[winid].winbar = ' Code Companion '
+            end
+        })
+    end
 end
 
 m.on_update = function()
@@ -24,7 +52,7 @@ m.config = function()
         ---@type boolean
         attach_navic = false,
 
-        ---Whether to create winbar updater autocmd.
+        ---Whether to create winbar updater vim.api.nvim_create_autocmd.
         ---
         ---@type boolean
         create_autocmd = false,

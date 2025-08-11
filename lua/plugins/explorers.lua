@@ -2,7 +2,7 @@ local m = {}
 local echo = require 'vim.echo'.echo
 local expand = vim.fn.expand
 local cmd = require 'vim.cmd'.silent
-local file_readable = require 'vim.file_readable'.file_readable
+local file_readable = require 'vim.file-readable'.file_readable
 local pin = require 'plugins.pin'
 local user = require 'user'
 
@@ -14,8 +14,8 @@ local getcwd = vim.fn.getcwd
 local debugger = require 'plugins.debugger'
 local code_explorer_auto_open_min_columns = user.settings.code_explorer_config.auto_open_min_columns or 0
 
-m.file = require 'plugins.file_explorer'
-m.code = require 'plugins.code_explorer'
+m.file = require 'plugins.file-explorer'
+m.code = require 'plugins.code-explorer'
 m.terminals = {}
 
 m.display_current_file = function()

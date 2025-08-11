@@ -180,6 +180,13 @@ m.setup = function()
     }
 
     require 'plugins.config.cmp'.setup()
+
+    if m.diagnostic_hover then
+        vim.api.nvim_create_autocmd('cursorhold', {
+            group = vim.api.nvim_create_augroup('init.lua.lsp_diagnostics_hover', {}),
+            callback = m.diagnostic_hover
+        })
+    end
 end
 
 return m

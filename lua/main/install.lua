@@ -1,5 +1,5 @@
 local m = {}
-local file_readable = require 'vim.file_readable'.file_readable
+local file_readable = require 'vim.file-readable'.file_readable
 local cmd = require 'vim.cmd'.silent
 local term = require 'builtins.term'
 local os = require 'lib.os'.os

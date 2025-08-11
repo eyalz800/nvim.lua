@@ -1,7 +1,7 @@
 local m = {}
 local cmd = require 'vim.cmd'.silent
 local exists = require 'vim.exists'.exists
-local feed_keys = require 'vim.feed_keys'.feed_keys
+local feed_keys = require 'vim.feed-keys'.feed_keys
 local mode = vim.fn.mode
 
 local timer = vim.loop.new_timer()

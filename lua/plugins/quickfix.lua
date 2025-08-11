@@ -13,6 +13,14 @@ local quickfix_winhls = {
 }
 local quickfix_winhl = quickfix_winhls[user.settings.quickfix_config.winhl or 'none']
 
+m.setup = function()
+    vim.api.nvim_create_autocmd('filetype', {
+        pattern = 'qf',
+        group = vim.api.nvim_create_augroup('init.lua.quickfix', {}),
+        callback = require 'plugins.quickfix'.on_open
+    })
+end
+
 m.open = function(options)
     options = options or {}
 

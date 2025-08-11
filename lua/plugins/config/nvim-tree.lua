@@ -1,7 +1,7 @@
 local m = {}
 local user = require 'user'
 
-local file_readable = require 'vim.file_readable'.file_readable
+local file_readable = require 'vim.file-readable'.file_readable
 local cmd = require 'vim.cmd'.silent
 
 local expand = vim.fn.expand

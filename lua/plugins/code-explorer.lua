@@ -18,6 +18,16 @@ else
     explorer.toggle = function() end
 end
 
+m.setup = function()
+    if user.settings.code_explorer == 'symbols-outline' then
+        vim.api.nvim_create_autocmd('filetype', {
+            pattern = 'Outline',
+            group = vim.api.nvim_create_augroup('init.lua.code-explorer.symbols-outline', {}),
+            callback = m.on_open
+        })
+    end
+end
+
 m.open = explorer.open
 m.close = explorer.close
 m.is_open = explorer.is_open

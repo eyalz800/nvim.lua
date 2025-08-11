@@ -1,7 +1,7 @@
 local m = {}
 local echo = require 'vim.echo'.echo
-local file_readable = require 'vim.file_readable'.file_readable
-local is_directory = require 'vim.is_directory'.is_directory
+local file_readable = require 'vim.file-readable'.file_readable
+local is_directory = require 'vim.is-directory'.is_directory
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
 local getcwd = vim.fn.getcwd

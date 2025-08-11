@@ -1,8 +1,8 @@
 local m = {}
 local user = require 'user'
 local cmd = require 'vim.cmd'.silent
-local file_readable = require 'vim.file_readable'.file_readable
-local terminal_color = require 'plugins.terminal_color'
+local file_readable = require 'vim.file-readable'.file_readable
+local terminal_color = require 'plugins.terminal-color'
 
 local readfile = vim.fn.readfile
 local expand = vim.fn.expand
@@ -14,6 +14,28 @@ m.subscribers = {}
 
 m.subscribe = function(subscriber)
     table.insert(m.subscribers, subscriber)
+end
+
+m.setup = function()
+    vim.api.nvim_create_autocmd('colorschemepre', {
+        group = vim.api.nvim_create_augroup('init.lua.colorscheme-pre', {}),
+        callback = function(event)
+            m.pre_switch_color(event.match)
+        end
+    })
+
+    vim.api.nvim_create_autocmd('colorscheme', {
+        group = vim.api.nvim_create_augroup('init.lua.colorscheme', {}),
+        callback = function(event)
+            m.post_switch_color(event.match)
+        end
+    })
+
+    vim.api.nvim_create_autocmd('user', {
+        pattern = 'VeryLazy',
+        group = vim.api.nvim_create_augroup('init.lua.terminal-color', {}),
+        callback = m.load_terminal_colors
+    })
 end
 
 m.set = function()

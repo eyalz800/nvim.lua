@@ -4,6 +4,20 @@ local lsp = require 'plugins.lsp'
 vim.g.python_highlight_all = 1
 vim.g.python_highlight_operators = 0
 
+m.setup = function()
+    vim.api.nvim_create_autocmd('syntax', {
+        pattern = 'python',
+        group = vim.api.nvim_create_augroup('init.lua.syntax.python', {}),
+        callback = m.apply_py_syntax
+    })
+
+    vim.api.nvim_create_autocmd('syntax', {
+        pattern = { 'c', 'cpp' },
+        group = vim.api.nvim_create_augroup('init.lua.syntax.c_cpp', {}),
+        callback = m.apply_c_and_cpp_syntax
+    })
+end
+
 m.apply_c_and_cpp_syntax = function()
     if lsp.semantic_highlighting then
         return

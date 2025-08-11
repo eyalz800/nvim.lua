@@ -5,7 +5,14 @@ local user = require 'user'
 
 m.setup = function()
     local lazy_conf = require 'plugins.config.lazy'
+
     require 'lazy'.setup(m.plugins, lazy_conf.config())
+
+    vim.api.nvim_create_autocmd('user', {
+        pattern = 'LazyUpdatePre',
+        group = vim.api.nvim_create_augroup('init.lua.lazy-update-pre', {}),
+        callback = m.on_update
+    })
 end
 
 m.on_update = function()
@@ -290,12 +297,18 @@ m.plugins = {
     },
     {
         'tpope/vim-fugitive',
+        config = function()
+            require 'plugins.config.fugitive'.setup()
+        end,
     },
     {
         'skywind3000/asyncrun.vim',
     },
     {
         'mg979/vim-visual-multi',
+        config = function()
+            require 'plugins.config.visual-multi'.setup()
+        end,
     },
     {
         'tmsvg/pear-tree',
@@ -327,6 +340,9 @@ m.plugins = {
     },
     {
         'ntpeters/vim-better-whitespace',
+        config = function()
+            require 'plugins.config.better-whitespace'.setup()
+        end,
     },
     {
         'troydm/zoomwintab.vim',
@@ -408,6 +424,14 @@ m.plugins = {
         cond = user.settings.colorizer == 'nvim-colorizer',
     },
     {
+        'puremourning/vimspector',
+        event = 'VeryLazy',
+        config = function()
+            require 'plugins.config.vimspector'.setup()
+        end,
+        cond = user.settings.debugging == 'vimspector',
+    },
+    {
         'jay-babu/mason-nvim-dap.nvim',
         event = 'VeryLazy',
         config = function()
@@ -478,7 +502,7 @@ m.plugins = {
     },
     {
         'erig0/cscope_dynamic',
-        build = require 'lib.os_bin'.sed .. ' -i "s/call s:runShellCommand/call system/g" ./plugin/cscope_dynamic.vim',
+        build = require 'lib.os-bin'.sed .. ' -i "s/call s:runShellCommand/call system/g" ./plugin/cscope_dynamic.vim',
         event = 'VeryLazy',
         cond = user.settings.cscope_dynamic,
     },

@@ -1,7 +1,7 @@
 local m = {}
 local cmd = require 'vim.cmd'.silent
-local async_cmd = require 'plugins.async_cmd'.async_cmd
-local sed = require 'lib.os_bin'.sed
+local async_cmd = require 'plugins.async-cmd'.async_cmd
+local sed = require 'lib.os-bin'.sed
 local echo = require 'vim.echo'.echo
 local finder = require 'plugins.finder'
 
