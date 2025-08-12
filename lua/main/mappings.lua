@@ -107,6 +107,7 @@ m.setup = function()
             ['<leader>qf'] = { lsp.quick_fix, 'Apply LSP quick fix (lsp.quick_fix)' },
             ['<leader>gy'] = { lsp.type_definition, 'Go to LSP type definition (lsp.type_definition)' },
             ['grs'] = { lsp.switch_source_header, 'Switch between source/header (lsp.switch_source_header)' },
+            ['go'] = { lsp.switch_source_header, 'Switch between source/header (lsp.switch_source_header)' },
             ['K'] = { lsp.show_documentation, 'Show documentation (hover) (lsp.show_documentation)' },
             ['[d'] = { lsp.prev_diagnostic, 'Go to previous diagnostic (lsp.prev_diagnostic)' },
             [']d'] = { lsp.next_diagnostic, 'Go to next diagnostic (lsp.next_diagnostic)' },
