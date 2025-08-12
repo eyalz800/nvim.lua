@@ -9,6 +9,7 @@ m.setup = function()
         group = augroup('init.lua.autocmd.c-cpp-indentation', {}),
         callback = function()
             opt_local.cindent = true
+            opt_local.formatoptions:remove('o')
         end
     })
 
