@@ -74,7 +74,9 @@ if settings.diagnostic_hover then
 end
 
 m.switch_source_header = function()
-    if exists ':ClangdSwitchSourceHeader' then
+    if exists ':LspClangdSwitchSourceHeader' then
+        cmd ':LspClangdSwitchSourceHeader'
+    elseif exists ':ClangdSwitchSourceHeader' then
         cmd 'ClangdSwitchSourceHeader'
     end
 end
