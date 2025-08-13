@@ -126,7 +126,7 @@ m.config = function()
                 current = "FlashCurrent",
                 backdrop = "FlashBackdrop",
                 --label = "FlashLabel",
-                label = "Search",
+                label = "IncSearch",
             },
         },
         -- action to perform when picking a label.
