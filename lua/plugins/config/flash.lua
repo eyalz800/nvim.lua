@@ -116,7 +116,7 @@ m.config = function()
         },
         highlight = {
             -- show a backdrop with hl FlashBackdrop
-            backdrop = true,
+            backdrop = false,
             -- Highlight the search matches
             matches = true,
             -- extmark priority
@@ -125,7 +125,8 @@ m.config = function()
                 match = "FlashMatch",
                 current = "FlashCurrent",
                 backdrop = "FlashBackdrop",
-                label = "FlashLabel",
+                --label = "FlashLabel",
+                label = "Search",
             },
         },
         -- action to perform when picking a label.
@@ -206,7 +207,7 @@ m.config = function()
                     }
                 end,
                 search = { wrap = false },
-                highlight = { backdrop = true },
+                highlight = { backdrop = false },
                 jump = { register = false },
             },
             -- options used for treesitter selections
