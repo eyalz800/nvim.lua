@@ -49,6 +49,9 @@ m.zoom = 'zoomwintab'
 m.cscope_dynamic = false
 m.comment = 'comment.nvim'
 m.noice = true
+m.noice_config = {
+    custom_incsearch = true,
+}
 m.fidget = true
 m.diff = 'mini'
 m.copilot = true
