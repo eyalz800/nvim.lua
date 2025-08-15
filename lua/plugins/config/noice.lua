@@ -162,11 +162,6 @@ m.config = function()
 end
 
 m.setup_noice_incsearch = function()
-    if not vim.o.incsearch then
-        return
-    end
-    vim.o.incsearch = false
-
     local ns = vim.api.nvim_create_namespace('init.lua.noice-incsearch-ns')
     local group = vim.api.nvim_create_augroup('init.lua.noice-incsearch-group', {})
     local start_pos = nil
@@ -176,6 +171,7 @@ m.setup_noice_incsearch = function()
     local search_cmds = { ['/'] = true, ['?'] = true }
     local search_cmd = nil
     local accept = false
+    local is_noice_running = require 'noice.config'.is_running
 
     vim.keymap.set('c', '<cr>', function()
         if search_cmd then
@@ -203,7 +199,7 @@ m.setup_noice_incsearch = function()
         return result
     end
 
-    local function cursor_match_index()
+    local function match_index()
         local best_match_idx = nil
 
         if search_cmd == '/' then
@@ -250,7 +246,7 @@ m.setup_noice_incsearch = function()
         end
     end
 
-    local function jump_final(cmd_type)
+    local function jump_final()
         if not accept then
             vim.api.nvim_win_set_cursor(0, start_pos)
             return
@@ -289,7 +285,11 @@ m.setup_noice_incsearch = function()
         pattern = '/,?',
         callback = function()
             local cmd_type = vim.fn.getcmdtype()
-            if search_cmds[cmd_type] == nil then return end
+            if search_cmds[cmd_type] == nil or not is_noice_running() then return end
+            if vim.o.incsearch == false then
+                return
+            end
+            vim.o.incsearch = false
             start_pos = vim.api.nvim_win_get_cursor(0)
             accept = false
             matches = {}
@@ -313,7 +313,7 @@ m.setup_noice_incsearch = function()
                 return
             end
 
-            cur_idx = cursor_match_index()
+            cur_idx = match_index()
             jump()
 
             highlight()
@@ -330,6 +330,7 @@ m.setup_noice_incsearch = function()
             start_pos = nil
             accept = false
             matches = {}
+            vim.o.incsearch = true
             search_cmd = nil
         end,
     })
