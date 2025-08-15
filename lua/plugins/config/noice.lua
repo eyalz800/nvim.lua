@@ -165,6 +165,7 @@ m.setup_noice_incsearch = function()
     local ns = vim.api.nvim_create_namespace('init.lua.noice-incsearch-ns')
     local group = vim.api.nvim_create_augroup('init.lua.noice-incsearch-group', {})
     local start_pos = nil
+    local top_line = nil
     local matches = {}
     local cur_idx = 1
     local pat = ''
@@ -241,8 +242,9 @@ m.setup_noice_incsearch = function()
     local function jump()
         local match = matches[cur_idx]
         if match then
+            vim.api.nvim_win_set_cursor(0, { top_line, 0 })
+            vim.cmd('normal! zt')
             vim.api.nvim_win_set_cursor(0, { match[1], match[2] })
-            vim.cmd('normal! zz')
         end
     end
 
@@ -275,8 +277,9 @@ m.setup_noice_incsearch = function()
                     end
                 end
             end
+            vim.api.nvim_win_set_cursor(0, { top_line, 0 })
+            vim.cmd('normal! zt')
             vim.api.nvim_win_set_cursor(0, { line, col })
-            vim.cmd('normal! zz')
         end
     end
 
@@ -291,6 +294,7 @@ m.setup_noice_incsearch = function()
             end
             vim.o.incsearch = false
             start_pos = vim.api.nvim_win_get_cursor(0)
+            top_line = vim.fn.line('w0')
             accept = false
             matches = {}
             cur_idx = 1
@@ -328,6 +332,7 @@ m.setup_noice_incsearch = function()
             vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
             jump_final()
             start_pos = nil
+            top_line = nil
             accept = false
             matches = {}
             vim.o.incsearch = true
