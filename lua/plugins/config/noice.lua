@@ -58,7 +58,7 @@ m.config = function()
                     min_height = 30,
                 },
                 view = 'split',
-                opts ={
+                opts = {
                     enter = true,
                 }
             },
