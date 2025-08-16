@@ -235,7 +235,7 @@ m.setup_noice_incsearch = function()
         vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
         for i, match in ipairs(matches) do
             local hl = (i == cur_idx) and 'IncSearch' or 'Search'
-            vim.api.nvim_buf_set_extmark(0, ns, match[1] - 1, match[2], { hl_group = hl, end_col = match[2] + #pat })
+            pcall(vim.api.nvim_buf_set_extmark, 0, ns, match[1] - 1, match[2], { hl_group = hl, end_col = match[2] + #pat })
         end
     end
 
