@@ -301,6 +301,16 @@ return {
             '}\' > ' .. stdpath('config') .. '/coc-settings.json',
     },
     {
+        name = 'npm-packages',
+        command = 'sudo npm install -g @mermaid-js/mermaid-cli',
+        os = 'Linux',
+    },
+    {
+        name = 'npm-packages',
+        command = 'npm install -g @mermaid-js/mermaid-cli',
+        os = 'Darwin',
+    },
+    {
         name = 'success',
         command = 'echo Installation complete!'
     },
