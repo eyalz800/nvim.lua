@@ -42,6 +42,9 @@ m.config = function()
             highlights.FzfLuaPreviewTitle = { fg = color.fg, bg = color.bg }
             highlights.FzfLuaTitleFlags = { fg = color.fg, bg = color.bg }
             highlights.NvimTreeWinSeparator = { link = 'WinSeparator' }
+            highlights.NvimTreeNormal = { fg = color.fg, bg = color.bg_dark }
+            highlights.NvimTreeNormalNC = { fg = color.fg, bg = color.bg_dark }
+            highlights.NvimTreeCursorLine = { link = 'Visual' }
             highlights.InitLuaBufferLineVisibleFg = { fg = color.fg_dark }
             highlights.InitLuaBufferLineSelectedFg = { fg = color.fg }
             highlights.WinBarNC = { link = 'WinBar' }
