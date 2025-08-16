@@ -8,15 +8,15 @@ local getcwd = vim.fn.getcwd
 
 m.setup = function()
     m.root = vim.env.PWD
+    m.root_paths = user.settings.root_paths
 end
 
 m.switch_to_root = function()
     cmd('cd ' .. m.root)
 end
 
-m.switch_to_project_root = function()
-    local directory = vim.fn.expand '%:p:h'
-    if #directory == 0 then
+m.find_root = function(directory, root_paths)
+    if not directory or #directory == 0 then
         directory = getcwd()
     end
 
@@ -25,30 +25,43 @@ m.switch_to_project_root = function()
     local iteration = 0
 
     while iteration < limit do
-        if current_path == '/' then
-            echo "Project root not found!"
-            cmd('cd ' .. directory)
-            return
-        end
-
-        for _, root_path in ipairs(user.settings.root_paths) do
+        for _, root_path in ipairs(root_paths) do
             local abs_path = current_path .. '/' .. root_path
 
             if not file_readable(abs_path) and not is_directory(abs_path) then
                 goto continue
             end
 
-            cmd('cd ' .. current_path)
-            do return end
+            do return current_path end
             ::continue::
+        end
+
+        if current_path == '/' then
+            return nil
         end
 
         current_path = vim.fn.fnamemodify(current_path, ':h')
         iteration = iteration + 1
     end
 
-    echo "Project root not found!"
-    cmd('cd ' .. directory)
+    return nil
+end
+
+m.git_root = function(directory)
+    return m.find_root(directory, { '.git' })
+end
+
+m.project_root = function(directory)
+    return m.find_root(directory, m.root_paths)
+end
+
+m.switch_to_project_root = function()
+    local directory = m.project_root(vim.fn.expand '%:p:h')
+    if directory then
+        cmd('cd ' .. directory)
+    else
+        echo "Project root not found!"
+    end
 end
 
 return m
