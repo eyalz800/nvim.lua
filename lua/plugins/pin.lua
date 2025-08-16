@@ -16,6 +16,7 @@ m.filetyeps = {
     'dapui_console',
     'dap-repl',
     'noice',
+    'DiffviewFiles',
 }
 
 local make_win_ref = function(buf)
