@@ -172,6 +172,12 @@ m.command_history = function()
     })
 end
 
+m.lsp_workspace_symbols = function()
+    fzf_lua.lsp_workspace_symbols({
+        fzf_colors = vim.g.fzf_colors,
+    })
+end
+
 m.config = function()
     return {
         previewers = {

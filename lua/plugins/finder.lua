@@ -24,6 +24,8 @@ else
     m.color_picker = function() end
     m.keymaps = function() end
     m.browse_help_tags = function() end
+    m.command_history = function() end
+    m.lsp_workspace_symbols = function() end
 end
 
 return m
