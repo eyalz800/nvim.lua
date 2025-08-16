@@ -195,7 +195,7 @@ m.plugins = {
         dependencies = {
             'nvim-tree/nvim-web-devicons',
         },
-        cond = user.settings.file_explorer == 'nvim-tree',
+        cond = user.settings.file_explorer == 'nvim-tree' or user.settings.nvim_tree,
     },
     {
         'akinsho/bufferline.nvim',
@@ -414,7 +414,7 @@ m.plugins = {
         config = function()
             require 'plugins.config.nvim-notify'.setup()
         end,
-        cond = user.settings.noice,
+        cond = user.settings.noice and user.settings.notifier == 'noice',
     },
     {
         'folke/noice.nvim',

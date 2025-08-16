@@ -20,6 +20,7 @@ m.line = 'lualine'
 m.buffer_line = 'bufferline'
 m.buffer_deleter = 'mini'
 m.bar = 'dropbar'
+m.nvim_tree = true
 m.file_explorer = 'nvim-tree'
 m.file_explorer_config = { nvim_tree = { window_picker = false } }
 m.code_explorer = 'symbols-outline'

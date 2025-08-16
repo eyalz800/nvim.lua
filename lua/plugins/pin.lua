@@ -17,6 +17,7 @@ m.filetyeps = {
     'dap-repl',
     'noice',
     'DiffviewFiles',
+    'snacks_picker_list',
 }
 
 local make_win_ref = function(buf)

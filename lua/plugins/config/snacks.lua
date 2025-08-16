@@ -42,40 +42,6 @@ m.lazy = function()
                 },
                 explorer = {
                     enabled = true,
-                    win = {
-                        list = {
-                            keys = {
-                                ["<BS>"] = "explorer_up",
-                                ["l"] = "confirm",
-                                ["h"] = "explorer_close", -- close directory
-                                ["a"] = "explorer_add",
-                                ["d"] = "explorer_del",
-                                ["r"] = "explorer_rename",
-                                ["c"] = "explorer_copy",
-                                ["m"] = "explorer_move",
-                                ["o"] = "explorer_open", -- open with system application
-                                ["P"] = "toggle_preview",
-                                ["y"] = { "explorer_yank", mode = { "n", "x" } },
-                                ["p"] = "explorer_paste",
-                                ["u"] = "explorer_update",
-                                ["<c-c>"] = "tcd",
-                                ["<leader>/"] = "picker_grep",
-                                ["<c-t>"] = "terminal",
-                                ["."] = "explorer_focus",
-                                ["I"] = "toggle_ignored",
-                                ["H"] = "toggle_hidden",
-                                ["Z"] = "explorer_close_all",
-                                ["]g"] = "explorer_git_next",
-                                ["[g"] = "explorer_git_prev",
-                                ["]d"] = "explorer_diagnostic_next",
-                                ["[d"] = "explorer_diagnostic_prev",
-                                ["]w"] = "explorer_warn_next",
-                                ["[w"] = "explorer_warn_prev",
-                                ["]e"] = "explorer_error_next",
-                                ["[e"] = "explorer_error_prev",
-                            },
-                        },
-                    },
                 },
                 indent = { enabled = user.settings.indent_guides == 'snacks' },
                 input = { enabled = true },
@@ -96,13 +62,6 @@ m.lazy = function()
                         -- wo = { wrap = true } -- Wrap notifications
                     }
                 },
-                terminal = {
-                    win = {
-                        wo = {
-                            winbar = 'terminal',
-                        },
-                    },
-                },
             }
 
             require 'snacks'.setup(opts)
@@ -120,7 +79,8 @@ m.lazy = function()
             { '<leader>cR', function() m.snacks().rename.rename_file() end, desc = 'Rename File' },
             { '<leader>ee', function() m.snacks().explorer.reveal() end, desc = 'Open snacks explorer' },
             { 'gB', function() m.snacks().gitbrowse() end, desc = 'Git Browse', mode = { 'n', 'v' } },
-            { '<c-/>', function() m.snacks().terminal() end,  desc = 'Toggle Terminal' },
+            { '<c-/>', function() Snacks.terminal() end,  desc = 'Toggle snacks terminal' },
+            { '<c-_>', function() Snacks.terminal() end,  desc = 'which_key_ignore' },
             { ']]', function() m.snacks().words.jump(vim.v.count1) end, desc = 'Next Reference', mode = { 'n', 't' } },
             { '[[', function() m.snacks().words.jump(-vim.v.count1) end, desc = 'Prev Reference', mode = { 'n', 't' } },
             user.settings.notifier == 'snacks' and { '<leader>nh', function() m.snacks().notifier.show_history() end, desc = 'Notification History' } or nil,
@@ -130,16 +90,6 @@ m.lazy = function()
                 pattern = 'VeryLazy',
                 callback = function()
                     local snacks = m.snacks()
-
-                    -- Setup some globals for debugging (lazy-loaded)
-                    -- _G.dd = function(...)
-                    --     snacks.debug.inspect(...)
-                    -- end
-                    -- _G.bt = function()
-                    --     snacks.debug.backtrace()
-                    -- end
-                    --vim.print = _G.dd -- Override print to use snacks for `:=` command
-
                     snacks.toggle.option('spell', { name = 'Spelling' }):map('<leader>ts')
                     snacks.toggle.diagnostics():map('grt')
                     snacks.toggle.option('conceallevel', { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map('<leader>tc')
@@ -154,6 +104,32 @@ end
 
 m.snacks = function()
     return Snacks
+end
+
+m.explorer = function()
+    local explorer = {}
+
+    explorer.open = function()
+        m.snacks().explorer.reveal()
+    end
+
+    explorer.close = function()
+        m.snacks().explorer.reveal()
+        vim.api.nvim_win_close(0, false)
+    end
+
+    explorer.is_open = function()
+        return false
+    end
+
+    explorer.toggle = function()
+        m.snacks().explorer.reveal()
+    end
+
+    explorer.open_current_directory = function()
+    end
+
+    return explorer
 end
 
 return m
