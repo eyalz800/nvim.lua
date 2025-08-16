@@ -27,6 +27,15 @@ m.on_update = function()
 end
 
 m.plugins = {
+    -- Install FZF
+    {
+        'junegunn/fzf',
+        name = 'fzf',
+        dir = '~/.fzf',
+        build = './install --all',
+    },
+
+    -- Neovim Plugins
     {
         'folke/tokyonight.nvim',
         priority = 1000,
@@ -61,6 +70,10 @@ m.plugins = {
             require 'plugins.config.mason'.setup()
         end,
         cond = user.settings.lsp == 'nvim' or user.settings.debugger == 'dap'
+    },
+    {
+        'nvim-lua/plenary.nvim',
+        event = 'VeryLazy',
     },
     {
         'j-hui/fidget.nvim',
@@ -143,20 +156,6 @@ m.plugins = {
         cond = user.settings.git_plugin == 'gitsigns'
     },
     {
-        'airblade/vim-gitgutter',
-        init = function()
-            require 'plugins.config.gitgutter'.init()
-        end,
-        cond = user.settings.git_plugin == 'gitgutter',
-    },
-    {
-        'vim-airline/vim-airline',
-        init = function()
-            require 'plugins.config.airline'.init()
-        end,
-        cond = user.settings.line == 'airline'
-    },
-    {
         'nvim-lualine/lualine.nvim',
         config = function()
             require 'plugins.config.lualine'.setup()
@@ -178,7 +177,7 @@ m.plugins = {
             'SmiteshP/nvim-navic',
             'nvim-tree/nvim-web-devicons',
         },
-        cond = user.settings.bar == 'barbecue' and user.settings.lsp == 'nvim'
+        cond = user.settings.bar == 'barbecue' and user.settings.lsp == 'nvim',
     },
     {
         'Bekaboo/dropbar.nvim',
@@ -199,37 +198,15 @@ m.plugins = {
         cond = user.settings.file_explorer == 'nvim-tree',
     },
     {
-        'preservim/nerdtree',
-        init = function()
-            require 'plugins.config.nerdtree'.init()
-        end,
-        dependencies = {
-            {
-                'ryanoasis/vim-devicons',
-                init = function()
-                    require 'plugins.config.devicons'.init()
-                end
-            },
-            'tiagofumo/vim-nerdtree-syntax-highlight',
-            'Xuyuanp/nerdtree-git-plugin'
-        },
-        cond = user.settings.file_explorer == 'nerdtree',
-    },
-    {
         'akinsho/bufferline.nvim',
         event = 'UIEnter',
         config = function()
             require 'plugins.config.bufferline'.setup()
         end,
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        dependencies = {
+            'nvim-tree/nvim-web-devicons',
+        },
         cond = user.settings.buffer_line == 'bufferline',
-    },
-    {
-        'majutsushi/tagbar',
-        init = function()
-            require 'plugins.config.tagbar'.init()
-        end,
-        cond = user.settings.code_explorer == 'tagbar',
     },
     {
         'folke/edgy.nvim',
@@ -260,26 +237,6 @@ m.plugins = {
         cond = user.settings.code_explorer == 'symbols-outline',
     },
     {
-        'ludovicchabant/vim-gutentags',
-        cond = user.settings.enable_gutentags == true,
-    },
-    {
-        'junegunn/fzf',
-        name = 'fzf',
-        dir = '~/.fzf',
-        build = './install --all',
-    },
-    {
-        'junegunn/fzf.vim',
-        init = function()
-            require 'plugins.config.fzf'.init()
-        end,
-        dependencies = {
-            'junegunn/fzf',
-        },
-        cond = user.settings.finder == 'fzf-lua' or user.settings.finder == 'fzf',
-    },
-    {
         'ibhagwan/fzf-lua',
         dependencies = {
             'nvim-tree/nvim-web-devicons',
@@ -289,36 +246,6 @@ m.plugins = {
             require 'plugins.config.fzf-lua'.setup()
         end,
         cond = user.settings.finder == 'fzf-lua',
-    },
-    {
-        'neoclide/coc.nvim',
-        branch = 'release',
-        init = function()
-            require 'plugins.config.coc'.init()
-        end,
-        dependencies = {
-            {
-                'eyalz800/vim-ultisnips',
-                init = function()
-                    require 'plugins.config.ultisnips'.init()
-                end,
-                event = 'VeryLazy',
-            },
-        },
-        cond = user.settings.lsp == 'coc'
-    },
-    {
-        'antoinemadec/coc-fzf',
-        branch = 'release',
-        cond = user.settings.lsp == 'coc'
-    },
-    {
-        'octol/vim-cpp-enhanced-highlight',
-        cond = not require 'plugins.lsp'.semantic_highlighting or user.settings.treesitter
-    },
-    {
-        'voldikss/vim-floaterm',
-        cond = user.settings.terminal == 'floaterm' or user.settings.float_term == 'floaterm',
     },
     {
         'akinsho/toggleterm.nvim',
@@ -341,13 +268,6 @@ m.plugins = {
         end,
     },
     {
-        'tmsvg/pear-tree',
-        init = function()
-            require 'plugins.config.pear-tree'.init()
-        end,
-        cond = user.settings.pairs == 'pear-tree',
-    },
-    {
         'windwp/nvim-autopairs',
         event = 'InsertEnter',
         config = function()
@@ -357,11 +277,6 @@ m.plugins = {
             'hrsh7th/nvim-cmp',
         },
         cond = user.settings.pairs == 'nvim-autopairs',
-    },
-    {
-        'tpope/vim-commentary',
-        event = 'verylazy',
-        cond = user.settings.comment == 'vim-commentary',
     },
     {
         'numToStr/Comment.nvim',
@@ -378,84 +293,12 @@ m.plugins = {
         end,
     },
     {
-        'troydm/zoomwintab.vim',
-        event = 'VeryLazy',
-        init = function()
-            require 'plugins.config.zoomwintab'.init()
-        end,
-        cond = user.settings.zoom == 'zoomwintab',
-    },
-    {
         'nyngwang/NeoZoom.lua',
         event = 'VeryLazy',
         config = function()
             require 'plugins.config.neo-zoom'.setup()
         end,
         cond = user.settings.zoom == 'neo-zoom',
-    },
-    {
-        'christoomey/vim-tmux-navigator',
-        init = function()
-            require 'plugins.config.tmux-navigator'.init()
-        end,
-    },
-    {
-        'tpope/vim-surround',
-        event = 'VeryLazy',
-    },
-    {
-        'j5shi/CommandlineComplete.vim',
-        event = 'VeryLazy',
-    },
-    {
-        'skywind3000/asynctasks.vim',
-        event = 'VeryLazy',
-        init = function()
-            require 'plugins.config.asynctasks'.init()
-        end,
-        dependencies = {
-            'skywind3000/asyncrun.vim',
-        },
-    },
-    {
-        --'famiu/bufdelete.nvim',
-        'eyalz800/bufdelete.nvim',
-        event = 'VeryLazy',
-        cond = user.settings.buffer_deleter == 'bufdelete',
-    },
-    {
-        'tpope/vim-abolish',
-        init = function()
-            require 'plugins.config.abolish'.init()
-        end,
-        event = 'VeryLazy',
-    },
-    {
-        'wellle/targets.vim',
-        event = 'VeryLazy',
-    },
-    {
-        'yazgoo/yank-history',
-        event = 'VeryLazy',
-    },
-    {
-        'vim-python/python-syntax',
-        cond = not require 'plugins.lsp'.semantic_highlighting or user.settings.treesitter
-    },
-    {
-        'jreybert/vimagit',
-        init = function()
-            require 'plugins.config.magit'.init()
-        end,
-        cmd = { 'Magit', 'MagitOnly' }
-    },
-    {
-        'mbbill/undotree',
-        event = 'VeryLazy',
-    },
-    {
-        'tpope/vim-obsession',
-        cmd = 'Obsession',
     },
     {
         'lukas-reineke/indent-blankline.nvim',
@@ -523,39 +366,11 @@ m.plugins = {
         cond = user.settings.jumper == 'flash',
     },
     {
-        'easymotion/vim-easymotion',
-        event = 'VeryLazy',
-        cond = user.settings.jumper == 'easymotion-sneak',
-    },
-    {
-        'justinmk/vim-sneak',
-        event = 'VeryLazy',
-        cond = user.settings.jumper == 'easymotion-sneak',
-    },
-    {
-        'haya14busa/incsearch.vim',
-        cond = user.settings.jumper ~= 'flash' and user.settings.jumper ~= '',
-    },
-    {
         'sindrets/diffview.nvim',
         event = 'VeryLazy',
         config = function()
             require 'plugins.config.diffview'.setup()
         end,
-    },
-    {
-        'will133/vim-dirdiff',
-        cmd = 'DirDiff',
-    },
-    {
-        'erig0/cscope_dynamic',
-        build = require 'lib.os-bin'.sed .. ' -i "s/call s:runShellCommand/call system/g" ./plugin/cscope_dynamic.vim',
-        event = 'VeryLazy',
-        cond = user.settings.cscope_dynamic,
-    },
-    {
-        'nvim-lua/plenary.nvim',
-        event = 'VeryLazy',
     },
     {
         'rmagatti/goto-preview',
@@ -673,6 +488,198 @@ m.plugins = {
             require 'plugins.config.mini-bufremove'.setup()
         end,
         cond = user.settings.buffer_deleter == 'mini',
+    },
+
+    -- Vim Plugins
+    {
+        'junegunn/fzf.vim',
+        init = function()
+            require 'plugins.config.fzf'.init()
+        end,
+        dependencies = {
+            'junegunn/fzf',
+        },
+        cond = user.settings.finder == 'fzf-lua' or user.settings.finder == 'fzf',
+    },
+    {
+        'airblade/vim-gitgutter',
+        init = function()
+            require 'plugins.config.gitgutter'.init()
+        end,
+        cond = user.settings.git_plugin == 'gitgutter',
+    },
+    {
+        'vim-airline/vim-airline',
+        init = function()
+            require 'plugins.config.airline'.init()
+        end,
+        cond = user.settings.line == 'airline'
+    },
+    {
+        'preservim/nerdtree',
+        init = function()
+            require 'plugins.config.nerdtree'.init()
+        end,
+        dependencies = {
+            {
+                'ryanoasis/vim-devicons',
+                init = function()
+                    require 'plugins.config.devicons'.init()
+                end
+            },
+            'tiagofumo/vim-nerdtree-syntax-highlight',
+            'Xuyuanp/nerdtree-git-plugin'
+        },
+        cond = user.settings.file_explorer == 'nerdtree',
+    },
+    {
+        'majutsushi/tagbar',
+        init = function()
+            require 'plugins.config.tagbar'.init()
+        end,
+        cond = user.settings.code_explorer == 'tagbar',
+    },
+    {
+        'neoclide/coc.nvim',
+        branch = 'release',
+        init = function()
+            require 'plugins.config.coc'.init()
+        end,
+        dependencies = {
+            {
+                'eyalz800/vim-ultisnips',
+                init = function()
+                    require 'plugins.config.ultisnips'.init()
+                end,
+                event = 'VeryLazy',
+            },
+        },
+        cond = user.settings.lsp == 'coc'
+    },
+    {
+        'tmsvg/pear-tree',
+        init = function()
+            require 'plugins.config.pear-tree'.init()
+        end,
+        cond = user.settings.pairs == 'pear-tree',
+    },
+    {
+        'troydm/zoomwintab.vim',
+        event = 'VeryLazy',
+        init = function()
+            require 'plugins.config.zoomwintab'.init()
+        end,
+        cond = user.settings.zoom == 'zoomwintab',
+    },
+    {
+        'christoomey/vim-tmux-navigator',
+        init = function()
+            require 'plugins.config.tmux-navigator'.init()
+        end,
+    },
+    {
+        'skywind3000/asynctasks.vim',
+        event = 'VeryLazy',
+        init = function()
+            require 'plugins.config.asynctasks'.init()
+        end,
+        dependencies = {
+            'skywind3000/asyncrun.vim',
+        },
+    },
+    {
+        'tpope/vim-abolish',
+        init = function()
+            require 'plugins.config.abolish'.init()
+        end,
+        event = 'VeryLazy',
+    },
+    {
+        'jreybert/vimagit',
+        init = function()
+            require 'plugins.config.magit'.init()
+        end,
+        cmd = { 'Magit', 'MagitOnly' }
+    },
+    {
+        'ludovicchabant/vim-gutentags',
+        cond = user.settings.enable_gutentags == true,
+    },
+    {
+        'antoinemadec/coc-fzf',
+        branch = 'release',
+        cond = user.settings.lsp == 'coc'
+    },
+    {
+        'octol/vim-cpp-enhanced-highlight',
+        cond = not require 'plugins.lsp'.semantic_highlighting or user.settings.treesitter
+    },
+    {
+        'voldikss/vim-floaterm',
+        cond = user.settings.terminal == 'floaterm' or user.settings.float_term == 'floaterm',
+    },
+    {
+        'tpope/vim-surround',
+        event = 'VeryLazy',
+    },
+    {
+        'j5shi/CommandlineComplete.vim',
+        event = 'VeryLazy',
+    },
+    {
+        --'famiu/bufdelete.nvim',
+        'eyalz800/bufdelete.nvim',
+        event = 'VeryLazy',
+        cond = user.settings.buffer_deleter == 'bufdelete',
+    },
+    {
+        'wellle/targets.vim',
+        event = 'VeryLazy',
+    },
+    {
+        'yazgoo/yank-history',
+        event = 'VeryLazy',
+    },
+    {
+        'vim-python/python-syntax',
+        cond = not require 'plugins.lsp'.semantic_highlighting or user.settings.treesitter
+    },
+    {
+        'mbbill/undotree',
+        event = 'VeryLazy',
+    },
+    {
+        'tpope/vim-obsession',
+        cmd = 'Obsession',
+    },
+    {
+        'will133/vim-dirdiff',
+        cmd = 'DirDiff',
+    },
+    {
+        'tpope/vim-commentary',
+        event = 'verylazy',
+        cond = user.settings.comment == 'vim-commentary',
+    },
+    {
+        'easymotion/vim-easymotion',
+        event = 'VeryLazy',
+        cond = user.settings.jumper == 'easymotion-sneak',
+    },
+    {
+        'justinmk/vim-sneak',
+        event = 'VeryLazy',
+        cond = user.settings.jumper == 'easymotion-sneak',
+    },
+    {
+        'erig0/cscope_dynamic',
+        build = require 'lib.os-bin'.sed .. ' -i "s/call s:runShellCommand/call system/g" ./plugin/cscope_dynamic.vim',
+        event = 'VeryLazy',
+        cond = user.settings.cscope_dynamic,
+    },
+    {
+        'haya14busa/incsearch.vim',
+        cond = user.settings.jumper ~= 'flash' and user.settings.jumper ~= '',
     },
 }
 
