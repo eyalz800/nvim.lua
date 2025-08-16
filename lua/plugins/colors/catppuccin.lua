@@ -61,8 +61,6 @@ m.config = function()
                     InitLuaBufferLineSelectedBg = { bg = color.mantle },
                     InitLuaBufferLineVisibleBg = { bg = color.mantle },
                     WinBarNC = { link = 'WinBar' },
-                    SnacksIndentScope = { link = 'NonText' },
-                    IndentBlanklineContextChar = { link = 'NonText' },
                 }
 
                 if user.settings.bar == 'barbecue' or user.settings.bar == 'dropbar' then
