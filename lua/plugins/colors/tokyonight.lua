@@ -49,6 +49,8 @@ m.config = function()
             highlights.InitLuaBufferLineSelectedFg = { fg = color.fg }
             highlights.WinBarNC = { link = 'WinBar' }
             highlights.WinBar = { bg = color.bg }
+            highlights.SnacksIndentScope = { link = 'NonText' }
+            highlights.IndentBlanklineContextChar = { link = 'NonText' }
 
             highlights['@variable.builtin'] = { fg = color.magenta }
             highlights['@keyword'] = { fg = color.blue1 }
