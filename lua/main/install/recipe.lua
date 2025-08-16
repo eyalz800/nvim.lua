@@ -311,6 +311,21 @@ return {
         os = 'Darwin',
     },
     {
+        name = 'colorscript-clone',
+        command = 'git clone https://gitlab.com/dwt1/shell-color-scripts ' .. misc_path .. '/colorscript ;',
+        cond = not file_readable(misc_path .. '/colorscript/colorscript.sh'),
+    },
+    {
+        name = 'colorscript-link',
+        command = 'chmod +x ' .. misc_path .. '/colorscript/colorscript.sh ; ' .. " printf '" ..
+            '#!/bin/bash\n' ..
+            'cd ' .. misc_path .. '/colorscript\n' ..
+            'DEV=1 ./colorscript.sh $*' ..
+            "'> " .. programs_path .. '/colorscript; ' ..
+            'chmod +x ' .. programs_path .. '/colorscript',
+        cond = not file_readable(programs_path .. '/colorscript'),
+    },
+    {
         name = 'success',
         command = 'echo Installation complete!'
     },
