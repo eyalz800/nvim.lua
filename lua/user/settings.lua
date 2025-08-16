@@ -1,7 +1,7 @@
 local m = {}
 m.indentation = 4
 m.guess_indent = true
-m.snacks = false
+m.snacks = true
 m.indent_guides = m.snacks and 'snacks' or 'indent-blankline'
 m.expand_tabs = true
 m.respect_editor_config = true
