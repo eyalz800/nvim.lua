@@ -38,7 +38,7 @@ return {
     {
         name = 'brew-install',
         command = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" ; brew update',
-        cond = not executable('brew'),
+        cond = not executable 'brew',
         os = 'Darwin',
     },
     {
@@ -48,8 +48,8 @@ return {
     },
     {
         name = 'install-basic',
-        command = 'brew install curl ctags cscope llvm make autoconf automake unzip' ..
-                  ' pkg-config python3 nodejs gnu-sed bat ripgrep lazygit tig pandoc plantuml || true',
+        command = 'brew install curl ctags cscope llvm make autoconf automake unzip pkg-config python3 nodejs gnu-sed'
+            .. ' bat ripgrep fd lazygit tig pandoc plantuml imagemagick gs tectonic || true',
         'brew install git || true',
         os = 'Darwin',
     },
@@ -104,8 +104,9 @@ return {
     },
     {
         name = 'install-basic',
-        command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y wget curl exuberant-ctags cscope git unzip ca-certificates gnupg bat ripgrep ' ..
-                  'make autoconf xz-utils automake pkg-config openjdk-17-jre python3 python3-pip python3-venv gdb tig language-pack-en plantuml pandoc',
+        command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y wget curl exuberant-ctags cscope git unzip ca-certificates gnupg bat ripgrep fd-find ' ..
+                  'make autoconf xz-utils automake pkg-config openjdk-17-jre python3 python3-pip python3-venv gdb tig language-pack-en plantuml pandoc imagemagick ' ..
+                  'ghostscript texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra',
         os = 'Linux',
     },
     {
