@@ -17,6 +17,7 @@ m.filetyeps = {
     'dap-repl',
     'noice',
     'DiffviewFiles',
+    'DiffviewFileHistory',
     'snacks_picker_list',
 }
 
