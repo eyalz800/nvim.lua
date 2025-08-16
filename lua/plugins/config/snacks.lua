@@ -102,8 +102,8 @@ m.lazy = function()
             { '<leader>cR', function() m.snacks().rename.rename_file() end, desc = 'Rename File' },
             { '<leader>ee', function() m.snacks().explorer.reveal() end, desc = 'Open snacks explorer' },
             { 'gB', function() m.snacks().gitbrowse() end, desc = 'Git Browse', mode = { 'n', 'v' } },
-            { '<c-/>', function() Snacks.terminal() end,  desc = 'Toggle snacks terminal' },
-            { '<c-_>', function() Snacks.terminal() end,  desc = 'which_key_ignore' },
+            { '<c-/>', function() m.snacks().terminal() end,  desc = 'Toggle snacks terminal' },
+            { '<c-_>', function() m.snacks().terminal() end,  desc = 'which_key_ignore' },
             { ']]', function() m.snacks().words.jump(vim.v.count1) end, desc = 'Next Reference', mode = { 'n', 't' } },
             { '[[', function() m.snacks().words.jump(-vim.v.count1) end, desc = 'Prev Reference', mode = { 'n', 't' } },
             user.settings.notifier == 'snacks' and { '<leader>nh', function() m.snacks().notifier.show_history() end, desc = 'Notification History' } or nil,
@@ -130,6 +130,8 @@ m.snacks = function()
 end
 
 m.explorer = function()
+    -- TODO: this is not working
+
     local explorer = {}
 
     explorer.open = function()
