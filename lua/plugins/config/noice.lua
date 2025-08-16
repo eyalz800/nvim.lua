@@ -93,13 +93,6 @@ m.config = function()
             {
                 filter = {
                     event = 'msg_show',
-                    find = '^VM has started with warnings%.',
-                },
-                opts = { skip = true, },
-            },
-            {
-                filter = {
-                    event = 'msg_show',
                     kind = 'emsg',
                     find = '^Error in decoration provider',
                 },
