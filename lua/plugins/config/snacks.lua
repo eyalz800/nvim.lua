@@ -17,28 +17,48 @@ m.lazy = function()
                 dashboard = {
                     enabled = true,
                     preset = {
-                        pick = nil,
                         keys = {
-                            { icon = ' ', key = 'p', desc = 'Find File', action = ":lua Snacks.dashboard.pick('files')" },
                             { icon = ' ', key = 'n', desc = 'New File', action = ":ene" },
-                            { icon = ' ', key = 'r', desc = 'Find Text', action = ":lua Snacks.dashboard.pick('live_grep')" },
-                            { icon = ' ', key = 'f', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
-                            { icon = ' ', key = 'c', desc = 'Config', action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+                            { icon = '󰁯 ', key = 'o', desc = 'Last File', action = function() vim.api.nvim_feedkeys('2' .. vim.api.nvim_replace_termcodes('<c-o>', true, false, true), 'n', false) end },
+                            { icon = ' ', key = 'p', desc = 'Find File', action = require 'plugins.finder'.find_file },
+                            { icon = '󰘓 ', key = ']', desc = 'Find In All Files ', action = require 'plugins.finder'.find_file_hidden },
+                            { icon = ' ', key = 't', desc = 'Find Text', action = require 'plugins.finder'.find_in_files },
+                            { icon = ' ', key = 'r', desc = 'Recent Files', action = require 'plugins.finder'.recent_files },
+                            { icon = ' ', key = 'c', desc = 'Config Files', action = function() require 'plugins.finder'.find_file({ cwd = vim.fn.stdpath('config') }) end },
+                            { icon = ' ', key = 'C', desc = 'Config Text', action = function() require 'plugins.finder'.find_in_files({ cwd = vim.fn.stdpath('config') }) end },
                             { icon = '󰒲 ', key = 'L', desc = 'Lazy', action = ":Lazy", enabled = package.loaded.lazy ~= nil },
                             { icon = ' ', key = 'q', desc = 'Quit', action = ":qa" },
                         },
                     },
                     sections = {
-                        { section = 'header' },
                         {
-                            section = 'keys',
-                            gap = 1,
-                            padding = 1,
-                        },
-                        { icon = ' ', title = 'Recent Files', section = 'recent_files', indent = 2, padding = { 2, 2 } },
-                        { icon = ' ', title = 'Projects', section = 'projects', indent = 2, padding = 2 },
-                        { section = 'startup' },
-                    },
+                            { section = 'header' },
+                            {
+                                pane = 2,
+                                section = 'terminal',
+                                cmd = 'colorscript -e square',
+                                height = 5,
+                                padding = 1,
+                            },
+                            { section = 'keys', gap = 1, padding = 1 },
+                            { pane = 2, icon = ' ', title = 'Recent Files', section = 'recent_files', indent = 2, padding = 1 },
+                            { pane = 2, icon = ' ', title = 'Projects', section = 'projects', indent = 2, padding = 1 },
+                            {
+                                pane = 2,
+                                icon = ' ',
+                                title = 'Git Status',
+                                section = 'terminal',
+                                enabled = function()
+                                    return Snacks.git.get_root() ~= nil
+                                end,
+                                cmd = 'git status --short --branch --renames',
+                                height = 5,
+                                padding = 1,
+                                ttl = 5 * 60,
+                                indent = 3,
+                            },
+                            { section = 'startup' },
+                        }                    },
                 },
                 explorer = {
                     enabled = true,
@@ -74,6 +94,8 @@ m.lazy = function()
             })
         end,
         keys = {
+            { '<leader>da', function() m.snacks().dashboard.open() end, desc = 'Open Dashboard' },
+            { '<leader>bi', function() m.snacks().picker.icons() end, desc = 'Browse Icons' },
             { '<leader>.', function() m.snacks().scratch() end, desc = 'Toggle Scratch Buffer' },
             { '<leader>S', function() m.snacks().scratch.select() end, desc = 'Select Scratch Buffer' },
             { '<leader>cR', function() m.snacks().rename.rename_file() end, desc = 'Rename File' },
