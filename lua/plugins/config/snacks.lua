@@ -18,14 +18,15 @@ m.lazy = function()
                     enabled = true,
                     preset = {
                         keys = {
-                            { icon = ' ', key = 'n', desc = 'New File', action = ":ene" },
+                            { icon = ' ', key = 'n', desc = 'New File', action = ':ene' },
                             { icon = '󰁯 ', key = 'o', desc = 'Last File', action = function() vim.api.nvim_feedkeys('2' .. vim.api.nvim_replace_termcodes('<c-o>', true, false, true), 'n', false) end },
                             { icon = ' ', key = 'p', desc = 'Find File', action = require 'plugins.finder'.find_file },
                             { icon = '󰘓 ', key = ']', desc = 'Find In All Files ', action = require 'plugins.finder'.find_file_hidden },
                             { icon = ' ', key = 't', desc = 'Find Text', action = require 'plugins.finder'.find_in_files },
                             { icon = ' ', key = 'r', desc = 'Recent Files', action = require 'plugins.finder'.recent_files },
+                            { icon = ' ', key = 's', desc = 'Settings', action = ':n ' .. vim.fn.stdpath('config') .. '/lua/user/settings.lua'},
                             { icon = ' ', key = 'c', desc = 'Config Files', action = function() require 'plugins.finder'.find_file({ cwd = vim.fn.stdpath('config') }) end },
-                            { icon = ' ', key = 'C', desc = 'Config Text', action = function() require 'plugins.finder'.find_in_files({ cwd = vim.fn.stdpath('config') }) end },
+                            { icon = ' ', key = 'C', desc = 'Config Text', action = function() require 'plugins.finder'.find_in_files({ cwd = vim.fn.stdpath('config') }) end },
                             { icon = '󰒲 ', key = 'L', desc = 'Lazy', action = ":Lazy", enabled = package.loaded.lazy ~= nil },
                             { icon = ' ', key = 'q', desc = 'Quit', action = ":qa" },
                         },
