@@ -6,8 +6,10 @@ m.setup = function()
     vim.keymap.set('n', '<leader>nq', ':Noice dismiss<cr>', { desc = 'Dismiss Noice', noremap = true, silent = true })
     vim.keymap.set('n', '<leader>nd', ':Noice disable<cr>', { desc = 'Disable Noice', noremap = true, silent = true })
     vim.keymap.set('n', '<leader>ne', ':Noice enable<cr>', { desc = 'Enable Noice', noremap = true, silent = true })
-    vim.keymap.set('n', '<leader>nh', ':Noice history<cr>', { desc = 'Noice history', noremap = true, silent = true })
     vim.keymap.set('n', '<leader>na', ':Noice all<cr>', { desc = 'Noice all messages', noremap = true, silent = true })
+    if user.settings.notifier == 'noice' then
+        vim.keymap.set('n', '<leader>nh', ':Noice history<cr>', { desc = 'Noice history', noremap = true, silent = true })
+    end
     if user.settings.noice_config.custom_incsearch then
         m.setup_noice_incsearch()
     end

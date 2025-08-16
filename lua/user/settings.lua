@@ -3,7 +3,6 @@ m.indentation = 4
 m.guess_indent = true
 m.snacks = false
 m.indent_guides = m.snacks and 'snacks' or 'indent-blankline'
-m.notifier = m.snacks and 'snacks' or 'default'
 m.expand_tabs = true
 m.respect_editor_config = true
 m.swap_files = false
@@ -55,6 +54,7 @@ m.noice = true
 m.noice_config = {
     custom_incsearch = true,
 }
+m.notifier = m.snacks and 'snacks' or (m.noice and 'noice' or 'default')
 m.fidget = true
 m.diff = 'mini'
 m.copilot = true
