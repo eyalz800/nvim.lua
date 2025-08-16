@@ -166,6 +166,12 @@ m.browse_help = function()
     })
 end
 
+m.command_history = function()
+    fzf_lua.command_history({
+        fzf_colors = vim.g.fzf_colors,
+    })
+end
+
 m.config = function()
     return {}
 end
