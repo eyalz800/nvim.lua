@@ -2,7 +2,6 @@ local m = {}
 local user = require 'user'
 
 m.setup = function()
-    require 'plugins.config'.setup()
     require 'plugins.line'.setup()
     if user.settings.pin_bars == 'pin' then
         require 'plugins.pin'.setup()
@@ -14,6 +13,7 @@ m.setup = function()
     require 'plugins.doc-reader'.setup()
     require 'plugins.syntax'.setup()
     require 'plugins.code-explorer'.setup()
+    require 'plugins.zip'.setup()
     require 'plugins.lazy'.setup()
 end
 

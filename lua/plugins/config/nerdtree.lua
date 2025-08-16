@@ -4,32 +4,31 @@ local expand = vim.fn.expand
 local exists = require 'vim.exists'.exists
 local file_readable = require 'vim.file-readable'.file_readable
 
-vim.g.NERDTreeWinSize = 30
-vim.g.NERDTreeAutoCenter = 0
-vim.g.NERDTreeMinimalUI = 1
-vim.g.NERDTreeShowHidden = 1
-vim.g.NERDTreeAutoDeleteBuffer = 1
-vim.g.NERDTreeDirArrowExpandable = ''
-vim.g.NERDTreeDirArrowCollapsible = ''
-vim.g.NERDTreeDisableExactMatchHighlight = 1
-vim.g.NERDTreeDisablePatternMatchHighlight = 1
-vim.g.NERDTreeLimitedSyntax = 1
-vim.g.NERDTreeSyntaxDisableDefaultExtensions = 0
-vim.g.NERDTreeSyntaxEnabledExtensions = {'h', 'sh', 'bash', 'vim', 'md'}
-vim.g.NERDTreeGitStatusIndicatorMapCustom = {
-                 Modified  = 'M',
-                 Staged    = 'A',
-                 Untracked = 'U',
-                 Renamed   = '➜',
-                 Unmerged  = '═',
-                 Deleted   = '✖',
-                 Dirty     = 'M',
-                 Ignored   = '☒',
-                 Clean     = 'C',
-                 Unknown   = '?',
-             }
-
-m.setup = function()
+m.init = function()
+    vim.g.NERDTreeWinSize = 30
+    vim.g.NERDTreeAutoCenter = 0
+    vim.g.NERDTreeMinimalUI = 1
+    vim.g.NERDTreeShowHidden = 1
+    vim.g.NERDTreeAutoDeleteBuffer = 1
+    vim.g.NERDTreeDirArrowExpandable = ''
+    vim.g.NERDTreeDirArrowCollapsible = ''
+    vim.g.NERDTreeDisableExactMatchHighlight = 1
+    vim.g.NERDTreeDisablePatternMatchHighlight = 1
+    vim.g.NERDTreeLimitedSyntax = 1
+    vim.g.NERDTreeSyntaxDisableDefaultExtensions = 0
+    vim.g.NERDTreeSyntaxEnabledExtensions = {'h', 'sh', 'bash', 'vim', 'md'}
+    vim.g.NERDTreeGitStatusIndicatorMapCustom = {
+        Modified  = 'M',
+        Staged    = 'A',
+        Untracked = 'U',
+        Renamed   = '➜',
+        Unmerged  = '═',
+        Deleted   = '✖',
+        Dirty     = 'M',
+        Ignored   = '☒',
+        Clean     = 'C',
+        Unknown   = '?',
+    }
     vim.api.nvim_create_autocmd('filetype', {
         pattern = 'nerdtree',
         group = vim.api.nvim_create_augroup('init.lua.nerdtree', {}),

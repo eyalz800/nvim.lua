@@ -6,7 +6,28 @@ local cmd = require 'vim.cmd'.silent
 local expand = vim.fn.expand
 local fnameescape = vim.fn.fnameescape
 
-vim.g.fzf_layout = { window={width=0.9, height=0.85, border='sharp'} }
+m.init = function()
+    vim.g.fzf_layout = { window={width=0.9, height=0.85, border='sharp'} }
+    vim.opt.rtp:append '~/.fzf'
+
+    if user.settings.finder ~= 'fzf-lua' then
+        vim.g.fzf_colors = {
+            fg =      {'fg', 'Normal'},
+            bg =      {'bg', 'Normal'},
+            hl =      {'fg', 'SpecialKey'},
+            ['fg+'] = {'fg', 'CursorLine', 'CursorColumn', 'Normal'},
+            ['bg+'] = {'bg', 'CursorLine', 'CursorColumn'},
+            ['hl+'] = {'fg', 'String'},
+            info =    {'fg', 'Comment'},
+            border =  {'fg', 'Ignore'},
+            prompt =  {'fg', 'StorageClass'},
+            pointer = {'fg', 'Error'},
+            marker =  {'fg', 'Keyword'},
+            spinner = {'fg', 'Label'},
+            header =  {'fg', 'Comment'}
+        }
+    end
+end
 
 m.find_file = function()
     vim.env.FZF_DEFAULT_COMMAND = 'rg --files'
@@ -112,26 +133,6 @@ m.lines_preview = function()
             )
         )
     end
-end
-
-vim.opt.rtp:append '~/.fzf'
-
-if user.settings.finder ~= 'fzf-lua' then
-    vim.g.fzf_colors = {
-       fg =      {'fg', 'Normal'},
-       bg =      {'bg', 'Normal'},
-       hl =      {'fg', 'SpecialKey'},
-       ['fg+'] = {'fg', 'CursorLine', 'CursorColumn', 'Normal'},
-       ['bg+'] = {'bg', 'CursorLine', 'CursorColumn'},
-       ['hl+'] = {'fg', 'String'},
-       info =    {'fg', 'Comment'},
-       border =  {'fg', 'Ignore'},
-       prompt =  {'fg', 'StorageClass'},
-       pointer = {'fg', 'Error'},
-       marker =  {'fg', 'Keyword'},
-       spinner = {'fg', 'Label'},
-       header =  {'fg', 'Comment'}
-    }
 end
 
 return m

@@ -2,7 +2,9 @@ local m = {}
 local cmd = require 'vim.cmd'.silent
 local user = require 'user'
 
-vim.g.zoomwintab_remap = 0
+m.init = function()
+    vim.g.zoomwintab_remap = 0
+end
 
 m.toggle_zoom = function()
     if user.settings.edge == 'edgy' then

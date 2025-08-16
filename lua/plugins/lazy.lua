@@ -144,10 +144,16 @@ m.plugins = {
     },
     {
         'airblade/vim-gitgutter',
+        init = function()
+            require 'plugins.config.gitgutter'.init()
+        end,
         cond = user.settings.git_plugin == 'gitgutter',
     },
     {
         'vim-airline/vim-airline',
+        init = function()
+            require 'plugins.config.airline'.init()
+        end,
         cond = user.settings.line == 'airline'
     },
     {
@@ -194,8 +200,16 @@ m.plugins = {
     },
     {
         'preservim/nerdtree',
+        init = function()
+            require 'plugins.config.nerdtree'.init()
+        end,
         dependencies = {
-            'ryanoasis/vim-devicons',
+            {
+                'ryanoasis/vim-devicons',
+                init = function()
+                    require 'plugins.config.devicons'.init()
+                end
+            },
             'tiagofumo/vim-nerdtree-syntax-highlight',
             'Xuyuanp/nerdtree-git-plugin'
         },
@@ -212,6 +226,9 @@ m.plugins = {
     },
     {
         'majutsushi/tagbar',
+        init = function()
+            require 'plugins.config.tagbar'.init()
+        end,
         cond = user.settings.code_explorer == 'tagbar',
     },
     {
@@ -254,9 +271,13 @@ m.plugins = {
     },
     {
         'junegunn/fzf.vim',
+        init = function()
+            require 'plugins.config.fzf'.init()
+        end,
         dependencies = {
             'junegunn/fzf',
         },
+        cond = user.settings.finder == 'fzf-lua' or user.settings.finder == 'fzf',
     },
     {
         'ibhagwan/fzf-lua',
@@ -272,6 +293,18 @@ m.plugins = {
     {
         'neoclide/coc.nvim',
         branch = 'release',
+        init = function()
+            require 'plugins.config.coc'.init()
+        end,
+        dependencies = {
+            {
+                'eyalz800/vim-ultisnips',
+                init = function()
+                    require 'plugins.config.ultisnips'.init()
+                end,
+                event = 'VeryLazy',
+            },
+        },
         cond = user.settings.lsp == 'coc'
     },
     {
@@ -302,9 +335,6 @@ m.plugins = {
         end,
     },
     {
-        'skywind3000/asyncrun.vim',
-    },
-    {
         'mg979/vim-visual-multi',
         config = function()
             require 'plugins.config.visual-multi'.setup()
@@ -312,6 +342,9 @@ m.plugins = {
     },
     {
         'tmsvg/pear-tree',
+        init = function()
+            require 'plugins.config.pear-tree'.init()
+        end,
         cond = user.settings.pairs == 'pear-tree',
     },
     {
@@ -347,6 +380,9 @@ m.plugins = {
     {
         'troydm/zoomwintab.vim',
         event = 'VeryLazy',
+        init = function()
+            require 'plugins.config.zoomwintab'.init()
+        end,
         cond = user.settings.zoom == 'zoomwintab',
     },
     {
@@ -359,6 +395,9 @@ m.plugins = {
     },
     {
         'christoomey/vim-tmux-navigator',
+        init = function()
+            require 'plugins.config.tmux-navigator'.init()
+        end,
     },
     {
         'tpope/vim-surround',
@@ -371,6 +410,12 @@ m.plugins = {
     {
         'skywind3000/asynctasks.vim',
         event = 'VeryLazy',
+        init = function()
+            require 'plugins.config.asynctasks'.init()
+        end,
+        dependencies = {
+            'skywind3000/asyncrun.vim',
+        },
     },
     {
         --'famiu/bufdelete.nvim',
@@ -380,6 +425,9 @@ m.plugins = {
     },
     {
         'tpope/vim-abolish',
+        init = function()
+            require 'plugins.config.abolish'.init()
+        end,
         event = 'VeryLazy',
     },
     {
@@ -396,16 +444,14 @@ m.plugins = {
     },
     {
         'jreybert/vimagit',
+        init = function()
+            require 'plugins.config.magit'.init()
+        end,
         cmd = { 'Magit', 'MagitOnly' }
     },
     {
         'mbbill/undotree',
         event = 'VeryLazy',
-    },
-    {
-        'eyalz800/vim-ultisnips',
-        event = 'VeryLazy',
-        cond = user.settings.lsp == 'coc',
     },
     {
         'tpope/vim-obsession',

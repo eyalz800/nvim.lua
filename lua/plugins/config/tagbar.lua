@@ -2,10 +2,12 @@ local m = {}
 local cmd = require 'vim.cmd'.silent
 local exists = require 'vim.exists'.exists
 
-vim.g.tagbar_width = 30
-vim.g.tagbar_indent = 0
-vim.g.tagbar_compact = 2
-vim.g.tagbar_iconchars = {'', ''}
+m.init = function()
+    vim.g.tagbar_width = 30
+    vim.g.tagbar_indent = 0
+    vim.g.tagbar_compact = 2
+    vim.g.tagbar_iconchars = {'', ''}
+end
 
 m.open = function(_)
     cmd 'TagbarOpenAutoClose'

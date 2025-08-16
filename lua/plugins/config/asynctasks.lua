@@ -6,18 +6,20 @@ local quickfix = require 'plugins.quickfix'
 local input = vim.fn.input
 local system = vim.fn.system
 
-vim.g.asyncrun_open = 0
-vim.g.asyncrun_rootmarks = user.settings.root_paths
+m.init = function()
+    vim.g.asyncrun_open = 0
+    vim.g.asyncrun_rootmarks = user.settings.root_paths
 
-if user.settings.terminal == 'floaterm' then
-    vim.g.asynctasks_term_pos = 'floaterm'
-elseif user.settings.terminal == 'toggleterm' then
-    vim.g.asynctasks_term_pos = 'toggleterm2'
-else
-    vim.g.asynctasks_term_pos = 'right'
-    vim.g.asynctasks_term_rows = 10
-    vim.g.asynctasks_term_cols = 40
-    vim.g.asynctasks_term_reuse = 1
+    if user.settings.terminal == 'floaterm' then
+        vim.g.asynctasks_term_pos = 'floaterm'
+    elseif user.settings.terminal == 'toggleterm' then
+        vim.g.asynctasks_term_pos = 'toggleterm2'
+    else
+        vim.g.asynctasks_term_pos = 'right'
+        vim.g.asynctasks_term_rows = 10
+        vim.g.asynctasks_term_cols = 40
+        vim.g.asynctasks_term_reuse = 1
+    end
 end
 
 m.build_project = function()

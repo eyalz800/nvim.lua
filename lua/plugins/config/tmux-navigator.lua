@@ -1,11 +1,13 @@
 local m = {}
 local cmd = require 'vim.cmd'.silent
 
-vim.g.tmux_navigator_no_mappings = true
+m.init = function()
+    vim.g.tmux_navigator_no_mappings = true
 
-m.tmux_navigation_enabled = false
-if vim.env.TMUX then
-    m.tmux_navigation_enabled = true
+    m.tmux_navigation_enabled = false
+    if vim.env.TMUX then
+        m.tmux_navigation_enabled = true
+    end
 end
 
 m.tmux_navigate_left = function()

@@ -6,7 +6,11 @@ local feed_keys = require 'vim.feed-keys'.feed_keys
 local enabled = true
 local settings = user.settings.lsp_config.coc or {}
 
-vim.g.coc_global_extensions = settings.plugins or {}
+m.init = function()
+    vim.g.coc_global_extensions = settings.plugins or {}
+    vim.g.tagfunc = 'CocTagFunc'
+    vim.g.coc_fzf_preview = 'right:50%'
+end
 
 local check_back_space = function()
     local col = vim.fn.col('.') - 1
@@ -72,8 +76,5 @@ m.enter = function()
 end
 
 m.completion_mappings = true
-
-vim.g.tagfunc = 'CocTagFunc'
-vim.g.coc_fzf_preview = 'right:50%'
 
 return m
