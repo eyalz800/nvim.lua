@@ -11,6 +11,12 @@ elseif user.settings.buffer_deleter == 'mini' then
     m.delete = function(id)
         mini_bufremove.delete(id or 0, false)
     end
+
+elseif user.settings.buffer_deleter == 'snacks' then
+    local snacks_bufdelete = require 'plugins.config.snacks'.snacks().bufdelete
+    m.delete = function(id)
+        snacks_bufdelete.delete({ buf = id, force = false })
+    end
 else
     m.delete = function()
         vim.cmd 'bd!'

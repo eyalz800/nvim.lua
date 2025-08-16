@@ -4,8 +4,12 @@ local user = require 'user'
 local terminal = require 'plugins.terminal'.open_floating_terminal
 local expand = vim.fn.expand
 
-m.show_git = function()
-    terminal(vim.env.SHELL .. ' -c "cd ' .. expand('%:p:h') .. ' ; lazygit"')
+if user.settings.snacks then
+    m.show_git = function() Snacks.lazygit() end
+else
+    m.show_git = function()
+        terminal(vim.env.SHELL .. ' -c "cd ' .. expand('%:p:h') .. ' ; lazygit"')
+    end
 end
 
 m.git_blame = function()

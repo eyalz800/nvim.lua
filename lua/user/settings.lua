@@ -1,6 +1,9 @@
 local m = {}
 m.indentation = 4
 m.guess_indent = true
+m.snacks = false
+m.indent_guides = m.snacks and 'snacks' or 'indent-blankline'
+m.notifier = m.snacks and 'snacks' or 'default'
 m.expand_tabs = true
 m.respect_editor_config = true
 m.swap_files = false
@@ -45,7 +48,7 @@ m.line_number = {
     together = true,
 }
 m.colorizer = 'nvim-colorizer'
-m.zoom = 'zoomwintab'
+m.zoom = m.snacks and 'snacks' or 'zoomwintab'
 m.cscope_dynamic = false
 m.comment = 'comment.nvim'
 m.noice = true

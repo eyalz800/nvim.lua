@@ -287,6 +287,7 @@ m.plugins = {
         config = function()
             require 'plugins.config.indent-blankline'.setup()
         end,
+        cond = user.settings.indent_guides == 'indent-blankline',
     },
     {
         'NvChad/nvim-colorizer.lua',
