@@ -486,6 +486,7 @@ m.plugins = {
     },
     {
         'ntpeters/vim-better-whitespace',
+        event = 'BufRead',
         init = function()
             require 'plugins.config.better-whitespace'.init()
         end,
