@@ -11,6 +11,15 @@ local width = 30
 
 m.setup = function()
     require 'nvim-tree'.setup(m.config())
+    local api = require 'nvim-tree.api'
+    api.events.subscribe(api.events.Event.TreeRendered,
+        function(opts)
+            if not vim.w[opts.winnr].init_lua_custom_winhl_set then
+                vim.w[opts.winnr].init_lua_custom_winhl_set = true
+                vim.wo[opts.winnr].winhighlight = (vim.wo[opts.winnr].winhighlight ~= '' and vim.wo[opts.winnr].winhighlight .. ',' or '') .. 'CursorLineSign:NvimTreeCursorLine'
+            end
+        end
+    )
 end
 
 m.open = function(options)
