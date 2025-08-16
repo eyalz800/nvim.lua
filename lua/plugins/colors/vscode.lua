@@ -36,6 +36,8 @@ m.config = function()
             DiagnosticUnderlineTextInfo = { fg = color.vscBlue },
             MinuetVirtualText = { fg = color.vscSuggestion, bg = color.vscBack },
             WinBarNC = { link = 'WinBar' },
+            SnacksIndentScope = { link = 'NonText' },
+            IndentBlanklineContextChar = { link = 'NonText' },
             ['@keyword.function.lua'] = { fg = color.vscPink },
             ['@string.escape'] = { fg = color.vscYellowOrange },
             ['@conditional.ternary'] = { fg = color.vscFront },
