@@ -457,6 +457,7 @@ m.plugins = {
         end,
         cond = user.settings.buffer_deleter == 'mini',
     },
+    require 'plugins.config.snacks'.lazy(),
 
     -- Vim Plugins
     {

@@ -173,7 +173,15 @@ m.command_history = function()
 end
 
 m.config = function()
-    return {}
+    return {
+        previewers = {
+            builtin = {
+                snacks_image = {
+                    render_inline = false,
+                },
+            },
+        },
+    }
 end
 
 return m
