@@ -106,7 +106,7 @@ return {
         name = 'install-basic',
         command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y wget curl exuberant-ctags cscope git unzip ca-certificates gnupg bat ripgrep fd-find ' ..
                   'make autoconf xz-utils automake pkg-config openjdk-17-jre python3 python3-pip python3-venv gdb tig language-pack-en plantuml pandoc imagemagick ' ..
-                  'ghostscript texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra',
+                  'ghostscript texlive-latex-base',
         os = 'Linux',
     },
     {
