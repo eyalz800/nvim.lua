@@ -263,6 +263,9 @@ m.plugins = {
     },
     {
         'mg979/vim-visual-multi',
+        init = function()
+            require 'plugins.config.visual-multi'.init()
+        end,
         config = function()
             require 'plugins.config.visual-multi'.setup()
         end,
