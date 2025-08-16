@@ -9,7 +9,9 @@ m.config = function()
     return {
         ensure_installed = { 'c', 'cpp', 'lua', 'vim', 'vimdoc', 'python', 'query', 'gitcommit', 'gitignore', 'gitattributes',
             'markdown', 'markdown_inline', 'make', 'cmake', 'ninja', 'json', 'asm', 'nasm', 'rust', 'xml', 'ini', 'kconfig', 'diff', 'bash',
-            'yaml', 'html', 'css', 'javascript', 'typescript', 'dockerfile', 'toml', 'go', 'java' },
+            'yaml', 'html', 'css', 'javascript', 'typescript', 'dockerfile', 'toml', 'go', 'java', 'latex', 'norg', 'scss', 'svelte', 'tsx',
+            'typst', 'vue',
+        },
         sync_install = false,
         auto_install = user.settings.treesitter_auto_install,
         highlight = {
