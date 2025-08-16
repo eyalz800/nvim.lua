@@ -6,7 +6,8 @@ local augroup = vim.api.nvim_create_augroup
 m.active = false
 
 m.init = function()
-    vim.g.VM_default_mappings = 0
+    vim.g.VM_default_mappings = false
+    vim.g.VM_silent_exit = true
 
     if vim.o.background == 'dark' then
         vim.g.VM_theme = 'iceblue'

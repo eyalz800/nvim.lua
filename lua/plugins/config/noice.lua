@@ -93,13 +93,6 @@ m.config = function()
             {
                 filter = {
                     event = 'msg_show',
-                    find = '^Exited Visual%-Multi%.',
-                },
-                opts = { skip = true, },
-            },
-            {
-                filter = {
-                    event = 'msg_show',
                     find = '^VM has started with warnings%.',
                 },
                 opts = { skip = true, },
