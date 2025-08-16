@@ -1,7 +1,9 @@
 local m = {}
 local cmd = require 'vim.cmd'.silent
 
-vim.g.better_whitespace_filetypes_blacklist = {'diff', 'gitcommit', 'git', 'unite', 'qf', 'help', 'VimspectorPrompt', 'xxd', 'Outline' }
+m.init = function()
+    vim.g.better_whitespace_filetypes_blacklist = {'diff', 'gitcommit', 'git', 'unite', 'qf', 'help', 'VimspectorPrompt', 'xxd', 'Outline' }
+end
 
 m.setup = function()
     vim.api.nvim_create_autocmd('termopen', {

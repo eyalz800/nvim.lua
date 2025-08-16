@@ -12,6 +12,17 @@ local win_gotoid = vim.fn.win_gotoid
 local input = vim.fn.input
 local system = vim.fn.system
 
+m.init = function()
+    vim.g.vimspector_install_gadgets = {'debugpy', 'CodeLLDB', 'vscode-cpptools'}
+    vim.g.vimspector_sign_priority = {
+        vimspectorBP = 300,
+        vimspectorBPCond = 200,
+        vimspectorBPDisabled = 100,
+        vimspectorPC = 999,
+        vimspectorPCBP = 999,
+    }
+end
+
 m.setup = function()
     vim.api.nvim_create_autocmd('filetype', {
         pattern = 'VimspectorPrompt',
@@ -88,15 +99,6 @@ m.toggle_breakpoint = vim.fn['vimspector#ToggleBreakpoint']
 m.reset_ui = function() end
 m.toggle_ui = function() end
 m.is_ui_open = function() end
-
-vim.g.vimspector_install_gadgets = {'debugpy', 'CodeLLDB', 'vscode-cpptools'}
-vim.g.vimspector_sign_priority = {
-    vimspectorBP = 300,
-    vimspectorBPCond = 200,
-    vimspectorBPDisabled = 100,
-    vimspectorPC = 999,
-    vimspectorPCBP = 999,
-}
 
 m.on_initialize_prompt = function()
     map('n', 'x', 'i-exec<space>', {silent=true, buffer=true})

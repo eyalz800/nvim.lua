@@ -37,6 +37,12 @@ m.plugins = {
 
     -- Neovim Plugins
     {
+        'folke/which-key.nvim',
+        config = function()
+            require 'plugins.config.which-key'.setup()
+        end,
+    },
+    {
         'folke/tokyonight.nvim',
         priority = 1000,
         config = function()
@@ -56,12 +62,6 @@ m.plugins = {
         name = 'catppuccin',
         config = function()
             require 'plugins.colors.catppuccin'.setup()
-        end,
-    },
-    {
-        'folke/which-key.nvim',
-        config = function()
-            require 'plugins.config.which-key'.setup()
         end,
     },
     {
@@ -256,23 +256,8 @@ m.plugins = {
         cond = user.settings.terminal == 'toggleterm',
     },
     {
-        'tpope/vim-fugitive',
-        config = function()
-            require 'plugins.config.fugitive'.setup()
-        end,
-    },
-    {
-        'mg979/vim-visual-multi',
-        init = function()
-            require 'plugins.config.visual-multi'.init()
-        end,
-        config = function()
-            require 'plugins.config.visual-multi'.setup()
-        end,
-    },
-    {
         'windwp/nvim-autopairs',
-        event = 'InsertEnter',
+        event = { 'InsertEnter', 'VeryLazy' },
         config = function()
             require 'plugins.config.nvim-autopairs'.setup()
         end,
@@ -288,12 +273,6 @@ m.plugins = {
             require 'plugins.config.comment-nvim'.setup()
         end,
         cond = user.settings.comment == 'comment.nvim',
-    },
-    {
-        'ntpeters/vim-better-whitespace',
-        config = function()
-            require 'plugins.config.better-whitespace'.setup()
-        end,
     },
     {
         'nyngwang/NeoZoom.lua',
@@ -315,14 +294,6 @@ m.plugins = {
             require 'plugins.config.colorizer'.setup()
         end,
         cond = user.settings.colorizer == 'nvim-colorizer',
-    },
-    {
-        'puremourning/vimspector',
-        event = 'VeryLazy',
-        config = function()
-            require 'plugins.config.vimspector'.setup()
-        end,
-        cond = user.settings.debugging == 'vimspector',
     },
     {
         'jay-babu/mason-nvim-dap.nvim',
@@ -496,6 +467,42 @@ m.plugins = {
             'junegunn/fzf',
         },
         cond = user.settings.finder == 'fzf-lua' or user.settings.finder == 'fzf',
+    },
+    {
+        'tpope/vim-fugitive',
+        config = function()
+            require 'plugins.config.fugitive'.setup()
+        end,
+    },
+    {
+        --'mg979/vim-visual-multi',
+        'eyalz800/vim-visual-multi',
+        init = function()
+            require 'plugins.config.visual-multi'.init()
+        end,
+        config = function()
+            require 'plugins.config.visual-multi'.setup()
+        end,
+    },
+    {
+        'ntpeters/vim-better-whitespace',
+        init = function()
+            require 'plugins.config.better-whitespace'.init()
+        end,
+        config = function()
+            require 'plugins.config.better-whitespace'.setup()
+        end,
+    },
+    {
+        'puremourning/vimspector',
+        event = 'VeryLazy',
+        init = function()
+            require 'plugins.config.vimspector'.init()
+        end,
+        config = function()
+            require 'plugins.config.vimspector'.setup()
+        end,
+        cond = user.settings.debugging == 'vimspector',
     },
     {
         'airblade/vim-gitgutter',
