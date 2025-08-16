@@ -9,16 +9,20 @@ m.setup = function()
     fzf_lua.setup(m.config())
 end
 
-m.find_file = function()
+m.find_file = function(opts)
+    opts = opts or {}
     fzf_lua.files({
         cmd = 'rg --files --color=never --hidden -g "!.git"',
+        cwd = opts.cwd or nil,
         fzf_colors = vim.g.fzf_colors,
     })
 end
 
-m.find_file_hidden = function()
+m.find_file_hidden = function(opts)
+    opts = opts or {}
     fzf_lua.files({
         cmd = 'rg --files --no-ignore-vcs --color=never --hidden',
+        cwd = opts.cwd or nil,
         fzf_colors = vim.g.fzf_colors,
     })
 end
@@ -61,23 +65,29 @@ m.find_line = function()
     end
 end
 
-m.find_in_files = function()
+m.find_in_files = function(opts)
+    opts = opts or {}
     fzf_lua.grep_project({
         cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+        cwd = opts.cwd or nil,
         fzf_colors = vim.g.fzf_colors,
     })
 end
 
-m.find_in_files_precise = function()
+m.find_in_files_precise = function(opts)
+    opts = opts or {}
     fzf_lua.live_grep({
         cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+        cwd = opts.cwd or nil,
         fzf_colors = vim.g.fzf_colors,
     })
 end
 
-m.find_in_files_precise_native = function()
+m.find_in_files_precise_native = function(opts)
+    opts = opts or {}
     fzf_lua.live_grep_native({
         cmd = 'rg --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+        cwd = opts.cwd or nil,
         fzf_colors = vim.g.fzf_colors,
     })
 end
@@ -174,6 +184,12 @@ end
 
 m.lsp_workspace_symbols = function()
     fzf_lua.lsp_workspace_symbols({
+        fzf_colors = vim.g.fzf_colors,
+    })
+end
+
+m.recent_files = function()
+    fzf_lua.oldfiles({
         fzf_colors = vim.g.fzf_colors,
     })
 end

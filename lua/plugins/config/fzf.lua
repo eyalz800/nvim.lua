@@ -29,12 +29,12 @@ m.init = function()
     end
 end
 
-m.find_file = function()
+m.find_file = function(_)
     vim.env.FZF_DEFAULT_COMMAND = 'rg --files'
     cmd 'Files'
 end
 
-m.find_file_hidden = function()
+m.find_file_hidden = function(_)
     vim.env.FZF_DEFAULT_COMMAND = 'rg --files --no-ignore-vcs --hidden'
     cmd 'Files'
 end
@@ -63,15 +63,15 @@ m.find_line = function()
     vim.fn.Init_lua_lines_preview()
 end
 
-m.find_in_files = function()
+m.find_in_files = function(_)
     cmd 'Rg'
 end
 
-m.find_in_files_precise = function()
+m.find_in_files_precise = function(_)
     m.rg(false)
 end
 
-m.find_in_files_precise_native = function()
+m.find_in_files_precise_native = function(_)
     m.rg(false)
 end
 
@@ -110,6 +110,7 @@ m.command_history = function()
 end
 
 m.lsp_workspace_symbols = function() end
+m.recent_files = function() end
 
 m.rg = function(fullscreen)
     local initial_command = 'rg --column --line-number --no-heading --color=always --smart-case . '
