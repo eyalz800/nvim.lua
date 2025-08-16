@@ -392,13 +392,6 @@ m.plugins = {
         end,
     },
     {
-        'aklt/plantuml-syntax',
-        config = function()
-            vim.g.plantuml_set_makeprg = 0
-            vim.g.plantuml_executable_script = ''
-        end,
-    },
-    {
         'zbirenbaum/copilot.lua',
         enabled = true,
         dependencies = {
@@ -603,6 +596,12 @@ m.plugins = {
             require 'plugins.config.magit'.init()
         end,
         cmd = { 'Magit', 'MagitOnly' }
+    },
+    {
+        'aklt/plantuml-syntax',
+        init = function()
+            require 'plugins.config.plantuml-syntax'.init()
+        end,
     },
     {
         'ludovicchabant/vim-gutentags',
