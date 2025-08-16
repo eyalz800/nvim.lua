@@ -16,7 +16,11 @@ m.setup = function()
         function(opts)
             if not vim.w[opts.winnr].init_lua_custom_winhl_set then
                 vim.w[opts.winnr].init_lua_custom_winhl_set = true
-                vim.wo[opts.winnr].winhighlight = (vim.wo[opts.winnr].winhighlight ~= '' and vim.wo[opts.winnr].winhighlight .. ',' or '') .. 'CursorLineSign:NvimTreeCursorLine'
+                local current_winhighlight = vim.wo[opts.winnr].winhighlight
+                if not string.find(current_winhighlight, 'CursorLineSign', 1, true) then
+                    local new_highlight_entry = 'CursorLineSign:NvimTreeCursorLine'
+                    vim.wo[opts.winnr].winhighlight = (current_winhighlight ~= '' and current_winhighlight .. ',' or '') .. new_highlight_entry
+                end
             end
         end
     )
