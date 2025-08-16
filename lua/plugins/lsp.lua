@@ -1,10 +1,10 @@
 local m = {}
 local user = require 'user'
 
-if user.settings.lsp == 'coc' then
-    return require 'plugins.config.coc'
-elseif user.settings.lsp == 'nvim' then
+if user.settings.lsp == 'nvim' then
     return require 'plugins.config.nvim-lsp'
+elseif user.settings.lsp == 'coc' then
+    return require 'plugins.config.coc'
 else
     m.goto_definition = function() end
     m.goto_declaration = function() end
