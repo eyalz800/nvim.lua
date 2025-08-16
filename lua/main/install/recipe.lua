@@ -1,4 +1,4 @@
-local sed = require 'lib.os_bin'.sed
+local sed = require 'lib.os-bin'.sed
 local executable = require 'vim.executable'.executable
 local file_readable = require 'vim.file-readable'.file_readable
 local options = require 'user'.settings.install_options
