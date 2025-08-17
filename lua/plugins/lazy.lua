@@ -470,7 +470,7 @@ m.plugins = {
         config = function()
             require 'plugins.config.mini-ai'.setup()
         end,
-        cond = user.settings.mini_ai,
+        cond = user.settings.targets == 'mini',
     },
     {
         'sitiom/nvim-numbertoggle',
@@ -667,6 +667,7 @@ m.plugins = {
     {
         'wellle/targets.vim',
         event = 'VeryLazy',
+        cond = user.settings.targets == 'targets.vim',
     },
     {
         'yazgoo/yank-history',
