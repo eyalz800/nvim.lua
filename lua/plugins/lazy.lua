@@ -458,6 +458,20 @@ m.plugins = {
         cond = user.settings.buffer_deleter == 'mini',
     },
     {
+        'echasnovski/mini.bracketed',
+        event = 'VeryLazy',
+        config = function()
+            require 'plugins.config.mini-bracketed'.setup()
+        end,
+    },
+    {
+        'echasnovski/mini.ai',
+        event = 'VeryLazy',
+        config = function()
+            require 'plugins.config.mini-ai'.setup()
+        end,
+    },
+    {
         'sitiom/nvim-numbertoggle',
         event = 'VeryLazy',
         cond = user.settings.line_number.auto_toggle,
