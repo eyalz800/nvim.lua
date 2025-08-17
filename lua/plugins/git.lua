@@ -29,12 +29,8 @@ end
 if user.settings.git_plugin == 'gitsigns' then
     local gitsigns = require 'plugins.config.gitsigns'
     m.git_blame_current_line = gitsigns.git_blame_current_line
-    m.prev_hunk = gitsigns.prev_hunk
-    m.next_hunk = gitsigns.next_hunk
 else
     m.git_blame_current_line = function() end
-    m.prev_hunk = function() end
-    m.next_hunk = function() end
 end
 
 return m
