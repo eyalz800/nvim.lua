@@ -477,6 +477,17 @@ m.plugins = {
         event = 'VeryLazy',
         cond = user.settings.line_number.auto_toggle,
     },
+    {
+        'folke/todo-comments.nvim',
+        event = 'VimEnter',
+        config = function()
+            require 'plugins.config.todo-comments'.setup()
+        end,
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+        },
+    },
+
     require 'plugins.config.snacks'.lazy(),
 
     -- Vim Plugins
