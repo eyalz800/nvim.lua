@@ -17,6 +17,7 @@ m.lazy = function()
                 dashboard = {
                     enabled = true,
                     preset = {
+                        pick = user.settings.finder == 'fzf-lua' and function(cmd, opts) require 'fzf-lua'[cmd](opts) end or nil,
                         keys = {
                             { icon = ' ', key = 'n', desc = 'New File', action = ':ene' },
                             { icon = '󰁯 ', key = 'o', desc = 'Last File', action = function() vim.api.nvim_feedkeys('2' .. vim.api.nvim_replace_termcodes('<c-o>', true, false, true), 'n', false) end },
