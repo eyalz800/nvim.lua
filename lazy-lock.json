@@ -36,6 +36,7 @@
   "mini.bufremove": { "branch": "main", "commit": "a1bbb2af40f7773c8cee9e364aac4a724b5c10de" },
   "mini.diff": { "branch": "main", "commit": "f573bd2ae2eb225ea2f125126b8869e04bcaf231" },
   "mini.files": { "branch": "main", "commit": "5b9431cf5c69b8e69e5a67d2d12338a3ac2e1541" },
+  "mini.surround": { "branch": "main", "commit": "7a8606333affe7ce637a0ba91bbafc46fc42bfa0" },
   "minuet-ai.nvim": { "branch": "main", "commit": "9ba12416fd241d619e059b861811fb30366671c4" },
   "neoconf.nvim": { "branch": "main", "commit": "8601c3f54532e65581042cac43dd9bff224b6a2d" },
   "noice.nvim": { "branch": "main", "commit": "0427460c2d7f673ad60eb02b35f5e9926cf67c59" },

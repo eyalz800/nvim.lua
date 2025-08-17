@@ -487,6 +487,14 @@ m.plugins = {
             'nvim-lua/plenary.nvim',
         },
     },
+    {
+        'echasnovski/mini.surround',
+        event = 'VeryLazy',
+        config = function()
+            require 'plugins.config.mini-surround'.setup()
+        end,
+        cond = user.settings.targets == 'mini',
+    },
 
     require 'plugins.config.snacks'.lazy(),
 
@@ -664,6 +672,7 @@ m.plugins = {
     {
         'tpope/vim-surround',
         event = 'VeryLazy',
+        cond = user.settings.surround == 'vim-surround',
     },
     {
         'j5shi/CommandlineComplete.vim',

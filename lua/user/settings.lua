@@ -20,6 +20,7 @@ m.line = 'lualine'
 m.buffer_line = 'bufferline'
 m.buffer_deleter = 'mini'
 m.targets = 'mini'
+m.surround = 'mini'
 m.bar = 'dropbar'
 m.nvim_tree = true
 m.file_explorer = 'nvim-tree'
