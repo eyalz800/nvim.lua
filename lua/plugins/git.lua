@@ -1,7 +1,6 @@
 local m = {}
 local cmd = require 'vim.cmd'.silent
 local user = require 'user'
-local terminal = require 'plugins.terminal'.open_floating_terminal
 local expand = vim.fn.expand
 
 if user.settings.snacks then
@@ -9,6 +8,7 @@ if user.settings.snacks then
     local lazygit = require 'plugins.config.snacks'.snacks().lazygit
     m.show_git = function() lazygit({ args = { '-p', git_root(expand '%:p:h') } }) end
 else
+    local terminal = require 'plugins.terminal'.open_floating_terminal
     m.show_git = function()
         terminal(vim.env.SHELL .. ' -c "cd ' .. expand('%:p:h') .. ' ; lazygit"')
     end
