@@ -457,6 +457,11 @@ m.plugins = {
         end,
         cond = user.settings.buffer_deleter == 'mini',
     },
+    {
+        'sitiom/nvim-numbertoggle',
+        event = 'VeryLazy',
+        cond = user.settings.line_number.auto_toggle,
+    },
     require 'plugins.config.snacks'.lazy(),
 
     -- Vim Plugins

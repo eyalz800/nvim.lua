@@ -46,6 +46,7 @@ m.line_number = {
     number = true,
     relative = true,
     together = true,
+    auto_toggle = true,
 }
 m.colorizer = 'nvim-colorizer'
 m.zoom = m.snacks and 'snacks' or 'zoomwintab'
