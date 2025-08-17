@@ -23,7 +23,7 @@ m.mini_ai = false
 m.bar = 'dropbar'
 m.nvim_tree = true
 m.file_explorer = 'nvim-tree'
-m.file_explorer_config = { nvim_tree = { window_picker = false } }
+m.file_explorer_config = { nvim_tree = { window_picker = false, fs_watch_in_wsl = false } }
 m.code_explorer = 'symbols-outline'
 m.code_explorer_config = {
     auto_open_min_columns = 180,

@@ -77,7 +77,7 @@ m.config = function()
             ignore = false,
         },
         filesystem_watchers = {
-            enable = vim.loop.fs_stat('/mnt/c/Windows') == nil,
+            enable = user.settings.file_explorer_config.nvim_tree.fs_watch_in_wsl or vim.loop.fs_stat('/mnt/c/Windows') == nil,
         },
         actions = {
             open_file = {
