@@ -470,6 +470,7 @@ m.plugins = {
         config = function()
             require 'plugins.config.mini-ai'.setup()
         end,
+        cond = user.settings.mini_ai,
     },
     {
         'sitiom/nvim-numbertoggle',

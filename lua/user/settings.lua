@@ -19,6 +19,7 @@ m.finder = 'fzf-lua'
 m.line = 'lualine'
 m.buffer_line = 'bufferline'
 m.buffer_deleter = 'mini'
+m.mini_ai = false
 m.bar = 'dropbar'
 m.nvim_tree = true
 m.file_explorer = 'nvim-tree'
