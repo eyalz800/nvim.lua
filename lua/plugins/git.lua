@@ -6,7 +6,11 @@ local expand = vim.fn.expand
 if user.settings.snacks then
     local git_root = require 'main.root-paths'.git_root
     local lazygit = require 'plugins.config.snacks'.snacks().lazygit
-    m.show_git = function() lazygit({ args = { '-p', git_root(expand '%:p:h') } }) end
+    m.show_git = function()
+        local current_dir = expand '%:p:h'
+        local git_repo = git_root(current_dir)
+        lazygit(git_repo and { args = { '-p', git_repo } } or {})
+    end
 else
     local terminal = require 'plugins.terminal'.open_floating_terminal
     m.show_git = function()
