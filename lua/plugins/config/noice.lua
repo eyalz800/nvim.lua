@@ -103,6 +103,14 @@ m.config = function()
             {
                 filter = {
                     event = 'msg_show',
+                    kind = 'lua_error',
+                    find = '^Error executing vim.schedule lua callback: .../.local/share/nvim/lazy/snacks.nvim/lua/snacks/scope.lua'
+                },
+                opts = { skip = true, },
+            },
+            {
+                filter = {
+                    event = 'msg_show',
                     kind = {
                         'shell_out',
                         'shell_err',
