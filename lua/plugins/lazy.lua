@@ -110,7 +110,6 @@ m.plugins = {
         dependencies = {
             'williamboman/mason.nvim',
             'neovim/nvim-lspconfig',
-            'folke/neoconf.nvim',
         },
         config = function()
             require 'plugins.config.nvim-lsp'.setup()
@@ -124,13 +123,6 @@ m.plugins = {
             'hrsh7th/nvim-cmp',
             'folke/lazydev.nvim',
         },
-        cond = user.settings.lsp == 'nvim',
-    },
-    {
-        'folke/neoconf.nvim',
-        config = function()
-            require 'plugins.config.neoconf'.setup()
-        end,
         cond = user.settings.lsp == 'nvim',
     },
     {
