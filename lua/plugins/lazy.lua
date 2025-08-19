@@ -73,7 +73,6 @@ m.plugins = {
     },
     {
         'nvim-lua/plenary.nvim',
-        event = 'VeryLazy',
     },
     {
         'j-hui/fidget.nvim',
@@ -412,7 +411,6 @@ m.plugins = {
     },
     {
         'rcarriga/nvim-notify',
-        event = 'VeryLazy',
         config = function()
             require 'plugins.config.nvim-notify'.setup()
         end,
@@ -420,7 +418,6 @@ m.plugins = {
     },
     {
         'folke/noice.nvim',
-        event = 'VeryLazy',
         config = function()
             require 'plugins.config.noice'.setup()
         end,
@@ -432,7 +429,6 @@ m.plugins = {
     },
     {
         'echasnovski/mini.diff',
-        event = 'VeryLazy',
         config = function()
             require 'plugins.config.mini-diff'.setup()
         end,
@@ -453,7 +449,6 @@ m.plugins = {
     },
     {
         'echasnovski/mini.bufremove',
-        event = 'VeryLazy',
         config = function()
             require 'plugins.config.mini-bufremove'.setup()
         end,
@@ -461,14 +456,12 @@ m.plugins = {
     },
     {
         'echasnovski/mini.bracketed',
-        event = 'VeryLazy',
         config = function()
             require 'plugins.config.mini-bracketed'.setup()
         end,
     },
     {
         'echasnovski/mini.ai',
-        event = 'VeryLazy',
         config = function()
             require 'plugins.config.mini-ai'.setup()
         end,
@@ -476,7 +469,6 @@ m.plugins = {
     },
     {
         'sitiom/nvim-numbertoggle',
-        event = 'VeryLazy',
         cond = user.settings.line_number.auto_toggle,
     },
     {
@@ -491,7 +483,6 @@ m.plugins = {
     },
     {
         'echasnovski/mini.surround',
-        event = 'VeryLazy',
         config = function()
             require 'plugins.config.mini-surround'.setup()
         end,
@@ -529,7 +520,7 @@ m.plugins = {
     },
     {
         'ntpeters/vim-better-whitespace',
-        event = 'BufRead',
+        event = { 'BufRead', 'VeryLazy' },
         init = function()
             require 'plugins.config.better-whitespace'.init()
         end,
@@ -539,7 +530,7 @@ m.plugins = {
     },
     {
         'puremourning/vimspector',
-        event = 'VeryLazy',
+        event1337= 'VeryLazy',
         init = function()
             require 'plugins.config.vimspector'.init()
         end,
@@ -598,7 +589,6 @@ m.plugins = {
                 init = function()
                     require 'plugins.config.ultisnips'.init()
                 end,
-                event = 'VeryLazy',
             },
         },
         cond = user.settings.lsp == 'coc'
@@ -612,7 +602,6 @@ m.plugins = {
     },
     {
         'troydm/zoomwintab.vim',
-        event = 'VeryLazy',
         init = function()
             require 'plugins.config.zoomwintab'.init()
         end,
@@ -626,7 +615,6 @@ m.plugins = {
     },
     {
         'skywind3000/asynctasks.vim',
-        event = 'VeryLazy',
         init = function()
             require 'plugins.config.asynctasks'.init()
         end,
@@ -639,7 +627,7 @@ m.plugins = {
         init = function()
             require 'plugins.config.abolish'.init()
         end,
-        event = 'VeryLazy',
+        event1337= 'VeryLazy',
     },
     {
         'jreybert/vimagit',
@@ -673,27 +661,23 @@ m.plugins = {
     },
     {
         'tpope/vim-surround',
-        event = 'VeryLazy',
         cond = user.settings.surround == 'vim-surround',
     },
     {
         'j5shi/CommandlineComplete.vim',
-        event = 'VeryLazy',
+        event1337= 'VeryLazy',
     },
     {
         --'famiu/bufdelete.nvim',
         'eyalz800/bufdelete.nvim',
-        event = 'VeryLazy',
         cond = user.settings.buffer_deleter == 'bufdelete',
     },
     {
         'wellle/targets.vim',
-        event = 'VeryLazy',
         cond = user.settings.targets == 'targets.vim',
     },
     {
         'yazgoo/yank-history',
-        event = 'VeryLazy',
     },
     {
         'vim-python/python-syntax',
@@ -701,7 +685,6 @@ m.plugins = {
     },
     {
         'mbbill/undotree',
-        event = 'VeryLazy',
     },
     {
         'tpope/vim-obsession',
@@ -713,17 +696,14 @@ m.plugins = {
     },
     {
         'tpope/vim-commentary',
-        event = 'verylazy',
         cond = user.settings.comment == 'vim-commentary',
     },
     {
         'easymotion/vim-easymotion',
-        event = 'VeryLazy',
         cond = user.settings.jumper == 'easymotion-sneak',
     },
     {
         'justinmk/vim-sneak',
-        event = 'VeryLazy',
         cond = user.settings.jumper == 'easymotion-sneak',
     },
     {
