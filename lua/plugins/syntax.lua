@@ -1,25 +1,27 @@
 local m = {}
-local lsp = require 'plugins.lsp'
-
-vim.g.python_highlight_all = 1
-vim.g.python_highlight_operators = 0
 
 m.setup = function()
+    vim.g.python_highlight_all = 1
+    vim.g.python_highlight_operators = 0
+    m.group = vim.api.nvim_create_augroup('init.lua.syntax', {})
+
     vim.api.nvim_create_autocmd('syntax', {
         pattern = 'python',
-        group = vim.api.nvim_create_augroup('init.lua.syntax.python', {}),
+        group = m.group,
         callback = m.apply_py_syntax
     })
 
     vim.api.nvim_create_autocmd('syntax', {
         pattern = { 'c', 'cpp' },
-        group = vim.api.nvim_create_augroup('init.lua.syntax.c_cpp', {}),
+        group = m.group,
         callback = m.apply_c_and_cpp_syntax
     })
 end
 
 m.apply_c_and_cpp_syntax = function()
-    if lsp.semantic_highlighting then
+    m.lsp = require 'plugins.lsp'
+    if m.lsp.semantic_highlighting then
+        vim.api.nvim_clear_autocmds({ group = m.group })
         return
     end
 
@@ -80,8 +82,12 @@ m.apply_c_and_cpp_syntax = function()
 end
 
 m.apply_py_syntax = function()
-    if lsp.semantic_highlighting then
-        return
+    if not m.lsp then
+        m.lsp = require 'plugins.lsp'
+        if m.lsp.semantic_highlighting then
+            vim.api.nvim_clear_autocmds({ group = m.group })
+            return
+        end
     end
 
     vim.cmd [=[
