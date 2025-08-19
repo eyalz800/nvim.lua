@@ -149,6 +149,16 @@ m.plugins = {
         cond = user.settings.treesitter,
     },
     {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        config = function()
+            require 'plugins.config.nvim-treesitter-textobjects'.setup()
+        end,
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter',
+        },
+        cond = user.settings.treesitter,
+    },
+    {
         'lewis6991/gitsigns.nvim',
         config = function()
             require 'plugins.config.gitsigns'.setup()
