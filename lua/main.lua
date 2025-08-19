@@ -1,6 +1,7 @@
 local m = {}
 
 local startup = function()
+    require 'main.startup'.setup()
     require 'builtins.nested'.setup()
     require 'main.root-paths'.setup()
     require 'main.path'.setup()
