@@ -2,6 +2,8 @@ local m = {}
 
 m.setup = function()
     require 'mini.surround'.setup(m.config())
+    vim.keymap.del('x', 'ysa')
+    vim.keymap.set('x', 'gsa', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
 end
 
 m.config = function()
