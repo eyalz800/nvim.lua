@@ -4,7 +4,7 @@ local user = require 'user'
 
 m.init = function()
     vim.g.better_whitespace_filetypes_blacklist = { 'diff', 'gitcommit', 'git', 'unite', 'qf', 'help', 'VimspectorPrompt',
-        'xxd', 'Outline', 'snacks_dashboard' }
+        'xxd', 'Outline', 'snacks_dashboard', 'OverseerForm' }
 end
 
 m.setup = function()

@@ -19,6 +19,7 @@ m.filetyeps = {
     'DiffviewFiles',
     'DiffviewFileHistory',
     'snacks_picker_list',
+    'OverseerList',
 }
 
 local make_win_ref = function(buf)

@@ -521,6 +521,12 @@ m.plugins = {
         end,
         cond = user.settings.nvim_recorder,
     },
+    {
+        'stevearc/overseer.nvim',
+        config = function()
+            require 'plugins.config.overseer'.setup()
+        end,
+    },
 
     require 'plugins.config.snacks'.lazy(),
 
