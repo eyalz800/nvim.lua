@@ -563,7 +563,6 @@ m.plugins = {
     },
     {
         'puremourning/vimspector',
-        event1337= 'VeryLazy',
         init = function()
             require 'plugins.config.vimspector'.init()
         end,
@@ -660,7 +659,6 @@ m.plugins = {
         init = function()
             require 'plugins.config.abolish'.init()
         end,
-        event1337= 'VeryLazy',
     },
     {
         'jreybert/vimagit',
@@ -698,7 +696,7 @@ m.plugins = {
     },
     {
         'j5shi/CommandlineComplete.vim',
-        event1337= 'VeryLazy',
+        event = 'VeryLazy',
     },
     {
         --'famiu/bufdelete.nvim',
