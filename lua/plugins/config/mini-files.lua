@@ -1,4 +1,5 @@
 local m = {}
+local user = require 'user'
 
 m.setup = function()
     local mini_files = require 'mini.files'
@@ -26,6 +27,9 @@ end
 
 m.config = function()
     return {
+        options = {
+            use_as_default_explorer = user.settings.nvim_explorer == 'mini',
+        },
         mappings = {
             go_in = 'L',
             go_in_plus = '<cr>',

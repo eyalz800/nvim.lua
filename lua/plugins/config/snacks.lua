@@ -61,9 +61,6 @@ m.lazy = function()
                         { section = 'startup' },
                     },
                 },
-                explorer = {
-                    enabled = true,
-                },
                 indent = { enabled = user.settings.indent_guides == 'snacks' },
                 input = { enabled = true },
                 notifier = {
@@ -72,6 +69,14 @@ m.lazy = function()
                 },
                 picker = {
                     enabled = true,
+                    sources = {
+                        explorer = {
+                            layout = {
+                                cycle = false,
+                            },
+                            replace_netrw = user.settings.nvim_explorer == 'snacks',
+                        },
+                    },
                 },
                 quickfile = { enabled = true },
                 scope = { enabled = true },

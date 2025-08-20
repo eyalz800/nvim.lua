@@ -488,6 +488,17 @@ m.plugins = {
         end,
         cond = user.settings.targets == 'mini',
     },
+    {
+        'stevearc/oil.nvim',
+        lazy = false,
+        config = function()
+            require 'plugins.config.oil'.setup()
+        end,
+        dependencies = {
+            'nvim-tree/nvim-web-devicons',
+        },
+        cond = user.settings.oil,
+    },
 
     require 'plugins.config.snacks'.lazy(),
 

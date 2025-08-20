@@ -22,6 +22,7 @@ m.buffer_deleter = 'mini'
 m.targets = 'mini'
 m.surround = 'mini'
 m.bar = 'dropbar'
+m.nvim_explorer = 'oil'
 m.nvim_tree = true
 m.file_explorer = 'nvim-tree'
 m.file_explorer_config = { nvim_tree = { window_picker = false, fs_watch_in_wsl = false } }
