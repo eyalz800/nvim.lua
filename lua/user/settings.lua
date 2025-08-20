@@ -1,5 +1,6 @@
 local m = {}
 m.indentation = 4
+m.jumpoptions = ''
 m.guess_indent = true
 m.snacks = true
 m.indent_guides = m.snacks and 'snacks' or 'indent-blankline'
