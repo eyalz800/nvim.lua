@@ -2,12 +2,49 @@ local m = {}
 local user = require 'user'
 
 m.setup = function()
-    require 'oil'.setup(m.config())
+    local oil = require 'oil'
+    oil.setup(m.config())
+    vim.keymap.set('n', '<c-w>i', oil.open ,{ noremap = true, silent = true, desc = 'Open Oil file explorer (oil.open)' })
 end
 
 m.config = function()
     return {
         default_file_explorer = user.settings.nvim_explorer == 'oil',
+        keymaps = {
+            ['g?'] = { 'actions.show_help', mode = 'n' },
+            ['<CR>'] = 'actions.select',
+
+            ['<C-s>'] = false,
+            ['gv'] = { 'actions.select', opts = { vertical = true } },
+
+            ['<C-h>'] = false,
+            ['gh'] = { 'actions.select', opts = { horizontal = true } },
+
+            ['<C-t>'] = { 'actions.select', opts = { tab = true } },
+
+            ['<C-p>'] = false,
+            ['gp'] = 'actions.preview',
+
+            ['<C-c>'] = { 'actions.close', mode = 'n' },
+            ['gq'] = { 'actions.close', mode = 'n' },
+
+            ['<C-l>'] = false,
+            ['gr'] = { 'actions.refresh', mode = 'n', nowait = true },
+
+
+            ['-'] = false,
+            ['cu'] = { 'actions.parent', mode = 'n' },
+
+            ['_'] = { 'actions.open_cwd', mode = 'n' },
+            ['<C-w>i'] = { 'actions.open_cwd', mode = 'n' },
+            ['cd'] = { 'actions.cd', mode = 'n' },
+            ['`'] = { 'actions.cd', mode = 'n' },
+            ['~'] = { 'actions.cd', opts = { scope = 'tab' }, mode = 'n' },
+            ['gs'] = { 'actions.change_sort', mode = 'n' },
+            ['gx'] = 'actions.open_external',
+            ['g.'] = { 'actions.toggle_hidden', mode = 'n' },
+            ['g\\'] = { 'actions.toggle_trash', mode = 'n' },
+        },
     }
 end
 
