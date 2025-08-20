@@ -696,7 +696,7 @@ m.plugins = {
     },
     {
         'j5shi/CommandlineComplete.vim',
-        event = 'VeryLazy',
+        cond = not user.settings.noice,
     },
     {
         --'famiu/bufdelete.nvim',
