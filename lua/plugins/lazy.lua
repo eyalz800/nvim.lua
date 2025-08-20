@@ -3,6 +3,12 @@ local user = require 'user'
 
 ---@diagnostic disable: different-requires
 
+m.icons_plugin = {
+    ['nvim-web-devicons'] = 'nvim-tree/nvim-web-devicons',
+    ['mini'] = 'echasnovski/mini.icons',
+}
+
+
 m.setup = function()
     local lazy_conf = require 'plugins.config.lazy'
 
@@ -162,7 +168,7 @@ m.plugins = {
             require 'plugins.config.lualine'.setup()
         end,
         dependencies = {
-            'nvim-tree/nvim-web-devicons',
+            m.icons_plugin[user.settings.icons],
         },
         cond = user.settings.line == 'lualine'
     },
@@ -176,7 +182,7 @@ m.plugins = {
         end,
         dependencies = {
             'SmiteshP/nvim-navic',
-            'nvim-tree/nvim-web-devicons',
+            m.icons_plugin[user.settings.icons],
         },
         cond = user.settings.bar == 'barbecue' and user.settings.lsp == 'nvim',
     },
@@ -194,7 +200,7 @@ m.plugins = {
             require 'plugins.config.nvim-tree'.setup()
         end,
         dependencies = {
-            'nvim-tree/nvim-web-devicons',
+            m.icons_plugin[user.settings.icons],
         },
         cond = user.settings.file_explorer == 'nvim-tree' or user.settings.nvim_tree,
     },
@@ -205,7 +211,7 @@ m.plugins = {
             require 'plugins.config.bufferline'.setup()
         end,
         dependencies = {
-            'nvim-tree/nvim-web-devicons',
+            m.icons_plugin[user.settings.icons],
         },
         cond = user.settings.buffer_line == 'bufferline',
     },
@@ -240,7 +246,7 @@ m.plugins = {
     {
         'ibhagwan/fzf-lua',
         dependencies = {
-            'nvim-tree/nvim-web-devicons',
+            m.icons_plugin[user.settings.icons],
             'junegunn/fzf',
         },
         config = function()
@@ -403,7 +409,7 @@ m.plugins = {
         event = 'VeryLazy',
         dependencies = {
             'nvim-treesitter/nvim-treesitter',
-            'nvim-tree/nvim-web-devicons',
+            m.icons_plugin[user.settings.icons],
         },
         config = function()
             require 'plugins.config.render-markdown'.setup()
@@ -495,9 +501,18 @@ m.plugins = {
             require 'plugins.config.oil'.setup()
         end,
         dependencies = {
-            'nvim-tree/nvim-web-devicons',
+            m.icons_plugin[user.settings.icons],
         },
         cond = user.settings.oil,
+    },
+    {
+        'nvim-tree/nvim-web-devicons',
+        cond = user.settings.icons == 'nvim-web-devicons',
+    },
+    {
+        'echasnovski/mini.icons',
+        opts = {},
+        cond = user.settings.icons == 'mini',
     },
 
     require 'plugins.config.snacks'.lazy(),
