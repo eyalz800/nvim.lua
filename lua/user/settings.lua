@@ -24,6 +24,7 @@ m.buffer_deleter = 'mini'
 m.targets = 'mini'
 m.surround = 'mini'
 m.bar = 'dropbar'
+m.nvim_recorder = true
 m.explorer_width = 35
 m.nvim_explorer = 'oil'
 m.nvim_tree = true

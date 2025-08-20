@@ -514,6 +514,13 @@ m.plugins = {
         opts = {},
         cond = user.settings.icons == 'mini',
     },
+    {
+        'chrisgrieser/nvim-recorder',
+        config = function()
+            require 'plugins.config.recorder'.setup()
+        end,
+        cond = user.settings.nvim_recorder,
+    },
 
     require 'plugins.config.snacks'.lazy(),
 
