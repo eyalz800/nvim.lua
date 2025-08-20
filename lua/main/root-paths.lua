@@ -20,6 +20,10 @@ m.find_root = function(directory, root_paths)
         directory = getcwd()
     end
 
+    if vim.bo.filetype == 'oil' then
+        directory = directory:gsub('^oil://', '', 1)
+    end
+
     local current_path = directory
     local limit = 100
     local iteration = 0
