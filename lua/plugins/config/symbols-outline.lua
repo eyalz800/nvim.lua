@@ -1,9 +1,11 @@
 local m = {}
 local cmd = require 'vim.cmd'.silent
-local symbols_outline = nil
+local symbols_outline = {}
+local user = require 'user'
 
 m.setup = function()
-    require 'symbols-outline'.setup(m.config())
+    symbols_outline = require 'symbols-outline'
+    symbols_outline.setup(m.config())
 end
 
 m.open = function(options)
@@ -41,14 +43,13 @@ m.toggle = function()
 end
 
 m.config = function()
-    symbols_outline = require 'symbols-outline'
     return {
         highlight_hovered_item = true,
         show_guides = true,
         auto_preview = false,
         position = 'right',
         relative_width = false,
-        width = 30,
+        width = user.settings.explorer_width or 30,
         auto_close = false,
         show_numbers = false,
         show_relative_numbers = false,

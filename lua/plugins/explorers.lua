@@ -18,6 +18,8 @@ m.file = require 'plugins.file-explorer'
 m.code = require 'plugins.code-explorer'
 m.terminals = {}
 
+local explorer_width = user.settings.explorer_width or 30
+
 m.display_current_file = function()
     if m.file.is_open() and file_readable(expand '%') then
         m.file.open({ focus=false })
@@ -115,14 +117,14 @@ m.arrange = function()
 
         --local width = winwidth(0)
         vim.cmd.wincmd 'L'
-        cmd('vertical resize ' .. 30)
+        cmd('vertical resize ' .. explorer_width)
     end
     if m.file.is_open() then
         m.file.open({ focus = true })
 
         --local width = winwidth(0)
         vim.cmd.wincmd 'H'
-        cmd('vertical resize ' .. 30)
+        cmd('vertical resize ' .. explorer_width)
     end
     win_gotoid(cur_win)
     cmd 'horizontal wincmd ='

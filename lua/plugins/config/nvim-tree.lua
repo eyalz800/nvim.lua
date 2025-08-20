@@ -7,7 +7,7 @@ local cmd = require 'vim.cmd'.silent
 local expand = vim.fn.expand
 local getcwd = vim.fn.getcwd
 
-local width = 30
+local explorer_width = user.settings.explorer_width or 30
 
 m.setup = function()
     require 'nvim-tree'.setup(m.config())
@@ -40,7 +40,7 @@ end
 
 m.open_current_directory = function()
     cmd 'NvimTreeRefresh'
-    cmd('NvimTreeResize ' .. width)
+    cmd('NvimTreeResize ' .. explorer_width)
 end
 
 m.is_open = function()
@@ -69,7 +69,7 @@ m.config = function()
         view = {
             adaptive_size = false,
             side = "left",
-            width = width,
+            width = explorer_width,
             preserve_window_proportions = true,
         },
         git = {
