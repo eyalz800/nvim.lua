@@ -78,6 +78,7 @@ m.codecompanion_config = {
     --         adapter = 'gemini'
     --     },
     -- },
+    wrap = true,
 }
 m.minuet_ai = false
 m.minuet_config = {

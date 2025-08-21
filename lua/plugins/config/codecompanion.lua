@@ -49,7 +49,7 @@ m.config = function()
                         numberwidth = 1,
                         signcolumn = "no",
                         spell = false,
-                        wrap = false,
+                        wrap = user.settings.codecompanion_config.wrap or true,
                     },
                 }
             },
