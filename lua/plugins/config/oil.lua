@@ -8,9 +8,44 @@ m.setup = function()
     vim.api.nvim_create_autocmd('FileType', {
         group = vim.api.nvim_create_augroup('init.lua.oil-timeout-zero', {}),
         pattern = 'oil_preview',
-        callback = function()
-            vim.opt_local.timeoutlen = 0
-            vim.opt_local.ttimeoutlen = 0
+        callback = function(ev)
+            local prev_timeout = vim.o.timeoutlen
+            local prev_ttimeout = vim.o.ttimeoutlen
+            local buf = ev.buf
+            local win = vim.api.nvim_get_current_win()
+
+            local restored = false
+            local restore = function()
+                if not restored then
+                    restored = true
+                    if prev_timeout ~= 0 then
+                        vim.o.timeoutlen = prev_timeout
+                    end
+                    if prev_ttimeout ~= 0 then
+                        vim.o.ttimeoutlen = prev_ttimeout
+                    end
+                end
+            end
+
+            if prev_timeout ~= 0 then
+                vim.o.timeoutlen = 0
+            end
+
+            if prev_ttimeout ~= 0 then
+                vim.o.ttimeoutlen = 0
+            end
+
+            vim.api.nvim_create_autocmd('BufLeave', {
+                buffer = buf,
+                once = true,
+                callback = restore,
+            })
+
+            vim.api.nvim_create_autocmd('WinClosed', {
+                pattern = tostring(win),
+                once = true,
+                callback = restore,
+            })
         end,
     })
 end
