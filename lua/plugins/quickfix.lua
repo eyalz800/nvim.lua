@@ -60,6 +60,8 @@ m.on_open = function()
     vim.keymap.set('n', 'a', explorers.arrange, { silent = true, buffer = true })
     vim.keymap.set('n', 'C', terminal.open_below, { silent = true, buffer = true })
     vim.keymap.set('n', 'ge', m.goto_error, { silent = true, buffer = true, desc = 'Go to error (quickfix.goto_error)' })
+    vim.keymap.set('n', '<cr>', function() pcall(m.goto_error) end, { silent = true, buffer = true, })
+    vim.keymap.set('n', '<2-leftmouse>', function() pcall(m.goto_error) end, { silent = true, buffer = true, })
 
     if quickfix_winhl and #vim.opt_local.winhighlight == 0 then
         vim.opt_local.winhighlight = quickfix_winhl
@@ -182,24 +184,29 @@ local function extract_candidates_from_text(text)
 end
 
 m.goto_error = function()
-    local cursor_line = vim.api.nvim_win_get_cursor(0)[1] -- quickfix window line number
-    local buf = vim.api.nvim_get_current_buf()
-    local text = vim.api.nvim_buf_get_lines(buf, cursor_line - 1, cursor_line, false)[1] or ""
+    -- snapshot before attempting builtin jump
+    local pre_buf   = vim.api.nvim_get_current_buf()
+    local pre_win   = vim.api.nvim_get_current_win()
 
-    local qflist = vim.fn.getqflist()
-    if cursor_line >= 1 and cursor_line <= #qflist then
-        vim.fn.setqflist({}, "a", { idx = cursor_line })
-    end
+    local idx = vim.api.nvim_win_get_cursor(0)[1]
 
-    local qf = vim.fn.getqflist({ idx = cursor_line, items = 1 })
-    local item = (qf and qf.items and #qf.items > 0) and qf.items[qf.idx] or nil
+    -- set qf index (so :cc will jump to that index)
+    pcall(vim.fn.setqflist, {}, 'a', { idx = idx })
 
-    -- Jump immediately if quickfix knows the file
-    if item and item.filename and item.filename ~= "" and uv.fs_stat(item.filename) then
-        open_at(item.filename, item.lnum > 0 and item.lnum or 1, item.col > 0 and item.col or 1)
+    -- try builtin quickfix jump
+    pcall(vim.cmd, ('silent! cc %d'):format(idx))
+
+    -- snapshot after
+    local post_buf  = vim.api.nvim_get_current_buf()
+    local post_win  = vim.api.nvim_get_current_win()
+
+    -- if anything meaningful changed, assume cc worked
+    if pre_buf ~= post_buf or pre_win ~= post_win then
         return
     end
 
+    -- fallback to smarter parser/jump
+    local text = vim.api.nvim_buf_get_lines(pre_buf, idx - 1, idx, false)[1] or ""
     local candidates = extract_candidates_from_text(text)
     if #candidates == 0 then return end
 
