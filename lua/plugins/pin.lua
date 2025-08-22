@@ -73,7 +73,7 @@ m.pin = function(opts)
         if vim.api.nvim_win_is_valid(win) then
             local pin_data = vim.w[win].pin_data
             if pin_data then
-                vim.api.nvim_set_option_value('winfixbuf', false, { scope = 'local', win = win })
+                vim.wo[win].winfixbuf = false
             end
         end
     end, 0)
