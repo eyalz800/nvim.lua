@@ -5,6 +5,14 @@ m.setup = function()
     local oil = require 'oil'
     oil.setup(m.config())
     vim.keymap.set('n', '<c-w>i', oil.open ,{ noremap = true, silent = true, desc = 'Open Oil file explorer (oil.open)' })
+    vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('init.lua.oil-timeout-zero', {}),
+        pattern = 'oil_preview',
+        callback = function()
+            vim.opt_local.timeoutlen = 0
+            vim.opt_local.ttimeoutlen = 0
+        end,
+    })
 end
 
 m.config = function()
