@@ -13,11 +13,33 @@ m.setup = function()
             vim.opt_local.ttimeoutlen = 0
         end,
     })
+    local disable_dim = function()
+        for _, group in ipairs(vim.fn.getcompletion('Oil', 'highlight')) do
+            local base = group:match('^(Oil.+)Hidden$')
+            if base then
+                vim.api.nvim_set_hl(0, group, { link = base })
+            end
+        end
+    end
+    disable_dim()
+    vim.api.nvim_create_autocmd('colorscheme', {
+        group = vim.api.nvim_create_augroup('init.lua.colorscheme-oil', {}),
+        callback = function()
+            disable_dim()
+        end
+    })
+
 end
 
 m.config = function()
     return {
         default_file_explorer = user.settings.nvim_explorer == 'oil',
+        view_options = {
+            show_hidden = true,
+            is_always_hidden = function(name)
+                return name == '..'
+            end,
+        },
         keymaps = {
             ['g?'] = { 'actions.show_help', mode = 'n' },
             ['<CR>'] = 'actions.select',
