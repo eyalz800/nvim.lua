@@ -66,8 +66,6 @@ m.on_open = function()
     end
 end
 
-local function trim(s) return (tostring(s) or ""):match("^%s*(.-)%s*$") end
-
 -- Normalize Windows/UNC/drive paths to Unix/WSL paths
 local function normalize_path(path)
     if not path or path == "" then return path end
@@ -82,7 +80,7 @@ local function normalize_path(path)
         local unix_rest = rest:gsub("\\", "/")
         local candidate = "/mnt/" .. drv .. "/" .. unix_rest
         if uv.fs_stat(candidate) then
-            if drv == "z" and uv.fs_stat("/mnt/z") and uv.fs_stat("/bin") and uv.fs_stat('/home') then
+            if uv.fs_stat("/mnt/" .. drv .. vim.fn.stdpath('config') .. '/install/success') then
                 return "/" .. unix_rest
             end
             return candidate
