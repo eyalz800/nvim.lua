@@ -17,6 +17,7 @@ m.colorscheme_settings = { tokyonight = { style = 'storm' } }
 m.powerline = true
 m.icons = 'nvim-web-devicons'
 m.install_options = { clang_version = 20 }
+m.unmodifiable_insert_append_jump = true
 m.finder = 'fzf-lua'
 m.line = 'lualine'
 m.buffer_line = 'bufferline'

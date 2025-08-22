@@ -392,6 +392,24 @@ m.setup = function()
             }, { mode = 'i' })
         end
     end
+
+    if user.settings.unmodifiable_insert_append_jump then
+        vim.keymap.set('n', 'I', function()
+            if vim.bo.modifiable == false then
+                return '^'
+            else
+                return 'I'
+            end
+        end, { expr = true })
+
+        vim.keymap.set('n', 'A', function()
+            if vim.bo.modifiable == false then
+                return '$'
+            else
+                return 'A'
+            end
+        end, { expr = true })
+    end
 end
 
 return m
