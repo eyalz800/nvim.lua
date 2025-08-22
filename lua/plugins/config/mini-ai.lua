@@ -8,7 +8,6 @@ m.config = function()
 
     local gen_spec = require 'mini.ai'.gen_spec
     return {
-        n_lines = 500,
         custom_textobjects = {
             f = gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }),
             c = gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }),
@@ -34,7 +33,7 @@ m.config = function()
         },
 
         -- Number of lines within which textobject is searched
-        n_lines = 50,
+        n_lines = 500,
 
         -- How to search for object (first inside current line, then inside
         -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
