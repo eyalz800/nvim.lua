@@ -68,14 +68,12 @@ m.on_open = function()
     end
 end
 
--- Normalize Windows/UNC/drive paths to Unix/WSL paths
-local function normalize_path(path)
+local normalize_path = function(path)
     if not path or path == "" then return path end
     path = tostring(path)
     if not is_wsl then return path end
     if path:match("^/") then return path end
 
-    -- Windows drive C:\...
     local drive, rest = path:match("^([A-Za-z]):[\\/](.*)")
     if drive and rest then
         local drv = drive:lower()
@@ -92,8 +90,7 @@ local function normalize_path(path)
     return path
 end
 
--- Open a file and set cursor
-local function open_at(path, lnum, col)
+local open_at = function(path, lnum, col)
     path = tostring(path or "")
     lnum = tonumber(lnum) or 1
     col  = tonumber(col) or 1
@@ -114,17 +111,15 @@ local function open_at(path, lnum, col)
     pcall(vim.cmd, 'silent normal! zz')
 end
 
--- Extract candidates from quickfix text
-local function extract_candidates_from_text(text)
+local extract_candidates_from_text = function(text)
     text = tostring(text or "")
     local candidates = {}
 
     local function is_path_char(c)
-        -- path characters: letters, numbers, _, ., -, /, \, ~
         return c:match("[%w_./\\~+-]")
     end
 
-    local function add_candidate(fname, lnum, col)
+    local add_candidate = function(fname, lnum, col)
         fname = fname and fname:match("^%s*(.-)%s*$") -- trim
         if fname and fname ~= "" then
             table.insert(candidates, {
@@ -211,57 +206,39 @@ m.goto_error = function()
     if #candidates == 0 then return end
 
     -- Step 1: separate resolved absolute, unresolved relative
-    local resolved, unresolved_relative = {}, {}
+    local resolved, unresolved = {}, {}
     for _, c in ipairs(candidates) do
         local is_absolute = c.path:match("^/")
 
         if uv.fs_stat(c.path) then
-            table.insert(resolved, { path = c.path, lnum = c.lnum, col = c.col })
+            table.insert(resolved, c)
         elseif not is_absolute then
-            -- Only relative paths go to fzf-lua
-            table.insert(unresolved_relative, c)
+            table.insert(unresolved, c)
         end
-        -- Absolute but missing files are ignored for fzf-lua
     end
 
     -- Step 2: jump immediately if exactly one resolved path
-    if #resolved == 1 and #unresolved_relative == 0 then
+    if #resolved == 1 and #unresolved == 0 then
         local e = resolved[1]
         open_at(e.path, e.lnum, e.col)
         return
     end
 
-    -- Step 3: prepare items for fzf-lua (only relative unresolved paths)
-    local fzf_items = {}
-    for _, c in ipairs(unresolved_relative) do
-        table.insert(fzf_items, c.path)
-    end
+    -- Step 3: user chooses file from the options
+    if #resolved > 0 or #unresolved > 0 then
+        local print_table = {}
+        for _, item in ipairs(resolved) do
+            table.insert(print_table, vim.fn.shellescape(item.path) .. ':' .. item.lnum .. ':' .. item.col .. ':')
+        end
+        local print = 'printf ' .. (#print_table > 0 and (table.concat(print_table, [[\\n]]) .. [[\\n]]) or '')
 
-    if #fzf_items > 0 then
-        local lnum         = unresolved_relative[1].lnum
-        local col          = unresolved_relative[1].col
-        local file_pattern = unresolved_relative[1].path -- can be partial match
-
-        -- Use rg to list files, then xargs to append :line:col: for previewer
-        local command      = string.format(
-            "`echo rg` --files -g %s | xargs -I{} echo {}:%d:%d:",
-            vim.fn.shellescape(file_pattern),
-            lnum,
-            col
-        )
-
-        require("fzf-lua").grep_project({
-            prompt = "find file> ",
-            cmd = command,
-            previewer = "builtin",
-            actions = {
-                ["default"] = function(selected)
-                    if not selected or #selected == 0 then return end
-                    local entry = require("fzf-lua.path").entry_to_file(selected[1])
-                    open_at(entry.path, lnum, col)
-                end,
-            },
-        })
+        local rg_table = {}
+        for _, item in ipairs(unresolved) do
+            table.insert(rg_table, string.format('rg --files -g %s | xargs -I{} echo {}:%d:%d:',
+                vim.fn.shellescape(vim.fs.basename(item.path)), item.lnum, item.col))
+        end
+        local rg = table.concat(rg_table, ';')
+        require 'fzf-lua'.grep_project({ prompt = 'Files❯ ', cmd = print .. ';' .. rg, })
     end
 end
 
