@@ -14,7 +14,7 @@ local quickfix_winhls = {
     'EndOfBuffer:NvimTreeEndOfBuffer,LineNr:NvimTreeLineNr,WinSeparator:NvimTreeWinSeparator,StatusLine:NvimTreeStatusLine,StatusLineNC:NvimTreeStatuslineNC,SignColumn:NvimTreeSignColumn,Normal:NvimTreeNormal,NormalNC:NvimTreeNormalNC,NormalFloat:NvimTreeNormalFloat,FloatBorder:NvimTreeNormalFloatBorder',
 }
 local quickfix_winhl = quickfix_winhls[user.settings.quickfix_config.winhl or 'none']
-local is_wsl = false
+local is_wsl = nil
 
 m.setup = function()
     is_wsl = vim.loop.fs_stat("/mnt/c/Windows") ~= nil
@@ -91,15 +91,15 @@ local normalize_path = function(path)
 end
 
 local open_at = function(path, lnum, col)
-    path = tostring(path or "")
+    path = tostring(path or '')
     lnum = tonumber(lnum) or 1
     col  = tonumber(col) or 1
-    pcall(vim.cmd, "edit " .. vim.fn.fnameescape(path))
+    pcall(cmd, 'edit ' .. vim.fn.fnameescape(path))
     local bufnr = vim.fn.bufnr(path, true)
     if bufnr < 0 then return end
     local winid = vim.fn.bufwinid(bufnr)
     if winid == -1 then
-        pcall(vim.cmd, "edit " .. vim.fn.fnameescape(path))
+        pcall(cmd, 'edit ' .. vim.fn.fnameescape(path))
         winid = vim.fn.bufwinid(bufnr)
     end
     if winid == -1 then winid = vim.api.nvim_get_current_win() end
@@ -108,11 +108,11 @@ local open_at = function(path, lnum, col)
     local col0 = math.max(0, col - 1)
     pcall(vim.api.nvim_win_set_cursor, winid, { l, col0 })
     pcall(vim.api.nvim_set_current_win, winid)
-    pcall(vim.cmd, 'silent normal! zz')
+    pcall(cmd, 'normal! zz')
 end
 
 local extract_candidates_from_text = function(text)
-    text = tostring(text or "")
+    text = tostring(text or '')
     local candidates = {}
 
     local function is_path_char(c)
@@ -189,7 +189,7 @@ m.goto_error = function()
     pcall(vim.fn.setqflist, {}, 'a', { idx = idx })
 
     -- try builtin quickfix jump
-    pcall(vim.cmd, ('silent! cc %d'):format(idx))
+    pcall(cmd, ('cc %d'):format(idx))
 
     -- snapshot after
     local post_buf  = vim.api.nvim_get_current_buf()
