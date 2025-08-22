@@ -71,7 +71,7 @@ m.config = function()
                     options.InitLuaBufferLineVisibleBg = { bg = color.base }
                 end
 
-                if vim.env.TERM == 'xterm-kitty' then
+                if vim.env.TERM == 'xterm-kitty' or vim.env.TERM == 'tmux-256color' then
                     options.InitLuaBufferLineIndicator = { bg = color.red }
                 end
 

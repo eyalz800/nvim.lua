@@ -71,7 +71,7 @@ m.config = function()
             highlights['@operator'] = { fg = color.fg }
             highlights['@conditional.ternary'] = { fg = color.fg }
 
-            if vim.env.TERM == 'xterm-kitty' then
+            if vim.env.TERM == 'xterm-kitty' or vim.env.TERM == 'tmux-256color' then
                 highlights.InitLuaBufferLineIndicator = { bg = color.red }
                 if user.settings.bar == 'barbecue' or user.settings.bar == 'dropbar' then
                     highlights.InitLuaBufferLineNormalBg = { bg = color.bg_highlight }

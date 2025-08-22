@@ -65,7 +65,7 @@ m.config = function()
     local fg = { highlight = 'InitLuaBufferLineNormalFg', attribute = 'fg' }
     local bg = { highlight = 'InitLuaBufferLineNormalBg', attribute = 'bg' }
     local underline_sp = { highlight = 'InitLuaBufferLineIndicator', attribute = 'bg' }
-    local underline_enabled = vim.env.TERM == 'xterm-kitty'
+    local underline_enabled = vim.env.TERM == 'xterm-kitty' or vim.env.TERM == 'tmux-256color'
 
     return {
         options = {
