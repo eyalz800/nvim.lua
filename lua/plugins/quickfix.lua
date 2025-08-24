@@ -139,43 +139,48 @@ local extract_candidates_from_text = function(text)
         end
     end
 
-    -- Pattern for (line,col) or (line)
-    for pos, lnum, col in text:gmatch("()%((%d+),(%d+)%)") do
-        local start_pos = pos - 1
-        -- walk backward to extract file path
-        local i = start_pos
-        for _, check_char in ipairs({ is_path_char, is_extended_path_char }) do
-            while i > 0 and check_char(text:sub(i, i)) do i = i - 1 end
-            local fname = text:sub(i + 1, start_pos)
-            local drive = text:sub(i - 1, i)
-            if drive:match("^[A-Za-z]:$") then
-                fname = drive .. fname
+    -- Pattern for (line,col) or |line col col|
+    for _, pattern in ipairs({ '()%((%d+),(%d+)%)', '()%|(%d+) col (%d+)%|' }) do
+        for pos, lnum, col in text:gmatch(pattern) do
+            local start_pos = pos - 1
+            -- walk backward to extract file path
+            local i = start_pos
+            for _, check_char in ipairs({ is_path_char, is_extended_path_char }) do
+                while i > 0 and check_char(text:sub(i, i)) do i = i - 1 end
+                local fname = text:sub(i + 1, start_pos)
+                local drive = text:sub(i - 1, i)
+                if drive:match('^[A-Za-z]:$') then
+                    fname = drive .. fname
+                end
+                add_candidate(fname, lnum, col)
             end
-            add_candidate(fname, lnum, col)
         end
     end
 
-    for pos, lnum in text:gmatch("()%((%d+)%)") do
-        local start_pos = pos - 1
-        local i = start_pos
-        for _, check_char in ipairs({ is_path_char, is_extended_path_char }) do
-            while i > 0 and check_char(text:sub(i, i)) do i = i - 1 end
-            local fname = text:sub(i + 1, start_pos)
-            local drive = text:sub(i - 1, i)
-            if drive:match("^[A-Za-z]:$") then
-                fname = drive .. fname
+    -- Pattern for (line) or |line|
+    for _, pattern in ipairs({ '()%((%d+)%)', '()%|(%d+)%|' }) do
+        for pos, lnum in text:gmatch(pattern) do
+            local start_pos = pos - 1
+            local i = start_pos
+            for _, check_char in ipairs({ is_path_char, is_extended_path_char }) do
+                while i > 0 and check_char(text:sub(i, i)) do i = i - 1 end
+                local fname = text:sub(i + 1, start_pos)
+                local drive = text:sub(i - 1, i)
+                if drive:match("^[A-Za-z]:$") then
+                    fname = drive .. fname
+                end
+                add_candidate(fname, lnum, 1)
             end
-            add_candidate(fname, lnum, 1)
         end
     end
 
     -- Pattern for filename:line:col
-    for fname, lnum, col in text:gmatch("([%w%._/\\~+-]+):(%d+):(%d+)") do
+    for fname, lnum, col in text:gmatch('([%w%._/\\~+-]+):(%d+):(%d+)') do
         add_candidate(fname, lnum, col)
     end
 
     -- Pattern for filename:line
-    for fname, lnum in text:gmatch("([%w%._/\\~+-]+):(%d+)") do
+    for fname, lnum in text:gmatch('([%w%._/\\~+-]+):(%d+)') do
         add_candidate(fname, lnum, 1)
     end
 
@@ -201,6 +206,23 @@ m.goto_error = function(opts)
 
     -- set qf index (so :cc will jump to that index)
     pcall(vim.fn.setqflist, {}, 'a', { idx = idx })
+
+    if is_wsl then
+        -- check if entry is accessible
+        local entry = vim.fn.getqflist()[idx] or {}
+        if entry.valid == 1 then
+            local buf_name = nil
+            if entry.bufnr then
+                local ok, name = pcall(vim.api.nvim_buf_get_name, entry.bufnr)
+                if ok then
+                    buf_name = name
+                end
+            end
+            if (entry.filename and not uv.fs_stat(entry.filename)) or (buf_name and not uv.fs_stat(buf_name)) then
+                opts.custom = true
+            end
+        end
+    end
 
     if not opts.custom then
         -- try builtin quickfix jump
