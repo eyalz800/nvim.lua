@@ -87,6 +87,11 @@ local normalize_path = function(path)
         end
         return candidate
     end
+
+    if not uv.fs_stat(path) then
+        return path:gsub('\\([^ ])', '/%1')
+    end
+
     return path
 end
 
@@ -230,15 +235,15 @@ m.goto_error = function()
         for _, item in ipairs(resolved) do
             table.insert(print_table, vim.fn.shellescape(item.path) .. ':' .. item.lnum .. ':' .. item.col .. ':')
         end
-        local print = 'printf ' .. (#print_table > 0 and (table.concat(print_table, [[\\n]]) .. [[\\n]]) or '')
+        local print_cmd = 'printf ' .. (#print_table > 0 and (table.concat(print_table, [[\\n]]) .. [[\\n]]) or '')
 
         local rg_table = {}
         for _, item in ipairs(unresolved) do
             table.insert(rg_table, string.format('rg --files -g %s | xargs -I{} echo {}:%d:%d:',
                 vim.fn.shellescape(vim.fs.basename(item.path)), item.lnum, item.col))
         end
-        local rg = table.concat(rg_table, ';')
-        require 'fzf-lua'.grep_project({ prompt = 'Files❯ ', cmd = print .. ';' .. rg, })
+        local rg_cmd = table.concat(rg_table, ';')
+        require 'fzf-lua'.grep_project({ prompt = 'Files❯ ', cmd = print_cmd .. ';' .. rg_cmd, })
     end
 end
 
