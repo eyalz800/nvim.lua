@@ -59,7 +59,7 @@ m.on_open = function()
     vim.keymap.set('n', 'q', ':<C-u>q<cr>', { silent = true, buffer = true })
     vim.keymap.set('n', 'a', explorers.arrange, { silent = true, buffer = true })
     vim.keymap.set('n', 'C', terminal.open_below, { silent = true, buffer = true })
-    vim.keymap.set('n', 'ge', m.goto_error, { silent = true, buffer = true, desc = 'Go to error (quickfix.goto_error)' })
+    vim.keymap.set('n', 'ge', function() m.goto_error({ custom = true }) end, { silent = true, buffer = true, desc = 'Go to error (quickfix.goto_error)' })
     vim.keymap.set('n', '<cr>', function() pcall(m.goto_error) end, { silent = true, buffer = true, })
     vim.keymap.set('n', '<2-leftmouse>', function() pcall(m.goto_error) end, { silent = true, buffer = true, })
 
@@ -191,26 +191,29 @@ local extract_candidates_from_text = function(text)
     return uniq
 end
 
-m.goto_error = function()
+m.goto_error = function(opts)
+    opts = opts or {}
     -- snapshot before attempting builtin jump
-    local pre_buf   = vim.api.nvim_get_current_buf()
-    local pre_win   = vim.api.nvim_get_current_win()
+    local pre_buf = vim.api.nvim_get_current_buf()
+    local pre_win = vim.api.nvim_get_current_win()
 
     local idx = vim.api.nvim_win_get_cursor(0)[1]
 
     -- set qf index (so :cc will jump to that index)
     pcall(vim.fn.setqflist, {}, 'a', { idx = idx })
 
-    -- try builtin quickfix jump
-    pcall(cmd, ('cc %d'):format(idx))
+    if not opts.custom then
+        -- try builtin quickfix jump
+        pcall(cmd, ('cc %d'):format(idx))
 
-    -- snapshot after
-    local post_buf  = vim.api.nvim_get_current_buf()
-    local post_win  = vim.api.nvim_get_current_win()
+        -- snapshot after
+        local post_buf  = vim.api.nvim_get_current_buf()
+        local post_win  = vim.api.nvim_get_current_win()
 
-    -- if anything meaningful changed, assume cc worked
-    if pre_buf ~= post_buf or pre_win ~= post_win then
-        return
+        -- if anything meaningful changed, assume cc worked
+        if pre_buf ~= post_buf or pre_win ~= post_win then
+            return
+        end
     end
 
     -- fallback to smarter parser/jump
