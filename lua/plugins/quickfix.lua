@@ -124,6 +124,10 @@ local extract_candidates_from_text = function(text)
         return c:match("[%w_./\\~+-]")
     end
 
+    local function is_extended_path_char(c)
+        return c:match("[%w_./\\~+-%%s()]")
+    end
+
     local add_candidate = function(fname, lnum, col)
         fname = fname and fname:match("^%s*(.-)%s*$") -- trim
         if fname and fname ~= "" then
@@ -140,25 +144,29 @@ local extract_candidates_from_text = function(text)
         local start_pos = pos - 1
         -- walk backward to extract file path
         local i = start_pos
-        while i > 0 and is_path_char(text:sub(i, i)) do i = i - 1 end
-        local fname = text:sub(i + 1, start_pos)
-        local drive = text:sub(i - 1, i)
-        if drive:match("^[A-Za-z]:$") then
-            fname = drive .. fname
+        for _, check_char in ipairs({ is_path_char, is_extended_path_char }) do
+            while i > 0 and check_char(text:sub(i, i)) do i = i - 1 end
+            local fname = text:sub(i + 1, start_pos)
+            local drive = text:sub(i - 1, i)
+            if drive:match("^[A-Za-z]:$") then
+                fname = drive .. fname
+            end
+            add_candidate(fname, lnum, col)
         end
-        add_candidate(fname, lnum, col)
     end
 
     for pos, lnum in text:gmatch("()%((%d+)%)") do
         local start_pos = pos - 1
         local i = start_pos
-        while i > 0 and is_path_char(text:sub(i, i)) do i = i - 1 end
-        local fname = text:sub(i + 1, start_pos)
-        local drive = text:sub(i - 1, i)
-        if drive:match("^[A-Za-z]:$") then
-            fname = drive .. fname
+        for _, check_char in ipairs({ is_path_char, is_extended_path_char }) do
+            while i > 0 and check_char(text:sub(i, i)) do i = i - 1 end
+            local fname = text:sub(i + 1, start_pos)
+            local drive = text:sub(i - 1, i)
+            if drive:match("^[A-Za-z]:$") then
+                fname = drive .. fname
+            end
+            add_candidate(fname, lnum, 1)
         end
-        add_candidate(fname, lnum, 1)
     end
 
     -- Pattern for filename:line:col
@@ -223,10 +231,21 @@ m.goto_error = function()
     end
 
     -- Step 2: jump immediately if exactly one resolved path
-    if #resolved == 1 and #unresolved == 0 then
-        local e = resolved[1]
-        open_at(e.path, e.lnum, e.col)
-        return
+    if #resolved == 1 then
+        local r = resolved[1]
+        local others_included = true
+        if #unresolved > 0 then
+            for _, u in ipairs(unresolved) do
+                if not r.path:find(u.path) then
+                    others_included = false
+                    break
+                end
+            end
+        end
+        if others_included then
+            open_at(r.path, r.lnum, r.col)
+            return
+        end
     end
 
     -- Step 3: user chooses file from the options
