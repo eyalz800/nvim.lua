@@ -280,7 +280,7 @@ m.goto_error = function(opts)
         for _, item in ipairs(resolved) do
             table.insert(print_table, vim.fn.shellescape(item.path) .. ':' .. item.lnum .. ':' .. item.col .. ':')
         end
-        local print_cmd = 'printf ' .. (#print_table > 0 and (table.concat(print_table, [[\\n]]) .. [[\\n]]) or '')
+        local print_cmd = 'printf ' .. (#print_table > 0 and (table.concat(print_table, [[\\n]]) .. [[\\n]]) or '""')
 
         local rg_table = {}
         for _, item in ipairs(unresolved) do
