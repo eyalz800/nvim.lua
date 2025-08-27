@@ -17,7 +17,7 @@ local quickfix_winhl = quickfix_winhls[user.settings.quickfix_config.winhl or 'n
 local is_wsl = nil
 
 m.setup = function()
-    is_wsl = vim.loop.fs_stat("/mnt/c/Windows") ~= nil
+    is_wsl = vim.loop.fs_stat('/mnt/c/Windows') ~= nil
 
     vim.api.nvim_create_autocmd('filetype', {
         pattern = 'qf',
@@ -69,27 +69,28 @@ m.on_open = function()
 end
 
 local normalize_path = function(path)
-    if not path or path == "" then return path end
-    path = tostring(path)
-    if not is_wsl then return path end
-    if path:match("^/") then return path end
+    if not path or path == '' then
+        return path
+    end
 
-    local drive, rest = path:match("^([A-Za-z]):[\\/](.*)")
-    if drive and rest then
-        local drv = drive:lower()
-        local unix_rest = rest:gsub("\\", "/")
-        local candidate = "/mnt/" .. drv .. "/" .. unix_rest
-        if uv.fs_stat(candidate) then
-            if uv.fs_stat("/mnt/" .. drv .. vim.fn.stdpath('config') .. '/install/success') then
-                return "/" .. unix_rest
+    path = tostring(path)
+    if is_wsl and not path:match('^/') then
+        local drive, rest = path:match('^([A-Za-z]):[\\/](.*)')
+        if drive and rest then
+            local drv = drive:lower()
+            local unix_rest = rest:gsub('\\', '/')
+            local candidate = '/mnt/' .. drv .. '/' .. unix_rest
+            if uv.fs_stat(candidate) and
+                uv.fs_stat('/' .. unix_rest) and
+                uv.fs_stat('/mnt/' .. drv .. vim.fn.stdpath('config') .. '/install/success') then
+                return '/' .. unix_rest
             end
             return candidate
         end
-        return candidate
-    end
 
-    if not uv.fs_stat(path) then
-        return path:gsub('\\([^ ])', '/%1')
+        if not uv.fs_stat(path) then
+            return path:gsub('\\([^ ])', '/%1')
+        end
     end
 
     return path
@@ -121,16 +122,16 @@ local extract_candidates_from_text = function(text)
     local candidates = {}
 
     local function is_path_char(c)
-        return c:match("[%w_./\\~+-]")
+        return c:match('[%w_./\\~+-]')
     end
 
     local function is_extended_path_char(c)
-        return c:match("[%w_./\\~+-%%s()]")
+        return c:match('[%w_./\\~+-%%s()]')
     end
 
     local add_candidate = function(fname, lnum, col)
-        fname = fname and fname:match("^%s*(.-)%s*$") -- trim
-        if fname and fname ~= "" then
+        fname = fname and fname:match('^%s*(.-)%s*$') -- trim
+        if fname and fname ~= '' then
             table.insert(candidates, {
                 path = normalize_path(fname),
                 lnum = tonumber(lnum) or 1,
@@ -166,7 +167,7 @@ local extract_candidates_from_text = function(text)
                 while i > 0 and check_char(text:sub(i, i)) do i = i - 1 end
                 local fname = text:sub(i + 1, start_pos)
                 local drive = text:sub(i - 1, i)
-                if drive:match("^[A-Za-z]:$") then
+                if drive:match('^[A-Za-z]:$') then
                     fname = drive .. fname
                 end
                 add_candidate(fname, lnum, 1)
@@ -239,14 +240,14 @@ m.goto_error = function(opts)
     end
 
     -- fallback to smarter parser/jump
-    local text = vim.api.nvim_buf_get_lines(pre_buf, idx - 1, idx, false)[1] or ""
+    local text = vim.api.nvim_buf_get_lines(pre_buf, idx - 1, idx, false)[1] or ''
     local candidates = extract_candidates_from_text(text)
     if #candidates == 0 then return end
 
     -- Step 1: separate resolved absolute, unresolved relative
     local resolved, unresolved = {}, {}
     for _, c in ipairs(candidates) do
-        local is_absolute = c.path:match("^/")
+        local is_absolute = c.path:match('^/')
 
         if uv.fs_stat(c.path) then
             table.insert(resolved, c)
