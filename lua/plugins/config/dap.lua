@@ -172,7 +172,7 @@ m.on_dap_repl_attach = function()
     require 'dap.ext.autocompl'.attach()
 end
 m.is_ui_open = function()
-    if not dap then
+    if not dap or not ui.dapui_windows then
         return false
     end
     return dap.session() or (#ui.dapui_windows.layouts > 1 and
