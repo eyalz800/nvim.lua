@@ -7,7 +7,9 @@ elseif user.settings.finder == 'fzf' then
     return require 'plugins.config.fzf'
 else
     m.find_file = function(_) end
+    m.find_file_rg = function(_) end
     m.find_file_hidden = function(_) end
+    m.find_file_hidden_rg = function(_) end
     m.find_line = function() end
     m.find_in_files = function(_) end
     m.find_in_files_precise = function(_) end

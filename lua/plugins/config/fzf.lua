@@ -34,10 +34,14 @@ m.find_file = function(_)
     cmd 'Files'
 end
 
+m.find_file_rg = m.find_file
+
 m.find_file_hidden = function(_)
     vim.env.FZF_DEFAULT_COMMAND = 'rg --files --no-ignore-vcs --hidden'
     cmd 'Files'
 end
+
+m.find_file_hidden_rg = m.find_file_hidden
 
 m.find_file_list = function()
     vim.env.FZF_DEFAULT_COMMAND = 'if [ -f .files ]; then cat .files; else rg --files | tee .files; fi;'

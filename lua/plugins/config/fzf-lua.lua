@@ -12,6 +12,14 @@ end
 m.find_file = function(opts)
     opts = opts or {}
     fzf_lua.files({
+        cwd = opts.cwd or nil,
+        fzf_colors = vim.g.fzf_colors,
+    })
+end
+
+m.find_file_rg = function(opts)
+    opts = opts or {}
+    fzf_lua.files({
         cmd = 'rg --files --color=never --hidden -g "!.git"',
         cwd = opts.cwd or nil,
         fzf_colors = vim.g.fzf_colors,
@@ -19,6 +27,16 @@ m.find_file = function(opts)
 end
 
 m.find_file_hidden = function(opts)
+    opts = opts or {}
+    fzf_lua.files({
+        hidden = true,
+        no_ignore = false,
+        cwd = opts.cwd or nil,
+        fzf_colors = vim.g.fzf_colors,
+    })
+end
+
+m.find_file_hidden_rg = function(opts)
     opts = opts or {}
     fzf_lua.files({
         cmd = 'rg --files --no-ignore-vcs --color=never --hidden',
