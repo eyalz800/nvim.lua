@@ -5,7 +5,7 @@ local user = require 'user'
 
 m.icons_plugin = {
     ['nvim-web-devicons'] = 'nvim-tree/nvim-web-devicons',
-    ['mini'] = 'echasnovski/mini.icons',
+    ['mini'] = 'nvim-mini/mini.icons',
 }
 
 
@@ -434,7 +434,7 @@ m.plugins = {
         cond = user.settings.noice,
     },
     {
-        'echasnovski/mini.diff',
+        'nvim-mini/mini.diff',
         config = function()
             require 'plugins.config.mini-diff'.setup()
         end,
@@ -448,26 +448,26 @@ m.plugins = {
         cond = user.settings.guess_indent,
     },
     {
-        'echasnovski/mini.files',
+        'nvim-mini/mini.files',
         config = function()
             require 'plugins.config.mini-files'.setup()
         end,
     },
     {
-        'echasnovski/mini.bufremove',
+        'nvim-mini/mini.bufremove',
         config = function()
             require 'plugins.config.mini-bufremove'.setup()
         end,
         cond = user.settings.buffer_deleter == 'mini',
     },
     {
-        'echasnovski/mini.bracketed',
+        'nvim-mini/mini.bracketed',
         config = function()
             require 'plugins.config.mini-bracketed'.setup()
         end,
     },
     {
-        'echasnovski/mini.ai',
+        'nvim-mini/mini.ai',
         config = function()
             require 'plugins.config.mini-ai'.setup()
         end,
@@ -488,7 +488,7 @@ m.plugins = {
         },
     },
     {
-        'echasnovski/mini.surround',
+        'nvim-mini/mini.surround',
         config = function()
             require 'plugins.config.mini-surround'.setup()
         end,
@@ -510,7 +510,7 @@ m.plugins = {
         cond = user.settings.icons == 'nvim-web-devicons',
     },
     {
-        'echasnovski/mini.icons',
+        'nvim-mini/mini.icons',
         opts = {},
         cond = user.settings.icons == 'mini',
     },
