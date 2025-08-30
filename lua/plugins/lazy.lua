@@ -244,8 +244,7 @@ m.plugins = {
         cond = user.settings.code_explorer == 'symbols-outline',
     },
     {
-        --'ibhagwan/fzf-lua',
-        'eyalz800/fzf-lua',
+        'ibhagwan/fzf-lua',
         dependencies = {
             m.icons_plugin[user.settings.icons],
             'junegunn/fzf',
