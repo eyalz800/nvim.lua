@@ -67,23 +67,23 @@ m.noice_config = {
 m.notifier = m.snacks and 'snacks' or (m.noice and 'noice' or 'default')
 m.fidget = true
 m.diff = 'mini'
-m.copilot = true
+m.copilot = false
 m.codecompanion = true
 m.codecompanion_config = {
     progress = m.fidget and 'fidget' or 'noice',
-    -- strategies = {
-    --     chat = {
-    --         adapter = 'gemini'
-    --     },
-    --     inline = {
-    --         adapter = 'gemini'
-    --     },
-    -- },
     wrap = true,
+    strategies = {
+        chat = {
+            adapter = 'gemini'
+        },
+        inline = {
+            adapter = 'gemini'
+        },
+    },
 }
 m.minuet_ai = false
 m.minuet_config = {
-    --provider = 'openai',
+    provider = 'openai',
     --provider = 'gemini',
     provider_options = nil,
 }

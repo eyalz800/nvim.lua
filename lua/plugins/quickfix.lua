@@ -3,6 +3,7 @@ local cmd = require 'vim.cmd'.silent
 local explorers = require 'plugins.explorers'
 local user = require 'user'
 local terminal = require 'plugins.terminal'
+local find = require 'plugins.find'
 
 local win_getid = vim.fn.win_getid
 local win_gotoid = vim.fn.win_gotoid
@@ -282,13 +283,13 @@ m.goto_error = function(opts)
         end
         local print_cmd = 'printf ' .. (#print_table > 0 and (table.concat(print_table, [[\\n]]) .. [[\\n]]) or '""')
 
-        local rg_table = {}
+        local find_table = {}
         for _, item in ipairs(unresolved) do
-            table.insert(rg_table, string.format('rg --files -g %s | xargs -I{} echo {}:%d:%d:',
+            table.insert(find_table, string.format(find.file_cmd .. ' -g %s | xargs -I{} echo {}:%d:%d:',
                 vim.fn.shellescape(vim.fs.basename(item.path)), item.lnum, item.col))
         end
-        local rg_cmd = table.concat(rg_table, ';')
-        require 'fzf-lua'.grep_project({ prompt = 'Files❯ ', cmd = print_cmd .. ';' .. rg_cmd, })
+        local find_cmd = table.concat(find_table, ';')
+        require 'fzf-lua'.grep_project({ prompt = 'Files❯ ', cmd = print_cmd .. ';' .. find_cmd, })
     end
 end
 

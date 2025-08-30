@@ -4,6 +4,7 @@ local async_cmd = require 'plugins.async-cmd'.async_cmd
 local sed = require 'lib.os-bin'.sed
 local echo = require 'vim.echo'.echo
 local finder = require 'plugins.finder'
+local find = require 'plugins.find'
 
 local split = vim.split
 local bufnr = vim.api.nvim_get_current_buf
@@ -22,28 +23,49 @@ local fnameescape = vim.fn.fnameescape
 
 local bin_path = stdpath 'data' .. '/installation/bin'
 
-local ctags_file_patterns = '-g "*.c" -g "*.cc" -g "*.cpp" -g "*.cxx" -g "*.h" -g "*.hh" -g "*.hpp"'
-local other_file_patterns = '-g "*.py" -g "*.te" -g "*.S" -g "*.asm" -g "*.mk" -g "*.md" -g "makefile" -g "Makefile"'
-local source_file_patterns = '-g "*.c" -g "*.cc" -g "*.cpp" -g "*.cxx" -g "*.h" -g "*.hh" -g "*.hpp" -g "*.py" -g "*.go" -g "*.java" -g "*.cs" -g "*.te" -g "*.S" -g "*.asm" -g "*.mk" -g "*.md" -g "*.lua" -g "makefile" -g "Makefile"'
+local ctags_file_patterns = nil
+local other_file_patterns = nil
+local source_file_patterns = nil
+
+if string.match(find.file_cmd, '^rg') then
+    ctags_file_patterns = '-g "*.c" -g "*.cc" -g "*.cpp" -g "*.cxx" -g "*.h" -g "*.hh" -g "*.hpp"'
+    other_file_patterns = '-g "*.py" -g "*.te" -g "*.S" -g "*.asm" -g "*.mk" -g "*.md" -g "makefile" -g "Makefile"'
+    source_file_patterns = '-g "*.c" -g "*.cc" -g "*.cpp" -g "*.cxx" -g "*.h" -g "*.hh" -g "*.hpp" -g "*.py" -g "*.go" -g "*.java" -g "*.cs" -g "*.te" -g "*.S" -g "*.asm" -g "*.mk" -g "*.md" -g "*.lua" -g "makefile" -g "Makefile"'
+else
+    ctags_file_patterns = "-e c -e cc -e cpp -e cxx -e h -e hh -e hpp"
+    other_file_patterns = [=['.*\.(py|te|S|asm|mk|md)$|(^|.*/)([Mm]akefile)$']=]
+    source_file_patterns = [=['.*\.(c|cc|cpp|cxx|h|hh|hpp|py|go|java|cs|te|S|asm|mk|md|lua)$|(^|.*/)([Mm]akefile)$']=]
+end
+
 local ctags_everything_options = '--c++-kinds=+p --fields=+iaSn --extras=+q --sort=foldcase --tag-relative --recurse=yes'
 local ctags_options = '--languages=C,C++ --c++-kinds=+p --fields=+iaSn --extras=+q --sort=foldcase --tag-relative --recurse=yes'
 local opengrok_file_patterns = "-I '*.cpp' -I '*.c' -I '*.cc' -I '*.cxx' -I '*.h' -I '*.hh' -I '*.hpp' -I '*.S' -I '*.s' -I '*.asm' -I '*.py' -I '*.go' -I '*.java' -I '*.cs' -I '*.mk' -I '*.te' -I '*.lua' -I makefile -I Makefile"
 local opengrok_jar = bin_path .. '/opengrok/lib/opengrok.jar'
 local opengrok_ctags = bin_path .. '/ctags-exuberant/ctags/ctags'
-local generate_files_command = 'rg --files ' ..
+local generate_files_command = find.file_cmd .. ' ' ..
     ctags_file_patterns ..
-    ' > cscope.files ; if ! [ -f .files ]; then cp cscope.files .files; fi ; rg --files ' ..
+    ' > cscope.files ; if ! [ -f .files ]; then cp cscope.files .files; fi ; ' .. find.file_cmd .. ' ' ..
     other_file_patterns .. ' >> .files'
 local generate_cpp_command = 'cscope -bq'
 local generate_opengrok_command = 'java -Xmx2048m -jar ' .. opengrok_jar .. ' -q -c ' ..
         opengrok_ctags .. ' -s . -d .opengrok ' .. opengrok_file_patterns .. ' -P -S -G -W .opengrok/configuration.xml'
 local generate_tags_command = 'echo ' .. ctags_options .. ' > .gutctags ; ' .. sed .. " -i 's/ /\\n/g' .gutctags ; ctags " .. ctags_options
 local generate_all_tags_command = 'echo ' .. ctags_everything_options .. ' > .gutctags ; ' .. sed .. " -i 's/ /\\n/g' .gutctags ; ctags " .. ctags_options
-local generate_flags_command = 'echo -std=c++20 > compile_flags.txt' ..
+
+local generate_flags_command = nil
+if find.dir_cmd then
+   generate_flags_command =  'echo -std=c++26 > compile_flags.txt' ..
+    ' ; echo -x >> compile_flags.txt' ..
+    ' ; echo c++ >> compile_flags.txt' ..
+    ' ; set +e ; ' .. find.dir_cmd .. ' ' .. [=['(^|.*/)([Ii]nc|[Ii]nclude)$']=] .. ' | grep -v \"/\\.\" | ' ..
+    sed .. ' s@^@-isystem\\\\n@g >> compile_flags.txt ; set -e'
+else
+   generate_flags_command =  'echo -std=c++26 > compile_flags.txt' ..
     ' ; echo -x >> compile_flags.txt' ..
     ' ; echo c++ >> compile_flags.txt' ..
     ' ; set +e ; find . -type d -name inc -or -name include -or -name Include | grep -v \"/\\.\" | ' ..
     sed .. ' s@^@-isystem\\\\n@g >> compile_flags.txt ; set -e'
+end
 
 m.generate_cpp = function()
     async_cmd(generate_files_command .. ' ; ' .. generate_cpp_command, { visible=true })
@@ -66,11 +88,11 @@ m.generate_cpp_and_opengrok = function()
 end
 
 m.generate_source_files_list = function()
-    async_cmd('rg --files ' .. source_file_patterns .. ' > .files', { visible=true })
+    async_cmd(find.file_cmd .. ' ' .. source_file_patterns .. ' > .files', { visible=true })
 end
 
 m.generate_all_files_list = function()
-    async_cmd('rg --files --no-ignore-vcs --hidden  > .files', { visible=true })
+    async_cmd(find.file_cmd .. ' --no-ignore --hidden  > .files', { visible=true })
 end
 
 m.generate_flags = function()

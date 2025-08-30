@@ -1,6 +1,7 @@
 local m = {}
 local fzf_lua = {}
 local cmd = require 'vim.cmd'.silent
+local find = require 'plugins.find'
 
 local expand = vim.fn.expand
 
@@ -39,7 +40,7 @@ end
 m.find_file_hidden_rg = function(opts)
     opts = opts or {}
     fzf_lua.files({
-        cmd = 'rg --files --no-ignore-vcs --color=never --hidden',
+        cmd = 'rg --files --no-ignore --color=never --hidden',
         cwd = opts.cwd or nil,
         fzf_colors = vim.g.fzf_colors,
     })
@@ -47,28 +48,28 @@ end
 
 m.find_file_list = function()
     fzf_lua.files({
-        cmd = 'if [ -f .files ]; then cat .files; else rg --files --color=never --hidden -g "!.git" | tee .files; fi;',
+        cmd = 'if [ -f .files ]; then cat .files; else ' .. find.file_cmd .. ' --color=never --hidden ' .. find.options.exclude_git .. ' | tee .files; fi;',
         fzf_colors = vim.g.fzf_colors,
     })
 end
 
 m.find_file_list_invalidate = function()
     fzf_lua.files({
-        cmd = 'rm -rf .files; rg --files --color=never --hidden -g "!.git" | tee .files',
+        cmd = 'rm -rf .files; ' .. find.file_cmd .. ' --color=never --hidden ' .. find.options.exclude_git .. ' | tee .files',
         fzf_colors = vim.g.fzf_colors,
     })
 end
 
 m.find_file_list_hidden = function()
     fzf_lua.files({
-        cmd = 'if [ -f .files ]; then cat .files; else rg --files --no-ignore-vcs --hidden | tee .files; fi;',
+        cmd = 'if [ -f .files ]; then cat .files; else ' .. find.file_cmd .. ' --no-ignore --hidden | tee .files; fi;',
         fzf_colors = vim.g.fzf_colors,
     })
 end
 
 m.find_file_list_hidden_invalidate = function()
     fzf_lua.files({
-        cmd = 'rm -rf .files; rg --files --color=never --no-ignore-vcs --hidden | tee .files',
+        cmd = 'rm -rf .files; ' .. find.file_cmd .. ' --color=never --no-ignore --hidden | tee .files',
         fzf_colors = vim.g.fzf_colors,
     })
 end
