@@ -286,9 +286,14 @@ m.goto_error = function(opts)
         local print_cmd = 'printf ' .. (#print_table > 0 and (table.concat(print_table, [[\\n]]) .. [[\\n]]) or '""')
 
         local find_table = {}
+        local seen_cmds = {}
         for _, item in ipairs(unresolved) do
-            table.insert(find_table, string.format(find.file_cmd .. ' -g %s | xargs -I{} echo {}:%d:%d: {}',
-                vim.fn.shellescape(vim.fs.basename(item.path)), item.lnum, item.col))
+            local find_cmd = string.format(find.file_cmd .. ' -g %s | xargs -I{} echo {}:%d:%d: {}',
+                vim.fn.shellescape(vim.fs.basename(item.path)), item.lnum, item.col)
+            if not seen_cmds[find_cmd] then
+                table.insert(find_table, find_cmd)
+                seen_cmds[find_cmd] = true
+            end
         end
         local find_cmd = table.concat(find_table, ';')
         require 'fzf-lua'.grep_project({
