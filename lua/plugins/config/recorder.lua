@@ -6,7 +6,7 @@ end
 
 m.config = function()
     return {
-        slots = { 'a', 's', 'd', 'w' },
+        slots = { 's', 'd', 'w' },
     }
 end
 
