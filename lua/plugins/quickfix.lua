@@ -279,17 +279,25 @@ m.goto_error = function(opts)
     if #resolved > 0 or #unresolved > 0 then
         local print_table = {}
         for _, item in ipairs(resolved) do
-            table.insert(print_table, vim.fn.shellescape(item.path) .. ':' .. item.lnum .. ':' .. item.col .. ':')
+            local file_path = vim.fn.shellescape(item.path)
+            local file_name = vim.fn.shellescape(vim.fs.basename(item.path))
+            table.insert(print_table, file_path .. ':' .. item.lnum .. ':' .. item.col .. ':\\ ' .. file_name)
         end
         local print_cmd = 'printf ' .. (#print_table > 0 and (table.concat(print_table, [[\\n]]) .. [[\\n]]) or '""')
 
         local find_table = {}
         for _, item in ipairs(unresolved) do
-            table.insert(find_table, string.format(find.file_cmd .. ' -g %s | xargs -I{} echo {}:%d:%d:',
+            table.insert(find_table, string.format(find.file_cmd .. ' -g %s | xargs -I{} echo {}:%d:%d: {}',
                 vim.fn.shellescape(vim.fs.basename(item.path)), item.lnum, item.col))
         end
         local find_cmd = table.concat(find_table, ';')
-        require 'fzf-lua'.grep_project({ prompt = 'Files❯ ', cmd = print_cmd .. ';' .. find_cmd, })
+        require 'fzf-lua'.grep_project({
+            prompt = 'Files❯ ',
+            actions = {
+                ['ctrl-g'] = false,
+            },
+            cmd = print_cmd .. ';' .. find_cmd,
+        })
     end
 end
 
