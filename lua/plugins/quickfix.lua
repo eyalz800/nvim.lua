@@ -288,7 +288,7 @@ m.goto_error = function(opts)
         local find_table = {}
         local seen_cmds = {}
         for _, item in ipairs(unresolved) do
-            local find_cmd = string.format(find.file_cmd .. ' -g %s | xargs -I{} echo {}:%d:%d: {}',
+            local find_cmd = string.format(find.file_cmd .. ' -g %s | xargs -I{} echo {}:%d:%d: `basename {}`',
                 vim.fn.shellescape(vim.fs.basename(item.path)), item.lnum, item.col)
             if not seen_cmds[find_cmd] then
                 table.insert(find_table, find_cmd)
