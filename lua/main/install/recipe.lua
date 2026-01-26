@@ -302,12 +302,12 @@ return {
     },
     {
         name = 'npm-packages',
-        command = 'sudo npm install --force -g @mermaid-js/mermaid-cli tree-sitter-cli',
+        command = 'sudo npm install --force -g @mermaid-js/mermaid-cli tree-sitter-cli@0.25',
         os = 'Linux',
     },
     {
         name = 'npm-packages',
-        command = 'npm install --force -g @mermaid-js/mermaid-cli tree-sitter-cli',
+        command = 'npm install --force -g @mermaid-js/mermaid-cli tree-sitter-cli@0.25',
         os = 'Darwin',
     },
     {
