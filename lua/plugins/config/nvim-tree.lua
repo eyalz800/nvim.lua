@@ -24,6 +24,20 @@ m.setup = function()
             end
         end
     )
+
+    -- Fix inheriting nvim-tree winhighlight
+    vim.api.nvim_create_autocmd('BufWinEnter', {
+        group = vim.api.nvim_create_augroup('init.lua.clear-nvim-tree-winhighlight', { clear = true }),
+        callback = function()
+            local win_hl = vim.wo.winhighlight
+            local is_file = vim.bo.buftype == ''
+            local is_not_tree = vim.bo.filetype ~= 'NvimTree'
+
+            if is_file and is_not_tree and win_hl:find('NvimTree') then
+                vim.opt_local.winhighlight = ''
+            end
+        end,
+    })
 end
 
 m.open = function(options)
