@@ -22,6 +22,7 @@ local lldb_mi = stdpath 'data' .. '/mason/packages/cpptools/extension/debugAdapt
 local translation = {
     codelldb = { 'c', 'cpp', 'rust' },
     cppdbg = { 'c', 'cpp', 'rust' },
+    godot = { 'gdscript' },
 }
 
 local setup_lldb_mi = function()
@@ -49,6 +50,16 @@ local find_launch_json = function(directory)
     end
 end
 
+local setup_additional_adapters  = function()
+    dap.adapters.godot = function(callback, config)
+        callback({
+            type = 'server',
+            host = config.host or '127.0.0.1',
+            port = config.port or '6006',
+        })
+    end
+end
+
 m.setup = function()
     dap = require 'dap'
     local sign_prefix = user.settings.signcolumn_config.dbg_prefix or ''
@@ -64,6 +75,8 @@ m.setup = function()
         group = vim.api.nvim_create_augroup('init.lua.dap.repl_complete', {}),
         callback = require 'plugins.config.dap'.on_dap_repl_attach
     })
+
+    setup_additional_adapters ()
 
     return {}
 end
@@ -87,6 +100,8 @@ m.launch_settings = function()
         m.generate_cpp_config()
     elseif debug_type == 'python' then
         m.generate_py_config()
+    elseif debug_type == 'gdscript' then
+        m.generate_gdscript_config()
     end
 
     m.launch({ debug_type = debug_type })
@@ -311,6 +326,31 @@ m.generate_py_config = function()
         "echo '            \"program\": \"" .. program .. "\",' >> launch.json && " ..
         "echo '            \"args\": [],' >> launch.json && " ..
         "echo '            \"python\": \"" .. python .. "\",' >> launch.json && " ..
+        "echo '            \"cwd\": \"${workspaceFolder}\",' >> launch.json && " ..
+        "echo '            \"stopOnEntry\": true' >> launch.json && " ..
+        "echo '        }' >> launch.json && " ..
+        "echo '    ]' >> launch.json && " ..
+        "echo '}' >> launch.json"
+    )
+end
+
+m.generate_gdscript_config = function()
+    local target = input('(launch.json) target: ', '127.0.0.1:6006')
+    local host, port = target:match("([^:]+):(%d+)")
+    if not host or not port then
+        error("Invalid target format. Expected host:port")
+        return
+    end
+    system(
+        "echo '{' > launch.json && " ..
+        "echo '    \"configurations\": [' >> launch.json && " ..
+        "echo '        {' >> launch.json && " ..
+        "echo '            \"name\": \"launch\",' >> launch.json && " ..
+        "echo '            \"request\": \"launch\",' >> launch.json && " ..
+        "echo '            \"type\": \"godot\",' >> launch.json && " ..
+        "echo '            \"host\": \"" .. host .. "\",' >> launch.json && " ..
+        "echo '            \"port\": \"" .. port .. "\",' >> launch.json && " ..
+        "echo '            \"args\": [],' >> launch.json && " ..
         "echo '            \"cwd\": \"${workspaceFolder}\",' >> launch.json && " ..
         "echo '            \"stopOnEntry\": true' >> launch.json && " ..
         "echo '        }' >> launch.json && " ..
