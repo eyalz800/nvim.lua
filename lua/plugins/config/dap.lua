@@ -212,6 +212,11 @@ m.generate_cpp_config = function()
     if type == 'codelldb' then
         if string.find(target, ':', 1, true) and not fs_stat(target) then
             local main_file = input('(attach) main file: ', getcwd() .. '/', 'file')
+            local host, port = target:match("([^:]+):(%d+)")
+            if not host or not port then
+                error("Invalid target format. Expected host:port")
+                return
+            end
             system(
                 "echo '{' > launch.json && " ..
                 "echo '    \"configurations\": [' >> launch.json && " ..
