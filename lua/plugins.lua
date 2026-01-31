@@ -14,6 +14,7 @@ m.setup = function()
     require 'plugins.syntax'.setup()
     require 'plugins.code-explorer'.setup()
     require 'plugins.zip'.setup()
+    require 'plugins.godot'.setup()
     require 'plugins.lazy'.setup()
 end
 

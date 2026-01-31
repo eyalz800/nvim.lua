@@ -156,6 +156,9 @@ m.setup = function()
         on_attach = on_attach,
     })
 
+    m.lspconfig_servers = {}
+    m.mason_packages = {}
+
     for server_name, server in pairs(m.servers) do
         vim.lsp.config(server_name, {
             cmd = server.cmd,
@@ -164,6 +167,8 @@ m.setup = function()
             filetypes = server.filetypes,
         })
         vim.lsp.enable(server_name)
+        m.mason_packages[server_name] = server.mason_package
+        m.lspconfig_servers[server_name] = (not server.mason_package) and server_name or nil
     end
 
     local mason_lspconfig = require 'mason-lspconfig'
@@ -171,15 +176,25 @@ m.setup = function()
     if user.settings.mason_lspconfig_autoenable == true then
         mason_lspconfig_automatic_enable = true
     elseif user.settings.mason_lspconfig_autoenable == 'if-not-defined' then
-        mason_lspconfig_automatic_enable = { exclude = vim.tbl_keys(m.servers) }
+        mason_lspconfig_automatic_enable = { exclude = vim.tbl_values(m.lspconfig_servers) }
     else
         mason_lspconfig_automatic_enable = false
     end
 
     mason_lspconfig.setup {
-        ensure_installed = vim.tbl_keys(m.servers),
+        ensure_installed = vim.tbl_values(m.lspconfig_servers),
         automatic_enable = mason_lspconfig_automatic_enable,
     }
+
+    local mason_registry = require 'mason-registry'
+    for _, pkg_name in pairs(m.mason_packages) do
+        if not mason_registry.is_installed(pkg_name) then
+            local pkg = mason_registry.get_package(pkg_name)
+            if not pkg:is_installing() then
+                pkg:install()
+            end
+        end
+    end
 
     require 'plugins.config.cmp'.setup()
 

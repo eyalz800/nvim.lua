@@ -144,6 +144,10 @@ m.lsp_config = {
             ruff = 'ruff',
             rust = 'rust_analyzer',
             ts = 'ts_ls',
+            gdscript = {
+                name = 'gdscript',
+                mason_package = 'gdtoolkit',
+            },
         },
     },
     coc = {
