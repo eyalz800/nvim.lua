@@ -8,12 +8,12 @@ end
 
 m.config = function()
     local adapters = user.settings.codecompanion_config.adapters or {}
-    local strategies = user.settings.codecompanion_config.strategies or {}
+    local interactions = user.settings.codecompanion_config.interactions or {}
 
-    strategies.inline = strategies.inline or {}
+    interactions.inline = interactions.inline or {}
 
-    if not strategies.inline.keymaps then
-        strategies.inline.keymaps = {
+    if not interactions.inline.keymaps then
+        interactions.inline.keymaps = {
             accept_change = {
                 modes = { n = 'gra' },
                 description = 'Accept the suggested change',
@@ -27,7 +27,7 @@ m.config = function()
 
     return {
         adapters = adapters,
-        strategies = strategies,
+        interactions = interactions,
         --opts = { log_level = 'TRACE' },
         display = {
             chat = {
