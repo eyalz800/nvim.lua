@@ -139,6 +139,7 @@ m.plugins = {
     },
     {
         'nvim-treesitter/nvim-treesitter',
+        branch = 'master',
         build = ':TSUpdate',
         config = function()
             require 'plugins.config.nvim-treesitter'.setup()
