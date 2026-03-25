@@ -10,6 +10,18 @@ m.config = function()
     local adapters = user.settings.codecompanion_config.adapters or {}
     local interactions = user.settings.codecompanion_config.interactions or {}
 
+    interactions.chat = interactions.chat or {}
+    interactions.chat.keymaps = interactions.chat.keymaps or {}
+    interactions.chat.keymaps.send = interactions.chat.keymaps.send or {
+        modes = { n = { '<CR>', '<C-s>' }, i = '<C-s>' },
+        index = 2,
+        callback = function(chat)
+            vim.cmd('stopinsert')
+            chat:submit()
+        end,
+        description = '[Request] Send response',
+    }
+
     interactions.inline = interactions.inline or {}
 
     if not interactions.inline.keymaps then

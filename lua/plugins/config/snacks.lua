@@ -28,6 +28,7 @@ m.lazy = function()
                             { icon = ' ', key = 's', desc = 'Settings', action = ':n ' .. vim.fn.stdpath('config') .. '/lua/user/settings.lua'},
                             { icon = ' ', key = 'c', desc = 'Config Files', action = function() require 'plugins.finder'.find_file({ cwd = vim.fn.stdpath('config') }) end },
                             { icon = ' ', key = 'C', desc = 'Config Text', action = function() require 'plugins.finder'.find_in_files({ cwd = vim.fn.stdpath('config') }) end },
+                            { icon = '󰚩 ', key = 'a', desc = 'AI Chat', action = function() vim.cmd('CodeCompanionChat') vim.cmd('only') vim.cmd('startinsert') end },
                             { icon = '󰒲 ', key = 'L', desc = 'Lazy', action = ":Lazy", enabled = package.loaded.lazy ~= nil },
                             { icon = ' ', key = 'q', desc = 'Quit', action = ":qa" },
                         },
