@@ -111,6 +111,14 @@ m.config = function()
             {
                 filter = {
                     event = 'msg_show',
+                    kind = 'lua_error',
+                    find = '^Error executing callback:\nENOTCONN',
+                },
+                opts = { skip = true, },
+            },
+            {
+                filter = {
+                    event = 'msg_show',
                     kind = {
                         'shell_out',
                         'shell_err',
