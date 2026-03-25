@@ -72,7 +72,7 @@ m.codecompanion = true
 m.codecompanion_config = {
     progress = m.fidget and 'fidget' or 'noice',
     wrap = true,
-    strategies = {
+    interactions = {
         chat = {
             adapter = 'gemini'
         },
