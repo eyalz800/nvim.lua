@@ -93,7 +93,8 @@ m.plugins = {
             'L3MON4D3/LuaSnip',
             'saadparwaiz1/cmp_luasnip',
             'hrsh7th/cmp-nvim-lsp',
-            'https://codeberg.org/FelipeLema/cmp-async-path.git',
+            -- 'https://codeberg.org/FelipeLema/cmp-async-path.git',
+            'eyalz800/cmp-async-path',
             'hrsh7th/cmp-buffer',
             {
                 'eyalz800/friendly-snippets',
