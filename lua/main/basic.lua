@@ -73,7 +73,7 @@ m.setup = function()
     vim.g.editorconfig = user.settings.respect_editor_config -- Respect or ignore editor config file
 
     -- Gui colors
-    if has('termguicolors') == 1 and user.settings.gui_colors then
+    if has('termguicolors') and user.settings.gui_colors then
         opt.termguicolors = true -- Term gui colors
     end
 end
