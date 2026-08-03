@@ -49,7 +49,7 @@ return {
     {
         name = 'install-basic',
         command = 'brew install curl ctags cscope llvm make autoconf automake unzip pkg-config python3 nodejs gnu-sed'
-            .. ' bat ripgrep fd lazygit tig pandoc plantuml imagemagick gs tectonic || true',
+            .. ' bat ripgrep fd lazygit tig pandoc plantuml imagemagick gs tectonic cmake ninja || true',
         'brew install git || true',
         os = 'Darwin',
     },
@@ -106,7 +106,7 @@ return {
         name = 'install-basic',
         command = 'sudo DEBIAN_FRONTEND=noninteractive apt install -y wget curl exuberant-ctags cscope git unzip ca-certificates gnupg bat ripgrep fd-find ' ..
                   'make autoconf xz-utils automake pkg-config openjdk-17-jre python3 python3-pip python3-venv gdb tig language-pack-en plantuml pandoc imagemagick ' ..
-                  'ghostscript texlive-latex-base',
+                  'ghostscript texlive-latex-base cmake ninja-build',
         os = 'Linux',
     },
     {
@@ -324,6 +324,20 @@ return {
             "'> " .. programs_path .. '/colorscript; ' ..
             'chmod +x ' .. programs_path .. '/colorscript',
         cond = not file_readable(programs_path .. '/colorscript'),
+    },
+    {
+        name = 'claude-code-install',
+        command = 'curl -fsSL https://claude.ai/install.sh | bash',
+    },
+    {
+        name = 'claude-agent-acp-install',
+        command = 'sudo npm install --force -g @zed-industries/claude-agent-acp',
+        os = 'Linux',
+    },
+    {
+        name = 'claude-agent-acp-install',
+        command = 'npm install --force -g @zed-industries/claude-agent-acp',
+        os = 'Darwin',
     },
     {
         name = 'success',
