@@ -326,6 +326,31 @@ return {
         cond = not file_readable(programs_path .. '/colorscript'),
     },
     {
+        name = 'claude-code-install',
+        command = [=[ sudo install -d -m 0755 /etc/apt/keyrings ; ]=] ..
+                  [=[ sudo curl -fsSL https://downloads.claude.ai/keys/claude-code.asc -o /etc/apt/keyrings/claude-code.asc ; ]=] ..
+                  [=[ echo "deb [signed-by=/etc/apt/keyrings/claude-code.asc] https://downloads.claude.ai/claude-code/apt/latest latest main" ]=] ..
+                  [=[ | sudo tee /etc/apt/sources.list.d/claude-code.list ; ]=] ..
+                  [=[ sudo apt update ; ]=] ..
+                  [=[ sudo DEBIAN_FRONTEND=noninteractive apt install -y claude-code ]=],
+        os = 'Linux',
+    },
+    {
+        name = 'claude-code-install',
+        command = 'brew install --cask claude-code@latest || true',
+        os = 'Darwin',
+    },
+    {
+        name = 'claude-agent-acp-install',
+        command = 'sudo npm install --force -g @zed-industries/claude-agent-acp',
+        os = 'Linux',
+    },
+    {
+        name = 'claude-agent-acp-install',
+        command = 'npm install --force -g @zed-industries/claude-agent-acp',
+        os = 'Darwin',
+    },
+    {
         name = 'success',
         command = 'echo Installation complete!'
     },

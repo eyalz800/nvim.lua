@@ -79,6 +79,17 @@ m.codecompanion_config = {
         inline = {
             adapter = 'gemini'
         },
+        cli = {
+            agent = 'claude',
+            agents = {
+                claude = {
+                    cmd = 'claude',
+                    args = {},
+                    description = 'Claude Code CLI',
+                    provider = 'terminal',
+                },
+            },
+        },
     },
 }
 m.minuet_ai = false
