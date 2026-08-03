@@ -43,6 +43,8 @@ m.config = function()
         --opts = { log_level = 'TRACE' },
         display = {
             chat = {
+                fold_reasoning = false, -- Do not fold the reasoning content in the chat buffer
+                show_reasoning = true, -- Show reasoning content in the chat buffer
                 window = {
                     layout = 'vertical', -- float|vertical|horizontal|buffer
                     position = 'right', -- left|right|top|bottom (nil will default depending on vim.opt.splitright|vim.opt.splitbelow)
