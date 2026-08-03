@@ -74,10 +74,21 @@ m.codecompanion_config = {
     wrap = true,
     interactions = {
         chat = {
-            adapter = 'gemini'
+            adapter = 'claude_code'
         },
         inline = {
-            adapter = 'gemini'
+            adapter = 'claude_code'
+        },
+        cli = {
+            agent = 'claude_code',
+            agents = {
+                claude_code = {
+                    cmd = 'claude',
+                    args = {},
+                    description = 'Claude Code CLI',
+                    provider = 'terminal',
+                },
+            },
         },
     },
 }
