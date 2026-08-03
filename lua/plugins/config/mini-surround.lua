@@ -2,8 +2,23 @@ local m = {}
 
 m.setup = function()
     require 'mini.surround'.setup(m.config())
-    vim.keymap.del('x', 'ysa')
-    vim.keymap.set('x', 'gsa', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
+
+    -- Remap the visual mode add/find mappings from ys* to gs* so that y in visual
+    -- mode stays responsive and does not wait for a possible surround mapping.
+    local remap_visual = function(old_lhs, new_lhs)
+        local map = vim.fn.maparg(old_lhs, 'x', false, true)
+        vim.keymap.del('x', old_lhs)
+        vim.keymap.set('x', new_lhs, map.callback or map.rhs,
+            { expr = map.expr == 1, silent = true, desc = map.desc })
+    end
+
+    remap_visual('ysa', 'gsa')
+    remap_visual('ysf', 'gsf')
+    remap_visual('ysfl', 'gsfl')
+    remap_visual('ysfn', 'gsfn')
+    remap_visual('ysF', 'gsF')
+    remap_visual('ysFl', 'gsFl')
+    remap_visual('ysFn', 'gsFn')
 end
 
 m.config = function()
