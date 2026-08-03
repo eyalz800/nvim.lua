@@ -8,9 +8,11 @@ end
 m.config = function()
     return {
         ensure_installed = { 'c', 'cpp', 'lua', 'vim', 'vimdoc', 'python', 'query', 'gitcommit', 'gitignore', 'gitattributes',
+            'git_config', 'git_rebase',
             'markdown', 'markdown_inline', 'make', 'cmake', 'ninja', 'json', 'asm', 'nasm', 'rust', 'xml', 'ini', 'kconfig', 'diff', 'bash',
             'yaml', 'html', 'css', 'javascript', 'typescript', 'dockerfile', 'toml', 'go', 'java', 'latex', 'norg', 'scss', 'svelte', 'tsx',
             'typst', 'vue', 'regex', 'editorconfig', 'gdscript', 'godot_resource', 'gdshader',
+            'c_sharp', 'csv', 'llvm', 'objc', 'objdump', 'tmux',
         },
         sync_install = false,
         auto_install = user.settings.treesitter_auto_install,
