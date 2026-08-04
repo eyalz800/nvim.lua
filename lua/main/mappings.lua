@@ -43,6 +43,7 @@ m.setup = function()
     local terminal = require 'plugins.terminal'
     local pin = require 'plugins.pin'
     local ai_chat = require 'plugins.ai-chat'
+    local ai_cli = require 'plugins.ai-cli'
     local _ = require 'which-key'
 
     local mappings = {
@@ -76,6 +77,7 @@ m.setup = function()
             ['<c-w>B'] = { terminal.split_below, 'Split terminal below (terminal.split_below)' },
             ['<c-w>t'] = { terminal.open_split, 'Open terminal right (terminal.open_split)' },
             ['<c-w>a'] = { ai_chat.toggle, 'Toggle AI chat window (ai_chat.toggle)' },
+            ['<c-w>A'] = { ai_cli.toggle, 'Toggle AI CLI terminal (ai_cli.toggle)' },
             ['<c-l>'] = { indent_guides.refresh_trigger('20zl', { expr = false }), 'Scroll right 20 columns (indent guides refresh)' },
             ['<c-h>'] = { indent_guides.refresh_trigger('20zh', { expr = false }), 'Scroll left 20 columns (indent guides refresh)' },
             ['<leader>rw'] = { whitespace.strip, 'Remove trailing whitespace (whitespace.strip)' },
@@ -309,6 +311,7 @@ m.setup = function()
         t = {
             ['<c-w>w'] = { '<c-\\><c-n>:q<cr>', 'Close terminal window (terminal mode)' },
             ['<c-w>n'] = { '<c-\\><c-n>', 'Switch to normal mode (terminal mode)' },
+            ['<c-w>A'] = { ai_cli.toggle, 'Toggle AI CLI terminal (terminal mode) (ai_cli.toggle)' },
             ['<c-w>h'] = { tmux_navigator.tmux_navigate_left, 'Navigate left (terminal mode, tmux/vim window)' },
             ['<c-w>j'] = { tmux_navigator.tmux_navigate_down, 'Navigate down (terminal mode, tmux/vim window)' },
             ['<c-w>k'] = { tmux_navigator.tmux_navigate_up, 'Navigate up (terminal mode, tmux/vim window)' },

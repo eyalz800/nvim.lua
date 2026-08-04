@@ -92,7 +92,10 @@ m.codecompanion_config = {
         },
     },
 }
+m.ai_cli = 'claude'
+m.ai_cli_config = { width = 0.45 }
 m.minuet_ai = false
+m.ai_cli_config = { width = 0.5 }
 m.minuet_config = {
     provider = 'openai',
     --provider = 'gemini',
